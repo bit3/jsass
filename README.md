@@ -199,16 +199,16 @@ jsass convert as good as it can the java values to libsass values and vise versa
 | ------------- | ------------------- |-------------------- | --------------------------- |
 | string        | SassString*         | SassString*         |                             |
 | string        | CharSequence        | SassString*         |                             |
-| string        | String              | String              | Quotation status is lost    |
-| boolean       | boolean             | Boolean             |                             |
+| string        | String              | String              | Quotation status get lost   |
+| boolean       | Boolean             | Boolean             |                             |
 | double        | SassNumber          | SassNumber          |                             |
 | double        | Number              | SassNumber          |                             |
 | double        | Double              | Double              | unit get lost               |
 | double        | Float               | Float               | unit and precision get lost |
-| double        | Long                | Long                | unit and precision get lost |
-| double        | Integer             | Integer             | unit and precision get lost |
-| double        | Short               | Short               | unit and precision get lost |
-| double        | Byte                | Byte                | unit and precision get lost |
+| double        | Long                | Long                | unit and fraction get lost  |
+| double        | Integer             | Integer             | unit and fraction get lost  |
+| double        | Short               | Short               | unit and fraction get lost  |
+| double        | Byte                | Byte                | unit and fraction get lost  |
 | color         | SassColor           | SassColor           |                             |
 | list          | SassList            | SassList            |                             |
 | list          | Collection          | SassList            |                             |
@@ -216,6 +216,8 @@ jsass convert as good as it can the java values to libsass values and vise versa
 
 * Note: Remind that `SassString implements CharSequence` which is incompatible with `java.lang.String`.
   If possible it is a good idea to use the `Sass*` type classes, but there is no need.
+* Note: Primitive types are also supported. jsass internally only use object types, but thanks to auto-boxing
+  primitive type support is also provided.
 
 Custom importers
 ----------------
