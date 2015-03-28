@@ -10,6 +10,8 @@ The most advantage of jsass is to hide the libsass complexity from the developer
 Basic usage example
 -------------------
 
+### Compile file
+
 ```java
 import de.bit3.jsass.CompilationException;
 import de.bit3.jsass.Compiler;
@@ -27,6 +29,33 @@ public class App {
 
         try {
             compiler.compileFile(inputFile, outputFile, options);
+        } catch (CompilationException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Compile string
+
+```java
+import de.bit3.jsass.CompilationException;
+import de.bit3.jsass.Compiler;
+import de.bit3.jsass.Options;
+
+import java.io.File;
+
+public class App {
+    public static void main(String[] args) {
+        String input = "body { color: red; }";
+        File inputFile = new File("stylesheet.scss");
+        File outputFile = new File("stylesheet.css");
+
+        Compiler compiler = new Compiler();
+        Options options = new Options();
+
+        try {
+            compiler.compileString(input, inputFile, outputFile, options);
         } catch (CompilationException e) {
             e.printStackTrace();
         }
