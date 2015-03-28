@@ -9,6 +9,11 @@ import java.util.List;
  */
 public class Options {
     /**
+     * Precision for outputting fractional numbers.
+     */
+    private int precision;
+
+    /**
      * Output style for the generated css code.
      */
     private OutputStyle outputStyle = OutputStyle.NESTED;
@@ -17,18 +22,6 @@ public class Options {
      * If you want inline source comments.
      */
     private boolean sourceComments;
-
-    /**
-     * Path to source map file.
-     * Enables the source map generating.
-     * Used to create sourceMappingUrl.
-     */
-    private File sourceMapFile;
-
-    /**
-     * Disable sourceMappingUrl in css output
-     */
-    private boolean omitSourceMapUrl = false;
 
     /**
      * Embed sourceMappingUrl as data uri.
@@ -41,14 +34,14 @@ public class Options {
     private boolean sourceMapContents = false;
 
     /**
+     * Disable sourceMappingUrl in css output
+     */
+    private boolean omitSourceMapUrl = false;
+
+    /**
      * Treat source_string as sass (as opposed to scss).
      */
     private boolean isIndentedSyntaxSrc = false;
-
-    /**
-     * List of paths.
-     */
-    private List<File> includePaths = new LinkedList<File>();
 
     /**
      * For the image-url Sass function.
@@ -56,14 +49,34 @@ public class Options {
     private String imageUrl = null;
 
     /**
-     * Precision for outputting fractional numbers.
+     * SassList of paths.
      */
-    private int precision;
+    private List<File> includePaths = new LinkedList<File>();
+
+    /**
+     * Path to source map file.
+     * Enables the source map generating.
+     * Used to create sourceMappingUrl.
+     */
+    private File sourceMapFile;
 
     /**
      * Custom import functions.
      */
-    private List<Function> importFunctions = new LinkedList<Function>();
+    private List<Object> functionProviders = new LinkedList<>();
+
+    /**
+     * Custom import functions.
+     */
+    private List<?> importers = new LinkedList<>();
+
+    public int getPrecision() {
+        return precision;
+    }
+
+    public void setPrecision(int precision) {
+        this.precision = precision;
+    }
 
     /**
      * Return the output style.
@@ -102,42 +115,6 @@ public class Options {
     }
 
     /**
-     * Return the source map file.
-     *
-     * @return The source map file or <em>null</em> if no source map should generated.
-     */
-    public File getSourceMapFile() {
-        return sourceMapFile;
-    }
-
-    /**
-     * Set the source map file.
-     *
-     * @param sourceMapFile The source map file or <em>null</em> to disable source map generation.
-     */
-    public void setSourceMapFile(File sourceMapFile) {
-        this.sourceMapFile = sourceMapFile;
-    }
-
-    /**
-     * Determine if sourceMappingUrl is omitted in css output.
-     *
-     * @return <em>true</em> if the sourceMappingUrl is omitted in css output.
-     */
-    public boolean isOmitSourceMapUrl() {
-        return omitSourceMapUrl;
-    }
-
-    /**
-     * Set if sourceMappingUrl should be omitted in css output.
-     *
-     * @param omitSourceMapUrl Omit the sourceMappingUrl in css output.
-     */
-    public void setOmitSourceMapUrl(boolean omitSourceMapUrl) {
-        this.omitSourceMapUrl = omitSourceMapUrl;
-    }
-
-    /**
      * Determine if source map is embedded into css output.
      *
      * @return <em>true</em> if the source map is embedded into css output.
@@ -163,20 +140,30 @@ public class Options {
         this.sourceMapContents = sourceMapContents;
     }
 
+    /**
+     * Determine if sourceMappingUrl is omitted in css output.
+     *
+     * @return <em>true</em> if the sourceMappingUrl is omitted in css output.
+     */
+    public boolean isOmitSourceMapUrl() {
+        return omitSourceMapUrl;
+    }
+
+    /**
+     * Set if sourceMappingUrl should be omitted in css output.
+     *
+     * @param omitSourceMapUrl Omit the sourceMappingUrl in css output.
+     */
+    public void setOmitSourceMapUrl(boolean omitSourceMapUrl) {
+        this.omitSourceMapUrl = omitSourceMapUrl;
+    }
+
     public boolean isIndentedSyntaxSrc() {
         return isIndentedSyntaxSrc;
     }
 
     public void setIsIndentedSyntaxSrc(boolean isIndentedSyntaxSrc) {
         this.isIndentedSyntaxSrc = isIndentedSyntaxSrc;
-    }
-
-    public List<File> getIncludePaths() {
-        return includePaths;
-    }
-
-    public void setIncludePaths(List<File> includePaths) {
-        this.includePaths = includePaths;
     }
 
     public String getImageUrl() {
@@ -187,11 +174,45 @@ public class Options {
         this.imageUrl = imageUrl;
     }
 
-    public int getPrecision() {
-        return precision;
+    public List<File> getIncludePaths() {
+        return includePaths;
     }
 
-    public void setPrecision(int precision) {
-        this.precision = precision;
+    public void setIncludePaths(List<File> includePaths) {
+        this.includePaths = includePaths;
+    }
+
+    /**
+     * Return the source map file.
+     *
+     * @return The source map file or <em>null</em> if no source map should generated.
+     */
+    public File getSourceMapFile() {
+        return sourceMapFile;
+    }
+
+    /**
+     * Set the source map file.
+     *
+     * @param sourceMapFile The source map file or <em>null</em> to disable source map generation.
+     */
+    public void setSourceMapFile(File sourceMapFile) {
+        this.sourceMapFile = sourceMapFile;
+    }
+
+    public List<Object> getFunctionProviders() {
+        return functionProviders;
+    }
+
+    public void setFunctionProviders(List<Object> functionProviders) {
+        this.functionProviders = functionProviders;
+    }
+
+    public List<?> getImporters() {
+        return importers;
+    }
+
+    public void setImporters(List<?> importers) {
+        this.importers = importers;
     }
 }

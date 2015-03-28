@@ -5,7 +5,6 @@ import sass.SassLibrary;
 
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -119,8 +118,8 @@ public class Compiler {
         String outputPathString    = outputPath.getAbsolutePath();
         String imagePath           = javaOptions.getImageUrl();
         String includePaths        = joinFilePaths(javaOptions.getIncludePaths());
-        String sourceMapFile       = javaOptions.getSourceMapFile().getAbsolutePath();
-        // TODO sass_option_set_c_functions
+        String sourceMapFile       = null == javaOptions.getSourceMapFile() ? "" : javaOptions.getSourceMapFile().getAbsolutePath();
+        SassLibrary.Sass_C_Function_List functions = createFunctions(javaOptions.getFunctionProviders());
         // TODO sass_option_set_importer
 
         SASS.sass_option_set_precision(libsassOptions, precision);
@@ -135,7 +134,7 @@ public class Compiler {
         SASS.sass_option_set_image_path(libsassOptions, imagePath);
         SASS.sass_option_set_include_path(libsassOptions, includePaths);
         SASS.sass_option_set_source_map_file(libsassOptions, sourceMapFile);
-        // TODO sass_option_set_c_functions
+        SASS.sass_option_set_c_functions(libsassOptions, functions);
         // TODO sass_option_set_importer
     }
 
@@ -165,6 +164,10 @@ public class Compiler {
     private Output createOutput(SassLibrary.Sass_Context context) {
         String css       = SASS.sass_context_get_output_string(context);
         String sourceMap = SASS.sass_context_get_source_map_string(context);
+
+        System.out.println("-----");
+        System.out.println(css);
+        System.out.println("-----");
 
         return new Output(css, sourceMap);
     }
@@ -212,6 +215,14 @@ public class Compiler {
         return string.substring(1);
     }
 
+    private SassLibrary.Sass_C_Function_List createFunctions(List<?> functionProviders) {
+        FunctionCallbackFactory functionCallbackFactory = new FunctionCallbackFactory(SASS);
+
+        List<SassLibrary.Sass_C_Function_Callback> callbacks = functionCallbackFactory.compileFunctions(functionProviders);
+
+        return functionCallbackFactory.toSassCFunctionList(callbacks);
+    }
+
     /**
      * Create native byte boolean.
      *
@@ -220,9 +231,5 @@ public class Compiler {
      */
     private byte createBooleanByte(boolean bool) {
         return bool ? (byte) 1 : 0;
-    }
-
-    private class FunctionWrapper {
-
     }
 }

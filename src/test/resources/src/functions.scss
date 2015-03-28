@@ -1,0 +1,12 @@
+
+@function hello($name: 'world') {
+  @return 'Hello ' + $name;
+}
+
+@function increment($value, $increment: 1) {
+  @return $value + $increment;
+}
+
+@function decrement($value, $decrement: 1) {
+  @return $value - $decrement;
+}
