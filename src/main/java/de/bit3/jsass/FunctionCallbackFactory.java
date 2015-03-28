@@ -100,7 +100,6 @@ class FunctionCallbackFactory {
 
         signature.append(")");
 
-        System.out.println(signature);
         return new FunctionDeclaration(
                 signature.toString(),
                 object,

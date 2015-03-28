@@ -105,11 +105,6 @@ class FunctionDeclaration {
         }
 
         try {
-            System.out.println("arguments: " + args.length);
-            for (Object arg : args) {
-                System.out.println(arg.getClass().getName());
-            }
-
             return method.invoke(object, args);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);

@@ -34,12 +34,6 @@ public class Compiler {
         try {
             ByteBuffer byteBuffer = StandardCharsets.US_ASCII.encode(string);
 
-            System.out.println("-----");
-            System.out.println(string);
-            System.out.println("-----");
-            //System.out.println(StandardCharsets.UTF_8.decode(byteBuffer));
-            System.out.println("-----");
-
             // create context
             dataContext = SASS.sass_make_data_context(byteBuffer);
 
@@ -164,10 +158,6 @@ public class Compiler {
     private Output createOutput(SassLibrary.Sass_Context context) {
         String css       = SASS.sass_context_get_output_string(context);
         String sourceMap = SASS.sass_context_get_source_map_string(context);
-
-        System.out.println("-----");
-        System.out.println(css);
-        System.out.println("-----");
 
         return new Output(css, sourceMap);
     }
