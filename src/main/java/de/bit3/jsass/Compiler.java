@@ -1,6 +1,8 @@
 package de.bit3.jsass;
 
+import com.sun.jna.Memory;
 import com.sun.jna.Native;
+import com.sun.jna.Pointer;
 import sass.SassLibrary;
 
 import java.io.File;
@@ -32,10 +34,11 @@ public class Compiler {
         SassLibrary.Sass_Data_Context dataContext = null;
 
         try {
-            ByteBuffer byteBuffer = StandardCharsets.US_ASCII.encode(string);
+            Pointer memory = new Memory(string.length() + 1);
+            memory.setString(0, string);
 
             // create context
-            dataContext = SASS.sass_make_data_context(byteBuffer);
+            dataContext = SASS.sass_make_data_context(memory);
 
             // configure context
             SassLibrary.Sass_Options libsassOptions = SASS.sass_data_context_get_options(dataContext);
