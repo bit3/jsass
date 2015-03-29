@@ -122,7 +122,6 @@ public class CompileFileTest {
 
     @Test
     public void testWithMap() throws Exception {
-        File sourceFile    = new File(this.sourceFile.toURI());
         File targetCssFile = new File(targetCssWithMapFile.toURI());
         File targetMapFile = new File(targetSourceMapFile.toURI());
 
