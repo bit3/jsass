@@ -108,11 +108,13 @@ public class Compiler {
         byte   sourceMapContents   = createBooleanByte(javaOptions.isSourceMapContents());
         byte   omitSourceMapUrl    = createBooleanByte(javaOptions.isOmitSourceMapUrl());
         byte   isIndentedSyntaxSrc = createBooleanByte(javaOptions.isIndentedSyntaxSrc());
-        String inputPathString     = inputPath.getAbsolutePath();
-        String outputPathString    = outputPath.getAbsolutePath();
+        String inputPathString     = null == inputPath ? "" : inputPath.getAbsolutePath();
+        String outputPathString    = null == outputPath ? "" : outputPath.getAbsolutePath();
         String imagePath           = javaOptions.getImageUrl();
         String includePaths        = joinFilePaths(javaOptions.getIncludePaths());
-        String sourceMapFile       = null == javaOptions.getSourceMapFile() ? "" : javaOptions.getSourceMapFile().getAbsolutePath();
+        String sourceMapFile = null == javaOptions.getSourceMapFile()
+                ? ""
+                : javaOptions.getSourceMapFile().getAbsolutePath();
         SassLibrary.Sass_C_Function_List functions = createFunctions(javaOptions.getFunctionProviders());
         // TODO sass_option_set_importer
 

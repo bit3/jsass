@@ -11,7 +11,7 @@ public class Options {
     /**
      * Precision for outputting fractional numbers.
      */
-    private int precision;
+    private int precision = 8;
 
     /**
      * Output style for the generated css code.
@@ -21,7 +21,7 @@ public class Options {
     /**
      * If you want inline source comments.
      */
-    private boolean sourceComments;
+    private boolean sourceComments = false;
 
     /**
      * Embed sourceMappingUrl as data uri.
@@ -46,7 +46,7 @@ public class Options {
     /**
      * For the image-url Sass function.
      */
-    private String imageUrl = null;
+    private String imageUrl = "";
 
     /**
      * SassList of paths.
@@ -171,7 +171,7 @@ public class Options {
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.imageUrl = null == imageUrl ? "" : imageUrl;
     }
 
     public List<File> getIncludePaths() {
