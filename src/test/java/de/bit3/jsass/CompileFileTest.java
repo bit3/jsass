@@ -94,11 +94,13 @@ public class CompileFileTest {
 
     @After
     public void tearDown() {
-        for (File file : targetDir.listFiles()) {
-            file.delete();
-        }
+        if (null != targetDir && targetDir.exists()) {
+            for (File file : targetDir.listFiles()) {
+                file.delete();
+            }
 
-        targetDir.delete();
+            targetDir.delete();
+        }
     }
 
     @Test
