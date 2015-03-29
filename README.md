@@ -11,6 +11,8 @@ The most advantage of jsass is to hide the libsass complexity from the developer
 Basic usage example
 -------------------
 
+Compiling a file is pretty simple, give an input file and an output file, the rest is just magic.
+
 ### Compile file
 
 ```java
@@ -38,6 +40,10 @@ public class App {
 ```
 
 ### Compile string
+
+Compiling a string is pretty simple, give an input string, the rest is just magic.
+Providing an input file and output file is always a good idea. With this informations libsass can determine the default
+include path and calculate relative paths.
 
 ```java
 import de.bit3.jsass.CompilationException;
