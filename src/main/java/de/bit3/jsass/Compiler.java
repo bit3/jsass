@@ -34,8 +34,10 @@ public class Compiler {
         SassLibrary.Sass_Data_Context dataContext = null;
 
         try {
-            Pointer memory = new Memory(string.length() + 1);
-            memory.setString(0, string);
+            byte[] bytes = string.getBytes();
+            Pointer memory = new Memory(bytes.length + 1);
+            memory.write(0, bytes, 0, bytes.length);
+            memory.setByte(bytes.length, (byte) 0); // TODO casting
 
             // create context
             dataContext = SASS.sass_make_data_context(memory);
