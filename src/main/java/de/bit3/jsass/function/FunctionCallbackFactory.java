@@ -1,7 +1,6 @@
 package de.bit3.jsass.function;
 
 import com.ochafik.lang.jnaerator.runtime.NativeSize;
-import de.bit3.jsass.Name;
 import de.bit3.jsass.annotation.*;
 import sass.SassLibrary;
 
