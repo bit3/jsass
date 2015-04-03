@@ -3,11 +3,11 @@ package de.bit3.jsass;
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import org.apache.commons.io.Charsets;
 import sass.SassLibrary;
 
 import java.io.File;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -23,21 +23,22 @@ public class Compiler {
      * Compile string.
      *
      * @param string     The input string.
+     * @param charset    The charset of the input string.
      * @param inputPath  The input path.
      * @param outputPath The output path.
      * @param options    The compile options.
      * @return The compilation output.
      * @throws CompilationException If the compilation failed.
      */
-    public Output compileString(String string, File inputPath, File outputPath, Options options) throws CompilationException {
+    public Output compileString(String string, Charset charset, File inputPath, File outputPath, Options options) throws CompilationException {
         // create file context
         SassLibrary.Sass_Data_Context dataContext = null;
 
         try {
-            byte[] bytes = string.getBytes();
+            byte[] bytes = string.getBytes(charset);
             Pointer memory = new Memory(bytes.length + 1);
             memory.write(0, bytes, 0, bytes.length);
-            memory.setByte(bytes.length, (byte) 0); // TODO casting
+            memory.setByte(bytes.length, (byte) 0);
 
             // create context
             dataContext = SASS.sass_make_data_context(memory);
