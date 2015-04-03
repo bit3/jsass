@@ -1,3 +1,12 @@
+// imported through include-path
+@import "mixins";
+
+// imported through custom importer
+@import "include";
+
+// custom functions
+@import "functions";
+
 .unit-test {
   display: block;
 
@@ -11,15 +20,15 @@
     content: hello("globe");
   }
   .increment {
-    content: increment(10);
+    z-index: increment(10);
   }
   .increment-five {
-    content: increment(10, 5);
+    z-index: increment(10, 5);
   }
   .decrement {
-    content: decrement(10);
+    z-index: decrement(10);
   }
   .decrement-five {
-    content: decrement(10, 5);
+    z-index: decrement(10, 5);
   }
 }

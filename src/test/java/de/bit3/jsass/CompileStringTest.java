@@ -52,9 +52,14 @@ public class CompileStringTest {
     public void setUp() throws IOException, URISyntaxException {
         compiler = new Compiler();
 
+        String incPath = String.format("/%s/inc", syntax);
+        URL incUrl = getClass().getResource(incPath);
+
         options = new Options();
         options.setIsIndentedSyntaxSrc(isIndentedStyle);
+        options.getIncludePaths().add(new File(incUrl.toURI()));
         options.getFunctionProviders().add(new TestFunctions());
+        options.getImporters().add(new TestImporter());
 
         String outputStyle = this.outputStyle.toString().toLowerCase();
 
@@ -74,10 +79,10 @@ public class CompileStringTest {
         targetSourceMapFile = new File(tempDir, targetSourceMapPath);
 
         String expectedCssWithoutMapPath = String.format("/%s/%s/output-without-map.css", syntax, outputStyle);
-        expectedCssWithoutMapUrl = CompileFileTest.class.getResource(expectedCssWithoutMapPath);
+        expectedCssWithoutMapUrl = getClass().getResource(expectedCssWithoutMapPath);
 
         String expectedCssWithMapPath = String.format("/%s/%s/output-with-map.css", syntax, outputStyle);
-        expectedCssWithMapUrl = CompileFileTest.class.getResource(expectedCssWithMapPath);
+        expectedCssWithMapUrl = getClass().getResource(expectedCssWithMapPath);
     }
 
     @Test
@@ -117,6 +122,10 @@ public class CompileStringTest {
     private void assertEquals(String actual, URL expectedSource) throws IOException {
         String expected = IOUtils.toString(expectedSource);
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(
+                String.format("Compile input.%s into %s output format failed", syntax, outputStyle),
+                expected,
+                actual
+        );
     }
 }

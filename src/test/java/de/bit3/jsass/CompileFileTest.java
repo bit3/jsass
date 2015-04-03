@@ -53,13 +53,18 @@ public class CompileFileTest {
     public void setUp() throws URISyntaxException {
         compiler = new Compiler();
 
+        String incPath = String.format("/%s/inc", syntax);
+        URL incUrl = getClass().getResource(incPath);
+        
         options = new Options();
+        options.getIncludePaths().add(new File(incUrl.toURI()));
         options.getFunctionProviders().add(new TestFunctions());
+        options.getImporters().add(new TestImporter());
 
         String outputStyle = this.outputStyle.toString().toLowerCase();
 
         String sourcePath = String.format("/%s/input.%s", syntax, syntax);
-        URL    sourceUrl  = CompileFileTest.class.getResource(sourcePath);
+        URL    sourceUrl  = getClass().getResource(sourcePath);
         sourceFile = new File(sourceUrl.toURI());
 
         String property    = "java.io.tmpdir";
@@ -83,13 +88,13 @@ public class CompileFileTest {
         targetSourceMapFile = new File(targetDir, targetSourceMapPath);
 
         String expectedCssWithoutMapPath = String.format("/%s/%s/output-without-map.css", syntax, outputStyle);
-        expectedCssWithoutMapUrl = CompileFileTest.class.getResource(expectedCssWithoutMapPath);
+        expectedCssWithoutMapUrl = getClass().getResource(expectedCssWithoutMapPath);
 
         String expectedCssWithMapPath = String.format("/%s/%s/output-with-map.css", syntax, outputStyle);
-        expectedCssWithMapUrl = CompileFileTest.class.getResource(expectedCssWithMapPath);
+        expectedCssWithMapUrl = getClass().getResource(expectedCssWithMapPath);
 
         String expectedSourceMapPath = String.format("/%s/%s/output-with-map.css.map", syntax, outputStyle);
-        expectedSourceMapUrl = CompileFileTest.class.getResource(expectedSourceMapPath);
+        expectedSourceMapUrl = getClass().getResource(expectedSourceMapPath);
     }
 
     @After
@@ -144,6 +149,10 @@ public class CompileFileTest {
     private void assertEquals(String actual, URL expectedSource) throws IOException {
         String expected = IOUtils.toString(expectedSource);
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(
+                String.format("Compile input.%s into %s output format failed", syntax, outputStyle),
+                expected,
+                actual
+        );
     }
 }
