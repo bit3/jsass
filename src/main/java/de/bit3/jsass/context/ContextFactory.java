@@ -1,16 +1,17 @@
 package de.bit3.jsass.context;
 
 import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
 import de.bit3.jsass.importer.Importer;
 import de.bit3.jsass.Options;
 import de.bit3.jsass.OutputStyle;
 import de.bit3.jsass.function.FunctionCallbackFactory;
+import de.bit3.jsass.importer.ImporterCallbackFactory;
 import sass.SassLibrary;
 
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.List;
 
 public class ContextFactory {
@@ -30,7 +31,7 @@ public class ContextFactory {
 
         // configure context
         SassLibrary.Sass_Options libsassOptions = SASS.sass_file_context_get_options(fileContext);
-        configure(inputPath, outputPath, libsassOptions, options);
+        configure(context, inputPath, outputPath, libsassOptions, options);
 
         return fileContext;
     }
@@ -54,7 +55,7 @@ public class ContextFactory {
 
         // configure context
         SassLibrary.Sass_Options libsassOptions = SASS.sass_data_context_get_options(dataContext);
-        configure(inputPath, outputPath, libsassOptions, options);
+        configure(context, inputPath, outputPath, libsassOptions, options);
 
         return dataContext;
     }
@@ -65,7 +66,7 @@ public class ContextFactory {
      * @param libsassOptions The libsass options.
      * @param javaOptions    The java options.
      */
-    private void configure(File inputPath, File outputPath, SassLibrary.Sass_Options libsassOptions, Options javaOptions) {
+    private void configure(Context context, File inputPath, File outputPath, SassLibrary.Sass_Options libsassOptions, Options javaOptions) {
         int    precision           = javaOptions.getPrecision();
         int    outputStyle         = mapOutputStyle(javaOptions.getOutputStyle());
         byte   sourceComments      = createBooleanByte(javaOptions.isSourceComments());
@@ -81,7 +82,7 @@ public class ContextFactory {
                 ? ""
                 : javaOptions.getSourceMapFile().getAbsolutePath();
         SassLibrary.Sass_C_Function_List   functions = createFunctions(javaOptions.getFunctionProviders());
-        SassLibrary.Sass_C_Import_Callback importer  = createImporter(javaOptions.getImporters());
+        SassLibrary.Sass_C_Import_Callback importer  = createImporter(context, javaOptions.getImporters());
 
         SASS.sass_option_set_precision(libsassOptions, precision);
         SASS.sass_option_set_output_style(libsassOptions, outputStyle);
@@ -150,8 +151,14 @@ public class ContextFactory {
         return functionCallbackFactory.toSassCFunctionList(callbacks);
     }
 
-    private SassLibrary.Sass_C_Import_Callback createImporter(List<?> importers) {
-        return null; // TODO
+    private SassLibrary.Sass_C_Import_Callback createImporter(Context originalContext, Collection<Importer> importers) {
+        if (importers.isEmpty()) {
+            return null;
+        }
+
+        ImporterCallbackFactory importerCallbackFactory = new ImporterCallbackFactory(SASS);
+
+        return importerCallbackFactory.create(originalContext, importers);
     }
 
     /**

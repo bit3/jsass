@@ -457,7 +457,7 @@ public interface SassLibrary extends Library {
 	 * Original signature : <code>Sass_Import** sass_make_import_list(size_t)</code><br>
 	 * <i>native declaration : src/main/libsass/sass_functions.h:30</i>
 	 */
-	SassLibrary.Sass_Import[] sass_make_import_list(NativeSize length);
+	PointerByReference sass_make_import_list(NativeSize length);
 	/**
 	 * Creator for a single import entry returned by the custom importer inside the list<br>
 	 * Original signature : <code>Sass_Import* sass_make_import_entry(const char*, char*, char*)</code><br>

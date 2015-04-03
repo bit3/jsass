@@ -1,6 +1,9 @@
 package de.bit3.jsass;
 
+import de.bit3.jsass.importer.Importer;
+
 import java.io.File;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,7 +71,7 @@ public class Options {
     /**
      * Custom import functions.
      */
-    private List<?> importers = new LinkedList<>();
+    private Collection<Importer> importers = new LinkedList<>();
 
     public int getPrecision() {
         return precision;
@@ -208,11 +211,11 @@ public class Options {
         this.functionProviders = functionProviders;
     }
 
-    public List<?> getImporters() {
+    public Collection<Importer> getImporters() {
         return importers;
     }
 
-    public void setImporters(List<?> importers) {
+    public void setImporters(Collection<Importer> importers) {
         this.importers = importers;
     }
 }
