@@ -1,6 +1,8 @@
 package de.bit3.jsass;
 
 import com.sun.jna.Pointer;
+import de.bit3.jsass.type.SassList;
+import de.bit3.jsass.type.TypeUtils;
 import sass.SassLibrary;
 
 class FunctionWrapper implements SassLibrary.Sass_C_Function {
@@ -19,7 +21,7 @@ class FunctionWrapper implements SassLibrary.Sass_C_Function {
     @Override
     public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cookie) {
         try {
-            Object decodedValue = ValueUtils.decodeValue(SASS, value);
+            Object decodedValue = TypeUtils.decodeValue(SASS, value);
             SassList sassList;
 
             if (decodedValue instanceof SassList) {
@@ -31,7 +33,7 @@ class FunctionWrapper implements SassLibrary.Sass_C_Function {
 
             Object result = declaration.invoke(sassList);
 
-            return ValueUtils.encodeValue(SASS, result);
+            return TypeUtils.encodeValue(SASS, result);
         } catch (CompilationException e) {
             throw new RuntimeException(e);
         }

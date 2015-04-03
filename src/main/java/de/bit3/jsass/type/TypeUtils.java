@@ -1,13 +1,15 @@
-package de.bit3.jsass;
+package de.bit3.jsass.type;
 
 import com.ochafik.lang.jnaerator.runtime.NativeSize;
+import de.bit3.jsass.CompilationException;
+import de.bit3.jsass.Separator;
 import sass.SassLibrary;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-class ValueUtils {
+public class TypeUtils {
     public static Object decodeValue(SassLibrary SASS, SassLibrary.Sass_Value value) throws CompilationException {
         if (SASS.sass_value_is_null(value) > 0) {
             return null;

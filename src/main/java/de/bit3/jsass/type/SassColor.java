@@ -1,4 +1,4 @@
-package de.bit3.jsass;
+package de.bit3.jsass.type;
 
 public class SassColor {
     private double red = 0;

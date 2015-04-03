@@ -4,7 +4,7 @@ public enum Separator {
     COMMA(','),
     SPACE(' ');
 
-    final char character;
+    public final char character;
 
     Separator(char character) {
         this.character = character;

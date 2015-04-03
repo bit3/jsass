@@ -1,5 +1,6 @@
-package de.bit3.jsass;
+package de.bit3.jsass.type;
 
+import de.bit3.jsass.Separator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
