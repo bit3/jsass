@@ -1,6 +1,7 @@
 package de.bit3.jsass;
 
 import com.sun.jna.Native;
+import de.bit3.jsass.context.Context;
 import de.bit3.jsass.context.ContextFactory;
 import de.bit3.jsass.context.FileContext;
 import de.bit3.jsass.context.StringContext;
@@ -93,6 +94,44 @@ public class Compiler {
     }
 
     /**
+     * Compile file.
+     *
+     * @param inputPath  The input path.
+     * @param outputPath The output path.
+     * @param options    The compile options.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compileFile(File inputPath, File outputPath, Options options) throws CompilationException {
+        FileContext context = new FileContext(inputPath, outputPath, options);
+        return compile(context);
+    }
+
+    /**
+     * Compile context.
+     *
+     * @param context The context.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compile(Context context) throws CompilationException {
+        if (context instanceof FileContext) {
+            return compile((FileContext) context);
+        }
+
+        if (context instanceof StringContext) {
+            return compile((StringContext) context);
+        }
+
+        throw new RuntimeException(
+                String.format(
+                        "Context type \"%s\" is not supported",
+                        null == context ? "null" : context.getClass().getName()
+                )
+        );
+    }
+
+    /**
      * Compile a string context.
      *
      * @param context The string context.
@@ -120,20 +159,6 @@ public class Compiler {
                 SASS.sass_delete_data_context(dataContext);
             }
         }
-    }
-
-    /**
-     * Compile file.
-     *
-     * @param inputPath  The input path.
-     * @param outputPath The output path.
-     * @param options    The compile options.
-     * @return The compilation output.
-     * @throws CompilationException If the compilation failed.
-     */
-    public Output compileFile(File inputPath, File outputPath, Options options) throws CompilationException {
-        FileContext context = new FileContext(inputPath, outputPath, options);
-        return compile(context);
     }
 
     /**
