@@ -2,6 +2,7 @@ package de.bit3.jsass;
 
 import de.bit3.jsass.annotation.DefaultIntegerValue;
 import de.bit3.jsass.annotation.DefaultStringValue;
+import de.bit3.jsass.annotation.Name;
 
 public class TestFunctions {
     public String hello(@Name("name") @DefaultStringValue("world") String name) {
