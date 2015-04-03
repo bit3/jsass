@@ -1,4 +1,4 @@
-package de.bit3.jsass;
+package de.bit3.jsass.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
-public @interface DefaultFloatValue {
-    float value();
+public @interface DefaultLongValue {
+    long value();
 }

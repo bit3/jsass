@@ -1,6 +1,7 @@
 package de.bit3.jsass;
 
 import com.ochafik.lang.jnaerator.runtime.NativeSize;
+import de.bit3.jsass.annotation.*;
 import sass.SassLibrary;
 
 import java.lang.reflect.Method;
