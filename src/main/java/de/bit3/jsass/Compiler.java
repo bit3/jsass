@@ -1,43 +1,39 @@
 package de.bit3.jsass;
 
-import com.sun.jna.Memory;
 import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import de.bit3.jsass.function.FunctionCallbackFactory;
+import de.bit3.jsass.context.ContextFactory;
+import de.bit3.jsass.context.FileContext;
+import de.bit3.jsass.context.StringContext;
 import org.apache.commons.io.Charsets;
 import sass.SassLibrary;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.util.List;
 
 /**
  * Hello world!
  */
 public class Compiler {
     /**
-     * SASS library adapter.
+     * The default defaultCharset that is used for compiling strings.
      */
-    private SassLibrary SASS = (SassLibrary) Native.loadLibrary("sass", SassLibrary.class);
+    public final Charset defaultCharset = Charsets.UTF_8;
 
     /**
-     * The default charset that is used for compiling strings.
+     * SASS library adapter.
      */
-    private Charset charset = Charsets.UTF_8;
+    private final SassLibrary SASS = (SassLibrary) Native.loadLibrary("sass", SassLibrary.class);
+
+    /**
+     * The context factory.
+     */
+    private final ContextFactory contextFactory;
 
     /**
      * Create new compiler.
      */
     public Compiler() {
-    }
-
-    /**
-     * Create new compiler.
-     *
-     * @param charset The default charset that is used for compiling strings.
-     */
-    public Compiler(Charset charset) {
-        this.charset = charset;
+        contextFactory = new ContextFactory(SASS);
     }
 
     /**
@@ -49,14 +45,14 @@ public class Compiler {
      * @throws CompilationException If the compilation failed.
      */
     public Output compileString(String string, Options options) throws CompilationException {
-        return compileString(string, charset, null, null, options);
+        return compileString(string, defaultCharset, null, null, options);
     }
 
     /**
      * Compile string.
      *
      * @param string  The input string.
-     * @param charset The charset of the input string.
+     * @param charset The defaultCharset of the input string.
      * @param options The compile options.
      * @return The compilation output.
      * @throws CompilationException If the compilation failed.
@@ -76,14 +72,14 @@ public class Compiler {
      * @throws CompilationException If the compilation failed.
      */
     public Output compileString(String string, File inputPath, File outputPath, Options options) throws CompilationException {
-        return compileString(string, charset, inputPath, outputPath, options);
+        return compileString(string, defaultCharset, inputPath, outputPath, options);
     }
 
     /**
      * Compile string.
      *
      * @param string     The input string.
-     * @param charset    The charset of the input string.
+     * @param charset    The defaultCharset of the input string.
      * @param inputPath  The input path.
      * @param outputPath The output path.
      * @param options    The compile options.
@@ -91,30 +87,33 @@ public class Compiler {
      * @throws CompilationException If the compilation failed.
      */
     public Output compileString(String string, Charset charset, File inputPath, File outputPath, Options options) throws CompilationException {
+        StringContext context = new StringContext(string, charset, inputPath, outputPath, options);
+
+        return compile(context);
+    }
+
+    /**
+     * Compile a string context.
+     *
+     * @param context The string context.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compile(StringContext context) throws CompilationException {
         // create file context
         SassLibrary.Sass_Data_Context dataContext = null;
 
         try {
-            byte[] bytes = string.getBytes(charset);
-            Pointer memory = new Memory(bytes.length + 1);
-            memory.write(0, bytes, 0, bytes.length);
-            memory.setByte(bytes.length, (byte) 0);
-
-            // create context
-            dataContext = SASS.sass_make_data_context(memory);
-
-            // configure context
-            SassLibrary.Sass_Options libsassOptions = SASS.sass_data_context_get_options(dataContext);
-            configure(inputPath, outputPath, libsassOptions, options);
+            dataContext = contextFactory.create(context);
 
             // compile file
             SASS.sass_compile_data_context(dataContext);
 
             // check error status
-            SassLibrary.Sass_Context context = SASS.sass_data_context_get_context(dataContext);
-            checkErrorStatus(context);
+            SassLibrary.Sass_Context libsassContext = SASS.sass_data_context_get_context(dataContext);
+            checkErrorStatus(libsassContext);
 
-            return createOutput(context);
+            return createOutput(libsassContext);
         } finally {
             if (null != dataContext) {
                 // free context
@@ -133,71 +132,39 @@ public class Compiler {
      * @throws CompilationException If the compilation failed.
      */
     public Output compileFile(File inputPath, File outputPath, Options options) throws CompilationException {
+        FileContext context = new FileContext(inputPath, outputPath, options);
+        return compile(context);
+    }
+
+    /**
+     * Compile file.
+     *
+     * @param context The file context.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compile(FileContext context) throws CompilationException {
         // create file context
         SassLibrary.Sass_File_Context fileContext = null;
 
         try {
             // create context
-            fileContext = SASS.sass_make_file_context(inputPath.getAbsolutePath());
-
-            // configure context
-            SassLibrary.Sass_Options libsassOptions = SASS.sass_file_context_get_options(fileContext);
-            configure(inputPath, outputPath, libsassOptions, options);
+            fileContext = contextFactory.create(context);
 
             // compile file
             SASS.sass_compile_file_context(fileContext);
 
             // check error status
-            SassLibrary.Sass_Context context = SASS.sass_file_context_get_context(fileContext);
-            checkErrorStatus(context);
+            SassLibrary.Sass_Context libsassContext = SASS.sass_file_context_get_context(fileContext);
+            checkErrorStatus(libsassContext);
 
-            return createOutput(context);
+            return createOutput(libsassContext);
         } finally {
             if (null != fileContext) {
                 // free context
                 SASS.sass_delete_file_context(fileContext);
             }
         }
-    }
-
-    /**
-     * Configure sass.
-     *
-     * @param libsassOptions The libsass options.
-     * @param javaOptions    The java options.
-     */
-    private void configure(File inputPath, File outputPath, SassLibrary.Sass_Options libsassOptions, Options javaOptions) {
-        int    precision           = javaOptions.getPrecision();
-        int    outputStyle         = mapOutputStyle(javaOptions.getOutputStyle());
-        byte   sourceComments      = createBooleanByte(javaOptions.isSourceComments());
-        byte   sourceMapEmbed      = createBooleanByte(javaOptions.isSourceMapEmbed());
-        byte   sourceMapContents   = createBooleanByte(javaOptions.isSourceMapContents());
-        byte   omitSourceMapUrl    = createBooleanByte(javaOptions.isOmitSourceMapUrl());
-        byte   isIndentedSyntaxSrc = createBooleanByte(javaOptions.isIndentedSyntaxSrc());
-        String inputPathString     = null == inputPath ? "" : inputPath.getAbsolutePath();
-        String outputPathString    = null == outputPath ? "" : outputPath.getAbsolutePath();
-        String imagePath           = javaOptions.getImageUrl();
-        String includePaths        = joinFilePaths(javaOptions.getIncludePaths());
-        String sourceMapFile = null == javaOptions.getSourceMapFile()
-                ? ""
-                : javaOptions.getSourceMapFile().getAbsolutePath();
-        SassLibrary.Sass_C_Function_List functions = createFunctions(javaOptions.getFunctionProviders());
-        // TODO sass_option_set_importer
-
-        SASS.sass_option_set_precision(libsassOptions, precision);
-        SASS.sass_option_set_output_style(libsassOptions, outputStyle);
-        SASS.sass_option_set_source_comments(libsassOptions, sourceComments);
-        SASS.sass_option_set_source_map_embed(libsassOptions, sourceMapEmbed);
-        SASS.sass_option_set_source_map_contents(libsassOptions, sourceMapContents);
-        SASS.sass_option_set_omit_source_map_url(libsassOptions, omitSourceMapUrl);
-        SASS.sass_option_set_is_indented_syntax_src(libsassOptions, isIndentedSyntaxSrc);
-        SASS.sass_option_set_input_path(libsassOptions, inputPathString);
-        SASS.sass_option_set_output_path(libsassOptions, outputPathString);
-        SASS.sass_option_set_image_path(libsassOptions, imagePath);
-        SASS.sass_option_set_include_path(libsassOptions, includePaths);
-        SASS.sass_option_set_source_map_file(libsassOptions, sourceMapFile);
-        SASS.sass_option_set_c_functions(libsassOptions, functions);
-        // TODO sass_option_set_importer
     }
 
     /**
@@ -230,64 +197,4 @@ public class Compiler {
         return new Output(css, sourceMap);
     }
 
-    /**
-     * Map java output style to native libsass output style.
-     *
-     * @param outputStyle The java output style.
-     * @return The native libsass output style.
-     */
-    private int mapOutputStyle(OutputStyle outputStyle) {
-        int result = SassLibrary.Sass_Output_Style.SASS_STYLE_NESTED;
-        switch (outputStyle) {
-            case EXPANDED:
-                result = SassLibrary.Sass_Output_Style.SASS_STYLE_EXPANDED;
-                break;
-            case COMPACT:
-                result = SassLibrary.Sass_Output_Style.SASS_STYLE_COMPACT;
-                break;
-            case COMPRESSED:
-                result = SassLibrary.Sass_Output_Style.SASS_STYLE_COMPRESSED;
-                break;
-        }
-        return result;
-    }
-
-    /**
-     * Create a string pointer from a file list, using the absolute paths and OS dependent separator char.
-     *
-     * @param list The file list.
-     * @return Pointer to list of absolute paths.
-     */
-    private String joinFilePaths(List<File> list) {
-        if (null == list || list.isEmpty()) {
-            return "";
-        }
-
-        String        separator = File.pathSeparator;
-        StringBuilder string    = new StringBuilder();
-
-        for (File file : list) {
-            string.append(separator).append(file.getAbsolutePath());
-        }
-
-        return string.substring(1);
-    }
-
-    private SassLibrary.Sass_C_Function_List createFunctions(List<?> functionProviders) {
-        FunctionCallbackFactory functionCallbackFactory = new FunctionCallbackFactory(SASS);
-
-        List<SassLibrary.Sass_C_Function_Callback> callbacks = functionCallbackFactory.compileFunctions(functionProviders);
-
-        return functionCallbackFactory.toSassCFunctionList(callbacks);
-    }
-
-    /**
-     * Create native byte boolean.
-     *
-     * @param bool The boolean value.
-     * @return <em>1</em> for <em>true</em> input, otherwise <em>0</em>.
-     */
-    private byte createBooleanByte(boolean bool) {
-        return bool ? (byte) 1 : 0;
-    }
 }
