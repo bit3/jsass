@@ -9,6 +9,7 @@ import de.bit3.jsass.function.FunctionCallbackFactory;
 import sass.SassLibrary;
 
 import java.io.File;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -42,12 +43,14 @@ public class ContextFactory {
         Options options    = context.getOptions();
 
         byte[]  bytes  = string.getBytes(charset);
-        Pointer memory = new Memory(bytes.length + 1);
+        Memory memory = new Memory(bytes.length + 1);
         memory.write(0, bytes, 0, bytes.length);
         memory.setByte(bytes.length, (byte) 0);
 
+        ByteBuffer buffer = memory.getByteBuffer(0, memory.size());
+
         // create context
-        SassLibrary.Sass_Data_Context dataContext = SASS.sass_make_data_context(memory);
+        SassLibrary.Sass_Data_Context dataContext = SASS.sass_make_data_context(buffer);
 
         // configure context
         SassLibrary.Sass_Options libsassOptions = SASS.sass_data_context_get_options(dataContext);
