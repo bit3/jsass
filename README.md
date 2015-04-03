@@ -9,7 +9,7 @@ Feature complete java sass compiler using [libsass][libsass] version 3.1.
 
 The most advantage of jsass is to hide the libsass complexity from the developer and provide a more java like way.
 
-For complete documentation, see [jsass-docs.rtfd.org](http://jsass-docs.rtfd.org/)
+For complete documentation, see [jsass.rtfd.org](http://jsass.rtfd.org/)
 
 Basic usage example
 -------------------
