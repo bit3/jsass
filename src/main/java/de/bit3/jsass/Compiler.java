@@ -20,6 +20,65 @@ public class Compiler {
     private SassLibrary SASS = (SassLibrary) Native.loadLibrary("sass", SassLibrary.class);
 
     /**
+     * The default charset that is used for compiling strings.
+     */
+    private Charset charset = Charsets.UTF_8;
+
+    /**
+     * Create new compiler.
+     */
+    public Compiler() {
+    }
+
+    /**
+     * Create new compiler.
+     *
+     * @param charset The default charset that is used for compiling strings.
+     */
+    public Compiler(Charset charset) {
+        this.charset = charset;
+    }
+
+    /**
+     * Compile string.
+     *
+     * @param string  The input string.
+     * @param options The compile options.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compileString(String string, Options options) throws CompilationException {
+        return compileString(string, charset, null, null, options);
+    }
+
+    /**
+     * Compile string.
+     *
+     * @param string  The input string.
+     * @param charset The charset of the input string.
+     * @param options The compile options.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compileString(String string, Charset charset, Options options) throws CompilationException {
+        return compileString(string, charset, null, null, options);
+    }
+
+    /**
+     * Compile string.
+     *
+     * @param string     The input string.
+     * @param inputPath  The input path.
+     * @param outputPath The output path.
+     * @param options    The compile options.
+     * @return The compilation output.
+     * @throws CompilationException If the compilation failed.
+     */
+    public Output compileString(String string, File inputPath, File outputPath, Options options) throws CompilationException {
+        return compileString(string, charset, inputPath, outputPath, options);
+    }
+
+    /**
      * Compile string.
      *
      * @param string     The input string.
