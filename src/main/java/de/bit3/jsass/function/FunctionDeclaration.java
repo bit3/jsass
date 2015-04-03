@@ -1,9 +1,9 @@
-package de.bit3.jsass;
+package de.bit3.jsass.function;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
-class FunctionDeclaration {
+public class FunctionDeclaration {
     public static final String DEFAULT_VALUE_INDICATOR = "JAVA_RUNTIME_DEFAULT_VALUE";
 
     protected final String     signature;

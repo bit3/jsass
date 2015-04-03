@@ -3,6 +3,7 @@ package de.bit3.jsass;
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import de.bit3.jsass.function.FunctionCallbackFactory;
 import org.apache.commons.io.Charsets;
 import sass.SassLibrary;
 

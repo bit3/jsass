@@ -1,11 +1,12 @@
-package de.bit3.jsass;
+package de.bit3.jsass.function;
 
 import com.sun.jna.Pointer;
+import de.bit3.jsass.CompilationException;
 import de.bit3.jsass.type.SassList;
 import de.bit3.jsass.type.TypeUtils;
 import sass.SassLibrary;
 
-class FunctionWrapper implements SassLibrary.Sass_C_Function {
+public class FunctionWrapper implements SassLibrary.Sass_C_Function {
     /**
      * SASS library adapter.
      */

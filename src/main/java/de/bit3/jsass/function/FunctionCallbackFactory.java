@@ -1,6 +1,7 @@
-package de.bit3.jsass;
+package de.bit3.jsass.function;
 
 import com.ochafik.lang.jnaerator.runtime.NativeSize;
+import de.bit3.jsass.Name;
 import de.bit3.jsass.annotation.*;
 import sass.SassLibrary;
 
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-class FunctionCallbackFactory {
+public class FunctionCallbackFactory {
     /**
      * SASS library adapter.
      */
