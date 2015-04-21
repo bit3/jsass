@@ -8,7 +8,45 @@
     <packaging>jar</packaging>
 
     <name>jsass</name>
-    <url>http://maven.apache.org</url>
+    <description>SASS compiler using libsass.</description>
+    <url>https://github.com/bit3/jsass</url>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://raw.githubusercontent.com/bit3/jsass/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>bit3</name>
+        <url>http://bit3.io</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Tristan Lins</name>
+            <email>tristan@lins.io</email>
+            <url>https://tristan.lins.io</url>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <url>https://github.com/bit3/jsass/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
+
+    <ciManagement>
+        <system>travis</system>
+        <url>https://travis-ci.org/bit3/jsass</url>
+    </ciManagement>
+
+    <scm>
+        <connection>scm:git:https://github.com/bit3/jsass.git</connection>
+        <developerConnection>scm:git:git@github.com:bit3/jsass.git</developerConnection>
+        <tag>master</tag>
+        <url>https://github.com/bit3/jsass</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
