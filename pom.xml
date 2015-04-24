@@ -164,6 +164,7 @@
                     </dependencies>
                     <configuration>
                         <configLocation>src/main/resources/checkstyle/google_checks.xml</configLocation>
+                        <logViolationsToConsole>true</logViolationsToConsole>
                     </configuration>
                 </plugin>
             </plugins>
