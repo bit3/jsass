@@ -4,26 +4,63 @@ import de.bit3.jsass.Options;
 
 import java.io.File;
 
+/**
+ * Abstract context that contain all shared informations for each context.
+ */
 public class AbstractContext implements Context {
-    private final File    inputPath;
-    private final File    outputPath;
-    private final Options options;
 
-    public AbstractContext(File inputPath, File outputPath, Options options) {
-        this.inputPath = inputPath;
-        this.outputPath = outputPath;
-        this.options = options;
-    }
+  /**
+   * The input file path.
+   */
+  private final File inputPath;
 
-    public File getInputPath() {
-        return inputPath;
-    }
+  /**
+   * The output file path.
+   */
+  private final File outputPath;
 
-    public File getOutputPath() {
-        return outputPath;
-    }
+  /**
+   * The compiler options.
+   */
+  private final Options options;
 
-    public Options getOptions() {
-        return options;
-    }
+  /**
+   * Initialize the context with input path, output path and options.
+   *
+   * @param inputPath  The input file path.
+   * @param outputPath The output file path.
+   * @param options    The compiler options.
+   */
+  public AbstractContext(File inputPath, File outputPath, Options options) {
+    this.inputPath = inputPath;
+    this.outputPath = outputPath;
+    this.options = options;
+  }
+
+  /**
+   * Return the input file path.
+   *
+   * @return The input file path or <em>null</em> if no path is specified.
+   */
+  public File getInputPath() {
+    return inputPath;
+  }
+
+  /**
+   * Return the output file path.
+   *
+   * @return The output file path or <em>null</em> if no path is specified.
+   */
+  public File getOutputPath() {
+    return outputPath;
+  }
+
+  /**
+   * Return the compiler options.
+   *
+   * @return The compiler options.
+   */
+  public Options getOptions() {
+    return options;
+  }
 }

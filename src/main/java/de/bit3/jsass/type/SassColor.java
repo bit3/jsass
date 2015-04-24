@@ -1,61 +1,141 @@
 package de.bit3.jsass.type;
 
+/**
+ * A sass color value.
+ */
 public class SassColor {
-    private double red = 0;
-    private double green = 0;
-    private double blue = 0;
-    private double alpha = 1;
 
-    public SassColor() {
-    }
+  /**
+   * The red value, between 0.0 and 1.0.
+   */
+  private double red = 0;
 
-    public SassColor(double red, double green, double blue) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-    }
+  /**
+   * The green value, between 0.0 and 1.0.
+   */
+  private double green = 0;
 
-    public SassColor(double red, double green, double blue, double alpha) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-        this.alpha = alpha;
-    }
+  /**
+   * The blue value, between 0.0 and 1.0.
+   */
+  private double blue = 0;
 
-    public double getRed() {
-        return red;
-    }
+  /**
+   * The alpha value, between 0.0 and 1.0.
+   */
+  private double alpha = 0;
 
-    public void setRed(double red) {
-        this.red = red;
-    }
+  /**
+   * Create an empty (black and full transparent) color.
+   */
+  public SassColor() {
+  }
 
-    public double getGreen() {
-        return green;
-    }
+  /**
+   * Create a RGB color.
+   *
+   * @param red The red value, between 0.0 and 1.0.
+   * @param green The green value, between 0.0 and 1.0.
+   * @param blue The blue value, between 0.0 and 1.0.
+   */
+  public SassColor(double red, double green, double blue) {
+    this(red, green, blue, 1);
+  }
 
-    public void setGreen(double green) {
-        this.green = green;
-    }
+  /**
+   * Create a RGB color.
+   *
+   * @param red The red value, between 0.0 and 1.0.
+   * @param green The green value, between 0.0 and 1.0.
+   * @param blue The blue value, between 0.0 and 1.0.
+   * @param alpha The alpha value, between 0.0 and 1.0.
+   */
+  public SassColor(double red, double green, double blue, double alpha) {
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
+    this.alpha = alpha;
+  }
 
-    public double getBlue() {
-        return blue;
-    }
+  /**
+   * Return the red value.
+   *
+   * @return The red value, between 0.0 and 1.0.
+   */
+  public double getRed() {
+    return red;
+  }
 
-    public void setBlue(double blue) {
-        this.blue = blue;
-    }
+  /**
+   * Set the red value.
+   *
+   * @param red The red value, between 0.0 and 1.0.
+   */
+  public void setRed(double red) {
+    this.red = red;
+  }
 
-    public double getAlpha() {
-        return alpha;
-    }
+  /**
+   * Return the green value.
+   *
+   * @return The green value, between 0.0 and 1.0.
+   */
+  public double getGreen() {
+    return green;
+  }
 
-    public void setAlpha(double alpha) {
-        this.alpha = alpha;
-    }
+  /**
+   * Set the green value.
+   *
+   * @param green The green value, between 0.0 and 1.0.
+   */
+  public void setGreen(double green) {
+    this.green = green;
+  }
 
-    @Override
-    public String toString() {
-        return String.format("rgba(%f,%f,%f,%f)", red, green, blue, alpha);
-    }
+  /**
+   * Return the blue value.
+   *
+   * @return The blue value, between 0.0 and 1.0.
+   */
+  public double getBlue() {
+    return blue;
+  }
+
+  /**
+   * Set the blue value.
+   *
+   * @param blue The blue value, between 0.0 and 1.0.
+   */
+  public void setBlue(double blue) {
+    this.blue = blue;
+  }
+
+  /**
+   * Return the alpha value.
+   *
+   * @return The alpha value, between 0.0 and 1.0.
+   */
+  public double getAlpha() {
+    return alpha;
+  }
+
+  /**
+   * Set the alpha value.
+   *
+   * @param alpha The alpha value, between 0.0 and 1.0.
+   */
+  public void setAlpha(double alpha) {
+    this.alpha = alpha;
+  }
+
+  /**
+   * Return a libsass compatible rgba(r,g,b,a) string representation.
+   *
+   * @return A libsass compatible rgba(r,g,b,a) string representation.
+   */
+  @Override
+  public String toString() {
+    return String.format("rgba(%f,%f,%f,%f)", red, green, blue, alpha);
+  }
 }

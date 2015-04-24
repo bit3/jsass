@@ -1,43 +1,58 @@
 package de.bit3.jsass.function;
 
 import com.sun.jna.Pointer;
+
 import de.bit3.jsass.CompilationException;
 import de.bit3.jsass.type.SassList;
 import de.bit3.jsass.type.TypeUtils;
+
 import sass.SassLibrary;
 
+/**
+ * Wraps a java function as libsass function and pass the arguments through.
+ */
 public class FunctionWrapper implements SassLibrary.Sass_C_Function {
-    /**
-     * SASS library adapter.
-     */
-    private final SassLibrary SASS;
 
-    private final FunctionDeclaration declaration;
+  /**
+   * SASS library adapter.
+   */
+  private final SassLibrary sass;
 
-    public FunctionWrapper(SassLibrary SASS, FunctionDeclaration declaration) {
-        this.SASS = SASS;
-        this.declaration = declaration;
+  /**
+   * The original function declaration, that is created by the factory.
+   */
+  private final FunctionDeclaration declaration;
+
+  /**
+   * Create a new wrapper for the given function.
+   *
+   * @param sass        The libsass adapter.
+   * @param declaration The function declaration.
+   */
+  public FunctionWrapper(SassLibrary sass, FunctionDeclaration declaration) {
+    this.sass = sass;
+    this.declaration = declaration;
+  }
+
+  @Override
+  public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cookie) {
+    try {
+      Object decodedValue = TypeUtils.decodeValue(sass, value);
+      SassList sassList;
+
+      if (decodedValue instanceof SassList) {
+        sassList = (SassList) decodedValue;
+      } else {
+        sassList = new SassList();
+        sassList.add(decodedValue);
+      }
+
+      Object result = declaration.invoke(sassList);
+
+      return TypeUtils.encodeValue(sass, result);
+    } catch (CompilationException e) {
+      throw new RuntimeException(e);
     }
-
-    @Override
-    public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cookie) {
-        try {
-            Object decodedValue = TypeUtils.decodeValue(SASS, value);
-            SassList sassList;
-
-            if (decodedValue instanceof SassList) {
-                sassList = (SassList)decodedValue;
-            } else {
-                sassList = new SassList();
-                sassList.add(decodedValue);
-            }
-
-            Object result = declaration.invoke(sassList);
-
-            return TypeUtils.encodeValue(SASS, result);
-        } catch (CompilationException e) {
-            throw new RuntimeException(e);
-        }
-    }
+  }
 }
 

@@ -1,12 +1,12 @@
 package de.bit3.jsass;
 
 public enum Separator {
-    COMMA(','),
-    SPACE(' ');
+  COMMA(','),
+  SPACE(' ');
 
-    public final char character;
+  public final char character;
 
-    Separator(char character) {
-        this.character = character;
-    }
+  Separator(char character) {
+    this.character = character;
+  }
 }

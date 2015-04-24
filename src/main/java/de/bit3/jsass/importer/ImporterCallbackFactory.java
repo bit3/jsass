@@ -5,24 +5,43 @@ import sass.SassLibrary;
 
 import java.util.Collection;
 
+/**
+ * Factory to create a libsass importer callback.
+ */
 public class ImporterCallbackFactory {
-    /**
-     * SASS library adapter.
-     */
-    private final SassLibrary SASS;
 
-    public ImporterCallbackFactory(SassLibrary SASS) {
-        this.SASS = SASS;
-    }
+  /**
+   * SASS library adapter.
+   */
+  private final SassLibrary sass;
 
-    public SassLibrary.Sass_C_Import_Callback create(
-            Context originalContext,
-            Collection<Importer> importers
-    ) {
-        Importer chain = new ChainImporter(importers);
+  /**
+   * Create a new factory.
+   *
+   * @param sass The SASS library adapter.
+   */
+  public ImporterCallbackFactory(SassLibrary sass) {
+    this.sass = sass;
+  }
 
-        ImporterWrapper wrapper = new ImporterWrapper(SASS, originalContext, chain);
+  /**
+   * Create a new callback for a list of importers.
+   *
+   * <p>Wraps a list of custom importers into one chain importer and create one libsass importer
+   * callback for this chain.</p>
+   *
+   * @param originalContext The original context that will be compiled.
+   * @param importers       The list of custom importers.
+   * @return The newly created libsass import callback.
+   */
+  public SassLibrary.Sass_C_Import_Callback create(
+      Context originalContext,
+      Collection<Importer> importers
+  ) {
+    Importer chain = new ChainImporter(importers);
 
-        return SASS.sass_make_importer(wrapper, null);
-    }
+    ImporterWrapper wrapper = new ImporterWrapper(sass, originalContext, chain);
+
+    return sass.sass_make_importer(wrapper, null);
+  }
 }

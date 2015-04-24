@@ -8,5 +8,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
 public @interface Name {
-    String value();
+
+  /**
+   * The parameter name.
+   *
+   * <p>Defines the parameter name used in the sass language for named parameters.</p>
+   */
+  String value();
 }

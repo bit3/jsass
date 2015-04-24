@@ -1,23 +1,23 @@
 package de.bit3.jsass;
 
 public enum OutputStyle {
-    /**
-     * Nested style.
-     */
-    NESTED,
+  /**
+   * Nested style.
+   */
+  NESTED,
 
-    /**
-     * Expanded style.
-     */
-    EXPANDED,
+  /**
+   * Expanded style.
+   */
+  EXPANDED,
 
-    /**
-     * Compact style.
-     */
-    COMPACT,
+  /**
+   * Compact style.
+   */
+  COMPACT,
 
-    /**
-     * Compressed style.
-     */
-    COMPRESSED
+  /**
+   * Compressed style.
+   */
+  COMPRESSED
 }

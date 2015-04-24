@@ -8,5 +8,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
 public @interface DefaultShortValue {
-    short value();
+
+  /**
+   * The default value.
+   */
+  short value();
 }

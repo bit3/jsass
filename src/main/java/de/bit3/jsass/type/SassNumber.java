@@ -1,52 +1,89 @@
 package de.bit3.jsass.type;
 
+/**
+ * A sass number value.
+ */
 public class SassNumber extends Number {
-    private double value;
-    private String unit;
 
-    public SassNumber(double value, String unit) {
-        this.value = value;
-        this.unit = unit;
-    }
+  /**
+   * The numeric value.
+   */
+  private double value;
 
-    public double getValue() {
-        return value;
-    }
+  /**
+   * The unit.
+   */
+  private String unit;
 
-    public void setValue(double value) {
-        this.value = value;
-    }
+  /**
+   * Create a new number.
+   *
+   * @param value The numeric value.
+   * @param unit The unit.
+   */
+  public SassNumber(double value, String unit) {
+    this.value = value;
+    this.unit = unit;
+  }
 
-    public String getUnit() {
-        return unit;
-    }
+  /**
+   * Return the numeric value.
+   *
+   * @return The numeric value.
+   */
+  public double getValue() {
+    return value;
+  }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
+  /**
+   * Set the numeric value.
+   *
+   * @param value The numeric value.
+   */
+  public void setValue(double value) {
+    this.value = value;
+  }
 
-    @Override
-    public int intValue() {
-        return (int) value;
-    }
+  /**
+   * Return the unit.
+   *
+   * @return The unit.
+   */
+  public String getUnit() {
+    return unit;
+  }
 
-    @Override
-    public long longValue() {
-        return (long) value;
-    }
+  /**
+   * Set the unit.
+   *
+   * @param unit The unit.
+   */
+  public void setUnit(String unit) {
+    this.unit = unit;
+  }
 
-    @Override
-    public float floatValue() {
-        return (float) value;
-    }
+  @Override
+  public int intValue() {
+    return (int) value;
+  }
 
-    @Override
-    public double doubleValue() {
-        return value;
-    }
+  @Override
+  public long longValue() {
+    return (long) value;
+  }
 
-    @Override
-    public String toString() {
-        return super.toString() + unit;
-    }
+  @Override
+  public float floatValue() {
+    return (float) value;
+  }
+
+  @Override
+  public double doubleValue() {
+    return value;
+  }
+
+  @Override
+  public String toString() {
+    return super.toString() + unit;
+  }
 }

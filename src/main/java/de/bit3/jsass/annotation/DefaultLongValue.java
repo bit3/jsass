@@ -8,5 +8,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
 public @interface DefaultLongValue {
-    long value();
+
+  /**
+   * The default value.
+   */
+  long value();
 }

@@ -1,36 +1,40 @@
 package de.bit3.jsass;
 
+/**
+ * The SASS compilation output.
+ */
 public class Output {
-    /**
-     * The css output.
-     */
-    private String css;
 
-    /**
-     * The source map output;
-     */
-    private String sourceMap;
+  /**
+   * The css output.
+   */
+  private String css;
 
-    public Output(String css, String sourceMap) {
-        this.css = css;
-        this.sourceMap = sourceMap;
-    }
+  /**
+   * The source map output.
+   */
+  private String sourceMap;
 
-    /**
-     * Get the css output.
-     *
-     * @return The css output.
-     */
-    public String getCss() {
-        return css;
-    }
+  public Output(String css, String sourceMap) {
+    this.css = css;
+    this.sourceMap = sourceMap;
+  }
 
-    /**
-     * Get the source map output.
-     *
-     * @return The source map output.
-     */
-    public String getSourceMap() {
-        return sourceMap;
-    }
+  /**
+   * Get the css output.
+   *
+   * @return The css output.
+   */
+  public String getCss() {
+    return css;
+  }
+
+  /**
+   * Get the source map output.
+   *
+   * @return The source map output.
+   */
+  public String getSourceMap() {
+    return sourceMap;
+  }
 }
