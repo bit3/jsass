@@ -37,29 +37,17 @@ public class AbstractContext implements Context {
     this.options = options;
   }
 
-  /**
-   * Return the input file path.
-   *
-   * @return The input file path or <em>null</em> if no path is specified.
-   */
+  @Override
   public File getInputPath() {
     return inputPath;
   }
 
-  /**
-   * Return the output file path.
-   *
-   * @return The output file path or <em>null</em> if no path is specified.
-   */
+  @Override
   public File getOutputPath() {
     return outputPath;
   }
 
-  /**
-   * Return the compiler options.
-   *
-   * @return The compiler options.
-   */
+  @Override
   public Options getOptions() {
     return options;
   }

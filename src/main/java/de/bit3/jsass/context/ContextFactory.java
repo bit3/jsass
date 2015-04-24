@@ -7,6 +7,9 @@ import de.bit3.jsass.function.FunctionCallbackFactory;
 import de.bit3.jsass.importer.Importer;
 import de.bit3.jsass.importer.ImporterCallbackFactory;
 import sass.SassLibrary;
+import sass.SassLibrary.Sass_Data_Context;
+import sass.SassLibrary.Sass_File_Context;
+import sass.SassLibrary.Sass_Options;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -39,19 +42,17 @@ public class ContextFactory {
    * @param context The jsass file context.
    * @return The newly created libsass file context.
    */
-  public SassLibrary.Sass_File_Context create(FileContext context) {
+  public Sass_File_Context create(FileContext context) {
     File inputPath = context.getInputPath();
-    File outputPath = context.getOutputPath();
-    Options options = context.getOptions();
 
     // create context
-    SassLibrary.Sass_File_Context
+    Sass_File_Context
         fileContext =
         sass.sass_make_file_context(inputPath.getAbsolutePath());
 
     // configure context
-    SassLibrary.Sass_Options libsassOptions = sass.sass_file_context_get_options(fileContext);
-    configure(context, inputPath, outputPath, libsassOptions, options);
+    Sass_Options libsassOptions = sass.sass_file_context_get_options(fileContext);
+    configure(context, libsassOptions);
 
     return fileContext;
   }
@@ -62,12 +63,9 @@ public class ContextFactory {
    * @param context The jsass string context.
    * @return The newly created libsass data context.
    */
-  public SassLibrary.Sass_Data_Context create(StringContext context) {
+  public Sass_Data_Context create(StringContext context) {
     String string = context.getString();
     Charset charset = context.getCharset();
-    File inputPath = context.getInputPath();
-    File outputPath = context.getOutputPath();
-    Options options = context.getOptions();
 
     byte[] bytes = string.getBytes(charset);
     Memory memory = new Memory(bytes.length + 1);
@@ -77,11 +75,11 @@ public class ContextFactory {
     ByteBuffer buffer = memory.getByteBuffer(0, memory.size());
 
     // create context
-    SassLibrary.Sass_Data_Context dataContext = sass.sass_make_data_context(buffer);
+    Sass_Data_Context dataContext = sass.sass_make_data_context(buffer);
 
     // configure context
-    SassLibrary.Sass_Options libsassOptions = sass.sass_data_context_get_options(dataContext);
-    configure(context, inputPath, outputPath, libsassOptions, options);
+    Sass_Options libsassOptions = sass.sass_data_context_get_options(dataContext);
+    configure(context, libsassOptions);
 
     return dataContext;
   }
@@ -89,11 +87,14 @@ public class ContextFactory {
   /**
    * Configure a libsass context with jsass options.
    *
+   * @param context        The compilation context.
    * @param libsassOptions The libsass options.
-   * @param javaOptions    The jsass options.
    */
-  private void configure(Context context, File inputPath, File outputPath,
-                         SassLibrary.Sass_Options libsassOptions, Options javaOptions) {
+  private void configure(Context context, Sass_Options libsassOptions) {
+    File inputPath = context.getInputPath();
+    File outputPath = context.getOutputPath();
+    Options javaOptions = context.getOptions();
+
     int precision = javaOptions.getPrecision();
     int outputStyle = mapOutputStyle(javaOptions.getOutputStyle());
     byte sourceComments = createBooleanByte(javaOptions.isSourceComments());
