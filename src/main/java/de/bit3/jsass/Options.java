@@ -72,10 +72,20 @@ public class Options {
    */
   private Collection<Importer> importers = new LinkedList<>();
 
+  /**
+   * Return the fractional numbers precision.
+   *
+   * @return The fractional numbers precision.
+   */
   public int getPrecision() {
     return precision;
   }
 
+  /**
+   * Set the fractional numbers precision.
+   *
+   * @param precision The fractional numbers precision.
+   */
   public void setPrecision(int precision) {
     this.precision = precision;
   }
