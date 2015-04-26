@@ -182,6 +182,7 @@
                     </dependencies>
                     <configuration>
                         <configLocation>src/main/resources/checkstyle/google_checks.xml</configLocation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         <logViolationsToConsole>true</logViolationsToConsole>
                     </configuration>
                 </plugin>
@@ -212,6 +213,7 @@
                 </reportSets>
                 <configuration>
                     <configLocation>src/main/resources/checkstyle/google_checks.xml</configLocation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
