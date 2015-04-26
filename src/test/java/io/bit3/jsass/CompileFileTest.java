@@ -126,8 +126,11 @@ public class CompileFileTest {
   @After
   public void tearDown() {
     if (null != targetDir && targetDir.exists()) {
-      for (File file : targetDir.listFiles()) {
-        file.delete();
+      File[] files = targetDir.listFiles();
+      if (null != files) {
+        for (File file : files) {
+          file.delete();
+        }
       }
 
       targetDir.delete();
