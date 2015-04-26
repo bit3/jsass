@@ -96,24 +96,24 @@ public class ContextFactory {
     URI outputPath = context.getOutputPath();
     Options javaOptions = context.getOptions();
 
-    int precision = javaOptions.getPrecision();
-    int outputStyle = mapOutputStyle(javaOptions.getOutputStyle());
-    byte sourceComments = createBooleanByte(javaOptions.isSourceComments());
-    byte sourceMapEmbed = createBooleanByte(javaOptions.isSourceMapEmbed());
-    byte sourceMapContents = createBooleanByte(javaOptions.isSourceMapContents());
-    byte omitSourceMapUrl = createBooleanByte(javaOptions.isOmitSourceMapUrl());
-    byte isIndentedSyntaxSrc = createBooleanByte(javaOptions.isIndentedSyntaxSrc());
-    String inputPathString = null == inputPath ? "" : inputPath.getAbsolutePath();
-    String outputPathString = null == outputPath ? "" : outputPath.getAbsolutePath();
-    String imagePath = javaOptions.getImageUrl();
-    String includePaths = joinFilePaths(javaOptions.getIncludePaths());
+    final int precision = javaOptions.getPrecision();
+    final int outputStyle = mapOutputStyle(javaOptions.getOutputStyle());
+    final byte sourceComments = createBooleanByte(javaOptions.isSourceComments());
+    final byte sourceMapEmbed = createBooleanByte(javaOptions.isSourceMapEmbed());
+    final byte sourceMapContents = createBooleanByte(javaOptions.isSourceMapContents());
+    final byte omitSourceMapUrl = createBooleanByte(javaOptions.isOmitSourceMapUrl());
+    final byte isIndentedSyntaxSrc = createBooleanByte(javaOptions.isIndentedSyntaxSrc());
+    String inputPathString = null == inputPath ? "" : inputPath.toString();
+    String outputPathString = null == outputPath ? "" : outputPath.toString();
+    final String imagePath = javaOptions.getImageUrl();
+    final String includePaths = joinFilePaths(javaOptions.getIncludePaths());
     String sourceMapFile = null == javaOptions.getSourceMapFile()
                            ? ""
-                           : javaOptions.getSourceMapFile().getAbsolutePath();
-    SassLibrary.Sass_C_Function_List
+                           : javaOptions.getSourceMapFile().toString();
+    final SassLibrary.Sass_C_Function_List
         functions =
         createFunctions(javaOptions.getFunctionProviders());
-    SassLibrary.Sass_C_Import_Callback
+    final SassLibrary.Sass_C_Import_Callback
         importer =
         createImporter(context, javaOptions.getImporters());
 
