@@ -152,7 +152,7 @@ public class CompileStringTest {
       );
 
       assertEquals(output.getCss(), expectedCssWithMapUrl);
-      assertNotNull((Object) output.getSourceMap());
+      assertNotNull(output.getSourceMap());
       assertFalse(targetCssFile.exists());
       assertFalse(targetSourceMapFile.exists());
     } catch (CompilationException exception) {
