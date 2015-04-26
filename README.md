@@ -20,9 +20,9 @@ Basic usage example
 Compiling a file is pretty simple, give an input file and an output file, the rest is just magic.
 
 ```java
-import de.bit3.jsass.CompilationException;
-import de.bit3.jsass.Compiler;
-import de.bit3.jsass.Options;
+import CompilationException;
+import Compiler;
+import Options;
 
 import java.io.File;
 
@@ -50,9 +50,9 @@ Providing an input file and output file is always a good idea. With this informa
 include path and calculate relative paths.
 
 ```java
-import de.bit3.jsass.CompilationException;
-import de.bit3.jsass.Compiler;
-import de.bit3.jsass.Options;
+import CompilationException;
+import Compiler;
+import Options;
 
 import java.io.File;
 
