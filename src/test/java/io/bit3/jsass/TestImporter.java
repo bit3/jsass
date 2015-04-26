@@ -24,6 +24,7 @@ public class TestImporter implements Importer {
       // Importers does not support SASS syntax, so we enforce scss here
       // String syntax = previous.substring(previous.length() - 4);
       String syntax = "scss";
+
       String resourcePath = String.format("/%s/src/include.%s", syntax, syntax);
       URL resource = getClass().getResource(resourcePath);
 

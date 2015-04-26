@@ -47,9 +47,7 @@ public class ContextFactory {
     URI inputPath = context.getInputPath();
 
     // create context
-    Sass_File_Context
-        fileContext =
-        sass.sass_make_file_context(inputPath.toString());
+    Sass_File_Context fileContext = sass.sass_make_file_context(inputPath.toString());
 
     // configure context
     Sass_Options libsassOptions = sass.sass_file_context_get_options(fileContext);
@@ -110,12 +108,13 @@ public class ContextFactory {
     String sourceMapFile = null == javaOptions.getSourceMapFile()
                            ? ""
                            : javaOptions.getSourceMapFile().toString();
-    final SassLibrary.Sass_C_Function_List
-        functions =
-        createFunctions(javaOptions.getFunctionProviders());
-    final SassLibrary.Sass_C_Import_Callback
-        importer =
-        createImporter(context, javaOptions.getImporters());
+    final SassLibrary.Sass_C_Function_List functions = createFunctions(
+        javaOptions.getFunctionProviders()
+    );
+    final SassLibrary.Sass_C_Import_Callback importer = createImporter(
+        context,
+        javaOptions.getImporters()
+    );
 
     // support for local file: URIs
     // when compiling in a data context, using protocol paths is absolutely valid,
@@ -203,9 +202,9 @@ public class ContextFactory {
   private SassLibrary.Sass_C_Function_List createFunctions(List<?> functionProviders) {
     FunctionCallbackFactory functionCallbackFactory = new FunctionCallbackFactory(sass);
 
-    List<SassLibrary.Sass_C_Function_Callback>
-        callbacks =
-        functionCallbackFactory.compileFunctions(functionProviders);
+    List<SassLibrary.Sass_C_Function_Callback> callbacks = functionCallbackFactory.compileFunctions(
+        functionProviders
+    );
 
     return functionCallbackFactory.toSassCFunctionList(callbacks);
   }

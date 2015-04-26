@@ -34,9 +34,9 @@ public class FunctionDeclaration {
    * Create a new function declaration.
    *
    * @param signature The libsass function signature.
-   * @param object The object instance to call the method on.
-   * @param method The method to call.
-   * @param types List of all parameter types.
+   * @param object    The object instance to call the method on.
+   * @param method    The method to call.
+   * @param types     List of all parameter types.
    */
   public FunctionDeclaration(String signature, Object object, Method method, Class<?>[] types) {
     this.signature = signature;
@@ -105,53 +105,53 @@ public class FunctionDeclaration {
       if (null != value && !targetType.isAssignableFrom(value.getClass())) {
         if (String.class.isAssignableFrom(targetType)) {
           value = value.toString();
-        } else if (Byte.class.isAssignableFrom(targetType) || byte.class
-            .isAssignableFrom(targetType)) {
+        } else if (Byte.class.isAssignableFrom(targetType)
+                   || byte.class.isAssignableFrom(targetType)) {
           if (value instanceof Number) {
             value = ((Number) value).byteValue();
           } else {
             value = Byte.parseByte(value.toString());
           }
-        } else if (Short.class.isAssignableFrom(targetType) || short.class
-            .isAssignableFrom(targetType)) {
+        } else if (Short.class.isAssignableFrom(targetType)
+                   || short.class.isAssignableFrom(targetType)) {
           if (value instanceof Number) {
             value = ((Number) value).shortValue();
           } else {
             value = Short.parseShort(value.toString());
           }
-        } else if (Integer.class.isAssignableFrom(targetType) || int.class
-            .isAssignableFrom(targetType)) {
+        } else if (Integer.class.isAssignableFrom(targetType)
+                   || int.class.isAssignableFrom(targetType)) {
           if (value instanceof Number) {
             value = ((Number) value).intValue();
           } else {
             value = Integer.parseInt(value.toString());
           }
-        } else if (Long.class.isAssignableFrom(targetType) || long.class
-            .isAssignableFrom(targetType)) {
+        } else if (Long.class.isAssignableFrom(targetType)
+                   || long.class.isAssignableFrom(targetType)) {
           if (value instanceof Number) {
             value = ((Number) value).longValue();
           } else {
             value = Long.parseLong(value.toString());
           }
-        } else if (Float.class.isAssignableFrom(targetType) || float.class
-            .isAssignableFrom(targetType)) {
+        } else if (Float.class.isAssignableFrom(targetType)
+                   || float.class.isAssignableFrom(targetType)) {
           if (value instanceof Number) {
             value = ((Number) value).floatValue();
           } else {
             value = Float.parseFloat(value.toString());
           }
-        } else if (Double.class.isAssignableFrom(targetType) || double.class
-            .isAssignableFrom(targetType)) {
+        } else if (Double.class.isAssignableFrom(targetType)
+                   || double.class.isAssignableFrom(targetType)) {
           if (value instanceof Number) {
             value = ((Number) value).doubleValue();
           } else {
             value = Double.parseDouble(value.toString());
           }
-        } else if (Boolean.class.isAssignableFrom(targetType) || boolean.class
-            .isAssignableFrom(targetType)) {
+        } else if (Boolean.class.isAssignableFrom(targetType)
+                   || boolean.class.isAssignableFrom(targetType)) {
           value = Boolean.valueOf(value.toString());
-        } else if (Character.class.isAssignableFrom(targetType) || char.class
-            .isAssignableFrom(targetType)) {
+        } else if (Character.class.isAssignableFrom(targetType)
+                   || char.class.isAssignableFrom(targetType)) {
           value = value.toString().charAt(0);
         } else {
           throw new RuntimeException(

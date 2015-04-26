@@ -105,14 +105,18 @@ public class CompileFileTest {
 
     final String outputStyle = this.outputStyle.toString().toLowerCase();
 
-    String
-        expectedCssWithoutMapPath =
-        String.format("/%s/%s/output-without-map.css", syntax, outputStyle);
+    String expectedCssWithoutMapPath = String.format(
+        "/%s/%s/output-without-map.css",
+        syntax,
+        outputStyle
+    );
     expectedCssWithoutMapUrl = getClass().getResource(expectedCssWithoutMapPath);
 
-    String
-        expectedCssWithMapPath =
-        String.format("/%s/%s/output-with-map.css", syntax, outputStyle);
+    String expectedCssWithMapPath = String.format(
+        "/%s/%s/output-with-map.css",
+        syntax,
+        outputStyle
+    );
     expectedCssWithMapUrl = getClass().getResource(expectedCssWithMapPath);
   }
 

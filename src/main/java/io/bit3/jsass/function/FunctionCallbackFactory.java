@@ -79,9 +79,11 @@ public class FunctionCallbackFactory {
 
     for (FunctionDeclaration declaration : declarations) {
       FunctionWrapper wrapper = new FunctionWrapper(sass, declaration);
-      SassLibrary.Sass_C_Function_Callback
-          callback =
-          sass.sass_make_function(declaration.signature, wrapper, null);
+      SassLibrary.Sass_C_Function_Callback callback = sass.sass_make_function(
+          declaration.signature,
+          wrapper,
+          null
+      );
 
       callbacks.add(callback);
     }
@@ -97,9 +99,11 @@ public class FunctionCallbackFactory {
    */
   public SassLibrary.Sass_C_Function_List toSassCFunctionList(
       List<SassLibrary.Sass_C_Function_Callback> callbacks) {
-    SassLibrary.Sass_C_Function_List
-        functionList =
-        sass.sass_make_function_list(new NativeSize(callbacks.size()));
+    SassLibrary.Sass_C_Function_List functionList = sass.sass_make_function_list(
+        new NativeSize(
+            callbacks.size()
+        )
+    );
 
     int index = 0;
     for (SassLibrary.Sass_C_Function_Callback callback : callbacks) {
@@ -235,9 +239,9 @@ public class FunctionCallbackFactory {
     }
 
     if (Character.class.isAssignableFrom(type) || char.class.isAssignableFrom(type)) {
-      DefaultCharacterValue
-          defaultCharacterValue =
-          parameter.getAnnotation(DefaultCharacterValue.class);
+      DefaultCharacterValue defaultCharacterValue = parameter.getAnnotation(
+          DefaultCharacterValue.class
+      );
 
       if (null != defaultCharacterValue) {
         return defaultCharacterValue.value();

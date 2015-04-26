@@ -206,8 +206,10 @@ public class TypeUtils {
       return encodeMap(sass, (Map<?, ?>) value);
     }
 
-    throw new CompilationException(-1, String
-        .format("Java object %s cannot be converted to SASS", value.getClass().getName()));
+    throw new CompilationException(
+        -1,
+        String.format("Java object %s cannot be converted to SASS", value.getClass().getName())
+    );
   }
 
   /**
@@ -310,9 +312,10 @@ public class TypeUtils {
       }
     }
 
-    SassLibrary.Sass_Value
-        value =
-        sass.sass_make_list(new NativeSize(list.size()), libsassSeparator);
+    SassLibrary.Sass_Value value = sass.sass_make_list(
+        new NativeSize(list.size()),
+        libsassSeparator
+    );
 
     int index = 0;
     for (Object item : list) {

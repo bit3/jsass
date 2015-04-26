@@ -45,9 +45,11 @@ public class ImporterWrapper implements SassLibrary.Sass_C_Import_Fn {
 
   @Override
   public PointerByReference apply(Pointer url, Pointer prev, Pointer cookie) {
-    Collection<Import>
-        imports =
-        importer.apply(url.getString(0), prev.getString(0), originalContext);
+    Collection<Import> imports = importer.apply(
+        url.getString(0),
+        prev.getString(0),
+        originalContext
+    );
 
     // return 0 to let libsass handle the import itself
     if (null == imports) {

@@ -101,14 +101,18 @@ public class CompileStringTest {
 
     final String outputStyle = this.outputStyle.toString().toLowerCase();
 
-    String
-        expectedCssWithoutMapPath =
-        String.format("/%s/%s/output-without-map.css", syntax, outputStyle);
+    String expectedCssWithoutMapPath = String.format(
+        "/%s/%s/output-without-map.css",
+        syntax,
+        outputStyle
+    );
     expectedCssWithoutMapUrl = getClass().getResource(expectedCssWithoutMapPath);
 
-    String
-        expectedCssWithMapPath =
-        String.format("/%s/%s/output-with-map.css", syntax, outputStyle);
+    String expectedCssWithMapPath = String.format(
+        "/%s/%s/output-with-map.css",
+        syntax,
+        outputStyle
+    );
     expectedCssWithMapUrl = getClass().getResource(expectedCssWithMapPath);
   }
 
@@ -117,9 +121,12 @@ public class CompileStringTest {
     try {
       options.setOutputStyle(outputStyle);
 
-      Output
-          output =
-          compiler.compileString(source, sourceFile.toURI(), targetCssFile.toURI(), options);
+      Output output = compiler.compileString(
+          source,
+          sourceFile.toURI(),
+          targetCssFile.toURI(),
+          options
+      );
 
       assertEquals(output.getCss(), expectedCssWithoutMapUrl);
       assertNull(output.getSourceMap());
@@ -137,9 +144,12 @@ public class CompileStringTest {
       options.setOutputStyle(outputStyle);
       options.setSourceMapFile(targetSourceMapFile.toURI());
 
-      Output
-          output =
-          compiler.compileString(source, sourceFile.toURI(), targetCssFile.toURI(), options);
+      Output output = compiler.compileString(
+          source,
+          sourceFile.toURI(),
+          targetCssFile.toURI(),
+          options
+      );
 
       assertEquals(output.getCss(), expectedCssWithMapUrl);
       assertNotNull((Object) output.getSourceMap());
