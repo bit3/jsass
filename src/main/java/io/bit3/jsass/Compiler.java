@@ -8,7 +8,7 @@ import io.bit3.jsass.context.StringContext;
 import org.apache.commons.io.Charsets;
 import sass.SassLibrary;
 
-import java.io.File;
+import java.net.URI;
 import java.nio.charset.Charset;
 
 /**
@@ -74,7 +74,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, File inputPath, File outputPath, Options options)
+  public Output compileString(String string, URI inputPath, URI outputPath, Options options)
       throws CompilationException {
     return compileString(string, defaultCharset, inputPath, outputPath, options);
   }
@@ -90,7 +90,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, Charset charset, File inputPath, File outputPath,
+  public Output compileString(String string, Charset charset, URI inputPath, URI outputPath,
                               Options options) throws CompilationException {
     StringContext context = new StringContext(string, charset, inputPath, outputPath, options);
 
@@ -106,7 +106,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileFile(File inputPath, File outputPath, Options options)
+  public Output compileFile(URI inputPath, URI outputPath, Options options)
       throws CompilationException {
     FileContext context = new FileContext(inputPath, outputPath, options);
     return compile(context);

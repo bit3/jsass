@@ -12,6 +12,7 @@ import sass.SassLibrary.Sass_File_Context;
 import sass.SassLibrary.Sass_Options;
 
 import java.io.File;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Collection;
@@ -43,12 +44,12 @@ public class ContextFactory {
    * @return The newly created libsass file context.
    */
   public Sass_File_Context create(FileContext context) {
-    File inputPath = context.getInputPath();
+    URI inputPath = context.getInputPath();
 
     // create context
     Sass_File_Context
         fileContext =
-        sass.sass_make_file_context(inputPath.getAbsolutePath());
+        sass.sass_make_file_context(inputPath.toString());
 
     // configure context
     Sass_Options libsassOptions = sass.sass_file_context_get_options(fileContext);
@@ -91,8 +92,8 @@ public class ContextFactory {
    * @param libsassOptions The libsass options.
    */
   private void configure(Context context, Sass_Options libsassOptions) {
-    File inputPath = context.getInputPath();
-    File outputPath = context.getOutputPath();
+    URI inputPath = context.getInputPath();
+    URI outputPath = context.getOutputPath();
     Options javaOptions = context.getOptions();
 
     int precision = javaOptions.getPrecision();
@@ -115,6 +116,13 @@ public class ContextFactory {
     SassLibrary.Sass_C_Import_Callback
         importer =
         createImporter(context, javaOptions.getImporters());
+
+    // support for local file: URIs
+    // when compiling in a data context, using protocol paths is absolutely valid,
+    // but not for local files!
+    inputPathString = inputPathString.replaceFirst("^file:", "");
+    outputPathString = outputPathString.replaceFirst("^file:", "");
+    sourceMapFile = sourceMapFile.replaceFirst("^file:", "");
 
     sass.sass_option_set_precision(libsassOptions, precision);
     sass.sass_option_set_output_style(libsassOptions, outputStyle);

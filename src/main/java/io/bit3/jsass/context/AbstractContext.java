@@ -2,7 +2,7 @@ package io.bit3.jsass.context;
 
 import io.bit3.jsass.Options;
 
-import java.io.File;
+import java.net.URI;
 
 /**
  * Abstract context that contain all shared informations for each context.
@@ -12,12 +12,12 @@ public class AbstractContext implements Context {
   /**
    * The input file path.
    */
-  private final File inputPath;
+  private final URI inputPath;
 
   /**
    * The output file path.
    */
-  private final File outputPath;
+  private final URI outputPath;
 
   /**
    * The compiler options.
@@ -31,19 +31,19 @@ public class AbstractContext implements Context {
    * @param outputPath The output file path.
    * @param options    The compiler options.
    */
-  public AbstractContext(File inputPath, File outputPath, Options options) {
+  public AbstractContext(URI inputPath, URI outputPath, Options options) {
     this.inputPath = inputPath;
     this.outputPath = outputPath;
     this.options = options;
   }
 
   @Override
-  public File getInputPath() {
+  public URI getInputPath() {
     return inputPath;
   }
 
   @Override
-  public File getOutputPath() {
+  public URI getOutputPath() {
     return outputPath;
   }
 

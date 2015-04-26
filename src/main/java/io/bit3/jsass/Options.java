@@ -3,6 +3,7 @@ package io.bit3.jsass;
 import io.bit3.jsass.importer.Importer;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class Options {
   /**
    * Path to source map file. Enables the source map generating. Used to create sourceMappingUrl.
    */
-  private File sourceMapFile;
+  private URI sourceMapFile;
 
   /**
    * Custom import functions.
@@ -199,7 +200,7 @@ public class Options {
    *
    * @return The source map file or <em>null</em> if no source map should generated.
    */
-  public File getSourceMapFile() {
+  public URI getSourceMapFile() {
     return sourceMapFile;
   }
 
@@ -208,7 +209,7 @@ public class Options {
    *
    * @param sourceMapFile The source map file or <em>null</em> to disable source map generation.
    */
-  public void setSourceMapFile(File sourceMapFile) {
+  public void setSourceMapFile(URI sourceMapFile) {
     this.sourceMapFile = sourceMapFile;
   }
 

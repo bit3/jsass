@@ -116,7 +116,7 @@ public class CompileFileTest {
         try {
             options.setOutputStyle(outputStyle);
 
-            Output output = compiler.compileFile(sourceFile, targetCssFile, options);
+            Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
             assertEquals(output.getCss(), expectedCssWithoutMapUrl);
         } catch (CompilationException exception) {
@@ -133,9 +133,9 @@ public class CompileFileTest {
 
         try {
             options.setOutputStyle(outputStyle);
-            options.setSourceMapFile(targetMapFile);
+            options.setSourceMapFile(targetMapFile.toURI());
 
-            Output output = compiler.compileFile(sourceFile, targetCssFile, options);
+            Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
             assertEquals(output.getCss(), expectedCssWithMapUrl);
             // assertEquals(output.getSourceMap(), expectedSourceMapUrl);

@@ -4,7 +4,7 @@ import io.bit3.jsass.Options;
 
 import org.apache.commons.io.Charsets;
 
-import java.io.File;
+import java.net.URI;
 import java.nio.charset.Charset;
 
 /**
@@ -30,7 +30,7 @@ public class StringContext extends AbstractContext {
    * @param outputPath The output path used for calculation path changes, or <em>null</em>.
    * @param options    The compiler options.
    */
-  public StringContext(String string, File inputPath, File outputPath, Options options) {
+  public StringContext(String string, URI inputPath, URI outputPath, Options options) {
     this(string, Charsets.UTF_8, inputPath, outputPath, options);
   }
 
@@ -43,7 +43,7 @@ public class StringContext extends AbstractContext {
    * @param outputPath The output path used for calculation path changes, or <em>null</em>.
    * @param options    The compiler options.
    */
-  public StringContext(String string, Charset charset, File inputPath, File outputPath,
+  public StringContext(String string, Charset charset, URI inputPath, URI outputPath,
                        Options options) {
     super(inputPath, outputPath, options);
     this.string = string;

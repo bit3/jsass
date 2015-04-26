@@ -2,7 +2,7 @@ package io.bit3.jsass.context;
 
 import io.bit3.jsass.Options;
 
-import java.io.File;
+import java.net.URI;
 
 public interface Context {
 
@@ -11,14 +11,14 @@ public interface Context {
    *
    * @return The input file path or <em>null</em> if no path is specified.
    */
-  File getInputPath();
+  URI getInputPath();
 
   /**
    * Return the output file path.
    *
    * @return The output file path or <em>null</em> if no path is specified.
    */
-  File getOutputPath();
+  URI getOutputPath();
 
   /**
    * Return the compiler options.

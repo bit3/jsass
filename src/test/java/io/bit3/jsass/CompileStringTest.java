@@ -91,7 +91,7 @@ public class CompileStringTest {
         try {
             options.setOutputStyle(outputStyle);
 
-            Output output = compiler.compileString(source, sourceFile, targetCssFile, options);
+            Output output = compiler.compileString(source, sourceFile.toURI(), targetCssFile.toURI(), options);
 
             assertEquals(output.getCss(), expectedCssWithoutMapUrl);
             assertNull(output.getSourceMap());
@@ -107,9 +107,9 @@ public class CompileStringTest {
     public void testWithMap() throws Exception {
         try {
             options.setOutputStyle(outputStyle);
-            options.setSourceMapFile(targetSourceMapFile);
+            options.setSourceMapFile(targetSourceMapFile.toURI());
 
-            Output output = compiler.compileString(source, sourceFile, targetCssFile, options);
+            Output output = compiler.compileString(source, sourceFile.toURI(), targetCssFile.toURI(), options);
 
             assertEquals(output.getCss(), expectedCssWithMapUrl);
             assertNotNull((Object) output.getSourceMap());

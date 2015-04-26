@@ -2,7 +2,7 @@ package io.bit3.jsass.context;
 
 import io.bit3.jsass.Options;
 
-import java.io.File;
+import java.net.URI;
 
 /**
  * A context to compile a file from the filesystem.
@@ -17,7 +17,7 @@ public class FileContext extends AbstractContext {
    *                   compilation.
    * @param options    The compiler options.
    */
-  public FileContext(File inputPath, File outputPath, Options options) {
+  public FileContext(URI inputPath, URI outputPath, Options options) {
     super(inputPath, outputPath, options);
   }
 }
