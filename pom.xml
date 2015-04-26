@@ -153,6 +153,7 @@
                 <version>3.4</version>
                 <configuration>
                     <printFailingErrors>true</printFailingErrors>
+                    <includeTests>true</includeTests>
                 </configuration>
                 <executions>
                     <execution>
@@ -220,6 +221,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.4</version>
+                <configuration>
+                    <includeTests>true</includeTests>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>

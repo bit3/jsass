@@ -31,13 +31,12 @@ public class CompileFileTest {
   private File targetSourceMapFile;
   private URL expectedCssWithoutMapUrl;
   private URL expectedCssWithMapUrl;
-  private URL expectedSourceMapUrl;
 
   /**
    * Create test running with specific syntax and output style.
    *
-   * @param syntax          The syntax (scss or sass).
-   * @param outputStyle     The output style.
+   * @param syntax      The syntax (scss or sass).
+   * @param outputStyle The output style.
    */
   public CompileFileTest(String syntax, OutputStyle outputStyle) {
     this.syntax = syntax;
@@ -115,11 +114,6 @@ public class CompileFileTest {
         expectedCssWithMapPath =
         String.format("/%s/%s/output-with-map.css", syntax, outputStyle);
     expectedCssWithMapUrl = getClass().getResource(expectedCssWithMapPath);
-
-    String
-        expectedSourceMapPath =
-        String.format("/%s/%s/output-with-map.css.map", syntax, outputStyle);
-    expectedSourceMapUrl = getClass().getResource(expectedSourceMapPath);
   }
 
   /**
@@ -165,7 +159,6 @@ public class CompileFileTest {
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
       assertEquals(output.getCss(), expectedCssWithMapUrl);
-      // assertEquals(output.getSourceMap(), expectedSourceMapUrl);
     } catch (CompilationException exception) {
       fail("Compilation failed: " + exception.getMessage());
     } finally {
