@@ -32,19 +32,19 @@ import Options;
 import java.io.File;
 
 public class App {
-    public static void main(String[] args) {
-        File inputFile = new File("stylesheet.scss");
-        File outputFile = new File("stylesheet.css");
-             
-        Compiler compiler = new Compiler();
-        Options options = new Options();
+  public static void main(String[] args) {
+    File inputFile = new File("stylesheet.scss");
+    File outputFile = new File("stylesheet.css");
 
-        try {
-            compiler.compileFile(inputFile, outputFile, options);
-        } catch (CompilationException e) {
-            e.printStackTrace();
-        }
+    Compiler compiler = new Compiler();
+    Options options = new Options();
+
+    try {
+      compiler.compileFile(inputFile, outputFile, options);
+    } catch (CompilationException e) {
+      e.printStackTrace();
     }
+  }
 }
 ```
 
@@ -62,20 +62,20 @@ import Options;
 import java.io.File;
 
 public class App {
-    public static void main(String[] args) {
-        String input = "body { color: red; }";
-        File inputFile = new File("stylesheet.scss");
-        File outputFile = new File("stylesheet.css");
+  public static void main(String[] args) {
+    String input = "body { color: red; }";
+    File inputFile = new File("stylesheet.scss");
+    File outputFile = new File("stylesheet.css");
 
-        Compiler compiler = new Compiler();
-        Options options = new Options();
+    Compiler compiler = new Compiler();
+    Options options = new Options();
 
-        try {
-            compiler.compileString(input, inputFile, outputFile, options);
-        } catch (CompilationException e) {
-            e.printStackTrace();
-        }
+    try {
+      compiler.compileString(input, inputFile, outputFile, options);
+    } catch (CompilationException e) {
+      e.printStackTrace();
     }
+  }
 }
 ```
 
