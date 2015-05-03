@@ -1,5 +1,6 @@
 package io.bit3.jsass.importer;
 
+import com.ochafik.lang.jnaerator.runtime.NativeSize;
 import io.bit3.jsass.context.Context;
 import sass.SassLibrary;
 
@@ -34,14 +35,23 @@ public class ImporterCallbackFactory {
    * @param importers       The list of custom importers.
    * @return The newly created libsass import callback.
    */
-  public SassLibrary.Sass_C_Import_Callback create(
+  public SassLibrary.Sass_Importer_List create(
       Context originalContext,
       Collection<Importer> importers
   ) {
-    Importer chain = new ChainImporter(importers);
+    SassLibrary.Sass_Importer_List list = sass.sass_make_importer_list(
+        new NativeSize(importers.size())
+    );
 
-    ImporterWrapper wrapper = new ImporterWrapper(sass, originalContext, chain);
+    int index = 0;
+    for (Importer importer : importers) {
+      ImporterWrapper wrapper = new ImporterWrapper(sass, originalContext, importer);
+      SassLibrary.Sass_Importer_Entry entry = sass.sass_make_importer(wrapper, 0, null);
 
-    return sass.sass_make_importer(wrapper, null);
+      sass.sass_importer_set_list_entry(list, new NativeSize(index), entry);
+      index++;
+    }
+
+    return list;
   }
 }

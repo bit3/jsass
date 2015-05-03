@@ -90,53 +90,81 @@ public class ContextFactory {
    * @param libsassOptions The libsass options.
    */
   private void configure(Context context, Sass_Options libsassOptions) {
-    URI inputPath = context.getInputPath();
-    URI outputPath = context.getOutputPath();
-    Options javaOptions = context.getOptions();
+    final Options javaOptions = context.getOptions();
 
-    final int precision = javaOptions.getPrecision();
-    final int outputStyle = mapOutputStyle(javaOptions.getOutputStyle());
-    final byte sourceComments = createBooleanByte(javaOptions.isSourceComments());
-    final byte sourceMapEmbed = createBooleanByte(javaOptions.isSourceMapEmbed());
-    final byte sourceMapContents = createBooleanByte(javaOptions.isSourceMapContents());
-    final byte omitSourceMapUrl = createBooleanByte(javaOptions.isOmitSourceMapUrl());
-    final byte isIndentedSyntaxSrc = createBooleanByte(javaOptions.isIndentedSyntaxSrc());
-    String inputPathString = null == inputPath ? "" : inputPath.toString();
-    String outputPathString = null == outputPath ? "" : outputPath.toString();
-    final String imagePath = javaOptions.getImageUrl();
-    final String includePaths = joinFilePaths(javaOptions.getIncludePaths());
-    String sourceMapFile = null == javaOptions.getSourceMapFile()
-                           ? ""
-                           : javaOptions.getSourceMapFile().toString();
-    final SassLibrary.Sass_C_Function_List functions = createFunctions(
+    // Note: support for local file URIs
+    // When compiling in a data context, using protocol paths is absolutely valid,
+    // but not for local files! That's why we remove the leading file: from local URIs.
+
+    final SassLibrary.Sass_Function_List functions = createFunctions(
         javaOptions.getFunctionProviders()
     );
-    final SassLibrary.Sass_C_Import_Callback importer = createImporter(
-        context,
-        javaOptions.getImporters()
-    );
-
-    // support for local file: URIs
-    // when compiling in a data context, using protocol paths is absolutely valid,
-    // but not for local files!
-    inputPathString = inputPathString.replaceFirst("^file:", "");
-    outputPathString = outputPathString.replaceFirst("^file:", "");
-    sourceMapFile = sourceMapFile.replaceFirst("^file:", "");
-
-    sass.sass_option_set_precision(libsassOptions, precision);
-    sass.sass_option_set_output_style(libsassOptions, outputStyle);
-    sass.sass_option_set_source_comments(libsassOptions, sourceComments);
-    sass.sass_option_set_source_map_embed(libsassOptions, sourceMapEmbed);
-    sass.sass_option_set_source_map_contents(libsassOptions, sourceMapContents);
-    sass.sass_option_set_omit_source_map_url(libsassOptions, omitSourceMapUrl);
-    sass.sass_option_set_is_indented_syntax_src(libsassOptions, isIndentedSyntaxSrc);
-    sass.sass_option_set_input_path(libsassOptions, inputPathString);
-    sass.sass_option_set_output_path(libsassOptions, outputPathString);
-    sass.sass_option_set_image_path(libsassOptions, imagePath);
-    sass.sass_option_set_include_path(libsassOptions, includePaths);
-    sass.sass_option_set_source_map_file(libsassOptions, sourceMapFile);
     sass.sass_option_set_c_functions(libsassOptions, functions);
-    sass.sass_option_set_importer(libsassOptions, importer);
+
+    final SassLibrary.Sass_Importer_List headers = createImporters(
+        context,
+        javaOptions.getHeaderImporters()
+    );
+    sass.sass_option_set_c_headers(libsassOptions, headers);
+
+    final SassLibrary.Sass_Importer_List importers = createImporters(
+            context,
+            javaOptions.getImporters()
+    );
+    sass.sass_option_set_c_importers(libsassOptions, importers);
+
+    final String includePaths = joinFilePaths(javaOptions.getIncludePaths());
+    sass.sass_option_set_include_path(libsassOptions, includePaths);
+
+    final String indent = javaOptions.getIndent();
+    sass.sass_option_set_indent(libsassOptions, indent);
+
+    final URI inputPath = context.getInputPath();
+    String inputPathString = null == inputPath ? "" : inputPath.toString();
+    inputPathString = inputPathString.replaceFirst("^file:", "");
+    sass.sass_option_set_input_path(libsassOptions, inputPathString);
+
+    final byte   isIndentedSyntaxSrc = createBooleanByte(javaOptions.isIndentedSyntaxSrc());
+    sass.sass_option_set_is_indented_syntax_src(libsassOptions, isIndentedSyntaxSrc);
+
+    final String linefeed = javaOptions.getLinefeed();
+    sass.sass_option_set_linefeed(libsassOptions, linefeed);
+
+    final byte omitSourceMapUrl = createBooleanByte(javaOptions.isOmitSourceMapUrl());
+    sass.sass_option_set_omit_source_map_url(libsassOptions, omitSourceMapUrl);
+
+    final URI outputPath = context.getOutputPath();
+    String outputPathString = null == outputPath ? "" : outputPath.toString();
+    outputPathString = outputPathString.replaceFirst("^file:", "");
+    sass.sass_option_set_output_path(libsassOptions, outputPathString);
+
+    final int outputStyle = mapOutputStyle(javaOptions.getOutputStyle());
+    sass.sass_option_set_output_style(libsassOptions, outputStyle);
+
+    String pluginPath = javaOptions.getPluginPath();
+    sass.sass_option_set_plugin_path(libsassOptions, pluginPath);
+
+    final int  precision      = javaOptions.getPrecision();
+    sass.sass_option_set_precision(libsassOptions, precision);
+
+    final byte sourceComments = createBooleanByte(javaOptions.isSourceComments());
+    sass.sass_option_set_source_comments(libsassOptions, sourceComments);
+
+    final byte sourceMapContents = createBooleanByte(javaOptions.isSourceMapContents());
+    sass.sass_option_set_source_map_contents(libsassOptions, sourceMapContents);
+
+    final byte sourceMapEmbed = createBooleanByte(javaOptions.isSourceMapEmbed());
+    sass.sass_option_set_source_map_embed(libsassOptions, sourceMapEmbed);
+
+    URI sourceMapFileUri = javaOptions.getSourceMapFile();
+    String sourceMapFile = null == sourceMapFileUri ? "" : sourceMapFileUri.toString();
+    sourceMapFile = sourceMapFile.replaceFirst("^file:", "");
+    sass.sass_option_set_source_map_file(libsassOptions, sourceMapFile);
+
+    URI sourceMapRootUri = javaOptions.getSourceMapRoot();
+    String sourceMapRoot = null == sourceMapRootUri ? "" : sourceMapRootUri.toString();
+    sourceMapRoot = sourceMapRoot.replaceFirst("^file:", "");
+    sass.sass_option_set_source_map_root(libsassOptions, sourceMapRoot);
   }
 
   /**
@@ -199,10 +227,10 @@ public class ContextFactory {
    * @param functionProviders A list of java objects.
    * @return The newly created libsass function list.
    */
-  private SassLibrary.Sass_C_Function_List createFunctions(List<?> functionProviders) {
+  private SassLibrary.Sass_Function_List createFunctions(List<?> functionProviders) {
     FunctionCallbackFactory functionCallbackFactory = new FunctionCallbackFactory(sass);
 
-    List<SassLibrary.Sass_C_Function_Callback> callbacks = functionCallbackFactory.compileFunctions(
+    List<SassLibrary.Sass_Function_Entry> callbacks = functionCallbackFactory.compileFunctions(
         functionProviders
     );
 
@@ -216,8 +244,8 @@ public class ContextFactory {
    * @param importers       A collection of importers.
    * @return The newly created libsass import callback.
    */
-  private SassLibrary.Sass_C_Import_Callback createImporter(Context originalContext,
-                                                            Collection<Importer> importers) {
+  private SassLibrary.Sass_Importer_List createImporters(Context originalContext,
+                                                          Collection<Importer> importers) {
     if (importers.isEmpty()) {
       return null;
     }

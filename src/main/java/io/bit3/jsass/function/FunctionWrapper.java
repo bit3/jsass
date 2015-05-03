@@ -5,13 +5,12 @@ import com.sun.jna.Pointer;
 import io.bit3.jsass.CompilationException;
 import io.bit3.jsass.type.SassList;
 import io.bit3.jsass.type.TypeUtils;
-
 import sass.SassLibrary;
 
 /**
  * Wraps a java function as libsass function and pass the arguments through.
  */
-public class FunctionWrapper implements SassLibrary.Sass_C_Function {
+public class FunctionWrapper implements SassLibrary.Sass_Function_Fn {
 
   /**
    * SASS library adapter.
@@ -35,7 +34,8 @@ public class FunctionWrapper implements SassLibrary.Sass_C_Function {
   }
 
   @Override
-  public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cookie) {
+  public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cb,
+                                      SassLibrary.Sass_Options options) {
     try {
       Object decodedValue = TypeUtils.decodeValue(sass, value);
       SassList sassList;

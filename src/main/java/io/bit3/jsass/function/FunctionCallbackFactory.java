@@ -41,11 +41,11 @@ public class FunctionCallbackFactory {
    * @param objects A list of "function provider" objects.
    * @return The newly created list of libsass callbacks.
    */
-  public List<SassLibrary.Sass_C_Function_Callback> compileFunctions(List<?> objects) {
-    List<SassLibrary.Sass_C_Function_Callback> callbacks = new LinkedList<>();
+  public List<SassLibrary.Sass_Function_Entry> compileFunctions(List<?> objects) {
+    List<SassLibrary.Sass_Function_Entry> callbacks = new LinkedList<>();
 
     for (Object object : objects) {
-      List<SassLibrary.Sass_C_Function_Callback> objectCallbacks = compileFunctions(object);
+      List<SassLibrary.Sass_Function_Entry> objectCallbacks = compileFunctions(object);
 
       callbacks.addAll(objectCallbacks);
     }
@@ -59,7 +59,7 @@ public class FunctionCallbackFactory {
    * @param object The "function provider" object.
    * @return The newly created list of libsass callbacks.
    */
-  public List<SassLibrary.Sass_C_Function_Callback> compileFunctions(Object object) {
+  public List<SassLibrary.Sass_Function_Entry> compileFunctions(Object object) {
     Class<?> functionClass = object.getClass();
     Method[] methods = functionClass.getDeclaredMethods();
     List<FunctionDeclaration> declarations = new LinkedList<>();
@@ -75,11 +75,11 @@ public class FunctionCallbackFactory {
       declarations.add(declaration);
     }
 
-    List<SassLibrary.Sass_C_Function_Callback> callbacks = new LinkedList<>();
+    List<SassLibrary.Sass_Function_Entry> callbacks = new LinkedList<>();
 
     for (FunctionDeclaration declaration : declarations) {
       FunctionWrapper wrapper = new FunctionWrapper(sass, declaration);
-      SassLibrary.Sass_C_Function_Callback callback = sass.sass_make_function(
+      SassLibrary.Sass_Function_Entry callback = sass.sass_make_function(
           declaration.signature,
           wrapper,
           null
@@ -97,16 +97,16 @@ public class FunctionCallbackFactory {
    * @param callbacks The java list of libsass function callbacks.
    * @return The newly created libsass function list.
    */
-  public SassLibrary.Sass_C_Function_List toSassCFunctionList(
-      List<SassLibrary.Sass_C_Function_Callback> callbacks) {
-    SassLibrary.Sass_C_Function_List functionList = sass.sass_make_function_list(
+  public SassLibrary.Sass_Function_List toSassCFunctionList(
+      List<SassLibrary.Sass_Function_Entry> callbacks) {
+    SassLibrary.Sass_Function_List functionList = sass.sass_make_function_list(
         new NativeSize(
             callbacks.size()
         )
     );
 
     int index = 0;
-    for (SassLibrary.Sass_C_Function_Callback callback : callbacks) {
+    for (SassLibrary.Sass_Function_Entry callback : callbacks) {
       sass.sass_function_set_list_entry(functionList, new NativeSize(index), callback);
       index++;
     }

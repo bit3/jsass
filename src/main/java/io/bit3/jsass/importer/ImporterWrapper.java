@@ -3,7 +3,6 @@ package io.bit3.jsass.importer;
 import com.ochafik.lang.jnaerator.runtime.NativeSize;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
-import com.sun.jna.ptr.PointerByReference;
 import io.bit3.jsass.context.Context;
 import sass.SassLibrary;
 
@@ -13,7 +12,7 @@ import java.util.Collection;
 /**
  * Wraps a java importer into a libsass import function.
  */
-public class ImporterWrapper implements SassLibrary.Sass_C_Import_Fn {
+public class ImporterWrapper implements SassLibrary.Sass_Importer_Fn {
 
   /**
    * SASS library adapter.
@@ -44,10 +43,16 @@ public class ImporterWrapper implements SassLibrary.Sass_C_Import_Fn {
   }
 
   @Override
-  public PointerByReference apply(Pointer url, Pointer prev, Pointer cookie) {
+  public SassLibrary.Sass_Import_List apply(Pointer url, Pointer cb,
+                                            SassLibrary.Sass_Compiler compiler) {
+    SassLibrary.Sass_Import_Entry lastImportEntry = sass.sass_compiler_get_last_import(compiler);
+    String previous = null == lastImportEntry
+        ? ""
+        : sass.sass_import_get_path(lastImportEntry);
+
     Collection<Import> imports = importer.apply(
         url.getString(0),
-        prev.getString(0),
+        previous,
         originalContext
     );
 
@@ -56,7 +61,7 @@ public class ImporterWrapper implements SassLibrary.Sass_C_Import_Fn {
       return null;
     }
 
-    PointerByReference list = sass.sass_make_import_list(new NativeSize(imports.size()));
+    SassLibrary.Sass_Import_List list = sass.sass_make_import_list(new NativeSize(imports.size()));
 
     int index = 0;
     String path;
@@ -96,7 +101,7 @@ public class ImporterWrapper implements SassLibrary.Sass_C_Import_Fn {
 
       sourceMap = sourceMapMemory.getByteBuffer(0, sourceMapMemory.size());
 
-      SassLibrary.Sass_Import entry = sass.sass_make_import(path, base, source, sourceMap);
+      SassLibrary.Sass_Import_Entry entry = sass.sass_make_import(path, base, source, sourceMap);
       sass.sass_import_set_list_entry(list, new NativeSize(index), entry);
       index++;
     }
