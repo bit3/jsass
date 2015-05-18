@@ -118,6 +118,7 @@ public class TypeUtils {
    * @param sass  The SASS library adapter.
    * @param value The libsass list.
    * @return The corresponding java list.
+   * @throws CompilationException If the value cannot be decoded.
    */
   public static SassList decodeList(SassLibrary sass, SassLibrary.Sass_Value value)
       throws CompilationException {
@@ -147,6 +148,7 @@ public class TypeUtils {
    * @param sass  The SASS library adapter.
    * @param value The libsass map.
    * @return The corresponding java map.
+   * @throws CompilationException If the value cannot be decoded.
    */
   public static Map<?, ?> decodeMap(SassLibrary sass, SassLibrary.Sass_Value value)
       throws CompilationException {
@@ -175,6 +177,7 @@ public class TypeUtils {
    * @param sass  The SASS library adapter.
    * @param value The java value.
    * @return The corresponding libsass value.
+   * @throws CompilationException If the value cannot be encoded.
    */
   public static SassLibrary.Sass_Value encodeValue(SassLibrary sass, Object value)
       throws CompilationException {
@@ -286,6 +289,7 @@ public class TypeUtils {
    * @param sass The SASS library adapter.
    * @param list The java list.
    * @return The corresponding libsass list.
+   * @throws CompilationException If the value cannot be encoded.
    */
   public static SassLibrary.Sass_Value encodeList(SassLibrary sass, Collection<?> list)
       throws CompilationException {
@@ -332,6 +336,7 @@ public class TypeUtils {
    * @param sass The SASS library adapter.
    * @param map  The java map.
    * @return The corresponding libsass map.
+   * @throws CompilationException If the value cannot be encoded.
    */
   public static SassLibrary.Sass_Value encodeMap(SassLibrary sass, Map<?, ?> map)
       throws CompilationException {
