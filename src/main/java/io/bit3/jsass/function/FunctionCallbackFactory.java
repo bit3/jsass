@@ -21,8 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Factory that create libsass function callbacks and wrap them into {@see
- * io.bit3.jsass.FunctionWrapper}s.
+ * Factory that create libsass function callbacks and wrap them into
+ * {@link io.bit3.jsass.function.FunctionWrapper}s.
  */
 public class FunctionCallbackFactory {
 
