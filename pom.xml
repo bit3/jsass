@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>jsass</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>SASS compiler using libsass.</description>
     <url>https://github.com/bit3/jsass</url>
 
