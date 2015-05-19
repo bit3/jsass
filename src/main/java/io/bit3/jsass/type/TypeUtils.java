@@ -250,7 +250,7 @@ public class TypeUtils {
         value = sass.sass_string_quote(value, (byte) string.getQuote()).getString(0);
       }
     } else {
-      value = sass.sass_string_quote(value, (byte) '\'').getString(0);
+      value = sass.sass_string_quote(value, (byte) SassString.DEFAULT_QUOTE_CHARACTER).getString(0);
     }
 
     return sass.sass_make_string(value);

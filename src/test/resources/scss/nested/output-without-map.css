@@ -6,9 +6,9 @@
   .unit-test .compile {
     font-size: 16px; }
   .unit-test .world {
-    content: 'Hello world'; }
+    content: "Hello world"; }
   .unit-test .globe {
-    content: 'Hello globe'; }
+    content: "Hello globe"; }
   .unit-test .increment {
     z-index: 11; }
   .unit-test .increment-five {

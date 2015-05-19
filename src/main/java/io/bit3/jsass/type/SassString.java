@@ -8,6 +8,11 @@ import java.util.stream.IntStream;
 public class SassString implements CharSequence {
 
   /**
+   * The default quote character.
+   */
+  public static final char DEFAULT_QUOTE_CHARACTER = '"';
+
+  /**
    * The string value.
    */
   private String value;
@@ -20,7 +25,7 @@ public class SassString implements CharSequence {
   /**
    * The quotation character.
    */
-  private char quote = '\'';
+  private char quote = DEFAULT_QUOTE_CHARACTER;
 
   /**
    * Create a new single quoted string value.

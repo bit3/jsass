@@ -83,7 +83,7 @@ public interface SassLibrary extends Library {
 		public static final int SASS_COMPILER_EXECUTED = 2;
 	};
 	/** <i>native declaration : src/main/libsass/sass_version.h</i> */
-	public static final String LIBSASS_VERSION = (String)"[NA]";
+	public static final String LIBSASS_VERSION = (String)"3.2.4";
 	/** <i>native declaration : src/main/libsass/sass_functions.h</i> */
 	public interface Sass_Importer_Fn extends Callback {
 		SassLibrary.Sass_Import_List apply(Pointer url, Pointer cb, SassLibrary.Sass_Compiler compiler);
