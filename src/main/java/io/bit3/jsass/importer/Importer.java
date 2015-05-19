@@ -6,5 +6,5 @@ import java.util.Collection;
 
 public interface Importer {
 
-  Collection<Import> apply(String url, String previous, Context originalContext);
+  Collection<Import> apply(String url, Import previous, Context originalContext);
 }

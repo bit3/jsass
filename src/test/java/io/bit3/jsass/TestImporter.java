@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public class TestImporter implements Importer {
 
   @Override
-  public Collection<Import> apply(String url, String previous, Context originalContext) {
+  public Collection<Import> apply(String url, Import previous, Context originalContext) {
     if ("functions".equals(url)) {
       return new LinkedList<>();
     }

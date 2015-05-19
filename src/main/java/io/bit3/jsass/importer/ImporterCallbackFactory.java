@@ -17,12 +17,29 @@ public class ImporterCallbackFactory {
   private final SassLibrary sass;
 
   /**
+   * The import factory.
+   */
+  private final ImportFactory importFactory;
+
+  /**
    * Create a new factory.
    *
    * @param sass The SASS library adapter.
    */
   public ImporterCallbackFactory(SassLibrary sass) {
     this.sass = sass;
+    this.importFactory = new ImportFactory(sass);
+  }
+
+  /**
+   * Create a new factory.
+   *
+   * @param sass The SASS library adapter.
+   * @param importFactory   The import factory.
+   */
+  public ImporterCallbackFactory(SassLibrary sass, ImportFactory importFactory) {
+    this.sass = sass;
+    this.importFactory = importFactory;
   }
 
   /**
@@ -45,7 +62,7 @@ public class ImporterCallbackFactory {
 
     int index = 0;
     for (Importer importer : importers) {
-      ImporterWrapper wrapper = new ImporterWrapper(sass, originalContext, importer);
+      ImporterWrapper wrapper = new ImporterWrapper(sass, importFactory, originalContext, importer);
       SassLibrary.Sass_Importer_Entry entry = sass.sass_make_importer(wrapper, 0, null);
 
       sass.sass_importer_set_list_entry(list, new NativeSize(index), entry);
