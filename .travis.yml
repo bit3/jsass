@@ -3,3 +3,7 @@ jdk:
   - oraclejdk8
 #  - openjdk8
 sudo: false
+script:
+  - mvn clean test
+  - mvn -P release clean source:jar
+  - mvn -P release clean javadoc:jar
