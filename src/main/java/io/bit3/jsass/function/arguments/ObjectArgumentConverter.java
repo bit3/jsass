@@ -1,6 +1,7 @@
 package io.bit3.jsass.function.arguments;
 
 import io.bit3.jsass.context.Context;
+import io.bit3.jsass.importer.Import;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ObjectArgumentConverter implements ArgumentConverter {
 
   @Override
   public Object convert(
-      List<?> remainingArguments, Context context
+      List<?> remainingArguments, Import lastImport, Context context
   ) {
     if (remainingArguments.isEmpty()) {
       return null;

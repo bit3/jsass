@@ -99,11 +99,11 @@ public class FunctionDeclaration {
    * @param arguments List of libsass arguments.
    * @return The method result.
    */
-  public Object invoke(List<?> arguments) {
+  public Object invoke(List<?> arguments, Import lastImport) {
     ArrayList<Object> values = new ArrayList<>(argumentConverters.size());
 
     for (ArgumentConverter argumentConverter : argumentConverters) {
-      Object value = argumentConverter.convert(arguments, context);
+      Object value = argumentConverter.convert(arguments, lastImport, context);
       values.add(value);
     }
 

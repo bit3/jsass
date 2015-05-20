@@ -6,8 +6,6 @@ import io.bit3.jsass.importer.Import;
 import java.util.List;
 
 public interface ArgumentConverter {
-  public Object convert(
-      List<?> remainingArguments,
-      Context context
-  );
+  public Object convert(List<?> remainingArguments, Import lastImport,
+                        Context context);
 }

@@ -83,14 +83,14 @@ public interface SassLibrary extends Library {
 		public static final int SASS_COMPILER_EXECUTED = 2;
 	};
 	/** <i>native declaration : src/main/libsass/sass_version.h</i> */
-	public static final String LIBSASS_VERSION = (String)"3.2.4";
+	public static final String LIBSASS_VERSION = (String)"[NA]";
 	/** <i>native declaration : src/main/libsass/sass_functions.h</i> */
 	public interface Sass_Importer_Fn extends Callback {
 		SassLibrary.Sass_Import_List apply(Pointer url, Pointer cb, SassLibrary.Sass_Compiler compiler);
 	};
 	/** <i>native declaration : src/main/libsass/sass_functions.h</i> */
 	public interface Sass_Function_Fn extends Callback {
-		SassLibrary.Sass_Value apply(SassLibrary.Sass_Value Sass_ValuePtr1, Pointer cb, SassLibrary.Sass_Options options);
+		SassLibrary.Sass_Value apply(SassLibrary.Sass_Value Sass_ValuePtr1, Pointer cb, SassLibrary.Sass_Compiler compiler);
 	};
 	/**
 	 * Check is needed before accessing specific values!<br>
@@ -1431,19 +1431,19 @@ public interface SassLibrary extends Library {
 			super();
 		}
 	};
-	public static class Sass_Options extends PointerType {
-		public Sass_Options(Pointer address) {
-			super(address);
-		}
-		public Sass_Options() {
-			super();
-		}
-	};
 	public static class Sass_Function_List extends PointerType {
 		public Sass_Function_List(Pointer address) {
 			super(address);
 		}
 		public Sass_Function_List() {
+			super();
+		}
+	};
+	public static class Sass_Options extends PointerType {
+		public Sass_Options(Pointer address) {
+			super(address);
+		}
+		public Sass_Options() {
 			super();
 		}
 	};

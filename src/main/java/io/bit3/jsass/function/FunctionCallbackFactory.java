@@ -21,6 +21,7 @@ import io.bit3.jsass.function.arguments.ContextArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.DoubleArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.FloatArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.IntegerArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.LastImportArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.LongArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.ObjectArgumentConverter;
 import io.bit3.jsass.function.arguments.ShortArgumentConverterFactory;
@@ -71,6 +72,7 @@ public class FunctionCallbackFactory {
     this.argumentConverterFactories.add(new DoubleArgumentConverterFactory());
     this.argumentConverterFactories.add(new FloatArgumentConverterFactory());
     this.argumentConverterFactories.add(new IntegerArgumentConverterFactory());
+    this.argumentConverterFactories.add(new LastImportArgumentConverterFactory());
     this.argumentConverterFactories.add(new LongArgumentConverterFactory());
     this.argumentConverterFactories.add(new ShortArgumentConverterFactory());
     this.argumentConverterFactories.add(new StringArgumentConverterFactory());

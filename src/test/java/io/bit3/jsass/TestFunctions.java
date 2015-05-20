@@ -3,6 +3,7 @@ package io.bit3.jsass;
 import io.bit3.jsass.annotation.DefaultIntegerValue;
 import io.bit3.jsass.annotation.DefaultStringValue;
 import io.bit3.jsass.annotation.Name;
+import io.bit3.jsass.importer.Import;
 
 public class TestFunctions {
 

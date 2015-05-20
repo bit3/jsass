@@ -5,12 +5,12 @@ import io.bit3.jsass.importer.Import;
 
 import java.util.List;
 
-public class ContextArgumentConverter implements ArgumentConverter {
+public class LastImportArgumentConverter implements ArgumentConverter {
 
   @Override
   public Object convert(
       List<?> remainingArguments, Import lastImport, Context context
   ) {
-    return context;
+    return lastImport;
   }
 }
