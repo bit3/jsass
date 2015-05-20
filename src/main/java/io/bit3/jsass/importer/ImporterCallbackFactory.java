@@ -5,6 +5,7 @@ import io.bit3.jsass.context.Context;
 import sass.SassLibrary;
 
 import java.util.Collection;
+import java.util.Stack;
 
 /**
  * Factory to create a libsass importer callback.
@@ -16,6 +17,8 @@ public class ImporterCallbackFactory {
    */
   private final SassLibrary sass;
 
+  private final Stack<Import> importStack;
+
   /**
    * The import factory.
    */
@@ -26,9 +29,8 @@ public class ImporterCallbackFactory {
    *
    * @param sass The SASS library adapter.
    */
-  public ImporterCallbackFactory(SassLibrary sass) {
-    this.sass = sass;
-    this.importFactory = new ImportFactory(sass);
+  public ImporterCallbackFactory(SassLibrary sass, Stack<Import> importStack) {
+    this(sass, importStack, new ImportFactory(sass));
   }
 
   /**
@@ -37,8 +39,10 @@ public class ImporterCallbackFactory {
    * @param sass          The SASS library adapter.
    * @param importFactory The import factory.
    */
-  public ImporterCallbackFactory(SassLibrary sass, ImportFactory importFactory) {
+  public ImporterCallbackFactory(SassLibrary sass, Stack<Import> importStack,
+                                 ImportFactory importFactory) {
     this.sass = sass;
+    this.importStack = importStack;
     this.importFactory = importFactory;
   }
 

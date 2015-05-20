@@ -6,13 +6,15 @@ import io.bit3.jsass.importer.Import;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Contains all informations about a declared custom function.
  */
 public class FunctionDeclaration {
+
+  private final Stack<Import> importStack;
 
   private final Context context;
 
@@ -41,13 +43,17 @@ public class FunctionDeclaration {
   /**
    * Create a new function declaration.
    *
+   * @param importStack
    * @param signature          The libsass function signature.
    * @param object             The object instance to call the method on.
    * @param method             The method to call.
    * @param argumentConverters List of argument converters.
    */
-  public FunctionDeclaration(Context context, String signature, Object object, Method method,
-                             List<ArgumentConverter> argumentConverters) {
+  public FunctionDeclaration(
+      Stack<Import> importStack, Context context, String signature, Object object, Method method,
+      List<ArgumentConverter> argumentConverters
+  ) {
+    this.importStack = importStack;
     this.context = context;
     this.signature = signature;
     this.object = object;
@@ -99,11 +105,11 @@ public class FunctionDeclaration {
    * @param arguments List of libsass arguments.
    * @return The method result.
    */
-  public Object invoke(List<?> arguments, Import lastImport) {
+  public Object invoke(List<?> arguments) {
     ArrayList<Object> values = new ArrayList<>(argumentConverters.size());
 
     for (ArgumentConverter argumentConverter : argumentConverters) {
-      Object value = argumentConverter.convert(arguments, lastImport, context);
+      Object value = argumentConverter.convert(arguments, importStack, context);
       values.add(value);
     }
 

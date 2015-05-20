@@ -50,21 +50,6 @@ public class FunctionWrapper implements SassLibrary.Sass_Function_Fn {
   public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cb,
                                       SassLibrary.Sass_Compiler compiler) {
     try {
-      Import lastImport;
-      int importStackSize = sass.sass_compiler_get_import_stack_size(compiler).intValue();
-
-      if (importStackSize > 0) {
-        SassLibrary.Sass_Import_Entry lastImportEntry = sass.sass_compiler_get_last_import(
-            compiler
-        );
-        lastImport = importFactory.create(lastImportEntry);
-      } else {
-        SassLibrary.Sass_Context context = sass.sass_compiler_get_context(compiler);
-        SassLibrary.Sass_Options options = sass.sass_context_get_options(context);
-        String inputPath = sass.sass_option_get_input_path(options);
-        lastImport = new Import(new URI(inputPath), new URI(""));
-      }
-
       Object decodedValue = TypeUtils.decodeValue(sass, value);
       SassList sassList;
 
@@ -75,10 +60,10 @@ public class FunctionWrapper implements SassLibrary.Sass_Function_Fn {
         sassList.add(decodedValue);
       }
 
-      Object result = declaration.invoke(sassList, lastImport);
+      Object result = declaration.invoke(sassList);
 
       return TypeUtils.encodeValue(sass, result);
-    } catch (CompilationException | URISyntaxException e) {
+    } catch (CompilationException e) {
       throw new RuntimeException(e);
     }
   }

@@ -5,11 +5,13 @@ import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.ContextFactory;
 import io.bit3.jsass.context.FileContext;
 import io.bit3.jsass.context.StringContext;
+import io.bit3.jsass.importer.Import;
 import org.apache.commons.io.Charsets;
 import sass.SassLibrary;
 
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.util.Stack;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
@@ -148,7 +150,9 @@ public class Compiler {
     SassLibrary.Sass_Data_Context dataContext = null;
 
     try {
-      dataContext = contextFactory.create(context);
+      Stack<Import> importStack = new Stack<>();
+
+      dataContext = contextFactory.create(context, importStack);
 
       // compile file
       sass.sass_compile_data_context(dataContext);
@@ -178,8 +182,10 @@ public class Compiler {
     SassLibrary.Sass_File_Context fileContext = null;
 
     try {
+      Stack<Import> importStack = new Stack<>();
+
       // create context
-      fileContext = contextFactory.create(context);
+      fileContext = contextFactory.create(context, importStack);
 
       // compile file
       sass.sass_compile_file_context(fileContext);
