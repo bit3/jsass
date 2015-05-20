@@ -34,8 +34,8 @@ public class ImporterCallbackFactory {
   /**
    * Create a new factory.
    *
-   * @param sass The SASS library adapter.
-   * @param importFactory   The import factory.
+   * @param sass          The SASS library adapter.
+   * @param importFactory The import factory.
    */
   public ImporterCallbackFactory(SassLibrary sass, ImportFactory importFactory) {
     this.sass = sass;

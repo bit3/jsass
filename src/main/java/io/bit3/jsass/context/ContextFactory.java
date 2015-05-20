@@ -97,6 +97,7 @@ public class ContextFactory {
     // but not for local files! That's why we remove the leading file: from local URIs.
 
     final SassLibrary.Sass_Function_List functions = createFunctions(
+        context,
         javaOptions.getFunctionProviders()
     );
     sass.sass_option_set_c_functions(libsassOptions, functions);
@@ -227,10 +228,12 @@ public class ContextFactory {
    * @param functionProviders A list of java objects.
    * @return The newly created libsass function list.
    */
-  private SassLibrary.Sass_Function_List createFunctions(List<?> functionProviders) {
+  private SassLibrary.Sass_Function_List createFunctions(Context originalContext,
+                                                         List<?> functionProviders) {
     FunctionCallbackFactory functionCallbackFactory = new FunctionCallbackFactory(sass);
 
     List<SassLibrary.Sass_Function_Entry> callbacks = functionCallbackFactory.compileFunctions(
+        originalContext,
         functionProviders
     );
 
@@ -245,7 +248,7 @@ public class ContextFactory {
    * @return The newly created libsass import callback.
    */
   private SassLibrary.Sass_Importer_List createImporters(Context originalContext,
-                                                          Collection<Importer> importers) {
+                                                         Collection<Importer> importers) {
     if (importers.isEmpty()) {
       return null;
     }
