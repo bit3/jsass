@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -38,13 +39,14 @@ public class ImporterTest {
     Functions functions = new Functions();
     Importer  importer  = new Importer();
 
+    options.setSourceMapFile(new URI("/output.css.map"));
     options.getFunctionProviders().add(functions);
     options.getImporters().add(importer);
 
     Output output = compiler.compileString(
-        "foo { bar: func(); } @import 'import.scss';",
-        new URI("input.scss"),
-        new URI("output.css"),
+        "foo { bar: func(); } @import 'import';",
+        new URI("/input.scss"),
+        new URI("/output.css"),
         options
     );
 
@@ -53,18 +55,18 @@ public class ImporterTest {
 
     assertArrayEquals(
         new String[]{
-            "input.scss",
-            "import.scss",
-            "imported.scss",
-            "import.scss"
+            "/input.scss",
+            "/foo/import.scss",
+            "/bar/imported.scss",
+            "/foo/import.scss"
         },
         functions.importPaths.toArray()
     );
 
     assertArrayEquals(
         new String[]{
-            "input.scss",
-            "import.scss"
+            "/input.scss",
+            "/foo/import.scss"
         },
         importer.importPaths.toArray()
     );
@@ -92,13 +94,13 @@ public class ImporterTest {
 
       List<Import> imports = new LinkedList<>();
 
-      if ("import.scss".equals(url)) {
+      if ("import".equals(url)) {
         try {
           imports.add(
               new Import(
-                  new URI("import.scss"),
-                  new URI(""),
-                  "foo { bar: func(); } @import 'imported.scss'; bar { foo: func(); }"
+                  new URI("/foo/import.scss"),
+                  new URI("/"),
+                  "foo { bar: func(); } @import 'imported'; bar { foo: func(); }"
               )
           );
         } catch (URISyntaxException e) {
@@ -106,12 +108,12 @@ public class ImporterTest {
         }
       }
 
-      if ("imported.scss".equals(url)) {
+      if ("imported".equals(url)) {
         try {
           imports.add(
               new Import(
-                  new URI("imported.scss"),
-                  new URI(""),
+                  new URI("/bar/imported.scss"),
+                  new URI("/"),
                   "foo { bar: func(); }"
               )
           );
