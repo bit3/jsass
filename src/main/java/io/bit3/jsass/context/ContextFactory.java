@@ -1,6 +1,7 @@
 package io.bit3.jsass.context;
 
 import com.sun.jna.Memory;
+import com.sun.jna.Pointer;
 import io.bit3.jsass.Options;
 import io.bit3.jsass.OutputStyle;
 import io.bit3.jsass.function.FunctionCallbackFactory;
@@ -84,6 +85,9 @@ public class ContextFactory {
     // configure context
     Sass_Options libsassOptions = sass.sass_data_context_get_options(dataContext);
     configure(context, libsassOptions, importStack);
+
+    // Caution: libsass obtain ownership of the memories
+    Pointer.nativeValue(memory, 0);
 
     return dataContext;
   }

@@ -1,6 +1,7 @@
 package io.bit3.jsass.importer;
 
 import com.sun.jna.Memory;
+import com.sun.jna.Pointer;
 import sass.SassLibrary;
 
 import java.net.URI;
@@ -64,7 +65,13 @@ public class ImportFactory {
 
     ByteBuffer sourceMap = sourceMapMemory.getByteBuffer(0, sourceMapMemory.size());
 
-    return sass.sass_make_import(path, base, source, sourceMap);
+    SassLibrary.Sass_Import_Entry entry = sass.sass_make_import(path, base, source, sourceMap);
+
+    // Caution: libsass obtain ownership of the memories
+    Pointer.nativeValue(sourceMemory, 0);
+    Pointer.nativeValue(sourceMapMemory, 0);
+
+    return entry;
   }
 
   /**
