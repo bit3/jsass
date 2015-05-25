@@ -7,14 +7,14 @@ import io.bit3.jsass.importer.Import;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
+import io.bit3.jsass.context.ImportStack;
 
 /**
  * Contains all informations about a declared custom function.
  */
 public class FunctionDeclaration {
 
-  private final Stack<Import> importStack;
+  private final ImportStack importStack;
 
   private final Context context;
 
@@ -50,7 +50,7 @@ public class FunctionDeclaration {
    * @param argumentConverters List of argument converters.
    */
   public FunctionDeclaration(
-      Stack<Import> importStack, Context context, String signature, Object object, Method method,
+      ImportStack importStack, Context context, String signature, Object object, Method method,
       List<ArgumentConverter> argumentConverters
   ) {
     this.importStack = importStack;

@@ -8,13 +8,13 @@ import io.bit3.jsass.importer.Import;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
-import java.util.Stack;
+import io.bit3.jsass.context.ImportStack;
 
 public class StringArgumentConverter implements ArgumentConverter {
 
   @Override
   public Object convert(
-      List<?> remainingArguments, Stack<Import> importStack, Context context
+      List<?> remainingArguments, ImportStack importStack, Context context
   ) {
     if (remainingArguments.isEmpty()) {
       return null;

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
+import io.bit3.jsass.context.ImportStack;
 
 /**
  * Factory that create libsass function callbacks and wrap them into {@link
@@ -41,7 +41,7 @@ public class FunctionCallbackFactory {
    */
   private SassLibrary sass;
 
-  private final Stack<Import> importStack;
+  private final ImportStack importStack;
 
   /**
    * The import factory.
@@ -52,13 +52,13 @@ public class FunctionCallbackFactory {
 
   private final List<ArgumentConverterFactory> argumentConverterFactories;
 
-  public FunctionCallbackFactory(SassLibrary sass, Stack<Import> importStack) {
+  public FunctionCallbackFactory(SassLibrary sass, ImportStack importStack) {
     this(sass, importStack, new ImportFactory(sass), new FunctionArgumentSignatureFactory());
   }
 
   public FunctionCallbackFactory(
       SassLibrary sass,
-      Stack<Import> importStack,
+      ImportStack importStack,
       ImportFactory importFactory
   ) {
     this(sass, importStack, importFactory, new FunctionArgumentSignatureFactory());
@@ -66,13 +66,13 @@ public class FunctionCallbackFactory {
 
   public FunctionCallbackFactory(
       SassLibrary sass,
-      Stack<Import> importStack, FunctionArgumentSignatureFactory functionArgumentSignatureFactory
+      ImportStack importStack, FunctionArgumentSignatureFactory functionArgumentSignatureFactory
   ) {
     this(sass, importStack, new ImportFactory(sass), functionArgumentSignatureFactory);
   }
 
   public FunctionCallbackFactory(
-      SassLibrary sass, Stack<Import> importStack, ImportFactory importFactory,
+      SassLibrary sass, ImportStack importStack, ImportFactory importFactory,
       FunctionArgumentSignatureFactory functionArgumentSignatureFactory
   ) {
     this.sass = sass;

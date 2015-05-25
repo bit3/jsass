@@ -64,7 +64,7 @@ public class TypeUtils {
    */
   public static SassNumber decodeNumber(SassLibrary sass, SassLibrary.Sass_Value value) {
     double number = sass.sass_number_get_value(value);
-    String unit = sass.sass_number_get_unit(value);
+    String unit   = sass.sass_number_get_unit(value);
 
     return new SassNumber(number, unit);
   }
@@ -77,7 +77,7 @@ public class TypeUtils {
    * @return The corresponding java string.
    */
   public static SassString decodeString(SassLibrary sass, SassLibrary.Sass_Value value) {
-    String string = sass.sass_string_get_value(value);
+    String string   = sass.sass_string_get_value(value);
     String unquoted = sass.sass_string_unquote(string).getString(0);
 
     boolean quoted = !string.equals(unquoted);
@@ -104,9 +104,9 @@ public class TypeUtils {
    * @return The corresponding java color.
    */
   public static SassColor decodeColor(SassLibrary sass, SassLibrary.Sass_Value value) {
-    double red = sass.sass_color_get_r(value);
+    double red   = sass.sass_color_get_r(value);
     double green = sass.sass_color_get_g(value);
-    double blue = sass.sass_color_get_b(value);
+    double blue  = sass.sass_color_get_b(value);
     double alpha = sass.sass_color_get_a(value);
 
     return new SassColor(red, green, blue, alpha);
@@ -122,8 +122,8 @@ public class TypeUtils {
    */
   public static SassList decodeList(SassLibrary sass, SassLibrary.Sass_Value value)
       throws CompilationException {
-    long size = sass.sass_list_get_length(value).longValue();
-    int separator = sass.sass_list_get_separator(value);
+    long size      = sass.sass_list_get_length(value).longValue();
+    int  separator = sass.sass_list_get_separator(value);
 
     SassList sassList = new SassList();
 
@@ -209,8 +209,7 @@ public class TypeUtils {
       return encodeMap(sass, (Map<?, ?>) value);
     }
 
-    throw new CompilationException(
-        -1,
+    return sass.sass_make_error(
         String.format("Java object %s cannot be converted to SASS", value.getClass().getName())
     );
   }
@@ -224,7 +223,7 @@ public class TypeUtils {
    */
   public static SassLibrary.Sass_Value encodeNumber(SassLibrary sass, Number number) {
     double value = number.doubleValue();
-    String unit = "";
+    String unit  = "";
 
     if (number instanceof SassNumber) {
       unit = ((SassNumber) number).getUnit();
@@ -241,19 +240,19 @@ public class TypeUtils {
    * @return The corresponding libsass string.
    */
   public static SassLibrary.Sass_Value encodeString(SassLibrary sass, CharSequence sequence) {
-    String value = sequence.toString();
+    SassLibrary.Sass_Value result = sass.sass_make_string(sequence.toString());
 
     if (sequence instanceof SassString) {
       SassString string = (SassString) sequence;
 
       if (string.isQuoted()) {
-        value = sass.sass_string_quote(value, (byte) string.getQuote()).getString(0);
+        sass.sass_string_set_quoted(result, (byte) string.getQuote());
       }
     } else {
-      value = sass.sass_string_quote(value, (byte) SassString.DEFAULT_QUOTE_CHARACTER).getString(0);
+      sass.sass_string_set_quoted(result, (byte) SassString.DEFAULT_QUOTE_CHARACTER);
     }
 
-    return sass.sass_make_string(value);
+    return result;
   }
 
   /**
@@ -275,9 +274,9 @@ public class TypeUtils {
    * @return The corresponding libsass color.
    */
   public static SassLibrary.Sass_Value encodeColor(SassLibrary sass, SassColor color) {
-    double red = color.getRed();
+    double red   = color.getRed();
     double green = color.getGreen();
-    double blue = color.getBlue();
+    double blue  = color.getBlue();
     double alpha = color.getAlpha();
 
     return sass.sass_make_color(red, green, blue, alpha);

@@ -4,14 +4,13 @@ import com.sun.jna.Native;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.ContextFactory;
 import io.bit3.jsass.context.FileContext;
+import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.context.StringContext;
-import io.bit3.jsass.importer.Import;
 import org.apache.commons.io.Charsets;
 import sass.SassLibrary;
 
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.Stack;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
@@ -92,8 +91,10 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, Charset charset, URI inputPath, URI outputPath,
-                              Options options) throws CompilationException {
+  public Output compileString(
+      String string, Charset charset, URI inputPath, URI outputPath,
+      Options options
+  ) throws CompilationException {
     StringContext context = new StringContext(string, charset, inputPath, outputPath, options);
 
     return compile(context);
@@ -150,7 +151,7 @@ public class Compiler {
     SassLibrary.Sass_Data_Context dataContext = null;
 
     try {
-      Stack<Import> importStack = new Stack<>();
+      ImportStack importStack = new ImportStack();
 
       dataContext = contextFactory.create(context, importStack);
 
@@ -182,7 +183,7 @@ public class Compiler {
     SassLibrary.Sass_File_Context fileContext = null;
 
     try {
-      Stack<Import> importStack = new Stack<>();
+      ImportStack importStack = new ImportStack();
 
       // create context
       fileContext = contextFactory.create(context, importStack);
@@ -227,7 +228,7 @@ public class Compiler {
    * @return The output.
    */
   private Output createOutput(SassLibrary.Sass_Context context) {
-    String css = sass.sass_context_get_output_string(context);
+    String css       = sass.sass_context_get_output_string(context);
     String sourceMap = sass.sass_context_get_source_map_string(context);
 
     return new Output(css, sourceMap);

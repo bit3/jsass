@@ -6,35 +6,26 @@ import io.bit3.jsass.type.SassList;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Stack;
+import io.bit3.jsass.context.ImportStack;
 
 public class JsassCustomFunctions {
 
-  private final Stack<Import> importStack;
+  private final ImportStack importStack;
 
-  public JsassCustomFunctions(Stack<Import> importStack) {
+  public JsassCustomFunctions(ImportStack importStack) {
     this.importStack = importStack;
   }
 
-  public SassList jsass_import_stack_push(String importPath, String basePath)
+  public Object jsass_import_stack_push(int id)
       throws URISyntaxException {
-    this.importStack.push(
-        new Import(
-            new URI(importPath),
-            new URI(basePath)
-        )
-    );
+    this.importStack.push(id);
 
-    return new SassList(Arrays.asList(importPath, basePath));
+    return null;
   }
 
-  public SassList jsass_import_stack_pop() {
+  public Object jsass_import_stack_pop() {
     this.importStack.pop();
 
-    Import importSource = importStack.peek();
-    String importPath = importSource.getUri().toString();
-    String basePath = importSource.getBase().toString();
-
-    return new SassList(Arrays.asList(importPath, basePath));
+    return null;
   }
 }

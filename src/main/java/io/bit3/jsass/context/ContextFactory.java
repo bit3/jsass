@@ -5,7 +5,6 @@ import io.bit3.jsass.Options;
 import io.bit3.jsass.OutputStyle;
 import io.bit3.jsass.function.FunctionCallbackFactory;
 import io.bit3.jsass.function.JsassCustomFunctions;
-import io.bit3.jsass.importer.Import;
 import io.bit3.jsass.importer.Importer;
 import io.bit3.jsass.importer.ImporterCallbackFactory;
 import io.bit3.jsass.importer.JsassCustomImporter;
@@ -21,7 +20,6 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Factory to create libsass contexts from jsass contexts.
@@ -49,7 +47,7 @@ public class ContextFactory {
    * @param importStack
    * @return The newly created libsass file context.
    */
-  public Sass_File_Context create(FileContext context, Stack<Import> importStack) {
+  public Sass_File_Context create(FileContext context, ImportStack importStack) {
     URI inputPath = context.getInputPath();
 
     // create context
@@ -69,7 +67,7 @@ public class ContextFactory {
    * @param importStack
    * @return The newly created libsass data context.
    */
-  public Sass_Data_Context create(StringContext context, Stack<Import> importStack) {
+  public Sass_Data_Context create(StringContext context, ImportStack importStack) {
     String string = context.getString();
     Charset charset = context.getCharset();
 
@@ -96,7 +94,7 @@ public class ContextFactory {
    * @param libsassOptions The libsass options.
    * @param importStack
    */
-  private void configure(Context context, Sass_Options libsassOptions, Stack<Import> importStack) {
+  private void configure(Context context, Sass_Options libsassOptions, ImportStack importStack) {
     final Options javaOptions = context.getOptions();
 
     // Note: support for local file URIs
@@ -242,7 +240,7 @@ public class ContextFactory {
   private SassLibrary.Sass_Function_List createFunctions(
       Context originalContext,
       List<?> functionProviders,
-      Stack<Import> importStack
+      ImportStack importStack
   ) {
     FunctionCallbackFactory functionCallbackFactory = new FunctionCallbackFactory(sass, importStack);
 
@@ -261,11 +259,11 @@ public class ContextFactory {
   private SassLibrary.Sass_Importer_List createHeaderImporters(
       Context originalContext,
       Collection<Importer> importers,
-      Stack<Import> importStack
+      ImportStack importStack
   ) {
     Collection<Importer> moreImporters = new LinkedList<>();
 
-    moreImporters.add(new JsassCustomImporter(sass));
+    moreImporters.add(new JsassCustomImporter(sass, importStack));
     moreImporters.addAll(importers);
 
     return createImporters(originalContext, moreImporters, importStack);
@@ -281,7 +279,7 @@ public class ContextFactory {
    */
   private SassLibrary.Sass_Importer_List createImporters(
       Context originalContext,
-      Collection<Importer> importers, Stack<Import> importStack
+      Collection<Importer> importers, ImportStack importStack
   ) {
     if (importers.isEmpty()) {
       return null;

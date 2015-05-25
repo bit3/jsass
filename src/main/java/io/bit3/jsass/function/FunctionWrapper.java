@@ -63,8 +63,8 @@ public class FunctionWrapper implements SassLibrary.Sass_Function_Fn {
       Object result = declaration.invoke(sassList);
 
       return TypeUtils.encodeValue(sass, result);
-    } catch (CompilationException e) {
-      throw new RuntimeException(e);
+    } catch (Throwable e) {
+      return sass.sass_make_error(e.getMessage());
     }
   }
 }
