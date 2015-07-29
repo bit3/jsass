@@ -1,7 +1,5 @@
 package io.bit3.jsass;
 
-import static org.junit.Assert.fail;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,6 +14,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class CompileFileTest {
@@ -146,6 +146,7 @@ public class CompileFileTest {
 
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
+      assertNoFail(output);
       assertEquals(output.getCss(), expectedCssWithoutMapUrl);
     } catch (CompilationException exception) {
       fail("Compilation failed: " + exception.getMessage());
@@ -165,6 +166,7 @@ public class CompileFileTest {
 
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
+      assertNoFail(output);
       assertEquals(output.getCss(), expectedCssWithMapUrl);
     } catch (CompilationException exception) {
       fail("Compilation failed: " + exception.getMessage());
@@ -172,6 +174,23 @@ public class CompileFileTest {
       targetCssFile.delete();
       targetMapFile.delete();
     }
+  }
+
+  private void assertNoFail(Output output) {
+    String message = String.format(
+        "Compile input.%s into %s output format failed with error status (%d) %s",
+        syntax, outputStyle, output.getErrorStatus(), output.getJsonError()
+    );
+
+    Assert.assertEquals(
+        message,
+        0,
+        output.getErrorStatus()
+    );
+    Assert.assertNull(
+        message,
+        output.getJsonError()
+    );
   }
 
   private void assertEquals(String actual, URL expectedSource) throws IOException {

@@ -1,24 +1,19 @@
 package io.bit3.jsass.importer;
 
-import io.bit3.jsass.Compiler;
-import io.bit3.jsass.context.Context;
-import io.bit3.jsass.context.ImportStack;
-import io.bit3.jsass.type.SassString;
-import sass.SassLibrary;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.bit3.jsass.context.Context;
+import io.bit3.jsass.context.ImportStack;
+
 public class JsassCustomImporter implements Importer {
 
-  private final SassLibrary sass;
   private final ImportStack importStack;
 
-  public JsassCustomImporter(SassLibrary sass, ImportStack importStack) {
-    this.sass = sass;
+  public JsassCustomImporter(ImportStack importStack) {
     this.importStack = importStack;
   }
 

@@ -4,20 +4,26 @@ public enum OutputStyle {
   /**
    * Nested style.
    */
-  NESTED,
+  NESTED(1),
 
   /**
    * Expanded style.
    */
-  EXPANDED,
+  EXPANDED(2),
 
   /**
    * Compact style.
    */
-  COMPACT,
+  COMPACT(3),
 
   /**
    * Compressed style.
    */
-  COMPRESSED
+  COMPRESSED(4);
+
+  public final int NUMERIC;
+
+  OutputStyle(int numeric) {
+    NUMERIC = numeric;
+  }
 }

@@ -1,0 +1,12 @@
+// Special behavior:
+// * when compiling before testing (update-test-assets.sh), this file is included through include path.
+// * when compiling in junit, this file is NOT included (=empty imports). The function are declared as custom functions.
+
+@function hello($name: 'world')
+  @return 'Hello ' + $name
+
+@function increment($value, $increment: 1)
+  @return $value + $increment
+
+@function decrement($value, $decrement: 1)
+  @return $value - $decrement
