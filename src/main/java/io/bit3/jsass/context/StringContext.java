@@ -18,11 +18,6 @@ public class StringContext extends AbstractContext {
   private String string;
 
   /**
-   * The charset of the in-memory sass code.
-   */
-  private Charset charset;
-
-  /**
    * Create a new string context.
    *
    * @param string     The in-memory sass code.
@@ -47,7 +42,6 @@ public class StringContext extends AbstractContext {
                        Options options) {
     super(inputPath, outputPath, options);
     this.string = string;
-    this.charset = charset;
   }
 
   /**
@@ -59,12 +53,4 @@ public class StringContext extends AbstractContext {
     return string;
   }
 
-  /**
-   * Return the charset of the in-memory sass code.
-   *
-   * @return The charset of the in-memory sass code.
-   */
-  public Charset getCharset() {
-    return charset;
-  }
 }

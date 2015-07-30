@@ -179,7 +179,7 @@ public class CompileFileTest {
   private void assertNoFail(Output output) {
     String message = String.format(
         "Compile input.%s into %s output format failed with error status (%d) %s",
-        syntax, outputStyle, output.getErrorStatus(), output.getJsonError()
+        syntax, outputStyle, output.getErrorStatus(), output.getErrorJson()
     );
 
     Assert.assertEquals(
@@ -189,7 +189,7 @@ public class CompileFileTest {
     );
     Assert.assertNull(
         message,
-        output.getJsonError()
+        output.getErrorJson()
     );
   }
 

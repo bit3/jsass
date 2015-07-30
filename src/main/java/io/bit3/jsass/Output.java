@@ -20,13 +20,34 @@ public class Output {
    */
   private final int errorStatus;
 
-  private final String jsonError;
+  private final String errorJson;
 
-  public Output(String css, String sourceMap, int errorStatus, String jsonError) {
+  private final String errorText;
+
+  private final String errorMessage;
+
+  private final String errorFile;
+
+  private final String errorSrc;
+
+  public Output(
+      String css,
+      String sourceMap,
+      int errorStatus,
+      String errorJson,
+      String errorText,
+      String errorMessage,
+      String errorFile,
+      String errorSrc
+  ) {
     this.css = css;
     this.sourceMap = sourceMap;
     this.errorStatus = errorStatus;
-    this.jsonError = jsonError;
+    this.errorJson = errorJson;
+    this.errorText = errorText;
+    this.errorMessage = errorMessage;
+    this.errorFile = errorFile;
+    this.errorSrc = errorSrc;
   }
 
   /**
@@ -51,7 +72,23 @@ public class Output {
     return errorStatus;
   }
 
-  public String getJsonError() {
-    return jsonError;
+  public String getErrorJson() {
+    return errorJson;
+  }
+
+  public String getErrorText() {
+    return errorText;
+  }
+
+  public String getErrorMessage() {
+    return errorMessage;
+  }
+
+  public String getErrorFile() {
+    return errorFile;
+  }
+
+  public String getErrorSrc() {
+    return errorSrc;
   }
 }

@@ -10,7 +10,8 @@ import java.util.Collection;
 /**
  * A sass value list.
  */
-public class SassList extends ArrayList<Object> {
+public class SassList extends ArrayList<Object> implements SassValue {
+  public static final int TYPE = 6;
 
   /**
    * The item separator.
@@ -49,6 +50,15 @@ public class SassList extends ArrayList<Object> {
    */
   public SassList(Collection<?> collection, Separator separator) {
     super(collection);
+    this.separator = separator;
+  }
+
+  public SassList(int initialCapacity) {
+    super(initialCapacity);
+  }
+
+  public SassList(int initialCapacity, Separator separator) {
+    super(initialCapacity);
     this.separator = separator;
   }
 

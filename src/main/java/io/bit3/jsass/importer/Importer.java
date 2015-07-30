@@ -5,6 +5,5 @@ import io.bit3.jsass.context.Context;
 import java.util.Collection;
 
 public interface Importer {
-
-  Collection<Import> apply(String url, Import previous, Context originalContext);
+  Collection<Import> apply(String url, Import previous);
 }

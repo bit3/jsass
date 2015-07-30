@@ -1,20 +1,18 @@
 package io.bit3.jsass.function;
 
-import io.bit3.jsass.context.Context;
-import io.bit3.jsass.function.arguments.ArgumentConverter;
-import io.bit3.jsass.importer.Import;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import io.bit3.jsass.context.ImportStack;
+
+import io.bit3.jsass.context.Context;
+import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
+import io.bit3.jsass.type.SassValue;
+import io.bit3.jsass.type.TypeUtils;
 
 /**
  * Contains all informations about a declared custom function.
  */
 public class FunctionDeclaration {
-
-  private final ImportStack importStack;
 
   private final Context context;
 
@@ -43,17 +41,15 @@ public class FunctionDeclaration {
   /**
    * Create a new function declaration.
    *
-   * @param importStack
    * @param signature          The libsass function signature.
    * @param object             The object instance to call the method on.
    * @param method             The method to call.
    * @param argumentConverters List of argument converters.
    */
   public FunctionDeclaration(
-      ImportStack importStack, Context context, String signature, Object object, Method method,
+      Context context, String signature, Object object, Method method,
       List<ArgumentConverter> argumentConverters
   ) {
-    this.importStack = importStack;
     this.context = context;
     this.signature = signature;
     this.object = object;
@@ -105,19 +101,20 @@ public class FunctionDeclaration {
    * @param arguments List of libsass arguments.
    * @return The method result.
    */
-  public Object invoke(List<?> arguments) {
+  public SassValue invoke(List<?> arguments) {
     ArrayList<Object> values = new ArrayList<>(argumentConverters.size());
 
     for (ArgumentConverter argumentConverter : argumentConverters) {
-      Object value = argumentConverter.convert(arguments, importStack, context);
+      Object value = argumentConverter.convert(arguments, context);
       values.add(value);
     }
 
     try {
-      return method.invoke(object, values.toArray());
-    } catch (ReflectiveOperationException e) {
+      Object result = method.invoke(object, values.toArray());
+
+      return TypeUtils.convertToSassValue(result);
+    } catch (Throwable e) {
       throw new RuntimeException(e);
     }
   }
 }
-

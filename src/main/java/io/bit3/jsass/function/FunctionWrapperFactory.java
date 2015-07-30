@@ -1,0 +1,215 @@
+package io.bit3.jsass.function;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import io.bit3.jsass.context.Context;
+import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
+import io.bit3.jsass.function.arguments.converter.ObjectArgumentConverter;
+import io.bit3.jsass.function.arguments.factory.ArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.BooleanArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.ByteArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.CharacterArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.ContextArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.DoubleArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.FloatArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.IntegerArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.LongArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.ShortArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.StringArgumentConverterFactory;
+import io.bit3.jsass.type.SassString;
+
+/**
+ * Factory that create libsass function callbacks and wrap them into {@link
+ * io.bit3.jsass.function.FunctionWrapper}s.
+ */
+public class FunctionWrapperFactory {
+
+  private final FunctionArgumentSignatureFactory functionArgumentSignatureFactory;
+
+  private final List<ArgumentConverterFactory> argumentConverterFactories;
+
+  public FunctionWrapperFactory(
+      FunctionArgumentSignatureFactory functionArgumentSignatureFactory
+  ) {
+    this.functionArgumentSignatureFactory = functionArgumentSignatureFactory;
+
+    // TODO move this into options and make it configurable
+    this.argumentConverterFactories = new LinkedList<>();
+    this.argumentConverterFactories.add(new BooleanArgumentConverterFactory());
+    this.argumentConverterFactories.add(new ByteArgumentConverterFactory());
+    this.argumentConverterFactories.add(new CharacterArgumentConverterFactory());
+    this.argumentConverterFactories.add(new ContextArgumentConverterFactory());
+    this.argumentConverterFactories.add(new DoubleArgumentConverterFactory());
+    this.argumentConverterFactories.add(new FloatArgumentConverterFactory());
+    this.argumentConverterFactories.add(new IntegerArgumentConverterFactory());
+    this.argumentConverterFactories.add(new LongArgumentConverterFactory());
+    this.argumentConverterFactories.add(new ShortArgumentConverterFactory());
+    this.argumentConverterFactories.add(new StringArgumentConverterFactory());
+  }
+
+  /**
+   * Compile methods from all objects into libsass functions.
+   *
+   * @param objects A list of "function provider" objects.
+   * @return The newly created list of libsass callbacks.
+   */
+  public List<FunctionWrapper> compileFunctions(Context context, List<?> objects) {
+    List<FunctionWrapper> callbacks = new LinkedList<>();
+
+    for (Object object : objects) {
+      List<FunctionWrapper> objectCallbacks = compileFunctions(context, object);
+
+      callbacks.addAll(objectCallbacks);
+    }
+
+    return callbacks;
+  }
+
+  /**
+   * Compile methods from an object into libsass functions.
+   *
+   * @param object The "function provider" object.
+   * @return The newly created list of libsass callbacks.
+   */
+  public List<FunctionWrapper> compileFunctions(Context context, Object object) {
+    Class<?> functionClass = object.getClass();
+    Method[] methods = functionClass.getDeclaredMethods();
+    List<FunctionDeclaration> declarations = new LinkedList<>();
+
+    for (Method method : methods) {
+      int modifiers = method.getModifiers();
+
+      if (!Modifier.isPublic(modifiers)) {
+        continue;
+      }
+
+      FunctionDeclaration declaration = createDeclaration(context, object, method);
+      declarations.add(declaration);
+    }
+
+    List<FunctionWrapper> callbacks = new LinkedList<>();
+
+    for (FunctionDeclaration declaration : declarations) {
+      callbacks.add(new FunctionWrapper(declaration));
+    }
+
+    return callbacks;
+  }
+
+  /**
+   * Create a function declaration from an object method.
+   *
+   * @param object The object.
+   * @param method The method.
+   * @return The newly created function declaration.
+   */
+  public FunctionDeclaration createDeclaration(Context context, Object object, Method method) {
+    StringBuilder signature = new StringBuilder();
+    Parameter[] parameters = method.getParameters();
+
+    List<ArgumentConverter> argumentConverters = new ArrayList<>(method.getParameterCount());
+    signature.append(method.getName()).append("(");
+
+    for (int index = 0; index < parameters.length; index++) {
+      Parameter parameter = parameters[index];
+      ArgumentConverter argumentConverter = createArgumentConverter(object, method, parameter);
+
+      argumentConverters.add(argumentConverter);
+
+      List<FunctionArgumentSignature> list = argumentConverter.argumentSignatures(
+          object,
+          method,
+          parameter,
+          functionArgumentSignatureFactory
+      );
+
+      for (FunctionArgumentSignature functionArgumentSignature : list) {
+        String name = functionArgumentSignature.getName();
+        Object defaultValue = functionArgumentSignature.getDefaultValue();
+
+        if (index > 0) {
+          signature.append(", ");
+        }
+
+        signature.append("$").append(name);
+
+        if (null != defaultValue) {
+          signature.append(": ").append(formatDefaultValue(defaultValue));
+        }
+      }
+    }
+
+    signature.append(")");
+
+    return new FunctionDeclaration(
+        context,
+        signature.toString(),
+        object,
+        method,
+        argumentConverters
+    );
+  }
+
+  /**
+   * Format a default value for libsass function signature.
+   *
+   * @param value The default value.
+   * @return The formated default value.
+   */
+  private String formatDefaultValue(Object value) {
+    if (value instanceof Boolean) {
+      return ((Boolean) value) ? "true" : "false";
+    }
+
+    if (value instanceof Number) {
+      return value.toString();
+    }
+
+    if (value instanceof Collection) {
+      StringBuilder builder = new StringBuilder();
+
+      builder.append("(");
+      boolean first = true;
+      for (Object item : ((Collection) value)) {
+        if (first) {
+          first = false;
+        } else {
+          builder.append(",");
+        }
+        builder.append(formatDefaultValue(item));
+      }
+      builder.append(")");
+
+      return builder.toString();
+    }
+
+    String string = value.toString();
+
+    if (string.startsWith("$")) {
+      return string;
+    }
+
+    return SassString.escape(string);
+  }
+
+  private ArgumentConverter createArgumentConverter(
+      Object object, Method method,
+      Parameter parameter
+  ) {
+    Class<?> type = parameter.getType();
+
+    for (ArgumentConverterFactory factory : argumentConverterFactories) {
+      if (factory.canHandle(type)) {
+        return factory.create(object, method, parameter);
+      }
+    }
+
+    return new ObjectArgumentConverter(type);
+  }
+}

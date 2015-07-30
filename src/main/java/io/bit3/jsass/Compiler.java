@@ -8,6 +8,9 @@ import java.nio.charset.Charset;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.FileContext;
 import io.bit3.jsass.context.StringContext;
+import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
+import io.bit3.jsass.function.FunctionWrapperFactory;
+import io.bit3.jsass.native_adapter.NativeAdapter;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
@@ -28,7 +31,10 @@ public class Compiler {
    * Create new compiler.
    */
   public Compiler() {
-    adapter = new NativeAdapter();
+    FunctionArgumentSignatureFactory functionArgumentSignatureFactory = new FunctionArgumentSignatureFactory();
+    FunctionWrapperFactory functionWrapperFactory = new FunctionWrapperFactory(functionArgumentSignatureFactory);
+
+    adapter = new NativeAdapter(functionWrapperFactory);
   }
 
   /**

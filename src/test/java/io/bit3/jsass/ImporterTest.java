@@ -3,14 +3,10 @@ package io.bit3.jsass;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 
-import io.bit3.jsass.context.Context;
 import io.bit3.jsass.importer.Import;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -50,18 +46,8 @@ public class ImporterTest {
         options
     );
 
-    assertFalse(functions.importPaths.isEmpty());
+    assertFalse(functions.calls == 0);
     assertFalse(importer.importPaths.isEmpty());
-
-    assertArrayEquals(
-        new String[]{
-            "/input.scss",
-            "/foo/import.scss",
-            "/bar/imported.scss",
-            "/foo/import.scss"
-        },
-        functions.importPaths.toArray()
-    );
 
     assertArrayEquals(
         new String[]{
@@ -74,10 +60,10 @@ public class ImporterTest {
 
   public static class Functions {
 
-    protected List<String> importPaths = new LinkedList<>();
+    protected int calls = 0;
 
-    public String func(Import lastImport) {
-      this.importPaths.add(lastImport.getUri().toString());
+    public String func() {
+      calls ++;
       return "World";
     }
   }
@@ -88,7 +74,7 @@ public class ImporterTest {
 
     @Override
     public Collection<Import> apply(
-        String url, Import previous, Context originalContext
+        String url, Import previous
     ) {
       this.importPaths.add(previous.getUri().toString());
 

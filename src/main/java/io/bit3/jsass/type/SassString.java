@@ -1,11 +1,17 @@
 package io.bit3.jsass.type;
 
+import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
+import org.apache.commons.lang3.text.translate.EntityArrays;
+import org.apache.commons.lang3.text.translate.JavaUnicodeEscaper;
+import org.apache.commons.lang3.text.translate.LookupTranslator;
+
 import java.util.stream.IntStream;
 
 /**
  * A sass probably quoted string value.
  */
-public class SassString implements CharSequence {
+public class SassString implements CharSequence, SassValue {
+  public static final int TYPE = 3;
 
   /**
    * The default quote character.
@@ -113,6 +119,25 @@ public class SassString implements CharSequence {
     this.quote = quote;
   }
 
+  public static String escape(String value) {
+    return escape(value, DEFAULT_QUOTE_CHARACTER);
+  }
+
+  public static String escape(String value, char quote) {
+    final CharSequenceTranslator ESCAPE =
+        new LookupTranslator(
+            new String[][] {
+                {Character.toString(quote), "\\" + quote},
+                {"\\", "\\\\"},
+            }).with(
+            new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_ESCAPE())
+        ).with(
+            JavaUnicodeEscaper.outsideOf(32, 0x7f)
+        );
+
+    return quote + ESCAPE.translate(value) + quote;
+  }
+
   @Override
   public int length() {
     return value.length();
@@ -140,6 +165,6 @@ public class SassString implements CharSequence {
 
   @Override
   public String toString() {
-    return value;
+    return quoted ? escape(value, quote) : value;
   }
 }

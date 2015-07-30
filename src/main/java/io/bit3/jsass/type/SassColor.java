@@ -3,7 +3,8 @@ package io.bit3.jsass.type;
 /**
  * A sass color value.
  */
-public class SassColor {
+public class SassColor implements SassValue {
+  public static final int TYPE = 5;
 
   /**
    * The red value, between 0.0 and 1.0.

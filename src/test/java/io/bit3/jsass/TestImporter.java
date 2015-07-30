@@ -1,6 +1,5 @@
 package io.bit3.jsass;
 
-import io.bit3.jsass.context.Context;
 import io.bit3.jsass.importer.Import;
 import io.bit3.jsass.importer.Importer;
 import org.apache.commons.io.IOUtils;
@@ -15,7 +14,7 @@ import java.util.LinkedList;
 public class TestImporter implements Importer {
 
   @Override
-  public Collection<Import> apply(String url, Import previous, Context originalContext) {
+  public Collection<Import> apply(String url, Import previous) {
     if ("functions".equals(url)) {
       return new LinkedList<>();
     }

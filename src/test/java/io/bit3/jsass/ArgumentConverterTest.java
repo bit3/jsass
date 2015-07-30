@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.importer.Import;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +56,6 @@ public class ArgumentConverterTest {
             {"16", 16d, new DoubleArgumentMock()},
             {"16", 16f, new FloatArgumentMock()},
             {"16", 16, new IntegerArgumentMock()},
-            {"", Import.class, new ImportArgumentMock()},
             {"16", 16L, new LongArgumentMock()},
             {"16", (short) 16, new ShortArgumentMock()},
             {"'foo'", "foo", new StringArgumentMock()},
@@ -79,8 +80,11 @@ public class ArgumentConverterTest {
 
     String source = String.format(SOURCE, sassValue);
 
-    compiler.compileString(source, new URI("input.scss"), new URI("output.css"), options);
+    Output output = compiler.compileString(source, new URI("input.scss"), new URI("output.css"), options);
 
+    assertEquals(0, output.getErrorStatus());
+    assertTrue(StringUtils.isEmpty(output.getErrorJson()));
+    assertTrue(StringUtils.isEmpty(output.getErrorMessage()));
     assertTrue(mock.called);
     assertNotNull(mock.actualValue);
 
@@ -146,14 +150,6 @@ public class ArgumentConverterTest {
 
   public static class IntegerArgumentMock extends AbstractedCalledMock {
     public String func(Integer arg) {
-      called = true;
-      actualValue = arg;
-      return "called";
-    }
-  }
-
-  public static class ImportArgumentMock extends AbstractedCalledMock {
-    public String func(Import arg) {
       called = true;
       actualValue = arg;
       return "called";
