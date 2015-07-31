@@ -3,11 +3,6 @@
 [![Gratipay](https://img.shields.io/gratipay/bit3.svg?style=flat-square)](https://gratipay.com/bit3/)
 [![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](https://readthedocs.org/projects/jsass/?badge=latest)
 
-**EXPERIMENTAL BRANCH**
-
-This is an experimental branch to upgrade to libsass 3.2+, but due too api changes the upgrade is
-incomplete and will not work as expected! 
-
 Java sass compiler
 ==================
 
