@@ -1,8 +1,11 @@
 package io.bit3.jsass.native_adapter;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +23,7 @@ import io.bit3.jsass.importer.Importer;
  */
 public class NativeAdapter {
   static {
-    // System.loadLibrary("libsass");
-    // System.loadLibrary("libjsass_native_adapater");
-    System.load("/home/lins/workspaces/bit3/jsass/src/main/resources/linux-x86-64/libsass.so");
-    System.load("/home/lins/workspaces/bit3/jsass/src/main/resources/linux-x86-64/libjsass_native_adapter.so");
+    NativeLoader.loadLibrary();
   }
 
   private final FunctionWrapperFactory functionWrapperFactory;
@@ -145,12 +145,12 @@ public class NativeAdapter {
   }
 
   /**
-   * Native call, see file src/main/c/io_bit3_jsass_NativeAdapter.c.
+   * Native call.
    */
   private native Output compileFile(NativeFileContext context);
 
   /**
-   * Native call, see file src/main/c/io_bit3_jsass_NativeAdapter.c.
+   * Native call.
    */
   private native Output compileString(NativeStringContext context);
 }

@@ -133,7 +133,6 @@
                 <version>2.18.1</version>
                 <configuration>
                     <useFile>false</useFile>
-                    <argLine>-Djava.library.path=${basedir}/src/main/resources</argLine>
                 </configuration>
             </plugin>
             <plugin>

@@ -5,24 +5,6 @@
 #include <stdlib.h>
 #include "io_bit3_jsass_native_adapter_NativeAdapter.h"
 
-// Define X_DEBUG here, to enable debugging output
-// #define X_DEBUG
-
-#ifdef X_DEBUG
-int debug_call_stack_size = 0;
-
-/**
- * Print indention for debugging purpose.
- */
-void indent() {
-    for (int i = 1; i < debug_call_stack_size; i++) {
-        printf("    ");
-    }
-    printf(" | ");
-}
-
-#endif
-
 /**
  * Call a JNI method and return its jobject value.
  *
@@ -41,26 +23,8 @@ jobject call_class_object_method(
         const char *method_name,
         const char *method_signature
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-    indent();
-    printf("call_class_object_method :: %s %s\n", method_name, method_signature);
-#endif
-
     jmethodID j_method = (*env)->GetMethodID(env, j_class, method_name, method_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  method id: %p\n", j_method);
-#endif
-
     jobject result = (*env)->CallObjectMethod(env, j_object, j_method);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %p\n", result);
-    debug_call_stack_size--;
-#endif
 
     return result;
 }
@@ -84,31 +48,9 @@ char *call_class_string_method(
         jclass j_class,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *method_signature = "()Ljava/lang/String;";
-
-#ifdef X_DEBUG
-    indent();
-    printf("call_class_string_method :: %p->%p->%s %s\n", j_object, j_class, method_name, method_signature);
-#endif
-
     jmethodID j_method = (*env)->GetMethodID(env, j_class, method_name, method_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  method id: %p\n", j_method);
-#endif
-
     jobject j_result = (*env)->CallObjectMethod(env, j_object, j_method);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  intermediate result: %p\n", j_result);
-#endif
-
     char *c_string;
 
     if (j_result) {
@@ -118,12 +60,6 @@ char *call_class_string_method(
     } else {
         c_string = "";
     }
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %s\n", c_string);
-    debug_call_stack_size--;
-#endif
 
     return c_string;
 }
@@ -144,31 +80,9 @@ char call_class_char_method(
         jclass j_class,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *method_signature = "()C";
-
-#ifdef X_DEBUG
-    indent();
-    printf("call_class_char_method :: %s %s\n", method_name, method_signature);
-#endif
-
     jmethodID j_method = (*env)->GetMethodID(env, j_class, method_name, method_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  method id: %p\n", j_method);
-#endif
-
     char result = (char) (*env)->CallCharMethod(env, j_object, j_method);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %c\n", result);
-    debug_call_stack_size--;
-#endif
 
     return result;
 }
@@ -189,31 +103,9 @@ bool call_class_boolean_method(
         jclass j_class,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *method_signature = "()Z";
-
-#ifdef X_DEBUG
-    indent();
-    printf("call_class_boolean_method :: %s %s\n", method_name, method_signature);
-#endif
-
     jmethodID j_method = (*env)->GetMethodID(env, j_class, method_name, method_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  method id: %p\n", j_method);
-#endif
-
     bool result = (*env)->CallBooleanMethod(env, j_object, j_method);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %s\n", result ? "true" : "false");
-    debug_call_stack_size--;
-#endif
 
     return result;
 }
@@ -234,31 +126,9 @@ int call_class_int_method(
         jclass j_class,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *method_signature = "()I";
-
-#ifdef X_DEBUG
-    indent();
-    printf("call_class_int_method :: %s %s\n", method_name, method_signature);
-#endif
-
     jmethodID j_method = (*env)->GetMethodID(env, j_class, method_name, method_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  method id: %p\n", j_method);
-#endif
-
     int result = (*env)->CallIntMethod(env, j_object, j_method);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %d\n", result);
-    debug_call_stack_size--;
-#endif
 
     return result;
 }
@@ -279,31 +149,9 @@ double call_class_double_method(
         jclass j_class,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *method_signature = "()D";
-
-#ifdef X_DEBUG
-    indent();
-    printf("call_class_double_method :: %s %s\n", method_name, method_signature);
-#endif
-
     jmethodID j_method = (*env)->GetMethodID(env, j_class, method_name, method_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  method id: %p\n", j_method);
-#endif
-
     double result = (*env)->CallDoubleMethod(env, j_object, j_method);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %f\n", result);
-    debug_call_stack_size--;
-#endif
 
     return result;
 }
@@ -326,24 +174,10 @@ jobject call_object_method(
         const char *method_name,
         const char *method_signature
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-    indent();
-    printf("call_object_method :: %p->%s %s\n", j_object, method_name, method_signature);
-#endif
-
     jclass j_class = (*env)->GetObjectClass(env, j_object);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  class: %p\n", j_class);
-#endif
-
     jobject result = call_class_object_method(env, j_object, j_class, method_name, method_signature);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_class);
 
     return result;
 }
@@ -367,24 +201,10 @@ const char *call_string_method(
         jobject j_object,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-    indent();
-    printf("call_string_method :: %p->%s\n", j_object, method_name);
-#endif
-
     jclass j_class = (*env)->GetObjectClass(env, j_object);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  class: %p\n", j_class);
-#endif
-
     const char *result = call_class_string_method(env, j_object, j_class, method_name);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_class);
 
     return result;
 }
@@ -405,24 +225,10 @@ bool call_boolean_method(
         jobject j_object,
         const char *method_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-    indent();
-    printf("call_boolean_method :: %p->%s\n", j_object, method_name);
-#endif
-
     jclass j_class = (*env)->GetObjectClass(env, j_object);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  class: %p\n", j_class);
-#endif
-
     bool result = call_class_boolean_method(env, j_object, j_class, method_name);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_class);
 
     return result;
 }
@@ -444,25 +250,8 @@ jobject get_class_object_property(
         const char *property_name,
         const char *property_signature
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-    indent();
-    printf("get_class_object_property :: %p->%p->%s %s\n", j_object, j_class, property_name, property_signature);
-#endif
-
     jfieldID j_field = (*env)->GetFieldID(env, j_class, property_name, property_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  field id: %p\n", j_field);
-#endif
-
     jobject j_result = (*env)->GetObjectField(env, j_object, j_field);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %p\n", j_result);
-#endif
 
     return j_result;
 }
@@ -484,22 +273,7 @@ char *get_field_string(
         jobject j_object,
         jfieldID j_field
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
-#ifdef X_DEBUG
-    indent();
-    printf("get_class_string_property :: %p->%p\n", j_object, j_field);
-#endif
-
     jobject j_result = (*env)->GetObjectField(env, j_object, j_field);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  intermediate result: %p\n", j_result);
-#endif
-
     char *c_string;
 
     if (j_result) {
@@ -509,12 +283,6 @@ char *get_field_string(
     } else {
         c_string = "";
     }
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %s\n", c_string);
-    debug_call_stack_size--;
-#endif
 
     return c_string;
 }
@@ -538,30 +306,9 @@ char *get_class_string_property(
         jclass j_class,
         const char *property_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *property_signature = "Ljava/lang/String;";
-
-#ifdef X_DEBUG
-    indent();
-    printf("get_class_string_property :: %p->%p->%s %s\n", j_object, j_class, property_name, property_signature);
-#endif
-
     jfieldID j_field = (*env)->GetFieldID(env, j_class, property_name, property_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  field id: %p\n", j_field);
-#endif
-
     jobject j_result = (*env)->GetObjectField(env, j_object, j_field);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  intermediate result: %p\n", j_result);
-#endif
 
     char *c_string;
 
@@ -572,12 +319,6 @@ char *get_class_string_property(
     } else {
         c_string = "";
     }
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %s\n", c_string);
-    debug_call_stack_size--;
-#endif
 
     return c_string;
 }
@@ -598,31 +339,9 @@ bool get_class_bool_property(
         jclass j_class,
         const char *property_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *property_signature = "Z";
-
-#ifdef X_DEBUG
-    indent();
-    printf("get_class_bool_property :: %p->%p->%s %s\n", j_object, j_class, property_name, property_signature);
-#endif
-
     jfieldID j_field = (*env)->GetFieldID(env, j_class, property_name, property_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  field id: %p\n", j_field);
-#endif
-
     jboolean j_result = (*env)->GetBooleanField(env, j_object, j_field);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %s\n", j_result ? "true" : "false");
-    debug_call_stack_size--;
-#endif
 
     return j_result;
 }
@@ -643,31 +362,9 @@ int get_class_int_property(
         jclass j_class,
         const char *property_name
 ) {
-#ifdef X_DEBUG
-    debug_call_stack_size++;
-#endif
-
     const char *property_signature = "I";
-
-#ifdef X_DEBUG
-    indent();
-    printf("get_class_int_property :: %p->%p->%s %s\n", j_object, j_class, property_name, property_signature);
-#endif
-
     jfieldID j_field = (*env)->GetFieldID(env, j_class, property_name, property_signature);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  field id: %p\n", j_field);
-#endif
-
     jint j_result = (*env)->GetIntField(env, j_object, j_field);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  result: %d\n", j_result);
-    debug_call_stack_size--;
-#endif
 
     return j_result;
 }
@@ -688,7 +385,11 @@ jobject get_object_property(
         const char *property_signature
 ) {
     jclass j_class = (*env)->GetObjectClass(env, j_object);
-    return get_class_object_property(env, j_object, j_class, property_name, property_signature);
+    jobject j_result = get_class_object_property(env, j_object, j_class, property_name, property_signature);
+
+    (*env)->DeleteLocalRef(env, j_class);
+
+    return j_result;
 }
 
 /**
@@ -710,7 +411,11 @@ char *get_string_property(
         const char *property_name
 ) {
     jclass j_class = (*env)->GetObjectClass(env, j_object);
-    return get_class_string_property(env, j_object, j_class, property_name);
+    char* c_result = get_class_string_property(env, j_object, j_class, property_name);
+
+    (*env)->DeleteLocalRef(env, j_class);
+
+    return c_result;
 }
 
 /**
@@ -734,6 +439,7 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         j_value = (*env)->NewObject(env, j_class, j_constructor, c_value, j_unit);
 
         (*env)->DeleteLocalRef(env, j_unit);
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     else if (sass_value_is_string(sass_value)) {
@@ -755,6 +461,7 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         j_value = (*env)->NewObject(env, j_class, j_constructor, j_string, c_quoted);
 
         (*env)->DeleteLocalRef(env, j_string);
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     else if (sass_value_is_boolean(sass_value)) {
@@ -763,6 +470,8 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         jclass j_class = (*env)->FindClass(env, "io/bit3/jsass/type/SassBoolean");
         jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(Z)V");
         j_value = (*env)->NewObject(env, j_class, j_constructor, c_value);
+
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     else if (sass_value_is_color(sass_value)) {
@@ -774,6 +483,8 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         jclass j_class = (*env)->FindClass(env, "io/bit3/jsass/type/SassColor");
         jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(DDDD)V");
         j_value = (*env)->NewObject(env, j_class, j_constructor, red, green, blue, alpha);
+
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     else if (sass_value_is_list(sass_value)) {
@@ -805,6 +516,8 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         }
 
         (*env)->DeleteLocalRef(env, j_separator);
+        (*env)->DeleteLocalRef(env, j_separator_class);
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     else if (sass_value_is_map(sass_value)) {
@@ -814,17 +527,21 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(I)V");
         j_value = (*env)->NewObject(env, j_class, j_constructor, (jint) c_length);
 
-        jmethodID j_put_method = (*env)->GetMethodID(env, j_class, "put",
-                                                     "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+        jmethodID j_put_method = (*env)->GetMethodID(
+                env, j_class, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+        );
 
         for (size_t i = 0; i < c_length; i++) {
             union Sass_Value *c_key = sass_map_get_key(sass_value, i);
             union Sass_Value *c_item = sass_map_get_value(sass_value, i);
-            jobject j_string = convert_sass_value_to_java(env, c_key);
+            jobject j_key = convert_sass_value_to_java(env, c_key);
             jobject j_item = convert_sass_value_to_java(env, c_item);
-            (*env)->CallObjectMethod(env, j_value, j_put_method, j_item);
+            (*env)->CallObjectMethod(env, j_value, j_put_method, j_key, j_item);
+            (*env)->DeleteLocalRef(env, j_key);
             (*env)->DeleteLocalRef(env, j_item);
         }
+
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     else if (sass_value_is_error(sass_value)) {
@@ -835,6 +552,7 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(Ljava/lang/String;)V");
         j_value = (*env)->NewObject(env, j_class, j_constructor, j_message);
 
+        (*env)->DeleteLocalRef(env, j_class);
         (*env)->DeleteLocalRef(env, j_message);
     }
 
@@ -846,6 +564,7 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(Ljava/lang/String;)V");
         j_value = (*env)->NewObject(env, j_class, j_constructor, j_message);
 
+        (*env)->DeleteLocalRef(env, j_class);
         (*env)->DeleteLocalRef(env, j_message);
     }
 
@@ -853,6 +572,8 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         jclass j_class = (*env)->FindClass(env, "io/bit3/jsass/type/SassNull");
         jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "()V");
         j_value = (*env)->NewObject(env, j_class, j_constructor);
+
+        (*env)->DeleteLocalRef(env, j_class);
     }
 
     // (*env)->DeleteLocalRef(env, j_value);
@@ -874,18 +595,22 @@ union Sass_Value *convert_java_value_to_sass(JNIEnv *env, jobject j_value) {
     if (!j_type_field) {
         char message[128];
         sprintf(message, "Java value %p does not have any type", j_value);
+
+        (*env)->DeleteLocalRef(env, j_type_class);
+
         return sass_make_error(message);
     }
 
     jint type = (*env)->GetStaticIntField(env, j_type_class, j_type_field);
+    union Sass_Value *sass_result = 0;
 
     if (1 == type) {
-        return sass_make_null();
+        sass_result = sass_make_null();
     } else if (2 == type) {
         double c_value = call_class_double_method(env, j_value, j_type_class, "doubleValue");
         char *c_unit = call_class_string_method(env, j_value, j_type_class, "getUnit");
 
-        return sass_make_number(c_value, c_unit);
+        sass_result = sass_make_number(c_value, c_unit);
     } else if (3 == type) {
         char *c_string = call_class_string_method(env, j_value, j_type_class, "getValue");
         bool c_quoted = call_class_boolean_method(env, j_value, j_type_class, "isQuoted");
@@ -898,18 +623,18 @@ union Sass_Value *convert_java_value_to_sass(JNIEnv *env, jobject j_value) {
         union Sass_Value *sass_string = sass_make_string(c_string);
         sass_string_set_quoted(sass_string, c_quoted);
 
-        return sass_string;
+        sass_result = sass_string;
     } else if (4 == type) {
         bool c_value = call_class_boolean_method(env, j_value, j_type_class, "getValue");
 
-        return sass_make_boolean(c_value);
+        sass_result = sass_make_boolean(c_value);
     } else if (5 == type) {
         double c_red = call_class_double_method(env, j_value, j_type_class, "getRed");
         double c_green = call_class_double_method(env, j_value, j_type_class, "getGreen");
         double c_blue = call_class_double_method(env, j_value, j_type_class, "getBlue");
         double c_alpha = call_class_double_method(env, j_value, j_type_class, "getAlpha");
 
-        return sass_make_color(c_red, c_green, c_blue, c_alpha);
+        sass_result = sass_make_color(c_red, c_green, c_blue, c_alpha);
     } else if (6 == type) {
         int c_size = call_class_int_method(env, j_value, j_type_class, "size");
 
@@ -936,9 +661,10 @@ union Sass_Value *convert_java_value_to_sass(JNIEnv *env, jobject j_value) {
             (*env)->DeleteLocalRef(env, j_item);
         }
 
+        (*env)->DeleteLocalRef(env, j_separator_class);
         (*env)->DeleteLocalRef(env, j_separator);
 
-        return sass_list;
+        sass_result = sass_list;
     } else if (7 == type) {
         int c_size = call_class_int_method(env, j_value, j_type_class, "size");
 
@@ -972,16 +698,24 @@ union Sass_Value *convert_java_value_to_sass(JNIEnv *env, jobject j_value) {
             (*env)->DeleteLocalRef(env, j_entry);
         }
 
+        (*env)->DeleteLocalRef(env, j_iterator_class);
         (*env)->DeleteLocalRef(env, j_iterator);
+        (*env)->DeleteLocalRef(env, j_entry_class);
         (*env)->DeleteLocalRef(env, j_entry_set);
 
-        return sass_map;
+        sass_result = sass_map;
     } else if (8 == type) {
         const char *message = call_class_string_method(env, j_value, j_type_class, "getMessage");
-        return sass_make_error(message);
+        sass_result = sass_make_error(message);
     } else if (9 == type) {
         const char *message = call_class_string_method(env, j_value, j_type_class, "getMessage");
-        return sass_make_warning(message);
+        sass_result = sass_make_warning(message);
+    }
+
+    (*env)->DeleteLocalRef(env, j_type_class);
+
+    if (sass_result) {
+        return sass_result;
     }
 
     char message[128];
@@ -1013,21 +747,25 @@ union Sass_Value *function_callback(
         struct Sass_Compiler *sass_compiler
 ) {
     void *cookie = sass_function_get_cookie(sass_function_entry);
-
     struct function_cookie *c_function_cookie = (struct function_cookie *) cookie;
 
     JNIEnv *env = c_function_cookie->env;
 
     jobject j_arguments = convert_sass_value_to_java(env, sass_arguments);
 
-    jobject result = (*env)->CallObjectMethod(
+    jobject j_result = (*env)->CallObjectMethod(
             env,
             c_function_cookie->j_object,
             c_function_cookie->j_method,
             j_arguments
     );
 
-    return convert_java_value_to_sass(env, result);
+    union Sass_Value *sass_result = convert_java_value_to_sass(env, j_result);
+
+    (*env)->DeleteLocalRef(env, j_result);
+    (*env)->DeleteLocalRef(env, j_arguments);
+    
+    return sass_result;
 }
 
 /**
@@ -1106,7 +844,8 @@ Sass_Import_List importer_callback(
         jfieldID j_import_uri_property = (*env)->GetFieldID(env, j_import_class, "uri", "Ljava/lang/String;");
         jfieldID j_import_base_property = (*env)->GetFieldID(env, j_import_class, "base", "Ljava/lang/String;");
         jfieldID j_import_contents_property = (*env)->GetFieldID(env, j_import_class, "contents", "Ljava/lang/String;");
-        jfieldID j_import_sourceMap_property = (*env)->GetFieldID(env, j_import_class, "sourceMap", "Ljava/lang/String;");
+        jfieldID j_import_sourceMap_property = (*env)->GetFieldID(env, j_import_class, "sourceMap",
+                                                                  "Ljava/lang/String;");
 
         size_t i = 0;
         while ((*env)->CallBooleanMethod(env, j_iterator, j_iterator_hasNext_method)) {
@@ -1122,8 +861,13 @@ Sass_Import_List importer_callback(
             );
             sass_import_set_list_entry(sass_import_list, i, sass_import_entry);
 
+            (*env)->DeleteLocalRef(env, j_import);
             i++;
         }
+
+        (*env)->DeleteLocalRef(env, j_imports_class);
+        (*env)->DeleteLocalRef(env, j_iterator_class);
+        (*env)->DeleteLocalRef(env, j_iterator);
     }
 
     // cleanup
@@ -1134,8 +878,62 @@ Sass_Import_List importer_callback(
     (*env)->DeleteLocalRef(env, j_last_import_base);
     (*env)->DeleteLocalRef(env, j_last_import_path);
     (*env)->DeleteLocalRef(env, j_url);
+    (*env)->DeleteLocalRef(env, j_importer_class);
+    (*env)->DeleteLocalRef(env, j_import_class);
 
     return sass_import_list;
+}
+
+/**
+ * Walk over function and release the jni references.
+ */
+void release_function_cookie_references(JNIEnv *env, Sass_Function_List c_functions) {
+    for(size_t i = 0; true; i++) {
+        Sass_Function_Entry c_function = sass_function_get_list_entry(c_functions, i);
+
+        if (!c_function) {
+            break;
+        }
+
+        void *cookie = sass_function_get_cookie(c_function);
+        struct function_cookie *c_function_cookie = (struct function_cookie *) cookie;
+
+        (*env)->DeleteLocalRef(env, c_function_cookie->j_object);
+    }
+}
+
+/**
+ * Walk over function and release the jni references.
+ */
+void release_importers_cookie_references(JNIEnv *env, Sass_Importer_List c_importers) {
+    for(size_t i = 0; true; i++) {
+        Sass_Importer_Entry c_importer = sass_importer_get_list_entry(c_importers, i);
+
+        if (!c_importer) {
+            break;
+        }
+
+        void *cookie = sass_importer_get_cookie(c_importer);
+        struct importer_cookie *c_importer_cookie = (struct importer_cookie *) cookie;
+
+        (*env)->DeleteLocalRef(env, c_importer_cookie->j_object);
+    }
+}
+
+/**
+ * Walk over function and importer cookies and release the jni references.
+ */
+void release_all_cookie_references(JNIEnv *env, struct Sass_Context *sass_context) {
+    struct Sass_Options *sass_options = sass_context_get_options(sass_context);
+
+    Sass_Function_List c_functions = sass_option_get_c_functions(sass_options);
+    release_function_cookie_references(env, c_functions);
+
+    Sass_Importer_List c_headers = sass_option_get_c_headers(sass_options);
+    release_importers_cookie_references(env, c_headers);
+
+    Sass_Importer_List c_importers = sass_option_get_c_importers(sass_options);
+    release_importers_cookie_references(env, c_importers);
 }
 
 /**
@@ -1178,6 +976,7 @@ jobject parse_and_execute(JNIEnv *env, struct Sass_Compiler *sass_compiler, stru
             error_status, j_error_json, j_error_text, j_error_message, j_error_file, j_error_src
     );
 
+    (*env)->DeleteLocalRef(env, j_class);
     (*env)->DeleteLocalRef(env, j_css);
     (*env)->DeleteLocalRef(env, j_source_map);
     (*env)->DeleteLocalRef(env, j_error_json);
@@ -1185,6 +984,7 @@ jobject parse_and_execute(JNIEnv *env, struct Sass_Compiler *sass_compiler, stru
     (*env)->DeleteLocalRef(env, j_error_message);
     (*env)->DeleteLocalRef(env, j_error_file);
     (*env)->DeleteLocalRef(env, j_error_src);
+    release_all_cookie_references(env, sass_context);
 
     sass_delete_compiler(sass_compiler);
 
@@ -1192,61 +992,23 @@ jobject parse_and_execute(JNIEnv *env, struct Sass_Compiler *sass_compiler, stru
 }
 
 /**
- * Configure the sass options corresponding to the java context options.
+ * Set custom functions in the sass options.
  *
- * @param env           The JNI environment.
- * @param j_context     The java context.
- * @param sass_options  The sass options.
+ * @param env             The JNI environment.
+ * @param sass_options    The sass options.
+ * @param j_options       The java options.
+ * @param j_options_class The java options class.
  */
-void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass_options) {
-    jobject j_options = get_object_property(env, j_context, "options", "Lio/bit3/jsass/native_adapter/NativeOptions;");
-
-#ifdef X_DEBUG
-    indent();
-    printf("configure_options: %p -> %p\n", j_options, sass_options);
-    debug_call_stack_size++;
-#endif
-
-    jclass j_class = (*env)->FindClass(env, "io/bit3/jsass/native_adapter/NativeOptions");
-
-    // NativeContext.inputPath
-    const char *c_input_path = get_string_property(env, j_context, "inputPath");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  input path: %s\n", c_input_path);
-#endif
-
-    sass_option_set_input_path(sass_options, c_input_path);
-
-    // NativeContext.outputPath
-    const char *c_output_path = get_string_property(env, j_context, "outputPath");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  output path: %s\n", c_output_path);
-#endif
-
-    sass_option_set_output_path(sass_options, c_output_path);
-
-    // NativeOptions.functions
+void configure_functions(
+        JNIEnv *env,
+        struct Sass_Options *sass_options,
+        jobject j_options,
+        jobject j_options_class
+) {
     jarray j_functions = get_class_object_property(
-            env, j_options, j_class, "functions", "[Lio/bit3/jsass/function/FunctionWrapper;"
+            env, j_options, j_options_class, "functions", "[Lio/bit3/jsass/function/FunctionWrapper;"
     );
-
-#ifdef X_DEBUG
-    indent();
-    printf("  functions: \"%p\"\n", j_functions);
-    debug_call_stack_size++;
-#endif
-
     jsize j_functions_length = (*env)->GetArrayLength(env, j_functions);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  length: \"%d\"\n", j_functions_length);
-#endif
-
     jclass j_function_wrapper_class = (*env)->FindClass(env, "io/bit3/jsass/function/FunctionWrapper");
     jmethodID j_function_wrapper_apply_method = (*env)->GetMethodID(
             env, j_function_wrapper_class, "apply", "(Lio/bit3/jsass/type/SassValue;)Lio/bit3/jsass/type/SassValue;"
@@ -1277,28 +1039,24 @@ void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass
 
     sass_option_set_c_functions(sass_options, sass_function_list);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_function_wrapper_class);
+    (*env)->DeleteLocalRef(env, j_functions);
+}
 
-    // NativeOptions.headerImporters
+/**
+ * Set header importers in the sass options.
+ *
+ * @param env             The JNI environment.
+ * @param sass_options    The sass options.
+ * @param j_options       The java options.
+ * @param j_options_class The java options class.
+ */
+void configure_header_importers(JNIEnv *env, struct Sass_Options *sass_options, jobject j_options,
+                                jobject j_options_class) {
     jarray j_header_importers = get_class_object_property(
-            env, j_options, j_class, "headerImporters", "[Lio/bit3/jsass/native_adapter/NativeImporterWrapper;"
+            env, j_options, j_options_class, "headerImporters", "[Lio/bit3/jsass/native_adapter/NativeImporterWrapper;"
     );
-
-#ifdef X_DEBUG
-    indent();
-    printf("  header_importers: \"%p\"\n", j_header_importers);
-    debug_call_stack_size++;
-#endif
-
     jsize j_header_importers_length = (*env)->GetArrayLength(env, j_header_importers);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  length: \"%d\"\n", j_header_importers_length);
-#endif
-
     Sass_Importer_List sass_header_importer_list = sass_make_importer_list((size_t) j_header_importers_length);
 
     for (size_t i = 0; i < j_header_importers_length; i++) {
@@ -1316,28 +1074,22 @@ void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass
 
     sass_option_set_c_headers(sass_options, sass_header_importer_list);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_header_importers);
+}
 
-    // NativeOptions.importers
+/**
+ * Set importers in the sass options.
+ *
+ * @param env             The JNI environment.
+ * @param sass_options    The sass options.
+ * @param j_options       The java options.
+ * @param j_options_class The java options class.
+ */
+void configure_importers(JNIEnv *env, struct Sass_Options *sass_options, jobject j_options, jobject j_options_class) {
     jarray j_importers = get_class_object_property(
-            env, j_options, j_class, "importers", "[Lio/bit3/jsass/native_adapter/NativeImporterWrapper;"
+            env, j_options, j_options_class, "importers", "[Lio/bit3/jsass/native_adapter/NativeImporterWrapper;"
     );
-
-#ifdef X_DEBUG
-    indent();
-    printf("  importers: \"%p\"\n", j_importers);
-    debug_call_stack_size++;
-#endif
-
     jsize j_importers_length = (*env)->GetArrayLength(env, j_importers);
-
-#ifdef X_DEBUG
-    indent();
-    printf("  length: \"%d\"\n", j_importers_length);
-#endif
-
     Sass_Importer_List sass_importer_list = sass_make_importer_list((size_t) j_importers_length);
 
     for (size_t i = 0; i < j_importers_length; i++) {
@@ -1355,171 +1107,106 @@ void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass
 
     sass_option_set_c_importers(sass_options, sass_importer_list);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_importers);
+}
+
+/**
+ * Configure the sass options corresponding to the java context options.
+ *
+ * @param env           The JNI environment.
+ * @param j_context     The java context.
+ * @param sass_options  The sass options.
+ */
+void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass_options) {
+    jobject j_options = get_object_property(env, j_context, "options", "Lio/bit3/jsass/native_adapter/NativeOptions;");
+
+    jclass j_options_class = (*env)->FindClass(env, "io/bit3/jsass/native_adapter/NativeOptions");
+
+    // NativeContext.inputPath
+    const char *c_input_path = get_string_property(env, j_context, "inputPath");
+    sass_option_set_input_path(sass_options, c_input_path);
+
+    // NativeContext.outputPath
+    const char *c_output_path = get_string_property(env, j_context, "outputPath");
+    sass_option_set_output_path(sass_options, c_output_path);
+
+    // NativeOptions.functions
+    configure_functions(env, sass_options, j_options, j_options_class);
+
+    // NativeOptions.headerImporters
+    configure_header_importers(env, sass_options, j_options, j_options_class);
+
+    // NativeOptions.importers
+    configure_importers(env, sass_options, j_options, j_options_class);
 
     // NativeOptions.includePath
-    const char *c_include_path = get_class_string_property(env, j_options, j_class, "includePath");
+    const char *c_include_path = get_class_string_property(env, j_options, j_options_class, "includePath");
     sass_option_set_include_path(sass_options, c_include_path);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
-
     // NativeOptions.indent
-    const char *c_indent = get_class_string_property(env, j_options, j_class, "indent");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  indent: \"%s\"\n", c_indent);
-#endif
-
+    const char *c_indent = get_class_string_property(env, j_options, j_options_class, "indent");
     sass_option_set_indent(sass_options, c_indent);
 
     // NativeOptions.indentedSyntaxSrc
-    bool c_is_indented_syntax = get_class_bool_property(env, j_options, j_class, "isIndentedSyntaxSrc");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  indented syntax: %s\n", c_is_indented_syntax ? "true" : "false");
-#endif
-
+    bool c_is_indented_syntax = get_class_bool_property(env, j_options, j_options_class, "isIndentedSyntaxSrc");
     sass_option_set_is_indented_syntax_src(sass_options, c_is_indented_syntax);
 
     // NativeOptions.linefeed
-    const char *c_linefeed = get_class_string_property(env, j_options, j_class, "linefeed");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  linefeed: %s\n", c_linefeed);
-#endif
-
+    const char *c_linefeed = get_class_string_property(env, j_options, j_options_class, "linefeed");
     sass_option_set_linefeed(sass_options, c_linefeed);
 
     // NativeOptions.omitSourceMapUrl
-    bool c_is_omit_source_map_url = get_class_bool_property(env, j_options, j_class, "omitSourceMapUrl");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  omit source map url: %s\n", c_is_omit_source_map_url ? "true" : "false");
-#endif
-
+    bool c_is_omit_source_map_url = get_class_bool_property(env, j_options, j_options_class, "omitSourceMapUrl");
     sass_option_set_omit_source_map_url(sass_options, c_is_omit_source_map_url);
 
     // NativeOptions.outputStyle
-    jint j_output_style_numeric = get_class_int_property(env, j_options, j_class, "outputStyle");
-
+    jint j_output_style_numeric = get_class_int_property(env, j_options, j_options_class, "outputStyle");
     switch ((int) j_output_style_numeric) {
         case 2:
-#ifdef X_DEBUG
-            indent();
-            printf("  output style: expanded\n");
-#endif
-
             sass_option_set_output_style(sass_options, SASS_STYLE_EXPANDED);
             break;
 
         case 3:
-#ifdef X_DEBUG
-            indent();
-            printf("  output style: compact\n");
-#endif
-
             sass_option_set_output_style(sass_options, SASS_STYLE_COMPACT);
             break;
 
         case 4:
-#ifdef X_DEBUG
-            indent();
-            printf("  output style: compressed\n");
-#endif
-
             sass_option_set_output_style(sass_options, SASS_STYLE_COMPRESSED);
             break;
 
         default:
-#ifdef X_DEBUG
-            indent();
-            printf("  output style: nested\n");
-#endif
-
             sass_option_set_output_style(sass_options, SASS_STYLE_NESTED);
     }
 
     // NativeOptions.pluginPath
-    const char *c_plugin_path = get_class_string_property(env, j_options, j_class, "pluginPath");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  plugin path: %s\n", c_plugin_path);
-#endif
-
+    const char *c_plugin_path = get_class_string_property(env, j_options, j_options_class, "pluginPath");
     sass_option_set_plugin_path(sass_options, c_plugin_path);
 
     // NativeOptions.precision
-    int c_precision = get_class_int_property(env, j_options, j_class, "precision");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  precision: %d\n", c_precision);
-#endif
-
+    int c_precision = get_class_int_property(env, j_options, j_options_class, "precision");
     sass_option_set_precision(sass_options, c_precision);
 
     // NativeOptions.sourceComments
-    bool c_is_source_comments = get_class_bool_property(env, j_options, j_class, "sourceComments");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  source comments: %s\n", c_is_source_comments ? "true" : "false");
-#endif
-
+    bool c_is_source_comments = get_class_bool_property(env, j_options, j_options_class, "sourceComments");
     sass_option_set_source_comments(sass_options, c_is_source_comments);
 
     // NativeOptions.sourceMapContents
-    bool c_is_source_map_contents = get_class_bool_property(env, j_options, j_class, "sourceMapContents");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  source map contents: %s\n", c_is_source_map_contents ? "true" : "false");
-#endif
-
+    bool c_is_source_map_contents = get_class_bool_property(env, j_options, j_options_class, "sourceMapContents");
     sass_option_set_source_map_contents(sass_options, c_is_source_map_contents);
 
     // NativeOptions.sourceMapEmbed
-    bool c_is_source_map_embed = get_class_bool_property(env, j_options, j_class, "sourceMapEmbed");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  source map embed: %s\n", c_is_source_map_embed ? "true" : "false");
-#endif
-
+    bool c_is_source_map_embed = get_class_bool_property(env, j_options, j_options_class, "sourceMapEmbed");
     sass_option_set_source_map_embed(sass_options, c_is_source_map_embed);
 
     // NativeOptions.sourceMapFile
-    const char *c_source_map_file = get_class_string_property(env, j_options, j_class, "sourceMapFile");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  source map file: %s\n", c_source_map_file);
-#endif
-
+    const char *c_source_map_file = get_class_string_property(env, j_options, j_options_class, "sourceMapFile");
     sass_option_set_source_map_file(sass_options, c_source_map_file);
 
     // NativeOptions.sourceMapRoot
-    const char *c_source_map_root = get_class_string_property(env, j_options, j_class, "sourceMapRoot");
-
-#ifdef X_DEBUG
-    indent();
-    printf("  source map root: %s\n", c_source_map_root);
-#endif
-
+    const char *c_source_map_root = get_class_string_property(env, j_options, j_options_class, "sourceMapRoot");
     sass_option_set_source_map_root(sass_options, c_source_map_root);
 
-#ifdef X_DEBUG
-    debug_call_stack_size--;
-#endif
+    (*env)->DeleteLocalRef(env, j_options_class);
 }
 
 /**
@@ -1535,8 +1222,15 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_native_1adapter_NativeAdapter_
     configure_options(env, j_context, sass_options);
     sass_file_context_set_options(sass_context, sass_options);
     struct Sass_Compiler *sass_compiler = sass_make_file_compiler(sass_context);
+    
+    (*env)->DeleteLocalRef(env, j_adapter);
+    (*env)->DeleteLocalRef(env, j_context);
 
-    return parse_and_execute(env, sass_compiler, (struct Sass_Context *) sass_context);
+    jobject output = parse_and_execute(env, sass_compiler, (struct Sass_Context *) sass_context);
+
+    sass_delete_file_context(sass_context);
+
+    return output;
 }
 
 JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_native_1adapter_NativeAdapter_compileString
@@ -1549,5 +1243,12 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_native_1adapter_NativeAdapter_
     sass_data_context_set_options(sass_context, sass_options);
     struct Sass_Compiler *sass_compiler = sass_make_data_compiler(sass_context);
 
-    return parse_and_execute(env, sass_compiler, (struct Sass_Context *) sass_context);
+    (*env)->DeleteLocalRef(env, j_adapter);
+    (*env)->DeleteLocalRef(env, j_context);
+
+    jobject output = parse_and_execute(env, sass_compiler, (struct Sass_Context *) sass_context);
+
+    sass_delete_data_context(sass_context);
+
+    return output;
 }
