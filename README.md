@@ -16,7 +16,10 @@ Rebuild jni adapter
 -------------------
 
 ```bash
-$ mvn com.nativelibs4java:maven-jnaerator-plugin:generate
+$ cd src/main/c
+$ cmake .
+$ make
+$ cp libjsass.so ../resources/linux-x86-64/
 ```
 
 License
