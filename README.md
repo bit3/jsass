@@ -26,11 +26,3 @@ License
 -------
 
 MIT-License
-
-Attribution
------------
-
-This project originally based on [warmuuh/libsass-maven-plugin][warmuuh-libsass-maven-plugin].
-
-[warmuuh-libsass-maven-plugin]: https://github.com/warmuuh/libsass-maven-plugin
-[libsass]: https://github.com/sass/libsass
