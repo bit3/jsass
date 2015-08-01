@@ -1,5 +1,7 @@
 package io.bit3.jsass;
 
+import static org.junit.Assert.fail;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,8 +16,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
-
-import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class CompileFileTest {

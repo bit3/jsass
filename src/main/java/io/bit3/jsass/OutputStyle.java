@@ -21,9 +21,14 @@ public enum OutputStyle {
    */
   COMPRESSED(4);
 
-  public final int NUMERIC;
+  /**
+   * The numeric representation.
+   *
+   * <p>This is primary used in the native adapter.
+   */
+  public final int numeric;
 
   OutputStyle(int numeric) {
-    NUMERIC = numeric;
+    this.numeric = numeric;
   }
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 
 import io.bit3.jsass.importer.Import;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class ImporterTest {
 
   private Compiler compiler;
-  private Options  options;
+  private Options options;
 
   /**
    * Set up the compiler and the compiler options for each run.
@@ -33,13 +34,13 @@ public class ImporterTest {
   @Test
   public void testCall() throws Exception {
     Functions functions = new Functions();
-    Importer  importer  = new Importer();
+    Importer importer = new Importer();
 
     options.setSourceMapFile(new URI("/output.css.map"));
     options.getFunctionProviders().add(functions);
     options.getImporters().add(importer);
 
-    Output output = compiler.compileString(
+    compiler.compileString(
         "foo { bar: func(); } @import 'import';",
         new URI("/input.scss"),
         new URI("/output.css"),
@@ -63,7 +64,7 @@ public class ImporterTest {
     protected int calls = 0;
 
     public String func() {
-      calls ++;
+      calls++;
       return "World";
     }
   }

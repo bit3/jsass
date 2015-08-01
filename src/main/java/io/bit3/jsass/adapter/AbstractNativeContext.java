@@ -1,4 +1,4 @@
-package io.bit3.jsass.native_adapter;
+package io.bit3.jsass.adapter;
 
 abstract class AbstractNativeContext implements NativeContext {
   public final String inputPath;

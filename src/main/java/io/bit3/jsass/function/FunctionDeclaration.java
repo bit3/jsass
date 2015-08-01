@@ -1,13 +1,13 @@
 package io.bit3.jsass.function;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
 import io.bit3.jsass.type.SassValue;
 import io.bit3.jsass.type.TypeUtils;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains all informations about a declared custom function.

@@ -18,6 +18,9 @@ import java.util.List;
 
 public class FunctionArgumentSignatureFactory {
 
+  /**
+   * Create a new factory.
+   */
   public List<FunctionArgumentSignature> createDefaultArgumentSignature(Method method,
                                                                         Parameter parameter) {
     List<FunctionArgumentSignature> list = new LinkedList<>();

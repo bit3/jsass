@@ -13,7 +13,7 @@ file(COPY ${CMAKE_SOURCE_DIR}/../libsass/lib/libsass.so DESTINATION ${CMAKE_SOUR
 add_library(sass SHARED IMPORTED)
 SET_TARGET_PROPERTIES(sass PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/libsass.so)
 
-set(SOURCE_FILES io_bit3_jsass_native_adapter_NativeAdapter.c)
+set(SOURCE_FILES io_bit3_jsass_adapter_NativeAdapter.c)
 add_library(jsass SHARED ${SOURCE_FILES})
 set_property(TARGET jsass PROPERTY C_STANDARD 99)
 target_link_libraries(jsass sass)

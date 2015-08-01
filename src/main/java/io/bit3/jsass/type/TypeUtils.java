@@ -1,7 +1,6 @@
 package io.bit3.jsass.type;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -9,6 +8,9 @@ import java.util.stream.Collectors;
  * Helper class to convert libsass to java values and vise versa.
  */
 public class TypeUtils {
+  /**
+   * Try to convert "any" java object into a responsible sass value.
+   */
   public static SassValue convertToSassValue(Object value) {
     if (null == value) {
       return new SassNull();
@@ -52,7 +54,7 @@ public class TypeUtils {
     if (value instanceof Map) {
       SassMap map = new SassMap();
 
-      for (Map.Entry<?,?> entry : ((Map<?,?>)value).entrySet()) {
+      for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
         String key = entry.getKey().toString();
         SassValue item = TypeUtils.convertToSassValue(entry.getValue());
 

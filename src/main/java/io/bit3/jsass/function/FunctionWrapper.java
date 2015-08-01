@@ -26,6 +26,9 @@ public class FunctionWrapper {
     return declaration;
   }
 
+  /**
+   * Call the function.
+   */
   public SassValue apply(SassValue value) {
     SassList sassList;
 

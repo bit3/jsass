@@ -35,6 +35,7 @@ public class SassString implements CharSequence, SassValue {
 
   /**
    * Create a new single quoted string value.
+   *
    * @param value The string value.
    */
   public SassString(String value) {
@@ -44,7 +45,7 @@ public class SassString implements CharSequence, SassValue {
   /**
    * Create a new potentially quoted string value.
    *
-   * @param value The string value.
+   * @param value  The string value.
    * @param quoted Flag if the string is quoted.
    */
   public SassString(String value, boolean quoted) {
@@ -55,9 +56,9 @@ public class SassString implements CharSequence, SassValue {
   /**
    * Create a new potentially quoted string value with specific quotation character.
    *
-   * @param value The string value.
+   * @param value  The string value.
    * @param quoted Flag if the string is quoted.
-   * @param quote The quotation character.
+   * @param quote  The quotation character.
    */
   public SassString(String value, boolean quoted, char quote) {
     this.value = value;
@@ -119,14 +120,20 @@ public class SassString implements CharSequence, SassValue {
     this.quote = quote;
   }
 
+  /**
+   * Escape the string with default quote character.
+   */
   public static String escape(String value) {
     return escape(value, DEFAULT_QUOTE_CHARACTER);
   }
 
+  /**
+   * Escape the string with given quote character.
+   */
   public static String escape(String value, char quote) {
-    final CharSequenceTranslator ESCAPE =
+    final CharSequenceTranslator escape =
         new LookupTranslator(
-            new String[][] {
+            new String[][]{
                 {Character.toString(quote), "\\" + quote},
                 {"\\", "\\\\"},
             }).with(
@@ -135,7 +142,7 @@ public class SassString implements CharSequence, SassValue {
             JavaUnicodeEscaper.outsideOf(32, 0x7f)
         );
 
-    return quote + ESCAPE.translate(value) + quote;
+    return quote + escape.translate(value) + quote;
   }
 
   @Override

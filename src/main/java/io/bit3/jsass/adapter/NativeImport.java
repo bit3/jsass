@@ -1,8 +1,8 @@
-package io.bit3.jsass.native_adapter;
-
-import java.net.URI;
+package io.bit3.jsass.adapter;
 
 import io.bit3.jsass.importer.Import;
+
+import java.net.URI;
 
 class NativeImport {
 
@@ -14,11 +14,11 @@ class NativeImport {
 
   public final String sourceMap;
 
-  public NativeImport(Import _import) {
-    URI uri = _import.getUri();
-    URI base = _import.getBase();
-    String contents = _import.getContents();
-    String sourceMap = _import.getSourceMap();
+  public NativeImport(final Import sassImport) {
+    final URI uri = sassImport.getUri();
+    final URI base = sassImport.getBase();
+    final String contents = sassImport.getContents();
+    final String sourceMap = sassImport.getSourceMap();
 
     String uriString = null == uri ? "" : uri.toString();
     if (uriString.startsWith("file:")) {

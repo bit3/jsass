@@ -30,6 +30,9 @@ public class Output {
 
   private final String errorSrc;
 
+  /**
+   * Create a new output.
+   */
   public Output(
       String css,
       String sourceMap,

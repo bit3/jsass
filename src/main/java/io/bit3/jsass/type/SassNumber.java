@@ -20,7 +20,7 @@ public class SassNumber extends Number implements SassValue {
    * Create a new number.
    *
    * @param value The numeric value.
-   * @param unit The unit.
+   * @param unit  The unit.
    */
   public SassNumber(double value, String unit) {
     this.value = value;

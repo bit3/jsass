@@ -93,7 +93,7 @@
                                     <arg value="${project.basedir}/src/main/c"/>
                                     <arg value="-jni"/>
                                     <arg value="-force"/>
-                                    <arg value="io.bit3.jsass.native_adapter.NativeAdapter"/>
+                                    <arg value="io.bit3.jsass.adapter.NativeAdapter"/>
                                 </exec>
                             </target>
                         </configuration>

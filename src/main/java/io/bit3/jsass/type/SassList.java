@@ -44,8 +44,8 @@ public class SassList extends ArrayList<Object> implements SassValue {
 
   /**
    * Create a list from an existing values, with a specific separator character.
-   * @param separator The item separator.
    *
+   * @param separator  The item separator.
    * @param collection The existing values collection.
    */
   public SassList(Collection<?> collection, Separator separator) {

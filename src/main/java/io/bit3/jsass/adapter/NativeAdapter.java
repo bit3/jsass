@@ -1,13 +1,4 @@
-package io.bit3.jsass.native_adapter;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.stream.Collectors;
+package io.bit3.jsass.adapter;
 
 import io.bit3.jsass.Options;
 import io.bit3.jsass.Output;
@@ -17,6 +8,12 @@ import io.bit3.jsass.context.StringContext;
 import io.bit3.jsass.function.FunctionWrapper;
 import io.bit3.jsass.function.FunctionWrapperFactory;
 import io.bit3.jsass.importer.Importer;
+
+import java.io.File;
+import java.net.URI;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Adapter to native functions.
@@ -86,8 +83,10 @@ public class NativeAdapter {
   private NativeOptions convertToNativeOptions(Context context) {
     Options options = context.getOptions();
 
-    List<FunctionWrapper> functionWrappersList = functionWrapperFactory.compileFunctions(context, options.getFunctionProviders());
-    FunctionWrapper[] functionWrappers = functionWrappersList.toArray(new FunctionWrapper[functionWrappersList.size()]);
+    List<FunctionWrapper> functionWrappersList = functionWrapperFactory
+        .compileFunctions(context, options.getFunctionProviders());
+    FunctionWrapper[] functionWrappers = functionWrappersList
+        .toArray(new FunctionWrapper[functionWrappersList.size()]);
 
     List<Importer> headerImportersList = options.getHeaderImporters();
     NativeImporterWrapper[] headerImporters = headerImportersList
@@ -115,7 +114,7 @@ public class NativeAdapter {
 
     String linefeed = options.getLinefeed();
     boolean omitSourceMapUrl = options.isOmitSourceMapUrl();
-    int outputStyle = options.getOutputStyle().NUMERIC;
+    int outputStyle = options.getOutputStyle().numeric;
     String pluginPath = options.getPluginPath();
     int precision = options.getPrecision();
     boolean sourceComments = options.isSourceComments();

@@ -35,9 +35,9 @@ public class SassColor implements SassValue {
   /**
    * Create a RGB color.
    *
-   * @param red The red value, between 0.0 and 1.0.
+   * @param red   The red value, between 0.0 and 1.0.
    * @param green The green value, between 0.0 and 1.0.
-   * @param blue The blue value, between 0.0 and 1.0.
+   * @param blue  The blue value, between 0.0 and 1.0.
    */
   public SassColor(double red, double green, double blue) {
     this(red, green, blue, 1);
@@ -46,9 +46,9 @@ public class SassColor implements SassValue {
   /**
    * Create a RGB color.
    *
-   * @param red The red value, between 0.0 and 1.0.
+   * @param red   The red value, between 0.0 and 1.0.
    * @param green The green value, between 0.0 and 1.0.
-   * @param blue The blue value, between 0.0 and 1.0.
+   * @param blue  The blue value, between 0.0 and 1.0.
    * @param alpha The alpha value, between 0.0 and 1.0.
    */
   public SassColor(double red, double green, double blue, double alpha) {

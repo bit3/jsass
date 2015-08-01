@@ -3,7 +3,7 @@
 #include <string.h>
 #include <sass_context.h>
 #include <stdlib.h>
-#include "io_bit3_jsass_native_adapter_NativeAdapter.h"
+#include "io_bit3_jsass_adapter_NativeAdapter.h"
 
 /**
  * Call a JNI method and return its jobject value.
@@ -808,7 +808,7 @@ Sass_Import_List importer_callback(
     jstring j_last_import_base = c_last_import_base ? (*env)->NewStringUTF(env, c_last_import_base) : 0;
     jstring j_last_import_source = c_last_import_source ? (*env)->NewStringUTF(env, c_last_import_source) : 0;
     jstring j_last_import_srcmap = c_last_import_srcmap ? (*env)->NewStringUTF(env, c_last_import_srcmap) : 0;
-    jclass j_import_class = (*env)->FindClass(env, "io/bit3/jsass/native_adapter/NativeImport");
+    jclass j_import_class = (*env)->FindClass(env, "io/bit3/jsass/adapter/NativeImport");
     jmethodID j_import_constructor = (*env)->GetMethodID(
             env, j_import_class, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"
     );
@@ -818,10 +818,10 @@ Sass_Import_List importer_callback(
     );
 
     // call the java importer
-    jclass j_importer_class = (*env)->FindClass(env, "io/bit3/jsass/native_adapter/NativeImporterWrapper");
+    jclass j_importer_class = (*env)->FindClass(env, "io/bit3/jsass/adapter/NativeImporterWrapper");
     jmethodID j_importer_method = (*env)->GetMethodID(
             env, j_importer_class, "apply",
-            "(Ljava/lang/String;Lio/bit3/jsass/native_adapter/NativeImport;)Ljava/util/Collection;"
+            "(Ljava/lang/String;Lio/bit3/jsass/adapter/NativeImport;)Ljava/util/Collection;"
     );
     jobject j_imports = (*env)->CallObjectMethod(
             env, c_importer_cookie->j_object, j_importer_method, j_url, j_last_import
@@ -1054,7 +1054,7 @@ void configure_functions(
 void configure_header_importers(JNIEnv *env, struct Sass_Options *sass_options, jobject j_options,
                                 jobject j_options_class) {
     jarray j_header_importers = get_class_object_property(
-            env, j_options, j_options_class, "headerImporters", "[Lio/bit3/jsass/native_adapter/NativeImporterWrapper;"
+            env, j_options, j_options_class, "headerImporters", "[Lio/bit3/jsass/adapter/NativeImporterWrapper;"
     );
     jsize j_header_importers_length = (*env)->GetArrayLength(env, j_header_importers);
     Sass_Importer_List sass_header_importer_list = sass_make_importer_list((size_t) j_header_importers_length);
@@ -1087,7 +1087,7 @@ void configure_header_importers(JNIEnv *env, struct Sass_Options *sass_options, 
  */
 void configure_importers(JNIEnv *env, struct Sass_Options *sass_options, jobject j_options, jobject j_options_class) {
     jarray j_importers = get_class_object_property(
-            env, j_options, j_options_class, "importers", "[Lio/bit3/jsass/native_adapter/NativeImporterWrapper;"
+            env, j_options, j_options_class, "importers", "[Lio/bit3/jsass/adapter/NativeImporterWrapper;"
     );
     jsize j_importers_length = (*env)->GetArrayLength(env, j_importers);
     Sass_Importer_List sass_importer_list = sass_make_importer_list((size_t) j_importers_length);
@@ -1118,9 +1118,9 @@ void configure_importers(JNIEnv *env, struct Sass_Options *sass_options, jobject
  * @param sass_options  The sass options.
  */
 void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass_options) {
-    jobject j_options = get_object_property(env, j_context, "options", "Lio/bit3/jsass/native_adapter/NativeOptions;");
+    jobject j_options = get_object_property(env, j_context, "options", "Lio/bit3/jsass/adapter/NativeOptions;");
 
-    jclass j_options_class = (*env)->FindClass(env, "io/bit3/jsass/native_adapter/NativeOptions");
+    jclass j_options_class = (*env)->FindClass(env, "io/bit3/jsass/adapter/NativeOptions");
 
     // NativeContext.inputPath
     const char *c_input_path = get_string_property(env, j_context, "inputPath");
@@ -1213,7 +1213,7 @@ void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass
  * The java-native functions.
  */
 
-JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_native_1adapter_NativeAdapter_compileFile
+JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileFile
         (JNIEnv *env, jobject j_adapter, jobject j_context) {
     const char *c_input_path = get_string_property(env, j_context, "inputPath");
 
@@ -1233,7 +1233,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_native_1adapter_NativeAdapter_
     return output;
 }
 
-JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_native_1adapter_NativeAdapter_compileString
+JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileString
         (JNIEnv *env, jobject j_adapter, jobject j_context) {
     char *c_source_string = get_string_property(env, j_context, "source");
 

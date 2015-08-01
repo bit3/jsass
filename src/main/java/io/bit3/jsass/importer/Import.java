@@ -94,7 +94,8 @@ public class Import {
    * @param contents  The in-memory sass code.
    * @param sourceMap The in-memory source map.
    */
-  public Import(String uri, String base, String contents, String sourceMap) throws URISyntaxException {
+  public Import(String uri, String base, String contents, String sourceMap)
+      throws URISyntaxException {
     this.uri = new URI(uri);
     this.base = new URI(base);
     this.contents = contents;
@@ -131,8 +132,7 @@ public class Import {
   /**
    * Return the in-memory source map.
    *
-   * @return The in-memory source map or <em>null</em> when importing a file or no previous source
-   * map exists.
+   * @return The in-memory source map or <em>null</em>.
    */
   public String getSourceMap() {
     return sourceMap;

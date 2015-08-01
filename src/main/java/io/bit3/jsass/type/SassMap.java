@@ -1,14 +1,8 @@
 package io.bit3.jsass.type;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import io.bit3.jsass.Separator;
 
 /**
  * A sass value list.
@@ -19,8 +13,8 @@ public class SassMap extends LinkedHashMap<String, SassValue> implements SassVal
   public SassMap() {
   }
 
-  public SassMap(Map<? extends String, ? extends SassValue> m) {
-    super(m);
+  public SassMap(Map<? extends String, ? extends SassValue> map) {
+    super(map);
   }
 
   public SassMap(int initialCapacity) {

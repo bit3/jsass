@@ -1,13 +1,5 @@
 package io.bit3.jsass.function;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
 import io.bit3.jsass.function.arguments.converter.ObjectArgumentConverter;
@@ -24,6 +16,14 @@ import io.bit3.jsass.function.arguments.factory.ShortArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.StringArgumentConverterFactory;
 import io.bit3.jsass.type.SassString;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Factory that create libsass function callbacks and wrap them into {@link
  * io.bit3.jsass.function.FunctionWrapper}s.
@@ -34,6 +34,9 @@ public class FunctionWrapperFactory {
 
   private final List<ArgumentConverterFactory> argumentConverterFactories;
 
+  /**
+   * Create a new factory.
+   */
   public FunctionWrapperFactory(
       FunctionArgumentSignatureFactory functionArgumentSignatureFactory
   ) {

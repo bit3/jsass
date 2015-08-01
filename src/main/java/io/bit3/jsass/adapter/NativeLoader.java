@@ -1,4 +1,4 @@
-package io.bit3.jsass.native_adapter;
+package io.bit3.jsass.adapter;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -10,7 +10,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+/**
+ * This loader handle the extraction and loading of the shared library files from the jar.
+ */
 final class NativeLoader {
+  /**
+   * Load the shared libraries.
+   */
   public static void loadLibrary() {
     try {
       File tmpDir = new File(System.getProperty("java.io.tmpdir"));
@@ -30,7 +36,9 @@ final class NativeLoader {
     }
   }
 
-
+  /**
+   * Find the right shared library, depending on the operating system and architecture.
+   */
   private static URL findLibraryResource(String library) throws UnsupportedOperationException {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
@@ -55,13 +63,17 @@ final class NativeLoader {
           break;
 
         default:
-          throw new UnsupportedOperationException("Platform " + osName + ":" + osArch + " not supported");
+          throw new UnsupportedOperationException(
+              "Platform " + osName + ":" + osArch + " not supported"
+          );
       }
     } else if (osName.startsWith("mac")) {
       platform = "darwin";
       fileExtension = "dylib";
     } else {
-      throw new UnsupportedOperationException("Platform " + osName + ":" + osArch + " not supported");
+      throw new UnsupportedOperationException(
+          "Platform " + osName + ":" + osArch + " not supported"
+      );
     }
 
     String resourceName = "/" + platform + "/" + library + "." + fileExtension;
@@ -69,12 +81,17 @@ final class NativeLoader {
     URL resource = NativeLoader.class.getResource(resourceName);
 
     if (null == resource) {
-      throw new UnsupportedOperationException("Platform " + osName + ":" + osArch + " not supported");
+      throw new UnsupportedOperationException(
+          "Platform " + osName + ":" + osArch + " not supported"
+      );
     }
 
     return resource;
   }
 
+  /**
+   * Save the right shared library in the given temporary directory.
+   */
   private static String saveLibrary(File dir, String library) throws IOException {
     library = "lib" + library;
 

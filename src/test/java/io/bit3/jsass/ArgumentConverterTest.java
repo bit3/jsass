@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import io.bit3.jsass.context.Context;
-import io.bit3.jsass.importer.Import;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
@@ -19,17 +18,44 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Test for argument converters.
+ */
 @RunWith(Parameterized.class)
 public class ArgumentConverterTest {
-
+  /**
+   * The source to compile.
+   */
   private static final String SOURCE = "foo { bar: func(%s); }";
 
-  private String               sassValue;
-  private Object               expectedValue;
-  private AbstractedCalledMock mock;
-  private Compiler             compiler;
-  private Options              options;
+  /**
+   * The sass value string representation.
+   */
+  private String sassValue;
 
+  /**
+   * The expected java object.
+   */
+  private Object expectedValue;
+
+  /**
+   * The function provider mock.
+   */
+  private AbstractedCalledMock mock;
+
+  /**
+   * The jsass compiler.
+   */
+  private Compiler compiler;
+
+  /**
+   * The jsass compiler options.
+   */
+  private Options options;
+
+  /**
+   * Create new test.
+   */
   public ArgumentConverterTest(
       String sassValue,
       Object expectedValue,
@@ -80,7 +106,9 @@ public class ArgumentConverterTest {
 
     String source = String.format(SOURCE, sassValue);
 
-    Output output = compiler.compileString(source, new URI("input.scss"), new URI("output.css"), options);
+    Output output = compiler.compileString(
+        source, new URI("input.scss"), new URI("output.css"), options
+    );
 
     assertEquals(0, output.getErrorStatus());
     assertTrue(StringUtils.isEmpty(output.getErrorJson()));
@@ -95,12 +123,21 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Abstract mock function provider base.
+   */
   private static class AbstractedCalledMock {
     protected boolean called;
     protected Object actualValue;
   }
 
+  /**
+   * Boolean parameter mock function provider.
+   */
   public static class BooleanArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Boolean arg) {
       called = true;
       actualValue = arg;
@@ -108,7 +145,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Byte parameter mock function provider.
+   */
   public static class ByteArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Byte arg) {
       called = true;
       actualValue = arg;
@@ -116,7 +159,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Character parameter mock function provider.
+   */
   public static class CharacterArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Character arg) {
       called = true;
       actualValue = arg;
@@ -124,7 +173,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Context parameter mock function provider.
+   */
   public static class ContextArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Context arg) {
       called = true;
       actualValue = arg;
@@ -132,7 +187,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Double parameter mock function provider.
+   */
   public static class DoubleArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Double arg) {
       called = true;
       actualValue = arg;
@@ -140,7 +201,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Float parameter mock function provider.
+   */
   public static class FloatArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Float arg) {
       called = true;
       actualValue = arg;
@@ -148,7 +215,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Integer parameter mock function provider.
+   */
   public static class IntegerArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Integer arg) {
       called = true;
       actualValue = arg;
@@ -156,7 +229,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Long parameter mock function provider.
+   */
   public static class LongArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Long arg) {
       called = true;
       actualValue = arg;
@@ -164,7 +243,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * Short parameter mock function provider.
+   */
   public static class ShortArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(Short arg) {
       called = true;
       actualValue = arg;
@@ -172,7 +257,13 @@ public class ArgumentConverterTest {
     }
   }
 
+  /**
+   * String parameter mock function provider.
+   */
   public static class StringArgumentMock extends AbstractedCalledMock {
+    /**
+     * Mock function.
+     */
     public String func(String arg) {
       called = true;
       actualValue = arg;

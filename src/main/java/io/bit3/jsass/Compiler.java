@@ -1,16 +1,16 @@
 package io.bit3.jsass;
 
-import org.apache.commons.io.Charsets;
-
-import java.net.URI;
-import java.nio.charset.Charset;
-
+import io.bit3.jsass.adapter.NativeAdapter;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.FileContext;
 import io.bit3.jsass.context.StringContext;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.function.FunctionWrapperFactory;
-import io.bit3.jsass.native_adapter.NativeAdapter;
+
+import org.apache.commons.io.Charsets;
+
+import java.net.URI;
+import java.nio.charset.Charset;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
@@ -31,8 +31,10 @@ public class Compiler {
    * Create new compiler.
    */
   public Compiler() {
-    FunctionArgumentSignatureFactory functionArgumentSignatureFactory = new FunctionArgumentSignatureFactory();
-    FunctionWrapperFactory functionWrapperFactory = new FunctionWrapperFactory(functionArgumentSignatureFactory);
+    FunctionArgumentSignatureFactory functionArgumentSignatureFactory
+        = new FunctionArgumentSignatureFactory();
+    FunctionWrapperFactory functionWrapperFactory
+        = new FunctionWrapperFactory(functionArgumentSignatureFactory);
 
     adapter = new NativeAdapter(functionWrapperFactory);
   }
@@ -93,7 +95,7 @@ public class Compiler {
       String string, Charset charset, URI inputPath, URI outputPath,
       Options options
   ) throws CompilationException {
-    StringContext context = new StringContext(string, charset, inputPath, outputPath, options);
+    StringContext context = new StringContext(string, inputPath, outputPath, options);
 
     return compile(context);
   }
