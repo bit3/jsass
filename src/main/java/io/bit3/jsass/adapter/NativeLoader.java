@@ -25,10 +25,7 @@ final class NativeLoader {
       dir.mkdir();
       dir.deleteOnExit();
 
-      saveLibrary(dir, "sass");
-      String libraryPath = saveLibrary(dir, "jsass");
-
-      System.load(libraryPath);
+      System.load(saveLibrary(dir, "jsass"));
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
       exception.printStackTrace(System.err);

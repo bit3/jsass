@@ -15,8 +15,10 @@ For complete documentation, see [jsass.rtfd.org](http://jsass.rtfd.org/)
 Rebuild jni adapter
 -------------------
 
+### Linux
+
 ```bash
-$ cd src/main/c
+$ ./make-libjsass-linux-x86-64.sh
 $ cmake .
 $ make
 $ cp libjsass.so ../resources/linux-x86-64/
