@@ -14,59 +14,11 @@ import java.util.List;
 public class Options {
 
   /**
-   * Precision for outputting fractional numbers.
-   */
-  private int precision = 8;
-
-  /**
-   * Output style for the generated css code.
-   */
-  private OutputStyle outputStyle = OutputStyle.NESTED;
-
-  /**
-   * If you want inline source comments.
-   */
-  private boolean sourceComments = false;
-
-  /**
-   * Embed sourceMappingUrl as data uri.
-   */
-  private boolean sourceMapEmbed = false;
-
-  /**
-   * Embed include contents in maps.
-   */
-  private boolean sourceMapContents = false;
-
-  /**
-   * Disable sourceMappingUrl in css output.
-   */
-  private boolean omitSourceMapUrl = false;
-
-  /**
-   * Treat source_string as sass (as opposed to scss).
-   */
-  private boolean isIndentedSyntaxSrc = false;
-
-  /**
-   * For the image-url Sass function.
-   */
-  private String imageUrl = "";
-
-  /**
-   * SassList of paths.
-   */
-  private List<File> includePaths = new LinkedList<File>();
-
-  /**
-   * Path to source map file. Enables the source map generating. Used to create sourceMappingUrl.
-   */
-  private URI sourceMapFile;
-
-  /**
    * Custom import functions.
    */
   private List<Object> functionProviders = new LinkedList<>();
+
+  private List<Importer> headerImporters = new LinkedList<>();
 
   /**
    * Custom import functions.
@@ -74,83 +26,112 @@ public class Options {
   private Collection<Importer> importers = new LinkedList<>();
 
   /**
-   * Return the fractional numbers precision.
-   *
-   * @return The fractional numbers precision.
+   * SassList of paths.
    */
-  public int getPrecision() {
-    return precision;
-  }
+  private List<File> includePaths = new LinkedList<File>();
+
+  private String indent = "  ";
 
   /**
-   * Set the fractional numbers precision.
-   *
-   * @param precision The fractional numbers precision.
+   * Treat source_string as sass (as opposed to scss).
    */
-  public void setPrecision(int precision) {
-    this.precision = precision;
-  }
+  private boolean isIndentedSyntaxSrc = false;
+
+  private String linefeed = "\n";
 
   /**
-   * Return the output style.
-   *
-   * @return The output style.
+   * Disable sourceMappingUrl in css output.
    */
-  public OutputStyle getOutputStyle() {
-    return outputStyle;
-  }
+  private boolean omitSourceMapUrl = false;
 
   /**
-   * Set the output style.
-   *
-   * @param outputStyle The output style.
+   * Output style for the generated css code.
    */
-  public void setOutputStyle(OutputStyle outputStyle) {
-    this.outputStyle = outputStyle;
-  }
+  private OutputStyle outputStyle = OutputStyle.NESTED;
+
+  private String pluginPath = null;
 
   /**
-   * Determine if inline source comments are generated.
-   *
-   * @return <em>true</em> if inline source comments are generated.
+   * Precision for outputting fractional numbers.
    */
-  public boolean isSourceComments() {
-    return sourceComments;
-  }
+  private int precision = 8;
 
   /**
-   * Set if inline source comments should generated.
-   *
-   * @param sourceComments <em>true</em> if inline source comments should generated.
+   * If you want inline source comments.
    */
-  public void setSourceComments(boolean sourceComments) {
-    this.sourceComments = sourceComments;
-  }
+  private boolean sourceComments = false;
 
   /**
-   * Determine if source map is embedded into css output.
-   *
-   * @return <em>true</em> if the source map is embedded into css output.
+   * Embed include contents in maps.
    */
-  public boolean isSourceMapEmbed() {
-    return sourceMapEmbed;
-  }
+  private boolean sourceMapContents = false;
 
   /**
-   * Set if source map is embedded into css output.
-   *
-   * @param sourceMapEmbed Embed source map into css output.
+   * Embed sourceMappingUrl as data uri.
    */
-  public void setSourceMapEmbed(boolean sourceMapEmbed) {
-    this.sourceMapEmbed = sourceMapEmbed;
+  private boolean sourceMapEmbed = false;
+
+  /**
+   * Path to source map file. Enables the source map generating. Used to create sourceMappingUrl.
+   */
+  private URI sourceMapFile;
+
+  private URI sourceMapRoot;
+
+  public List<Object> getFunctionProviders() {
+    return functionProviders;
   }
 
-  public boolean isSourceMapContents() {
-    return sourceMapContents;
+  public void setFunctionProviders(List<Object> functionProviders) {
+    this.functionProviders = functionProviders;
   }
 
-  public void setSourceMapContents(boolean sourceMapContents) {
-    this.sourceMapContents = sourceMapContents;
+  public List<Importer> getHeaderImporters() {
+    return headerImporters;
+  }
+
+  public void setHeaderImporters(List<Importer> headerImporters) {
+    this.headerImporters = headerImporters;
+  }
+
+  public Collection<Importer> getImporters() {
+    return importers;
+  }
+
+  public void setImporters(Collection<Importer> importers) {
+    this.importers = importers;
+  }
+
+  public List<File> getIncludePaths() {
+    return includePaths;
+  }
+
+  public void setIncludePaths(List<File> includePaths) {
+    this.includePaths = includePaths;
+  }
+
+  public String getIndent() {
+    return indent;
+  }
+
+  public void setIndent(String indent) {
+    this.indent = indent;
+  }
+
+  public boolean isIndentedSyntaxSrc() {
+    return isIndentedSyntaxSrc;
+  }
+
+  public void setIsIndentedSyntaxSrc(boolean isIndentedSyntaxSrc) {
+    this.isIndentedSyntaxSrc = isIndentedSyntaxSrc;
+  }
+
+  public String getLinefeed() {
+    return linefeed;
+  }
+
+  public void setLinefeed(String linefeed) {
+    this.linefeed = linefeed;
   }
 
   /**
@@ -171,28 +152,92 @@ public class Options {
     this.omitSourceMapUrl = omitSourceMapUrl;
   }
 
-  public boolean isIndentedSyntaxSrc() {
-    return isIndentedSyntaxSrc;
+  /**
+   * Return the output style.
+   *
+   * @return The output style.
+   */
+  public OutputStyle getOutputStyle() {
+    return outputStyle;
   }
 
-  public void setIsIndentedSyntaxSrc(boolean isIndentedSyntaxSrc) {
-    this.isIndentedSyntaxSrc = isIndentedSyntaxSrc;
+  /**
+   * Set the output style.
+   *
+   * @param outputStyle The output style.
+   */
+  public void setOutputStyle(OutputStyle outputStyle) {
+    this.outputStyle = outputStyle;
   }
 
-  public String getImageUrl() {
-    return imageUrl;
+  public String getPluginPath() {
+    return pluginPath;
   }
 
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = null == imageUrl ? "" : imageUrl;
+  public void setPluginPath(String pluginPath) {
+    this.pluginPath = pluginPath;
   }
 
-  public List<File> getIncludePaths() {
-    return includePaths;
+  /**
+   * Return the fractional numbers precision.
+   *
+   * @return The fractional numbers precision.
+   */
+  public int getPrecision() {
+    return precision;
   }
 
-  public void setIncludePaths(List<File> includePaths) {
-    this.includePaths = includePaths;
+  /**
+   * Set the fractional numbers precision.
+   *
+   * @param precision The fractional numbers precision.
+   */
+  public void setPrecision(int precision) {
+    this.precision = precision;
+  }
+
+  /**
+   * Determine if inline source comments are generated.
+   *
+   * @return <em>true</em> if inline source comments are generated.
+   */
+  public boolean isSourceComments() {
+    return sourceComments;
+  }
+
+  /**
+   * Set if inline source comments should generated.
+   *
+   * @param sourceComments <em>true</em> if inline source comments should generated.
+   */
+  public void setSourceComments(boolean sourceComments) {
+    this.sourceComments = sourceComments;
+  }
+
+  public boolean isSourceMapContents() {
+    return sourceMapContents;
+  }
+
+  public void setSourceMapContents(boolean sourceMapContents) {
+    this.sourceMapContents = sourceMapContents;
+  }
+
+  /**
+   * Determine if source map is embedded into css output.
+   *
+   * @return <em>true</em> if the source map is embedded into css output.
+   */
+  public boolean isSourceMapEmbed() {
+    return sourceMapEmbed;
+  }
+
+  /**
+   * Set if source map is embedded into css output.
+   *
+   * @param sourceMapEmbed Embed source map into css output.
+   */
+  public void setSourceMapEmbed(boolean sourceMapEmbed) {
+    this.sourceMapEmbed = sourceMapEmbed;
   }
 
   /**
@@ -213,19 +258,11 @@ public class Options {
     this.sourceMapFile = sourceMapFile;
   }
 
-  public List<Object> getFunctionProviders() {
-    return functionProviders;
+  public URI getSourceMapRoot() {
+    return sourceMapRoot;
   }
 
-  public void setFunctionProviders(List<Object> functionProviders) {
-    this.functionProviders = functionProviders;
-  }
-
-  public Collection<Importer> getImporters() {
-    return importers;
-  }
-
-  public void setImporters(Collection<Importer> importers) {
-    this.importers = importers;
+  public void setSourceMapRoot(URI sourceMapRoot) {
+    this.sourceMapRoot = sourceMapRoot;
   }
 }

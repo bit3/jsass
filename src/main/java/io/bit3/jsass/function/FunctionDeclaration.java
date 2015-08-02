@@ -1,12 +1,20 @@
 package io.bit3.jsass.function;
 
+import io.bit3.jsass.context.Context;
+import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
+import io.bit3.jsass.type.SassValue;
+import io.bit3.jsass.type.TypeUtils;
+
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Contains all informations about a declared custom function.
  */
 public class FunctionDeclaration {
+
+  private final Context context;
 
   /**
    * The libsass function signature.
@@ -26,23 +34,27 @@ public class FunctionDeclaration {
   protected final Method method;
 
   /**
-   * List of all parameter types.
+   * List of argument converters that are used to convert the method parameter values.
    */
-  protected final Class<?>[] types;
+  protected final List<ArgumentConverter> argumentConverters;
 
   /**
    * Create a new function declaration.
    *
-   * @param signature The libsass function signature.
-   * @param object    The object instance to call the method on.
-   * @param method    The method to call.
-   * @param types     List of all parameter types.
+   * @param signature          The libsass function signature.
+   * @param object             The object instance to call the method on.
+   * @param method             The method to call.
+   * @param argumentConverters List of argument converters.
    */
-  public FunctionDeclaration(String signature, Object object, Method method, Class<?>[] types) {
+  public FunctionDeclaration(
+      Context context, String signature, Object object, Method method,
+      List<ArgumentConverter> argumentConverters
+  ) {
+    this.context = context;
     this.signature = signature;
     this.object = object;
     this.method = method;
-    this.types = types;
+    this.argumentConverters = argumentConverters;
   }
 
   /**
@@ -73,12 +85,12 @@ public class FunctionDeclaration {
   }
 
   /**
-   * Return the list of all parameter types.
+   * Return the list of argument converters.
    *
-   * @return List of all parameter types.
+   * @return List of argument converters.
    */
-  public Class<?>[] getTypes() {
-    return types;
+  public List<ArgumentConverter> getArgumentConverters() {
+    return argumentConverters;
   }
 
   /**
@@ -89,89 +101,20 @@ public class FunctionDeclaration {
    * @param arguments List of libsass arguments.
    * @return The method result.
    */
-  public Object invoke(List<?> arguments) {
-    Object[] args = new Object[types.length];
+  public SassValue invoke(List<?> arguments) {
+    ArrayList<Object> values = new ArrayList<>(argumentConverters.size());
 
-    for (int index = 0; index < args.length; index++) {
-      Class<?> targetType = types[index];
-      Object value;
-
-      if (index >= arguments.size()) {
-        value = null;
-      } else {
-        value = arguments.get(index);
-      }
-
-      if (null != value && !targetType.isAssignableFrom(value.getClass())) {
-        if (String.class.isAssignableFrom(targetType)) {
-          value = value.toString();
-        } else if (Byte.class.isAssignableFrom(targetType)
-                   || byte.class.isAssignableFrom(targetType)) {
-          if (value instanceof Number) {
-            value = ((Number) value).byteValue();
-          } else {
-            value = Byte.parseByte(value.toString());
-          }
-        } else if (Short.class.isAssignableFrom(targetType)
-                   || short.class.isAssignableFrom(targetType)) {
-          if (value instanceof Number) {
-            value = ((Number) value).shortValue();
-          } else {
-            value = Short.parseShort(value.toString());
-          }
-        } else if (Integer.class.isAssignableFrom(targetType)
-                   || int.class.isAssignableFrom(targetType)) {
-          if (value instanceof Number) {
-            value = ((Number) value).intValue();
-          } else {
-            value = Integer.parseInt(value.toString());
-          }
-        } else if (Long.class.isAssignableFrom(targetType)
-                   || long.class.isAssignableFrom(targetType)) {
-          if (value instanceof Number) {
-            value = ((Number) value).longValue();
-          } else {
-            value = Long.parseLong(value.toString());
-          }
-        } else if (Float.class.isAssignableFrom(targetType)
-                   || float.class.isAssignableFrom(targetType)) {
-          if (value instanceof Number) {
-            value = ((Number) value).floatValue();
-          } else {
-            value = Float.parseFloat(value.toString());
-          }
-        } else if (Double.class.isAssignableFrom(targetType)
-                   || double.class.isAssignableFrom(targetType)) {
-          if (value instanceof Number) {
-            value = ((Number) value).doubleValue();
-          } else {
-            value = Double.parseDouble(value.toString());
-          }
-        } else if (Boolean.class.isAssignableFrom(targetType)
-                   || boolean.class.isAssignableFrom(targetType)) {
-          value = Boolean.valueOf(value.toString());
-        } else if (Character.class.isAssignableFrom(targetType)
-                   || char.class.isAssignableFrom(targetType)) {
-          value = value.toString().charAt(0);
-        } else {
-          throw new RuntimeException(
-              String.format(
-                  "Cannot convert SASS type %s to Java type %s",
-                  value.getClass().getName(),
-                  targetType.getName()
-              )
-          );
-        }
-      }
-
-      args[index] = value;
+    for (ArgumentConverter argumentConverter : argumentConverters) {
+      Object value = argumentConverter.convert(arguments, context);
+      values.add(value);
     }
 
     try {
-      return method.invoke(object, args);
-    } catch (ReflectiveOperationException e) {
+      Object result = method.invoke(object, values.toArray());
+
+      return TypeUtils.convertToSassValue(result);
+    } catch (Throwable e) {
       throw new RuntimeException(e);
     }
   }
 }
-

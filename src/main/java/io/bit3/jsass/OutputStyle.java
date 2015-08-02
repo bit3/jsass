@@ -4,20 +4,31 @@ public enum OutputStyle {
   /**
    * Nested style.
    */
-  NESTED,
+  NESTED(1),
 
   /**
    * Expanded style.
    */
-  EXPANDED,
+  EXPANDED(2),
 
   /**
    * Compact style.
    */
-  COMPACT,
+  COMPACT(3),
 
   /**
    * Compressed style.
    */
-  COMPRESSED
+  COMPRESSED(4);
+
+  /**
+   * The numeric representation.
+   *
+   * <p>This is primary used in the native adapter.
+   */
+  public final int numeric;
+
+  OutputStyle(int numeric) {
+    this.numeric = numeric;
+  }
 }

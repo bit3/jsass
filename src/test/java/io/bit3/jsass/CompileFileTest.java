@@ -146,6 +146,7 @@ public class CompileFileTest {
 
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
+      assertNoFail(output);
       assertEquals(output.getCss(), expectedCssWithoutMapUrl);
     } catch (CompilationException exception) {
       fail("Compilation failed: " + exception.getMessage());
@@ -165,6 +166,7 @@ public class CompileFileTest {
 
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
+      assertNoFail(output);
       assertEquals(output.getCss(), expectedCssWithMapUrl);
     } catch (CompilationException exception) {
       fail("Compilation failed: " + exception.getMessage());
@@ -172,6 +174,23 @@ public class CompileFileTest {
       targetCssFile.delete();
       targetMapFile.delete();
     }
+  }
+
+  private void assertNoFail(Output output) {
+    String message = String.format(
+        "Compile input.%s into %s output format failed with error status (%d) %s",
+        syntax, outputStyle, output.getErrorStatus(), output.getErrorJson()
+    );
+
+    Assert.assertEquals(
+        message,
+        0,
+        output.getErrorStatus()
+    );
+    Assert.assertNull(
+        message,
+        output.getErrorJson()
+    );
   }
 
   private void assertEquals(String actual, URL expectedSource) throws IOException {

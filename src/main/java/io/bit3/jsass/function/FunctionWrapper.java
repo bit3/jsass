@@ -1,22 +1,12 @@
 package io.bit3.jsass.function;
 
-import com.sun.jna.Pointer;
-
-import io.bit3.jsass.CompilationException;
 import io.bit3.jsass.type.SassList;
-import io.bit3.jsass.type.TypeUtils;
-
-import sass.SassLibrary;
+import io.bit3.jsass.type.SassValue;
 
 /**
  * Wraps a java function as libsass function and pass the arguments through.
  */
-public class FunctionWrapper implements SassLibrary.Sass_C_Function {
-
-  /**
-   * SASS library adapter.
-   */
-  private final SassLibrary sass;
+public class FunctionWrapper {
 
   /**
    * The original function declaration, that is created by the factory.
@@ -26,33 +16,29 @@ public class FunctionWrapper implements SassLibrary.Sass_C_Function {
   /**
    * Create a new wrapper for the given function.
    *
-   * @param sass        The libsass adapter.
    * @param declaration The function declaration.
    */
-  public FunctionWrapper(SassLibrary sass, FunctionDeclaration declaration) {
-    this.sass = sass;
+  public FunctionWrapper(FunctionDeclaration declaration) {
     this.declaration = declaration;
   }
 
-  @Override
-  public SassLibrary.Sass_Value apply(SassLibrary.Sass_Value value, Pointer cookie) {
-    try {
-      Object decodedValue = TypeUtils.decodeValue(sass, value);
-      SassList sassList;
+  public FunctionDeclaration getDeclaration() {
+    return declaration;
+  }
 
-      if (decodedValue instanceof SassList) {
-        sassList = (SassList) decodedValue;
-      } else {
-        sassList = new SassList();
-        sassList.add(decodedValue);
-      }
+  /**
+   * Call the function.
+   */
+  public SassValue apply(SassValue value) {
+    SassList sassList;
 
-      Object result = declaration.invoke(sassList);
-
-      return TypeUtils.encodeValue(sass, result);
-    } catch (CompilationException e) {
-      throw new RuntimeException(e);
+    if (value instanceof SassList) {
+      sassList = (SassList) value;
+    } else {
+      sassList = new SassList();
+      sassList.add(value);
     }
+
+    return declaration.invoke(sassList);
   }
 }
-

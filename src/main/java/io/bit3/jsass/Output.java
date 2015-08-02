@@ -8,16 +8,49 @@ public class Output {
   /**
    * The css output.
    */
-  private String css;
+  private final String css;
 
   /**
    * The source map output.
    */
-  private String sourceMap;
+  private final String sourceMap;
 
-  public Output(String css, String sourceMap) {
+  /**
+   * The error status, not zero means an error occurred.
+   */
+  private final int errorStatus;
+
+  private final String errorJson;
+
+  private final String errorText;
+
+  private final String errorMessage;
+
+  private final String errorFile;
+
+  private final String errorSrc;
+
+  /**
+   * Create a new output.
+   */
+  public Output(
+      String css,
+      String sourceMap,
+      int errorStatus,
+      String errorJson,
+      String errorText,
+      String errorMessage,
+      String errorFile,
+      String errorSrc
+  ) {
     this.css = css;
     this.sourceMap = sourceMap;
+    this.errorStatus = errorStatus;
+    this.errorJson = errorJson;
+    this.errorText = errorText;
+    this.errorMessage = errorMessage;
+    this.errorFile = errorFile;
+    this.errorSrc = errorSrc;
   }
 
   /**
@@ -36,5 +69,29 @@ public class Output {
    */
   public String getSourceMap() {
     return sourceMap;
+  }
+
+  public int getErrorStatus() {
+    return errorStatus;
+  }
+
+  public String getErrorJson() {
+    return errorJson;
+  }
+
+  public String getErrorText() {
+    return errorText;
+  }
+
+  public String getErrorMessage() {
+    return errorMessage;
+  }
+
+  public String getErrorFile() {
+    return errorFile;
+  }
+
+  public String getErrorSrc() {
+    return errorSrc;
   }
 }

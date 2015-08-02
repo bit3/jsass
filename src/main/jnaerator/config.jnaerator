@@ -1,1 +1,0 @@
--DADDAPI= -DADDCALL= -f -runtime JNA -library sass src/main/libsass/sass_context.h src/main/libsass/sass_functions.h

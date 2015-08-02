@@ -3,7 +3,8 @@ package io.bit3.jsass.type;
 /**
  * A sass number value.
  */
-public class SassNumber extends Number {
+public class SassNumber extends Number implements SassValue {
+  public static final int TYPE = 2;
 
   /**
    * The numeric value.
@@ -19,7 +20,7 @@ public class SassNumber extends Number {
    * Create a new number.
    *
    * @param value The numeric value.
-   * @param unit The unit.
+   * @param unit  The unit.
    */
   public SassNumber(double value, String unit) {
     this.value = value;

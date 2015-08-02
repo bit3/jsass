@@ -1,12 +1,13 @@
 package io.bit3.jsass;
 
-import com.sun.jna.Native;
+import io.bit3.jsass.adapter.NativeAdapter;
 import io.bit3.jsass.context.Context;
-import io.bit3.jsass.context.ContextFactory;
 import io.bit3.jsass.context.FileContext;
 import io.bit3.jsass.context.StringContext;
+import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
+import io.bit3.jsass.function.FunctionWrapperFactory;
+
 import org.apache.commons.io.Charsets;
-import sass.SassLibrary;
 
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -24,18 +25,18 @@ public class Compiler {
   /**
    * sass library adapter.
    */
-  private final SassLibrary sass = (SassLibrary) Native.loadLibrary("sass", SassLibrary.class);
-
-  /**
-   * The context factory.
-   */
-  private final ContextFactory contextFactory;
+  private final NativeAdapter adapter;
 
   /**
    * Create new compiler.
    */
   public Compiler() {
-    contextFactory = new ContextFactory(sass);
+    FunctionArgumentSignatureFactory functionArgumentSignatureFactory
+        = new FunctionArgumentSignatureFactory();
+    FunctionWrapperFactory functionWrapperFactory
+        = new FunctionWrapperFactory(functionArgumentSignatureFactory);
+
+    adapter = new NativeAdapter(functionWrapperFactory);
   }
 
   /**
@@ -90,9 +91,11 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, Charset charset, URI inputPath, URI outputPath,
-                              Options options) throws CompilationException {
-    StringContext context = new StringContext(string, charset, inputPath, outputPath, options);
+  public Output compileString(
+      String string, Charset charset, URI inputPath, URI outputPath,
+      Options options
+  ) throws CompilationException {
+    StringContext context = new StringContext(string, inputPath, outputPath, options);
 
     return compile(context);
   }
@@ -144,26 +147,7 @@ public class Compiler {
    * @throws CompilationException If the compilation failed.
    */
   public Output compile(StringContext context) throws CompilationException {
-    // create file context
-    SassLibrary.Sass_Data_Context dataContext = null;
-
-    try {
-      dataContext = contextFactory.create(context);
-
-      // compile file
-      sass.sass_compile_data_context(dataContext);
-
-      // check error status
-      SassLibrary.Sass_Context libsassContext = sass.sass_data_context_get_context(dataContext);
-      checkErrorStatus(libsassContext);
-
-      return createOutput(libsassContext);
-    } finally {
-      if (null != dataContext) {
-        // free context
-        sass.sass_delete_data_context(dataContext);
-      }
-    }
+    return adapter.compile(context);
   }
 
   /**
@@ -174,57 +158,6 @@ public class Compiler {
    * @throws CompilationException If the compilation failed.
    */
   public Output compile(FileContext context) throws CompilationException {
-    // create file context
-    SassLibrary.Sass_File_Context fileContext = null;
-
-    try {
-      // create context
-      fileContext = contextFactory.create(context);
-
-      // compile file
-      sass.sass_compile_file_context(fileContext);
-
-      // check error status
-      SassLibrary.Sass_Context libsassContext = sass.sass_file_context_get_context(fileContext);
-      checkErrorStatus(libsassContext);
-
-      return createOutput(libsassContext);
-    } finally {
-      if (null != fileContext) {
-        // free context
-        sass.sass_delete_file_context(fileContext);
-      }
-    }
+    return adapter.compile(context);
   }
-
-  /**
-   * Check the error status.
-   *
-   * @param context The sass context.
-   * @throws CompilationException If the error status is not <em>0</em>.
-   */
-  private void checkErrorStatus(SassLibrary.Sass_Context context) throws CompilationException {
-    int status = sass.sass_context_get_error_status(context);
-
-    if (status != 0) {
-      String file = sass.sass_context_get_error_file(context);
-      String message = sass.sass_context_get_error_message(context);
-
-      throw new CompilationException(status, file + ": " + message);
-    }
-  }
-
-  /**
-   * Create output from context.
-   *
-   * @param context The sass context.
-   * @return The output.
-   */
-  private Output createOutput(SassLibrary.Sass_Context context) {
-    String css = sass.sass_context_get_output_string(context);
-    String sourceMap = sass.sass_context_get_source_map_string(context);
-
-    return new Output(css, sourceMap);
-  }
-
 }

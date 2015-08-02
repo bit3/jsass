@@ -1,11 +1,22 @@
 package io.bit3.jsass.type;
 
+import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
+import org.apache.commons.lang3.text.translate.EntityArrays;
+import org.apache.commons.lang3.text.translate.JavaUnicodeEscaper;
+import org.apache.commons.lang3.text.translate.LookupTranslator;
+
 import java.util.stream.IntStream;
 
 /**
  * A sass probably quoted string value.
  */
-public class SassString implements CharSequence {
+public class SassString implements CharSequence, SassValue {
+  public static final int TYPE = 3;
+
+  /**
+   * The default quote character.
+   */
+  public static final char DEFAULT_QUOTE_CHARACTER = '"';
 
   /**
    * The string value.
@@ -20,10 +31,11 @@ public class SassString implements CharSequence {
   /**
    * The quotation character.
    */
-  private char quote = '\'';
+  private char quote = DEFAULT_QUOTE_CHARACTER;
 
   /**
    * Create a new single quoted string value.
+   *
    * @param value The string value.
    */
   public SassString(String value) {
@@ -33,7 +45,7 @@ public class SassString implements CharSequence {
   /**
    * Create a new potentially quoted string value.
    *
-   * @param value The string value.
+   * @param value  The string value.
    * @param quoted Flag if the string is quoted.
    */
   public SassString(String value, boolean quoted) {
@@ -44,9 +56,9 @@ public class SassString implements CharSequence {
   /**
    * Create a new potentially quoted string value with specific quotation character.
    *
-   * @param value The string value.
+   * @param value  The string value.
    * @param quoted Flag if the string is quoted.
-   * @param quote The quotation character.
+   * @param quote  The quotation character.
    */
   public SassString(String value, boolean quoted, char quote) {
     this.value = value;
@@ -108,6 +120,31 @@ public class SassString implements CharSequence {
     this.quote = quote;
   }
 
+  /**
+   * Escape the string with default quote character.
+   */
+  public static String escape(String value) {
+    return escape(value, DEFAULT_QUOTE_CHARACTER);
+  }
+
+  /**
+   * Escape the string with given quote character.
+   */
+  public static String escape(String value, char quote) {
+    final CharSequenceTranslator escape =
+        new LookupTranslator(
+            new String[][]{
+                {Character.toString(quote), "\\" + quote},
+                {"\\", "\\\\"},
+            }).with(
+            new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_ESCAPE())
+        ).with(
+            JavaUnicodeEscaper.outsideOf(32, 0x7f)
+        );
+
+    return quote + escape.translate(value) + quote;
+  }
+
   @Override
   public int length() {
     return value.length();
@@ -135,6 +172,6 @@ public class SassString implements CharSequence {
 
   @Override
   public String toString() {
-    return value;
+    return quoted ? escape(value, quote) : value;
   }
 }
