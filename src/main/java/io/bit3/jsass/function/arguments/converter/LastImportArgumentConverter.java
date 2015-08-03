@@ -10,12 +10,15 @@ import java.lang.reflect.Parameter;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ContextArgumentConverter implements ArgumentConverter {
-
+/**
+ * Inject the current import as argument.
+ */
+public class LastImportArgumentConverter implements ArgumentConverter {
   @Override
   public Object convert(
-      List<?> remainingArguments, ImportStack importStack, Context context) {
-    return context;
+      List<?> remainingArguments, ImportStack importStack, Context context
+  ) {
+    return importStack.peek();
   }
 
   @Override

@@ -4,16 +4,20 @@ import io.bit3.jsass.Options;
 import io.bit3.jsass.Output;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.FileContext;
+import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.context.StringContext;
 import io.bit3.jsass.function.FunctionWrapper;
 import io.bit3.jsass.function.FunctionWrapperFactory;
+import io.bit3.jsass.function.JsassCustomFunctions;
 import io.bit3.jsass.importer.Importer;
+import io.bit3.jsass.importer.JsassCustomHeaderImporter;
 
 import java.io.File;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Adapter to native functions.
@@ -34,8 +38,8 @@ public class NativeAdapter {
    *
    * @return The compiled result.
    */
-  public Output compile(FileContext context) {
-    NativeFileContext nativeContext = convertToNativeContext(context);
+  public Output compile(FileContext context, ImportStack importStack) {
+    NativeFileContext nativeContext = convertToNativeContext(context, importStack);
     return compileFile(nativeContext);
   }
 
@@ -44,24 +48,28 @@ public class NativeAdapter {
    *
    * @return The compiled result.
    */
-  public Output compile(StringContext context) {
-    NativeStringContext nativeContext = convertToNativeContext(context);
+  public Output compile(StringContext context, ImportStack importStack) {
+    NativeStringContext nativeContext = convertToNativeContext(context, importStack);
     return compileString(nativeContext);
   }
 
-  private NativeFileContext convertToNativeContext(FileContext context) {
+  private NativeFileContext convertToNativeContext(
+      FileContext context, ImportStack importStack
+  ) {
     String inputPath = convertToString(context.getInputPath());
     String outputPath = convertToString(context.getOutputPath());
-    NativeOptions options = convertToNativeOptions(context);
+    NativeOptions options = convertToNativeOptions(context, importStack);
 
     return new NativeFileContext(inputPath, outputPath, options);
   }
 
-  private NativeStringContext convertToNativeContext(StringContext context) {
+  private NativeStringContext convertToNativeContext(
+      StringContext context, ImportStack importStack
+  ) {
     String source = context.getString();
     String inputPath = convertToString(context.getInputPath());
     String outputPath = convertToString(context.getOutputPath());
-    NativeOptions options = convertToNativeOptions(context);
+    NativeOptions options = convertToNativeOptions(context, importStack);
 
     return new NativeStringContext(source, inputPath, outputPath, options);
   }
@@ -80,25 +88,36 @@ public class NativeAdapter {
     return string;
   }
 
-  private NativeOptions convertToNativeOptions(Context context) {
+  private NativeOptions convertToNativeOptions(Context context, ImportStack importStack) {
     Options options = context.getOptions();
 
-    List<FunctionWrapper> functionWrappersList = functionWrapperFactory
-        .compileFunctions(context, options.getFunctionProviders());
+    List<FunctionWrapper> functionWrappersList = Stream
+        .concat(
+            functionWrapperFactory
+                .compileFunctions(importStack, context, new JsassCustomFunctions(importStack))
+                .stream(),
+            functionWrapperFactory
+                .compileFunctions(importStack, context, options.getFunctionProviders())
+                .stream()
+        )
+        .collect(Collectors.toList());
     FunctionWrapper[] functionWrappers = functionWrappersList
         .toArray(new FunctionWrapper[functionWrappersList.size()]);
 
     List<Importer> headerImportersList = options.getHeaderImporters();
-    NativeImporterWrapper[] headerImporters = headerImportersList
-        .stream()
-        .map(NativeImporterWrapper::new)
+    NativeImporterWrapper[] headerImporters = Stream
+        .concat(
+            Stream.of(new JsassCustomHeaderImporter(importStack)),
+            headerImportersList.stream()
+        )
+        .map(i -> new NativeImporterWrapper(importStack, i))
         .collect(Collectors.toList())
         .toArray(new NativeImporterWrapper[headerImportersList.size()]);
 
     Collection<Importer> importersList = options.getImporters();
     NativeImporterWrapper[] importers = importersList
         .stream()
-        .map(NativeImporterWrapper::new)
+        .map(i -> new NativeImporterWrapper(importStack, i))
         .collect(Collectors.toList())
         .toArray(new NativeImporterWrapper[importersList.size()]);
 

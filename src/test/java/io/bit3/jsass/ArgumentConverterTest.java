@@ -117,7 +117,7 @@ public class ArgumentConverterTest {
     assertNotNull(mock.actualValue);
 
     if (expectedValue instanceof Class) {
-      assertTrue(((Class) expectedValue).isAssignableFrom(mock.actualValue.getClass()));
+      assertTrue(((Class<?>) expectedValue).isAssignableFrom(mock.actualValue.getClass()));
     } else {
       assertEquals(expectedValue, mock.actualValue);
     }

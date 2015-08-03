@@ -3,6 +3,7 @@ package io.bit3.jsass;
 import io.bit3.jsass.adapter.NativeAdapter;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.FileContext;
+import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.context.StringContext;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.function.FunctionWrapperFactory;
@@ -147,7 +148,9 @@ public class Compiler {
    * @throws CompilationException If the compilation failed.
    */
   public Output compile(StringContext context) throws CompilationException {
-    return adapter.compile(context);
+    final ImportStack importStack = new ImportStack();
+
+    return adapter.compile(context, importStack);
   }
 
   /**
@@ -158,6 +161,8 @@ public class Compiler {
    * @throws CompilationException If the compilation failed.
    */
   public Output compile(FileContext context) throws CompilationException {
-    return adapter.compile(context);
+    final ImportStack importStack = new ImportStack();
+
+    return adapter.compile(context, importStack);
   }
 }

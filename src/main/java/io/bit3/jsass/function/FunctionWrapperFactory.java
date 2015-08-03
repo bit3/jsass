@@ -1,6 +1,7 @@
 package io.bit3.jsass.function;
 
 import io.bit3.jsass.context.Context;
+import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
 import io.bit3.jsass.function.arguments.converter.ObjectArgumentConverter;
 import io.bit3.jsass.function.arguments.factory.ArgumentConverterFactory;
@@ -11,6 +12,7 @@ import io.bit3.jsass.function.arguments.factory.ContextArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.DoubleArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.FloatArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.IntegerArgumentConverterFactory;
+import io.bit3.jsass.function.arguments.factory.LastImportArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.LongArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.ShortArgumentConverterFactory;
 import io.bit3.jsass.function.arguments.factory.StringArgumentConverterFactory;
@@ -51,6 +53,7 @@ public class FunctionWrapperFactory {
     this.argumentConverterFactories.add(new DoubleArgumentConverterFactory());
     this.argumentConverterFactories.add(new FloatArgumentConverterFactory());
     this.argumentConverterFactories.add(new IntegerArgumentConverterFactory());
+    this.argumentConverterFactories.add(new LastImportArgumentConverterFactory());
     this.argumentConverterFactories.add(new LongArgumentConverterFactory());
     this.argumentConverterFactories.add(new ShortArgumentConverterFactory());
     this.argumentConverterFactories.add(new StringArgumentConverterFactory());
@@ -59,14 +62,17 @@ public class FunctionWrapperFactory {
   /**
    * Compile methods from all objects into libsass functions.
    *
-   * @param objects A list of "function provider" objects.
+   * @param importStack The import stack.
+   * @param objects     A list of "function provider" objects.
    * @return The newly created list of libsass callbacks.
    */
-  public List<FunctionWrapper> compileFunctions(Context context, List<?> objects) {
+  public List<FunctionWrapper> compileFunctions(
+      ImportStack importStack, Context context, List<?> objects
+  ) {
     List<FunctionWrapper> callbacks = new LinkedList<>();
 
     for (Object object : objects) {
-      List<FunctionWrapper> objectCallbacks = compileFunctions(context, object);
+      List<FunctionWrapper> objectCallbacks = compileFunctions(importStack, context, object);
 
       callbacks.addAll(objectCallbacks);
     }
@@ -77,10 +83,13 @@ public class FunctionWrapperFactory {
   /**
    * Compile methods from an object into libsass functions.
    *
-   * @param object The "function provider" object.
+   * @param importStack The import stack.
+   * @param object      The "function provider" object.
    * @return The newly created list of libsass callbacks.
    */
-  public List<FunctionWrapper> compileFunctions(Context context, Object object) {
+  public List<FunctionWrapper> compileFunctions(
+      ImportStack importStack, Context context, Object object
+  ) {
     Class<?> functionClass = object.getClass();
     Method[] methods = functionClass.getDeclaredMethods();
     List<FunctionDeclaration> declarations = new LinkedList<>();
@@ -92,7 +101,7 @@ public class FunctionWrapperFactory {
         continue;
       }
 
-      FunctionDeclaration declaration = createDeclaration(context, object, method);
+      FunctionDeclaration declaration = createDeclaration(importStack, context, object, method);
       declarations.add(declaration);
     }
 
@@ -108,17 +117,21 @@ public class FunctionWrapperFactory {
   /**
    * Create a function declaration from an object method.
    *
-   * @param object The object.
-   * @param method The method.
+   * @param importStack The import stack.
+   * @param object      The object.
+   * @param method      The method.
    * @return The newly created function declaration.
    */
-  public FunctionDeclaration createDeclaration(Context context, Object object, Method method) {
+  public FunctionDeclaration createDeclaration(
+      ImportStack importStack, Context context, Object object, Method method
+  ) {
     StringBuilder signature = new StringBuilder();
     Parameter[] parameters = method.getParameters();
 
     List<ArgumentConverter> argumentConverters = new ArrayList<>(method.getParameterCount());
     signature.append(method.getName()).append("(");
 
+    int parameterCount = 0;
     for (int index = 0; index < parameters.length; index++) {
       Parameter parameter = parameters[index];
       ArgumentConverter argumentConverter = createArgumentConverter(object, method, parameter);
@@ -136,7 +149,7 @@ public class FunctionWrapperFactory {
         String name = functionArgumentSignature.getName();
         Object defaultValue = functionArgumentSignature.getDefaultValue();
 
-        if (index > 0) {
+        if (parameterCount > 0) {
           signature.append(", ");
         }
 
@@ -145,12 +158,15 @@ public class FunctionWrapperFactory {
         if (null != defaultValue) {
           signature.append(": ").append(formatDefaultValue(defaultValue));
         }
+
+        parameterCount ++;
       }
     }
 
     signature.append(")");
 
     return new FunctionDeclaration(
+        importStack,
         context,
         signature.toString(),
         object,
