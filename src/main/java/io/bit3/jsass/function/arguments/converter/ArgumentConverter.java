@@ -1,6 +1,7 @@
 package io.bit3.jsass.function.arguments.converter;
 
 import io.bit3.jsass.context.Context;
+import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.FunctionArgumentSignature;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public interface ArgumentConverter {
   Object convert(
       List<?> remainingArguments,
+      ImportStack importStack,
       Context context
   );
 
