@@ -32,6 +32,9 @@ class NativeImporterWrapper {
       boolean isNotJsassCustomImporter = !(importer instanceof JsassCustomHeaderImporter);
       Collection<Import> imports = this.importer.apply(url, previous);
 
+      if (imports == null)
+        return null;
+      
       Collection<NativeImport> nativeImports = new LinkedList<>();
 
       for (Import importObject : imports) {

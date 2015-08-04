@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
-cd `dirname $0`
-cd ../src/main/libsass
+cd `dirname $0`;
+cd ../src/main;
 
-autoreconf --force --install
-./configure --disable-tests --enable-shared 
-
-make -j5
-
-cd ..
-
+rm -r resources/darwin
 mkdir -p resources/darwin
-cp libsass/.libs/libsass.0.dylib resources/darwin/libsass.dylib
 
-cd ..
+# *** Build libsass
+
+#make -C libsass clean
+
+# We use:
+# - BUILD="shared" to make sure that we build a shared system library
+BUILD="static" make -C libsass -j5
+
+# *** Build libjsass
+cmake c
+make -C c -j5
+cp c/libjsass.dylib resources/darwin/libjsass.dylib
+
