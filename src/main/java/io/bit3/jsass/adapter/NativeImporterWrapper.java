@@ -50,7 +50,8 @@ class NativeImporterWrapper {
 
       return nativeImports;
     } catch (Throwable e) {
-      return Collections.emptyList();
+      e.printStackTrace(System.err);
+      return null;
     }
   }
 
