@@ -8,7 +8,7 @@ mkdir -p resources/linux-x86-64
 
 # *** Build libsass
 
-#make -C libsass clean
+make -C libsass clean
 
 # We use:
 # - BUILD="shared" to make sure that we build a shared system library
