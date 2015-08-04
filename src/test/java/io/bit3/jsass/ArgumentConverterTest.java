@@ -1,12 +1,12 @@
 package io.bit3.jsass;
 
+import static io.bit3.jsass.Assert.assertSuccessful;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import io.bit3.jsass.context.Context;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,9 +110,7 @@ public class ArgumentConverterTest {
         source, new URI("input.scss"), new URI("output.css"), options
     );
 
-    assertEquals(0, output.getErrorStatus());
-    assertTrue(StringUtils.isEmpty(output.getErrorJson()));
-    assertTrue(StringUtils.isEmpty(output.getErrorMessage()));
+    assertSuccessful(output, "scss", options.getOutputStyle());
     assertTrue(mock.called);
     assertNotNull(mock.actualValue);
 

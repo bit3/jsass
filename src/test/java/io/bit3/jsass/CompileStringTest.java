@@ -1,9 +1,9 @@
 package io.bit3.jsass;
 
+import static io.bit3.jsass.Assert.assertSuccessful;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -118,46 +118,38 @@ public class CompileStringTest {
 
   @Test
   public void testWithoutMap() throws Exception {
-    try {
-      options.setOutputStyle(outputStyle);
+    options.setOutputStyle(outputStyle);
 
-      Output output = compiler.compileString(
-          source,
-          sourceFile.toURI(),
-          targetCssFile.toURI(),
-          options
-      );
+    Output output = compiler.compileString(
+        source,
+        sourceFile.toURI(),
+        targetCssFile.toURI(),
+        options
+    );
 
-      assertEquals(output.getCss(), expectedCssWithoutMapUrl);
-      assertNull(output.getSourceMap());
-      assertFalse(targetCssFile.exists());
-    } catch (CompilationException exception) {
-      System.out.print("error message: ");
-      System.out.println(exception.getMessage());
-      fail("Compilation failed: " + exception.getMessage());
-    }
+    assertSuccessful(output, syntax, outputStyle);
+    assertEquals(output.getCss(), expectedCssWithoutMapUrl);
+    assertNull(output.getSourceMap());
+    assertFalse(targetCssFile.exists());
   }
 
   @Test
   public void testWithMap() throws Exception {
-    try {
-      options.setOutputStyle(outputStyle);
-      options.setSourceMapFile(targetSourceMapFile.toURI());
+    options.setOutputStyle(outputStyle);
+    options.setSourceMapFile(targetSourceMapFile.toURI());
 
-      Output output = compiler.compileString(
-          source,
-          sourceFile.toURI(),
-          targetCssFile.toURI(),
-          options
-      );
+    Output output = compiler.compileString(
+        source,
+        sourceFile.toURI(),
+        targetCssFile.toURI(),
+        options
+    );
 
-      assertEquals(output.getCss(), expectedCssWithMapUrl);
-      assertNotNull(output.getSourceMap());
-      assertFalse(targetCssFile.exists());
-      assertFalse(targetSourceMapFile.exists());
-    } catch (CompilationException exception) {
-      fail("Compilation failed: " + exception.getMessage());
-    }
+    assertSuccessful(output, syntax, outputStyle);
+    assertEquals(output.getCss(), expectedCssWithMapUrl);
+    assertNotNull(output.getSourceMap());
+    assertFalse(targetCssFile.exists());
+    assertFalse(targetSourceMapFile.exists());
   }
 
   private void assertEquals(String actual, URL expectedSource) throws IOException {
