@@ -49,9 +49,10 @@ class NativeImporterWrapper {
       }
 
       return nativeImports;
-    } catch (Throwable e) {
-      e.printStackTrace(System.err);
-      return null;
+    } catch (Throwable throwable) {
+      throwable.printStackTrace(System.err);
+      NativeImport nativeImport = new NativeImport(throwable);
+      return Collections.singletonList(nativeImport);
     }
   }
 

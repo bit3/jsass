@@ -845,11 +845,21 @@ Sass_Import_List importer_callback(
         jmethodID j_iterator_hasNext_method = (*env)->GetMethodID(env, j_iterator_class, "hasNext", "()Z");
         jmethodID j_iterator_next_method = (*env)->GetMethodID(env, j_iterator_class, "next", "()Ljava/lang/Object;");
 
-        jfieldID j_import_uri_property = (*env)->GetFieldID(env, j_import_class, "uri", "Ljava/lang/String;");
-        jfieldID j_import_base_property = (*env)->GetFieldID(env, j_import_class, "base", "Ljava/lang/String;");
-        jfieldID j_import_contents_property = (*env)->GetFieldID(env, j_import_class, "contents", "Ljava/lang/String;");
-        jfieldID j_import_sourceMap_property = (*env)->GetFieldID(env, j_import_class, "sourceMap",
-                                                                  "Ljava/lang/String;");
+        jfieldID j_import_uri_property = (*env)->GetFieldID(
+                env, j_import_class, "uri", "Ljava/lang/String;"
+        );
+        jfieldID j_import_base_property = (*env)->GetFieldID(
+                env, j_import_class, "base", "Ljava/lang/String;"
+        );
+        jfieldID j_import_contents_property = (*env)->GetFieldID(
+                env, j_import_class, "contents", "Ljava/lang/String;"
+        );
+        jfieldID j_import_sourceMap_property = (*env)->GetFieldID(
+                env, j_import_class, "sourceMap", "Ljava/lang/String;"
+        );
+        jfieldID j_import_errorMessage_property = (*env)->GetFieldID(
+                env, j_import_class, "errorMessage", "Ljava/lang/String;"
+        );
 
         size_t i = 0;
         while ((*env)->CallBooleanMethod(env, j_iterator, j_iterator_hasNext_method)) {
@@ -859,10 +869,14 @@ Sass_Import_List importer_callback(
             char *c_import_base = get_field_string(env, j_import, j_import_base_property);
             char *c_import_contents = get_field_string(env, j_import, j_import_contents_property);
             char *c_import_sourceMap = get_field_string(env, j_import, j_import_sourceMap_property);
+            char *c_error_message = get_field_string(env, j_import, j_import_errorMessage_property);
 
             Sass_Import_Entry sass_import_entry = sass_make_import(
                     c_import_uri, c_import_base, c_import_contents, c_import_sourceMap
             );
+            if (strlen(c_error_message)) {
+                sass_import_set_error(sass_import_entry, c_error_message, 0, 0);
+            }
             sass_import_set_list_entry(sass_import_list, i, sass_import_entry);
 
             (*env)->DeleteLocalRef(env, j_import);
