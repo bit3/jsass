@@ -6,6 +6,7 @@ set(SOURCE_FILES io_bit3_jsass_adapter_NativeAdapter.c empty.cpp)
 include_directories(
     "/usr/lib/jvm/java-8-oracle/include"
     "/usr/lib/jvm/java-8-oracle/include/linux"
+    "/System/Library/Frameworks/JavaVM.framework/Headers"
     "../libsass"
 )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -19,5 +20,6 @@ file(WRITE empty.cpp "")
 
 add_library(jsass SHARED ${SOURCE_FILES})
 set_property(TARGET jsass PROPERTY C_STANDARD 99)
-set(LINK_FLAGS ${LINK_FLAGS} "-Wl,--whole-archive")
-target_link_libraries(jsass "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
+#set(LINK_FLAGS ${LINK_FLAGS} "-Wl,--whole-archive")
+#target_link_libraries(jsass "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
+target_link_libraries(jsass sass)
