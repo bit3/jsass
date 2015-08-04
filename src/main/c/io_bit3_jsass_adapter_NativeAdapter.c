@@ -589,6 +589,10 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
  * @return The sass value.
  */
 union Sass_Value *convert_java_value_to_sass(JNIEnv *env, jobject j_value) {
+    if (!j_value) {
+        return sass_make_null();
+    }
+
     jclass j_type_class = (*env)->GetObjectClass(env, j_value);
     jfieldID j_type_field = (*env)->GetStaticFieldID(env, j_type_class, "TYPE", "I");
 
