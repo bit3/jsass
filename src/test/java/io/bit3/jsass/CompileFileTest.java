@@ -1,6 +1,6 @@
 package io.bit3.jsass;
 
-import static org.junit.Assert.fail;
+import static io.bit3.jsass.Assert.assertSuccessful;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
@@ -146,10 +146,8 @@ public class CompileFileTest {
 
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
-      assertNoFail(output);
+      assertSuccessful(output, syntax, outputStyle);
       assertEquals(output.getCss(), expectedCssWithoutMapUrl);
-    } catch (CompilationException exception) {
-      fail("Compilation failed: " + exception.getMessage());
     } finally {
       targetCssFile.delete();
     }
@@ -166,31 +164,12 @@ public class CompileFileTest {
 
       Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
-      assertNoFail(output);
+      assertSuccessful(output, syntax, outputStyle);
       assertEquals(output.getCss(), expectedCssWithMapUrl);
-    } catch (CompilationException exception) {
-      fail("Compilation failed: " + exception.getMessage());
     } finally {
       targetCssFile.delete();
       targetMapFile.delete();
     }
-  }
-
-  private void assertNoFail(Output output) {
-    String message = String.format(
-        "Compile input.%s into %s output format failed with error status (%d) %s",
-        syntax, outputStyle, output.getErrorStatus(), output.getErrorJson()
-    );
-
-    Assert.assertEquals(
-        message,
-        0,
-        output.getErrorStatus()
-    );
-    Assert.assertNull(
-        message,
-        output.getErrorJson()
-    );
   }
 
   private void assertEquals(String actual, URL expectedSource) throws IOException {
