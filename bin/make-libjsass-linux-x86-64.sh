@@ -17,10 +17,11 @@ make -C libsass clean
 # - CC=gcc-4.4     same as for CXX but for libc.so.6
 BUILD="static" make -C libsass -j5 CXX=g++-4.6 CC=gcc-4.4
 
-#cp libsass/lib/libsass.so resources/linux-x86-64/libsass.so
-
 # *** Build libjsass
 
-cmake c
-make -C c -j5 CXX=g++-4.6 CC=gcc-4.4
-cp c/libjsass.so resources/linux-x86-64/libjsass.so
+rm -r c/build
+mkdir -p c/build
+cd c/build
+cmake ../
+make -j5 CXX=g++-4.6 CC=gcc-4.4
+cp libjsass.so ../../resources/linux-x86-64/libjsass.so

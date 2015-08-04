@@ -16,6 +16,9 @@ BUILD="static" make -C libsass -j5
 
 # *** Build libjsass
 
-cmake c
-make -C c -j5
-cp c/libjsass.dylib resources/darwin/libjsass.dylib
+rm -r c/build
+mkdir -p c/build
+cd c/build
+cmake ../
+make -j5
+cp libjsass.dylib ../../resources/darwin/libjsass.dylib
