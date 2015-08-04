@@ -8,6 +8,7 @@ include_directories(
     "/System/Library/Frameworks/JavaVM.framework/Headers"
 
     # unix
+    "/usr/lib/jvm/default-java/include"
     "/usr/lib/jvm/java-8-oracle/include"
     "/usr/lib/jvm/java-8-oracle/include/linux"
 
