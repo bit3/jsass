@@ -12,6 +12,7 @@ env:
 
 install:
   - sudo sh -c "wget -qO- https://get.docker.com/ | sh"
+  - sudo apt-get -qy install slirp
   - sudo sudo usermod -aG docker "$USER"
   - git clone git://github.com/cptactionhank/sekexe
 
