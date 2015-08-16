@@ -36,18 +36,26 @@ But at the moment there are no automated builds and tests for them. We are worki
 
 [osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg
 
-Rebuild jni adapter
--------------------
+Gradle tasks you should know
+----------------------------
 
-### Linux
+`gradle check` runs checkstyle, pmd, junit locally. Also junit will run on each testing docker container.
 
-```bash
-$ ./make-libjsass-linux-x86-64.sh
-$ cmake .
-$ make
-$ cp libjsass.so ../resources/linux-x86-64/
-```
+`gradle buildNativeLibs` build the native libs, using our build docker container.
 
+`gradle buildDocker` build latest version of all docker containers locally. This should only used for development purpose, the containers are available on Docker Hub!
+ 
+Build scripts
+-------------
+
+*Our build scripts are mostly deprecated in favor of the gradle tasks!*
+
+`./bin/make-libjsass-darwin.sh` build the native lib for OS X.
+ 
+`./bin/make-libjsass-linux-x86-64.sh` build the native lib for Linux, using our build docker container. This is equivalent to `gradle buildNativeLinuxLibs`!
+ 
+`./bin/make-libjsass-windows-x86-64.bat` build the native lib for Windows.
+ 
 License
 -------
 
