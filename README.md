@@ -12,18 +12,50 @@ The most advantage of jsass is to hide the libsass complexity from the developer
 
 For complete documentation, see [jsass.rtfd.org](http://jsass.rtfd.org/)
 
-Rebuild jni adapter
--------------------
+Compatibility
+-------------
 
-### Linux
+| Linux                        | Windows                     | Mac               |
+| ---------------------------- | --------------------------- | ----------------- |
+| ![CentOS 5][centos5]         | ![Windows 64bit][windows64] | ![OS X 10][osx10] | 
+| ![CentOS 6][centos6]         |                             |                   |
+| ![CentOS 7][centos7]         |                             |                   |
+| ![ubuntu 12.04][ubuntu12.04] |                             |                   |
+| ![ubuntu 14.04][ubuntu14.04] |                             |                   |
 
-```bash
-$ ./make-libjsass-linux-x86-64.sh
-$ cmake .
-$ make
-$ cp libjsass.so ../resources/linux-x86-64/
-```
+A note to Windows and OS X compatibility: jsass may also work on Windows and OS X.
+But at the moment there are no automated builds and tests for them. We are working on it.
 
+[centos5]: https://img.shields.io/badge/CentOS-5-green.svg
+[centos6]: https://img.shields.io/badge/CentOS-6-green.svg
+[centos7]: https://img.shields.io/badge/CentOS-7-green.svg
+[ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04-green.svg
+[ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04-green.svg
+
+[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg
+
+[osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg
+
+Gradle tasks you should know
+----------------------------
+
+`gradle check` runs checkstyle, pmd, junit locally. Also junit will run on each testing docker container.
+
+`gradle buildNativeLibs` build the native libs, using our build docker container.
+
+`gradle buildDocker` build latest version of all docker containers locally. This should only used for development purpose, the containers are available on Docker Hub!
+ 
+Build scripts
+-------------
+
+*Our build scripts are mostly deprecated in favor of the gradle tasks!*
+
+`./bin/make-libjsass-darwin.sh` build the native lib for OS X.
+ 
+`./bin/make-libjsass-linux-x86-64.sh` build the native lib for Linux, using our build docker container. This is equivalent to `gradle buildNativeLinuxLibs`!
+ 
+`./bin/make-libjsass-windows-x86-64.bat` build the native lib for Windows.
+ 
 License
 -------
 
