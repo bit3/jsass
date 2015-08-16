@@ -36,7 +36,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.ajoberstar:gradle-git:0.6.3'
+        classpath 'org.ajoberstar:gradle-git:1.2.0'
     }
 }
 
@@ -46,8 +46,6 @@ def isVerbose() {
     def logLevel = gradle.startParameter.logLevel
     return LogLevel.INFO == logLevel || LogLevel.DEBUG == logLevel
 }
-
-import org.ajoberstar.gradle.git.tasks.*
 
 task determineUid() {
     project.ext['uid'] = 0
@@ -85,12 +83,25 @@ task determineCurrentWorkingDirectory() {
     }
 }
 
-task determineBranchName(type: GitBranchList) {
-    branchType = GitBranchList.BranchType.LOCAL
-    project.ext['branchName'] = 'unknown'
+task determineRepositoryHeadStability() {
+    def repo = org.ajoberstar.grgit.Grgit.open(project.file('.'))
+
+    project.ext['headIsUpstream'] = true
 
     doLast {
-        project.ext['branchName'] = getWorkingBranch().name
+        def branch = repo.branch.getCurrent()
+
+        if (branch) {
+            branch = branch.getName()
+        }
+
+        if (!branch || 'HEAD' == branch) {
+            def tag = repo.describe()
+
+            project.ext['headIsUpstream'] = !(tag =~ /^\d+(\.\d+)+$/)
+        } else {
+            project.ext['headIsUpstream'] = 'master' != branch
+        }
     }
 }
 
@@ -112,7 +123,7 @@ task determineDockerAvailable() {
 def runDockerContainer(name) {
     def type = 'stable'
 
-    if ('develop' == branchName) {
+    if (headIsUpstream) {
         type = 'latest'
     }
 
@@ -159,7 +170,7 @@ task buildNativeLibs {
 }
 
 task buildNativeLinuxLibs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for linux'
@@ -180,7 +191,7 @@ task runDockerTests {
 test.dependsOn runDockerTests
 
 task runDockerTestCentOS5 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 5 test container'
@@ -189,7 +200,7 @@ task runDockerTestCentOS5 {
 }
 
 task runDockerTestCentOS6 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 6 test container'
@@ -198,7 +209,7 @@ task runDockerTestCentOS6 {
 }
 
 task runDockerTestCentOS7 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 7 test container'
@@ -207,7 +218,7 @@ task runDockerTestCentOS7 {
 }
 
 task runDockerTestUbuntu1204 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker ubuntu 12.04 test container'
@@ -216,7 +227,7 @@ task runDockerTestUbuntu1204 {
 }
 
 task runDockerTestUbuntu1404 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker ubuntu 14.04 test container'
