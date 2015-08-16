@@ -12,6 +12,30 @@ The most advantage of jsass is to hide the libsass complexity from the developer
 
 For complete documentation, see [jsass.rtfd.org](http://jsass.rtfd.org/)
 
+Compatibility
+-------------
+
+| Linux                        | Windows                     | Mac               |
+| ---------------------------- | --------------------------- | ----------------- |
+| ![CentOS 5][centos5]         | ![Windows 64bit][windows64] | ![OS X 10][osx10] | 
+| ![CentOS 6][centos6]         |                             |                   |
+| ![CentOS 7][centos7]         |                             |                   |
+| ![ubuntu 12.04][ubuntu12.04] |                             |                   |
+| ![ubuntu 14.04][ubuntu14.04] |                             |                   |
+
+A note to Windows and OS X compatibility: jsass may also work on Windows and OS X.
+But at the moment there are no automated builds and tests for them. We are working on it.
+
+[centos5]: https://img.shields.io/badge/CentOS-5-green.svg
+[centos6]: https://img.shields.io/badge/CentOS-6-green.svg
+[centos7]: https://img.shields.io/badge/CentOS-7-green.svg
+[ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04-green.svg
+[ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04-green.svg
+
+[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg
+
+[osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg
+
 Rebuild jni adapter
 -------------------
 

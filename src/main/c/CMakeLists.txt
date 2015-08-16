@@ -4,6 +4,10 @@ project(jsass)
 set(SOURCE_FILES io_bit3_jsass_adapter_NativeAdapter.c empty.cpp)
 
 include_directories(
+    # docker
+    "/opt/jdk1.8.0_51/include"
+    "/opt/jdk1.8.0_51/include/linux"
+
     # apple
     "/System/Library/Frameworks/JavaVM.framework/Headers"
 

@@ -1,0 +1,293 @@
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+
+sourceCompatibility = 1.8
+version '3.1.3-SNAPSHOT'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'jsass',
+                'Implementation-Version': version
+    }
+}
+
+// Pinned to checkstyle 6.7 because newer versions are incompatible with gradle <=2.6
+// https://issues.gradle.org/browse/GRADLE-3314
+checkstyle {
+    toolVersion = "6.7"
+}
+
+pmd {
+    toolVersion = "4.3"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:gradle-git:0.6.3'
+    }
+}
+
+// -----------------------------------------------------------------------------
+
+def isVerbose() {
+    def logLevel = gradle.startParameter.logLevel
+    return LogLevel.INFO == logLevel || LogLevel.DEBUG == logLevel
+}
+
+import org.ajoberstar.gradle.git.tasks.*
+
+task determineUid() {
+    project.ext['uid'] = 0
+
+    doLast {
+        def user = System.getProperty("user.name")
+        def output = new ByteArrayOutputStream();
+        exec {
+            commandLine 'id', '-u', user
+            standardOutput = output
+        }
+        project.ext['uid'] = output.toString().trim()
+    }
+}
+
+task determineGid() {
+    project.ext['gid'] = 0
+
+    doLast {
+        def user = System.getProperty("user.name")
+        def output = new ByteArrayOutputStream();
+        exec {
+            commandLine 'id', '-g', user
+            standardOutput = output
+        }
+        project.ext['gid'] = output.toString().trim()
+    }
+}
+
+task determineCurrentWorkingDirectory() {
+    project.ext['cwd'] = '/'
+
+    doLast {
+        project.ext['cwd'] = new File('.').absolutePath
+    }
+}
+
+task determineBranchName(type: GitBranchList) {
+    branchType = GitBranchList.BranchType.LOCAL
+    project.ext['branchName'] = 'unknown'
+
+    doLast {
+        project.ext['branchName'] = getWorkingBranch().name
+    }
+}
+
+task determineDockerAvailable() {
+    doLast {
+        def execResult = exec {
+            commandLine 'docker', '--version'
+            ignoreExitValue = true
+            standardOutput = new ByteArrayOutputStream()
+            errorOutput = standardOutput
+        }
+
+        if (execResult.exitValue != 0) {
+            throw new GradleException("Docker is required to run this task")
+        }
+    }
+}
+
+def runDockerContainer(name) {
+    def type = 'stable'
+
+    if ('develop' == branchName) {
+        type = 'latest'
+    }
+
+    def output = new ByteArrayOutputStream()
+    def execResult = exec {
+        workingDir cwd
+        commandLine 'docker', 'run', "--user=$uid:$gid", '--rm', '-v', "$cwd:/jsass", "bit3/jsass-$name:$type"
+
+        if (!isVerbose()) {
+            standardOutput = output
+            errorOutput = output
+            ignoreExitValue = true
+        }
+    }
+
+    if (execResult.exitValue != 0) {
+        throw new GradleException("Docker run failed\n" + output.toString())
+    }
+}
+
+def buildDockerContainer(name) {
+    def output = new ByteArrayOutputStream()
+    def execResult = exec {
+        workingDir "src/main/docker/$name"
+        commandLine 'docker', 'build', '-t', "bit3/jsass-$name:latest", '.'
+
+        if (!isVerbose()) {
+            standardOutput = output
+            errorOutput = output
+            ignoreExitValue = true
+        }
+    }
+
+    if (execResult.exitValue != 0) {
+        throw new GradleException("Docker build failed\n" + output.toString())
+    }
+}
+
+// -----------------------------------------------------------------------------
+
+// Run docker tests
+task buildNativeLibs {
+    dependsOn 'buildNativeLinuxLibs'
+}
+
+task buildNativeLinuxLibs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for linux'
+        runDockerContainer('build-linux')
+    }
+}
+
+// -----------------------------------------------------------------------------
+
+// Run docker tests
+task runDockerTests {
+    dependsOn 'runDockerTestCentOS5',
+            'runDockerTestCentOS6',
+            'runDockerTestCentOS7',
+            'runDockerTestUbuntu1204',
+            'runDockerTestUbuntu1404'
+}
+test.dependsOn runDockerTests
+
+task runDockerTestCentOS5 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker CentOS 5 test container'
+        runDockerContainer('test-centos5')
+    }
+}
+
+task runDockerTestCentOS6 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker CentOS 6 test container'
+        runDockerContainer('test-centos5')
+    }
+}
+
+task runDockerTestCentOS7 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker CentOS 7 test container'
+        runDockerContainer('test-centos5')
+    }
+}
+
+task runDockerTestUbuntu1204 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker ubuntu 12.04 test container'
+        runDockerContainer('test-ubuntu12.04')
+    }
+}
+
+task runDockerTestUbuntu1404 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineBranchName, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker ubuntu 14.04 test container'
+        runDockerContainer('test-ubuntu14.04')
+    }
+}
+
+// -----------------------------------------------------------------------------
+
+// Build docker images tasks
+// Note: these tasks are only for local development purpose,
+// all containers are available on Docker Hub too!
+task buildDocker {
+    dependsOn 'buildDockerBuildLinux',
+            'buildDockerTestCentOS5',
+            'buildDockerTestCentOS6',
+            'buildDockerTestCentOS7',
+            'buildDockerTestUbuntu1204',
+            'buildDockerTestUbuntu1404'
+}
+
+task buildDockerBuildLinux {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux build container'
+        buildDockerContainer('build-linux')
+    }
+}
+
+task buildDockerTestCentOS5 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker CentOS 5 test container'
+        buildDockerContainer('test-centos5')
+    }
+}
+
+task buildDockerTestCentOS6 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker CentOS 6 test container'
+        buildDockerContainer('test-centos6')
+    }
+}
+
+task buildDockerTestCentOS7 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker CentOS 7 test container'
+        buildDockerContainer('test-centos7')
+    }
+}
+
+task buildDockerTestUbuntu1204 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker ubuntu 12.04 test container'
+        buildDockerContainer('test-ubuntu12.04')
+    }
+}
+
+task buildDockerTestUbuntu1404 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker ubuntu 14.04 test container'
+        buildDockerContainer('test-ubuntu14.04')
+    }
+}
