@@ -1,5 +1,9 @@
 package io.bit3.jsass.type;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -64,8 +68,18 @@ public class TypeUtils {
       return map;
     }
 
-    if (value instanceof Exception) {
-      return new SassError(((Exception) value).getMessage());
+    if (value instanceof Throwable) {
+      Throwable throwable = (Throwable) value;
+      StringWriter stringWriter = new StringWriter();
+      PrintWriter printWriter = new PrintWriter(stringWriter);
+
+      String message = throwable.getMessage();
+      if (StringUtils.isNotEmpty(message)) {
+        printWriter.append(message).append("\n");
+      }
+      throwable.printStackTrace(printWriter);
+
+      return new SassError(stringWriter.toString());
     }
 
     return new SassError(
