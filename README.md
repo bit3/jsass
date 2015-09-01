@@ -52,7 +52,7 @@ Build scripts
 
 `./bin/make-libjsass-darwin.sh` build the native lib for OS X.
  
-`./bin/make-libjsass-linux-x86-64.sh` build the native lib for Linux, using our build docker container. This is equivalent to `gradle buildNativeLinuxLibs`!
+`./bin/make-libjsass-linux-x64.sh` build the native lib for Linux, using our build docker container. This is equivalent to `gradle buildDockerBuildLinux64 buildNativeLinux64Libs`!
  
 `./bin/make-libjsass-windows-x86-64.bat` build the native lib for Windows.
  

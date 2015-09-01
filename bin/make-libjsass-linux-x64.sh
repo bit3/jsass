@@ -5,11 +5,16 @@ if [[ -z "$(which docker)" ]]; then
     exit 1
 fi
 
+if [[ -z "$(which gradle)" ]]; then
+    echo "The linux build require gradle"
+    exit 1
+fi
+
 DIR=$(dirname $(dirname $(realpath "$0")))
+cd "$DIR"
 
 # Install docker container
-cd "$DIR/src/main/docker/build"
-docker build -t jsass/build:latest .
+gradle buildDockerBuildLinux64
 
 # Compile binaries
-docker run --user=$UID:$GID --rm -it -v "$DIR:/jsass" jsass/build:latest
+gradle buildNativeLinux64Libs

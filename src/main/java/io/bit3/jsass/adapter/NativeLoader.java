@@ -51,12 +51,7 @@ final class NativeLoader {
       switch (osArch) {
         case "amd64":
         case "x86_64":
-          platform = "linux-x86-64";
-          break;
-
-        case "i386":
-        case "x86":
-          platform = "linux-x86";
+          platform = "linux-x64";
           break;
 
         default:
