@@ -43,8 +43,24 @@ final class NativeLoader {
     String fileExtension;
 
     if (osName.startsWith("win")) {
-      platform = "win-x86";
       fileExtension = "dll";
+
+      switch (osArch) {
+        case "i386":
+        case "x86":
+          platform = "windows-x32";
+          break;
+
+        case "amd64":
+        case "x86_64":
+          platform = "windows-x64";
+          break;
+
+        default:
+          throw new UnsupportedOperationException(
+              "Platform " + osName + ":" + osArch + " not supported"
+          );
+      }
     } else if (osName.startsWith("linux")) {
       fileExtension = "so";
 
@@ -60,8 +76,8 @@ final class NativeLoader {
           );
       }
     } else if (osName.startsWith("mac")) {
-      platform = "darwin";
       fileExtension = "dylib";
+      platform = "darwin";
     } else {
       throw new UnsupportedOperationException(
           "Platform " + osName + ":" + osArch + " not supported"

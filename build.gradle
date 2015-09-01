@@ -166,7 +166,9 @@ def buildDockerContainer(name) {
 
 // Run docker tests
 task buildNativeLibs {
-    dependsOn 'buildNativeLinux64Libs'
+    dependsOn 'buildNativeLinux64Libs',
+            'buildNativeWindows32Libs',
+            'buildNativeWindows64Libs'
 }
 
 task buildNativeLinux64Libs {
@@ -175,6 +177,24 @@ task buildNativeLinux64Libs {
     doLast {
         println 'Build native libs for linux x64'
         runDockerContainer('build-linux-x64')
+    }
+}
+
+task buildNativeWindows32Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for windows x32'
+        runDockerContainer('build-windows-x32')
+    }
+}
+
+task buildNativeWindows64Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for windows x64'
+        runDockerContainer('build-windows-x64')
     }
 }
 
@@ -242,6 +262,8 @@ task runDockerTestUbuntu1404 {
 // all containers are available on Docker Hub too!
 task buildDocker {
     dependsOn 'buildDockerBuildLinux64',
+            'buildDockerBuildWindows32',
+            'buildDockerBuildWindows64',
             'buildDockerTestCentOS5',
             'buildDockerTestCentOS6',
             'buildDockerTestCentOS7',
@@ -255,6 +277,24 @@ task buildDockerBuildLinux64 {
     doLast {
         println 'Build Docker Linux build container'
         buildDockerContainer('build-linux-x64')
+    }
+}
+
+task buildDockerBuildWindows32 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux build container'
+        buildDockerContainer('build-windows-x32')
+    }
+}
+
+task buildDockerBuildWindows64 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux build container'
+        buildDockerContainer('build-windows-x64')
     }
 }
 
