@@ -21,8 +21,9 @@ MAKE=mingw32 \
 CC=i686-w64-mingw32-gcc \
 CXX=i686-w64-mingw32-g++ \
 WINDRES=i686-w64-mingw32-windres \
-BUILD=static \
+BUILD=shared \
     make -C libsass -j8 lib/libsass.dll || exit 1
+cp libsass/lib/libsass.dll resources/windows-x32/libsass.dll || exit 1
 
 # *** Build libjsass
 

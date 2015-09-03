@@ -25,6 +25,10 @@ final class NativeLoader {
       dir.mkdir();
       dir.deleteOnExit();
 
+      if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
+        System.load(saveLibrary(dir, "sass"));
+      }
+
       System.load(saveLibrary(dir, "jsass"));
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
