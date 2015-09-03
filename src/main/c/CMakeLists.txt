@@ -35,8 +35,6 @@ set(LINK_FLAGS ${LINK_FLAGS} "-Wl,--whole-archive")
 
 if(APPLE)
     target_link_libraries(jsass sass)
-elseif(WIN32)
-    target_link_libraries(jsass "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
 else()
     target_link_libraries(jsass "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
 endif()
