@@ -8,6 +8,9 @@ mkdir -p resources/windows-x32
 # *** Build libsass
 
 make -C libsass clean
+cd libsass
+git clean -xdf # hard reset
+cd ..
 
 # MAKE=mingw32                      to make sure we build for windows
 # CC=i686-w64-mingw32-gcc           cross compile with mingw32-gcc compiler

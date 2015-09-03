@@ -8,6 +8,9 @@ mkdir -p resources/linux-x64
 # *** Build libsass
 
 make -C libsass clean
+cd libsass
+git clean -xdf # hard reset
+cd ..
 
 # We use:
 # - BUILD="static" to make sure that we build a static library

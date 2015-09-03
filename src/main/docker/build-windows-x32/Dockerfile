@@ -7,7 +7,7 @@ RUN set -x \
     && apt-get install -y software-properties-common \
     && add-apt-repository -y ppa:george-edison55/cmake-3.x \
     && apt-get update \
-    && apt-get install -y wget mingw-w64 make cmake
+    && apt-get install -y wget git mingw-w64 make cmake
 
 # Install Java JDK 8
 RUN set -x \
