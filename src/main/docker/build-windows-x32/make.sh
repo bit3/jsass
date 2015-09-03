@@ -22,13 +22,13 @@ CC=i686-w64-mingw32-gcc \
 CXX=i686-w64-mingw32-g++ \
 WINDRES=i686-w64-mingw32-windres \
 BUILD=static \
-    make -C libsass -j8 lib/libsass.a
+    make -C libsass -j8 lib/libsass.dll || exit 1
 
 # *** Build libjsass
 
 rm -r c/build
 mkdir -p c/build
 cd c/build
-cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x32.cmake ../
-make
-cp libjsass.dll ../../resources/windows-x32/libjsass.dll
+cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x32.cmake ../ || exit 1
+make || exit 1
+cp libjsass.dll ../../resources/windows-x32/libjsass.dll || exit 1
