@@ -12,6 +12,8 @@ The most advantage of jsass is to hide the libsass complexity from the developer
 
 For complete documentation, see [jsass.rtfd.org](http://jsass.rtfd.org/)
 
+[libsass]: https://github.com/sass/libsass
+
 Compatibility
 -------------
 
