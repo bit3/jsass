@@ -32,8 +32,8 @@ But at the moment there are no automated builds and tests for them. We are worki
 [ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg
 [ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg
 
-[windows32]: https://img.shields.io/badge/Windows-32bit-yellow.svg
-[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg
+[windows32]: https://img.shields.io/badge/Windows-32bit-green.svg
+[windows64]: https://img.shields.io/badge/Windows-64bit-green.svg
 
 [osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg
 
