@@ -25,6 +25,10 @@ final class NativeLoader {
       dir.mkdir();
       dir.deleteOnExit();
 
+      if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
+        System.load(saveLibrary(dir, "sass"));
+      }
+
       System.load(saveLibrary(dir, "jsass"));
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
@@ -43,20 +47,31 @@ final class NativeLoader {
     String fileExtension;
 
     if (osName.startsWith("win")) {
-      platform = "win-x86";
       fileExtension = "dll";
+
+      switch (osArch) {
+        case "i386":
+        case "x86":
+          platform = "windows-x32";
+          break;
+
+        case "amd64":
+        case "x86_64":
+          platform = "windows-x64";
+          break;
+
+        default:
+          throw new UnsupportedOperationException(
+              "Platform " + osName + ":" + osArch + " not supported"
+          );
+      }
     } else if (osName.startsWith("linux")) {
       fileExtension = "so";
 
       switch (osArch) {
         case "amd64":
         case "x86_64":
-          platform = "linux-x86-64";
-          break;
-
-        case "i386":
-        case "x86":
-          platform = "linux-x86";
+          platform = "linux-x64";
           break;
 
         default:
@@ -65,8 +80,8 @@ final class NativeLoader {
           );
       }
     } else if (osName.startsWith("mac")) {
-      platform = "darwin";
       fileExtension = "dylib";
+      platform = "darwin";
     } else {
       throw new UnsupportedOperationException(
           "Platform " + osName + ":" + osArch + " not supported"
@@ -100,7 +115,7 @@ final class NativeLoader {
 
     try (
         InputStream in = libraryResource.openStream();
-        OutputStream out = new FileOutputStream(file);
+        OutputStream out = new FileOutputStream(file)
     ) {
       IOUtils.copy(in, out);
     }

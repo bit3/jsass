@@ -3,9 +3,14 @@ package io.bit3.jsass.function;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
+import io.bit3.jsass.type.SassError;
 import io.bit3.jsass.type.SassValue;
 import io.bit3.jsass.type.TypeUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,19 +113,28 @@ public class FunctionDeclaration {
    * @return The method result.
    */
   public SassValue invoke(List<?> arguments) {
-    ArrayList<Object> values = new ArrayList<>(argumentConverters.size());
-
-    for (ArgumentConverter argumentConverter : argumentConverters) {
-      Object value = argumentConverter.convert(arguments, importStack, context);
-      values.add(value);
-    }
-
     try {
+      ArrayList<Object> values = new ArrayList<>(argumentConverters.size());
+
+      for (ArgumentConverter argumentConverter : argumentConverters) {
+        Object value = argumentConverter.convert(arguments, importStack, context);
+        values.add(value);
+      }
+
       Object result = method.invoke(object, values.toArray());
 
       return TypeUtils.convertToSassValue(result);
-    } catch (Throwable e) {
-      throw new RuntimeException(e);
+    } catch (Throwable throwable) {
+      StringWriter stringWriter = new StringWriter();
+      PrintWriter printWriter = new PrintWriter(stringWriter);
+
+      String message = throwable.getMessage();
+      if (StringUtils.isNotEmpty(message)) {
+        printWriter.append(message).append("\n");
+      }
+      throwable.printStackTrace(printWriter);
+
+      return new SassError(stringWriter.toString());
     }
   }
 }

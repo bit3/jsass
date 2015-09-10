@@ -166,15 +166,35 @@ def buildDockerContainer(name) {
 
 // Run docker tests
 task buildNativeLibs {
-    dependsOn 'buildNativeLinuxLibs'
+    dependsOn 'buildNativeLinux64Libs',
+            'buildNativeWindows32Libs',
+            'buildNativeWindows64Libs'
 }
 
-task buildNativeLinuxLibs {
+task buildNativeLinux64Libs {
     dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
-        println 'Build native libs for linux'
-        runDockerContainer('build-linux')
+        println 'Build native libs for linux x64'
+        runDockerContainer('build-linux-x64')
+    }
+}
+
+task buildNativeWindows32Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for windows x32'
+        runDockerContainer('build-windows-x32')
+    }
+}
+
+task buildNativeWindows64Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for windows x64'
+        runDockerContainer('build-windows-x64')
     }
 }
 
@@ -241,7 +261,9 @@ task runDockerTestUbuntu1404 {
 // Note: these tasks are only for local development purpose,
 // all containers are available on Docker Hub too!
 task buildDocker {
-    dependsOn 'buildDockerBuildLinux',
+    dependsOn 'buildDockerBuildLinux64',
+            'buildDockerBuildWindows32',
+            'buildDockerBuildWindows64',
             'buildDockerTestCentOS5',
             'buildDockerTestCentOS6',
             'buildDockerTestCentOS7',
@@ -249,12 +271,30 @@ task buildDocker {
             'buildDockerTestUbuntu1404'
 }
 
-task buildDockerBuildLinux {
+task buildDockerBuildLinux64 {
     dependsOn determineDockerAvailable
 
     doLast {
         println 'Build Docker Linux build container'
-        buildDockerContainer('build-linux')
+        buildDockerContainer('build-linux-x64')
+    }
+}
+
+task buildDockerBuildWindows32 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux build container'
+        buildDockerContainer('build-windows-x32')
+    }
+}
+
+task buildDockerBuildWindows64 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux build container'
+        buildDockerContainer('build-windows-x64')
     }
 }
 
