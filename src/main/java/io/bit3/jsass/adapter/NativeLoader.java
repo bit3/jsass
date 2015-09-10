@@ -115,7 +115,7 @@ final class NativeLoader {
 
     try (
         InputStream in = libraryResource.openStream();
-        OutputStream out = new FileOutputStream(file);
+        OutputStream out = new FileOutputStream(file)
     ) {
       IOUtils.copy(in, out);
     }
