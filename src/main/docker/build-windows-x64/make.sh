@@ -12,6 +12,10 @@ cd libsass
 git clean -xdf # hard reset
 cd ..
 
+# *** Prepare makefile to use static windows subsystem bindings
+# @see https://github.com/sass/libsass/wiki/Building-with-MinGW#building-via-minggw-64bit-makefiles
+sed -i 's/ -Wl,--subsystem,windows/ -static -Wl,--subsystem,windows/' src/main/libsass/Makefile
+
 # MAKE=mingw32                      to make sure we build for windows
 # CC=i686-w64-mingw32-gcc           cross compile with mingw32-gcc compiler
 # CXX=i686-w64-mingw32-g++          cross compile with mingw32-g++ compiler
@@ -21,7 +25,7 @@ MAKE=mingw32 \
 CC=x86_64-w64-mingw32-gcc \
 CXX=x86_64-w64-mingw32-g++ \
 WINDRES=x86_64-w64-mingw32-windres \
-BUILD=shared \
+BUILD=static \
     make -C libsass -j8 lib/libsass.dll || exit 1
 cp libsass/lib/libsass.dll resources/windows-x64/libsass.dll || exit 1
 
