@@ -4,6 +4,7 @@ import io.bit3.jsass.importer.Import;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
@@ -26,14 +27,22 @@ class NativeImport {
     final String contents = sassImport.getContents();
     final String sourceMap = sassImport.getSourceMap();
 
-    String uriString = null == uri ? "" : uri.toString();
-    if (uriString.startsWith("file:")) {
-      uriString = uriString.substring(5);
+    String uriString = "";
+    if (null != uri) {
+      if ("file".equals(uri.getScheme())) {
+        uriString = new File(uri).getAbsolutePath();
+      } else {
+        uriString = uri.toString();
+      }
     }
 
-    String baseString = null == base ? "" : base.toString();
-    if (baseString.startsWith("file:")) {
-      baseString = baseString.substring(5);
+    String baseString = "";
+    if (null != base) {
+      if ("file".equals(base.getScheme())) {
+        baseString = new File(base).getAbsolutePath();
+      } else {
+        baseString = base.toString();
+      }
     }
 
     this.uri = uriString;

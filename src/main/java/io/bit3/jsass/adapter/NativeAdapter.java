@@ -81,8 +81,8 @@ public class NativeAdapter {
 
     String string = uri.toString();
 
-    if (string.startsWith("file:")) {
-      string = string.substring(5);
+    if ("file".equals(uri.getScheme())) {
+      string = new File(uri).getAbsolutePath();
     }
 
     return string;
