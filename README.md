@@ -29,16 +29,16 @@ Compatibility
 A note to Windows and OS X compatibility: jsass may also work on Windows and OS X.
 But at the moment there are no automated tests for them. We are working on it.
 
-[centos5]: https://img.shields.io/badge/CentOS-5%20%28x86_64%29-green.svg
-[centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg
-[centos7]: https://img.shields.io/badge/CentOS-7%20%28x86_64%29-green.svg
-[ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg
-[ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg
+[centos5]: https://img.shields.io/badge/CentOS-5%20%28x86_64%29-green.svg?style=flat-square
+[centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat-square
+[centos7]: https://img.shields.io/badge/CentOS-7%20%28x86_64%29-green.svg?style=flat-square
+[ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg?style=flat-square
+[ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg?style=flat-square
 
-[windows32]: https://img.shields.io/badge/Windows-32bit-yellow.svg
-[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg
+[windows32]: https://img.shields.io/badge/Windows-32bit-yellow.svg?style=flat-square
+[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg?style=flat-square
 
-[osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg
+[osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg?style=flat-square
 
 Gradle tasks you should know
 ----------------------------
