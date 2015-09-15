@@ -9,7 +9,8 @@ mkdir -p resources/linux-x64
 
 make -C libsass clean
 cd libsass
-git clean -xdf # hard reset
+git reset --hard # hard reset
+git clean -xdf # hard clean
 cd ..
 
 # We use:

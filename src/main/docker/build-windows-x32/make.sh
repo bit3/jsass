@@ -9,7 +9,8 @@ mkdir -p resources/windows-x32
 
 make -C libsass clean
 cd libsass
-git clean -xdf # hard reset
+git reset --hard # hard reset
+git clean -xdf # hard clean
 cd ..
 
 # *** Prepare makefile to use static windows subsystem bindings
