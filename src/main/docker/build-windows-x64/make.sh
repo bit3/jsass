@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /jsass/src/main;
+cd /jsass/src/main
 
 rm -r resources/windows-x64
 mkdir -p resources/windows-x64
