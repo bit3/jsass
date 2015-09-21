@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /jsass/src/main;
+cd /jsass/src/main
 
 rm -r resources/linux-x64
 mkdir -p resources/linux-x64
@@ -9,7 +9,8 @@ mkdir -p resources/linux-x64
 
 make -C libsass clean
 cd libsass
-git clean -xdf # hard reset
+git reset --hard # hard reset
+git clean -xdf # hard clean
 cd ..
 
 # We use:
