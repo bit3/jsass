@@ -27,7 +27,7 @@ Compatibility
 | ![ubuntu 14.04 (x86_64)][ubuntu14.04] |                             |                   |
 
 A note to Windows and OS X compatibility: jsass may also work on Windows and OS X.
-But at the moment there are no automated tests for them. We are working on it.
+But at the moment there are no automated tests for them and both platforms are not well tested!
 
 [centos5]: https://img.shields.io/badge/CentOS-5%20%28x86_64%29-green.svg?style=flat-square
 [centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat-square
