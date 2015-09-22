@@ -1,0 +1,4 @@
+# LF line ending is necessary to run tests successfully
+*.scss text eol=lf
+*.sass text eol=lf
+*.css text eol=lf
