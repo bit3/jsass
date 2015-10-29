@@ -48,6 +48,6 @@ public class TestImporter implements Importer {
       }
     }
 
-    return null;
+    throw new IllegalArgumentException("Cannot handle import \"" + url + "\"");
   }
 }
