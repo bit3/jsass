@@ -218,7 +218,8 @@ public class FunctionWrapperFactory {
   }
 
   private ArgumentConverter createArgumentConverter(
-      Object object, Method method,
+      Object object,
+      Method method,
       Parameter parameter
   ) {
     Class<?> type = parameter.getType();

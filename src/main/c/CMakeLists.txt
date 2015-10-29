@@ -17,7 +17,7 @@ include_directories(
     "/usr/lib/jvm/java-8-oracle/include/linux"
 
     # libsass
-    "../libsass"
+    "../libsass/include"
 )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 

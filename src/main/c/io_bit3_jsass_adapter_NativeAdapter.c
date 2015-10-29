@@ -1,7 +1,8 @@
 #include <jni.h>
 #include <stdio.h>
 #include <string.h>
-#include <sass_context.h>
+#include <sass.h>
+#include <sass2scss.h>
 #include <stdlib.h>
 #include "io_bit3_jsass_adapter_NativeAdapter.h"
 
@@ -796,8 +797,8 @@ Sass_Import_List importer_callback(
 ) {
     void *cookie = sass_importer_get_cookie(sass_importer_entry);
     Sass_Import_Entry sass_last_import_entry = sass_compiler_get_last_import(sass_compiler);
-    const char *c_last_import_path = sass_import_get_path(sass_last_import_entry);
-    const char *c_last_import_base = sass_import_get_base(sass_last_import_entry);
+    const char *c_last_import_imp_path = sass_import_get_imp_path(sass_last_import_entry);
+    const char *c_last_import_abs_path = sass_import_get_abs_path(sass_last_import_entry);
     const char *c_last_import_source = sass_import_get_source(sass_last_import_entry);
     const char *c_last_import_srcmap = sass_import_get_srcmap(sass_last_import_entry);
 
@@ -808,8 +809,8 @@ Sass_Import_List importer_callback(
     jstring j_url = (*env)->NewStringUTF(env, c_url);
 
     // recreate a java import object
-    jstring j_last_import_path = c_last_import_path ? (*env)->NewStringUTF(env, c_last_import_path) : 0;
-    jstring j_last_import_base = c_last_import_base ? (*env)->NewStringUTF(env, c_last_import_base) : 0;
+    jstring j_last_import_imp_path = c_last_import_imp_path ? (*env)->NewStringUTF(env, c_last_import_imp_path) : 0;
+    jstring j_last_import_abs_path = c_last_import_abs_path ? (*env)->NewStringUTF(env, c_last_import_abs_path) : 0;
     jstring j_last_import_source = c_last_import_source ? (*env)->NewStringUTF(env, c_last_import_source) : 0;
     jstring j_last_import_srcmap = c_last_import_srcmap ? (*env)->NewStringUTF(env, c_last_import_srcmap) : 0;
     jclass j_import_class = (*env)->FindClass(env, "io/bit3/jsass/adapter/NativeImport");
@@ -818,7 +819,7 @@ Sass_Import_List importer_callback(
     );
     jobject j_last_import = (*env)->NewObject(
             env, j_import_class, j_import_constructor,
-            j_last_import_path, j_last_import_base, j_last_import_source, j_last_import_srcmap
+            j_last_import_imp_path, j_last_import_abs_path, j_last_import_source, j_last_import_srcmap
     );
 
     // call the java importer
@@ -845,11 +846,11 @@ Sass_Import_List importer_callback(
         jmethodID j_iterator_hasNext_method = (*env)->GetMethodID(env, j_iterator_class, "hasNext", "()Z");
         jmethodID j_iterator_next_method = (*env)->GetMethodID(env, j_iterator_class, "next", "()Ljava/lang/Object;");
 
-        jfieldID j_import_uri_property = (*env)->GetFieldID(
-                env, j_import_class, "uri", "Ljava/lang/String;"
+        jfieldID j_import_path_property = (*env)->GetFieldID(
+                env, j_import_class, "importPath", "Ljava/lang/String;"
         );
-        jfieldID j_import_base_property = (*env)->GetFieldID(
-                env, j_import_class, "base", "Ljava/lang/String;"
+        jfieldID j_import_absolute_path_property = (*env)->GetFieldID(
+                env, j_import_class, "absolutePath", "Ljava/lang/String;"
         );
         jfieldID j_import_contents_property = (*env)->GetFieldID(
                 env, j_import_class, "contents", "Ljava/lang/String;"
@@ -865,14 +866,14 @@ Sass_Import_List importer_callback(
         while ((*env)->CallBooleanMethod(env, j_iterator, j_iterator_hasNext_method)) {
             jobject j_import = (*env)->CallObjectMethod(env, j_iterator, j_iterator_next_method);
 
-            char *c_import_uri = get_field_string(env, j_import, j_import_uri_property);
-            char *c_import_base = get_field_string(env, j_import, j_import_base_property);
+            char *c_import_path = get_field_string(env, j_import, j_import_path_property);
+            char *c_import_absolute_path= get_field_string(env, j_import, j_import_absolute_path_property);
             char *c_import_contents = get_field_string(env, j_import, j_import_contents_property);
             char *c_import_sourceMap = get_field_string(env, j_import, j_import_sourceMap_property);
             char *c_error_message = get_field_string(env, j_import, j_import_errorMessage_property);
 
             Sass_Import_Entry sass_import_entry = sass_make_import(
-                    c_import_uri, c_import_base, c_import_contents, c_import_sourceMap
+                    c_import_path, c_import_absolute_path, c_import_contents, c_import_sourceMap
             );
             if (strlen(c_error_message)) {
                 sass_import_set_error(sass_import_entry, c_error_message, 0, 0);
@@ -893,8 +894,8 @@ Sass_Import_List importer_callback(
     (*env)->DeleteLocalRef(env, j_last_import);
     (*env)->DeleteLocalRef(env, j_last_import_srcmap);
     (*env)->DeleteLocalRef(env, j_last_import_source);
-    (*env)->DeleteLocalRef(env, j_last_import_base);
-    (*env)->DeleteLocalRef(env, j_last_import_path);
+    (*env)->DeleteLocalRef(env, j_last_import_abs_path);
+    (*env)->DeleteLocalRef(env, j_last_import_imp_path);
     (*env)->DeleteLocalRef(env, j_url);
     (*env)->DeleteLocalRef(env, j_importer_class);
     (*env)->DeleteLocalRef(env, j_import_class);

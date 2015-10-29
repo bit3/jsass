@@ -23,8 +23,8 @@ class NativeImporterWrapper {
   public Collection<NativeImport> apply(String url, NativeImport previousNative) {
     try {
       Import previous = new Import(
-          previousNative.uri,
-          previousNative.base,
+          previousNative.importPath,
+          previousNative.absolutePath,
           previousNative.contents,
           previousNative.sourceMap
       );
@@ -76,8 +76,8 @@ class NativeImporterWrapper {
     try {
       return new NativeImport(
           new Import(
-              new URI(importSource.getUri() + "/JSASS_PRE_IMPORT.scss"),
-              importSource.getUri(),
+              new URI(importSource.getImportUri() + "/JSASS_PRE_IMPORT.scss"),
+              importSource.getImportUri(),
               preSource.toString()
           )
       );
@@ -95,8 +95,8 @@ class NativeImporterWrapper {
     try {
       return new NativeImport(
           new Import(
-              new URI(importSource.getUri() + "/JSASS_POST_IMPORT.scss"),
-              importSource.getUri(),
+              new URI(importSource.getImportUri() + "/JSASS_POST_IMPORT.scss"),
+              importSource.getImportUri(),
               postSource.toString()
           )
       );

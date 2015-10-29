@@ -9,14 +9,14 @@ import java.net.URISyntaxException;
 public class Import {
 
   /**
-   * The file uri relative to the base uri.
+   * The import uri for this import.
    */
-  private final URI uri;
+  private final URI importUri;
 
   /**
-   * The base uri for this import.
+   * The absolute uri for this import.
    */
-  private final URI base;
+  private final URI absoluteUri;
 
   /**
    * The in-memory sass code, may be <em>null</em> when importing a file.
@@ -32,35 +32,35 @@ public class Import {
   /**
    * Create a file import.
    *
-   * @param uri  The file uri relative to the base uri.
-   * @param base The base uri for this import.
+   * @param importUri  The file uri relative to the base uri.
+   * @param absoluteUri The base uri for this import.
    */
-  public Import(URI uri, URI base) {
-    this(uri, base, null, null);
+  public Import(URI importUri, URI absoluteUri) {
+    this(importUri, absoluteUri, null, null);
   }
 
   /**
    * Create a string import.
    *
-   * @param uri      The file uri relative to the base uri.
-   * @param base     The base uri for this import.
+   * @param importUri      The file uri relative to the base uri.
+   * @param absoluteUri     The base uri for this import.
    * @param contents The in-memory sass code.
    */
-  public Import(URI uri, URI base, String contents) {
-    this(uri, base, contents, null);
+  public Import(URI importUri, URI absoluteUri, String contents) {
+    this(importUri, absoluteUri, contents, null);
   }
 
   /**
    * Create a string import.
    *
-   * @param uri       The file uri relative to the base uri.
-   * @param base      The base uri for this import.
+   * @param importUri       The file uri relative to the base uri.
+   * @param absoluteUri      The base uri for this import.
    * @param contents  The in-memory sass code.
    * @param sourceMap The in-memory source map.
    */
-  public Import(URI uri, URI base, String contents, String sourceMap) {
-    this.uri = uri;
-    this.base = base;
+  public Import(URI importUri, URI absoluteUri, String contents, String sourceMap) {
+    this.importUri = importUri;
+    this.absoluteUri = absoluteUri;
     this.contents = contents;
     this.sourceMap = sourceMap;
   }
@@ -68,56 +68,56 @@ public class Import {
   /**
    * Create a file import.
    *
-   * @param uri  The file uri relative to the base uri.
-   * @param base The base uri for this import.
+   * @param importUri  The file uri relative to the base uri.
+   * @param absoluteUri The base uri for this import.
    */
-  public Import(String uri, String base) throws URISyntaxException {
-    this(uri, base, null, null);
+  public Import(String importUri, String absoluteUri) throws URISyntaxException {
+    this(importUri, absoluteUri, null, null);
   }
 
   /**
    * Create a string import.
    *
-   * @param uri      The file uri relative to the base uri.
-   * @param base     The base uri for this import.
+   * @param importUri      The file uri relative to the base uri.
+   * @param absoluteUri     The base uri for this import.
    * @param contents The in-memory sass code.
    */
-  public Import(String uri, String base, String contents) throws URISyntaxException {
-    this(uri, base, contents, null);
+  public Import(String importUri, String absoluteUri, String contents) throws URISyntaxException {
+    this(importUri, absoluteUri, contents, null);
   }
 
   /**
    * Create a string import.
    *
-   * @param uri       The file uri relative to the base uri.
-   * @param base      The base uri for this import.
+   * @param importUri       The file uri relative to the base uri.
+   * @param absoluteUri      The base uri for this import.
    * @param contents  The in-memory sass code.
    * @param sourceMap The in-memory source map.
    */
-  public Import(String uri, String base, String contents, String sourceMap)
+  public Import(String importUri, String absoluteUri, String contents, String sourceMap)
       throws URISyntaxException {
-    this.uri = new URI(uri);
-    this.base = new URI(base);
+    this.importUri = new URI(importUri);
+    this.absoluteUri = new URI(absoluteUri);
     this.contents = contents;
     this.sourceMap = sourceMap;
   }
 
   /**
-   * Get the relative file uri.
+   * Get the import uri.
    *
    * @return The file uri relative to the base uri.
    */
-  public URI getUri() {
-    return uri;
+  public URI getImportUri() {
+    return importUri;
   }
 
   /**
-   * Get the base uri.
+   * Get the absolute uri.
    *
    * @return The base uri for this import.
    */
-  public URI getBase() {
-    return base;
+  public URI getAbsoluteUri() {
+    return absoluteUri;
   }
 
   /**

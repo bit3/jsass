@@ -11,9 +11,9 @@ import java.net.URI;
 
 class NativeImport {
 
-  public final String uri;
+  public final String importPath;
 
-  public final String base;
+  public final String absolutePath;
 
   public final String contents;
 
@@ -22,8 +22,8 @@ class NativeImport {
   public final String errorMessage;
 
   public NativeImport(final Import sassImport) {
-    final URI uri = sassImport.getUri();
-    final URI base = sassImport.getBase();
+    final URI uri = sassImport.getImportUri();
+    final URI base = sassImport.getAbsoluteUri();
     final String contents = sassImport.getContents();
     final String sourceMap = sassImport.getSourceMap();
 
@@ -45,24 +45,24 @@ class NativeImport {
       }
     }
 
-    this.uri = uriString;
-    this.base = baseString;
+    this.importPath = uriString;
+    this.absolutePath = baseString;
     this.contents = null == contents ? "" : contents;
     this.sourceMap = null == sourceMap ? "" : sourceMap;
     this.errorMessage = "";
   }
 
-  public NativeImport(String uri, String base, String contents, String sourceMap) {
-    this.uri = uri;
-    this.base = base;
+  public NativeImport(String importPath, String absolutePath, String contents, String sourceMap) {
+    this.importPath = importPath;
+    this.absolutePath = absolutePath;
     this.contents = contents;
     this.sourceMap = sourceMap;
     this.errorMessage = "";
   }
 
   public NativeImport(Throwable throwable) {
-    uri = "";
-    base = "";
+    importPath = "";
+    absolutePath = "";
     contents = "";
     sourceMap = "";
 

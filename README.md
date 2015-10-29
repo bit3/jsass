@@ -6,7 +6,7 @@
 Java sass compiler
 ==================
 
-Feature complete java sass compiler using [libsass][libsass] version 3.2.
+Feature complete java sass compiler using [libsass][libsass] version 3.3.
 
 The most advantage of jsass is to hide the libsass complexity from the developer and provide a more java like way.
 
@@ -14,6 +14,16 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 
 [libsass]: https://github.com/sass/libsass
 [jsass-docs]: http://jsass.rtfd.org/
+
+API change warning
+------------------
+
+### Version 4+
+
+In libsass 3.3 the import api has changed.
+
+- `Import#uri` renamed to `Import#importUri`
+- `Import#base` renamed to `Import#absoluteUri`
 
 Compatibility
 -------------

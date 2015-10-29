@@ -40,7 +40,7 @@ public class JsassCustomHeaderImporter implements Importer {
 
     try {
       return new Import(
-          new URI(previous.getUri() + "/JSASS_CUSTOM.scss"),
+          new URI(previous.getImportUri() + "/JSASS_CUSTOM.scss"),
           new URI(""),
           source.toString()
       );
