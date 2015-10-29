@@ -40,7 +40,7 @@ final class NativeLoader {
   /**
    * Find the right shared library, depending on the operating system and architecture.
    */
-  private static URL findLibraryResource(String library) throws UnsupportedOperationException {
+  static URL findLibraryResource(String library) throws UnsupportedOperationException {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
     String platform;
@@ -104,7 +104,7 @@ final class NativeLoader {
   /**
    * Save the right shared library in the given temporary directory.
    */
-  private static String saveLibrary(File dir, String library) throws IOException {
+  static String saveLibrary(File dir, String library) throws IOException {
     library = "lib" + library;
 
     URL libraryResource = findLibraryResource(library);

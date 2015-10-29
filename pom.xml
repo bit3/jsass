@@ -78,6 +78,7 @@
                 <version>1.8</version>
                 <executions>
                     <execution>
+                        <id>generate-native-sources</id>
                         <phase>process-classes</phase>
                         <goals>
                             <goal>run</goal>
@@ -94,6 +95,28 @@
                                     <arg value="-jni" />
                                     <arg value="-force" />
                                     <arg value="io.bit3.jsass.adapter.NativeAdapter" />
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-native-test-sources</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <target>
+                                <property name="test_classpath" refid="maven.test.classpath"/>
+                                <exec executable="javah">
+                                    <arg value="-cp" />
+                                    <arg value="${test_classpath}" />
+                                    <arg value="-d" />
+                                    <arg value="${project.basedir}/src/main/c" />
+                                    <arg value="-jni" />
+                                    <arg value="-force" />
+                                    <arg value="io.bit3.jsass.adapter.NativeTestAdapter" />
                                 </exec>
                             </target>
                         </configuration>
