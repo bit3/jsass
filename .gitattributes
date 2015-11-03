@@ -1,3 +1,5 @@
+.gitignore text eol=lf diff=word
+
 # LF line ending is necessary to run tests successfully
 *.scss text eol=lf
 *.sass text eol=lf
