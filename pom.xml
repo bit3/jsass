@@ -113,7 +113,7 @@
                                     <arg value="-cp" />
                                     <arg value="${test_classpath}" />
                                     <arg value="-d" />
-                                    <arg value="${project.basedir}/src/main/c" />
+                                    <arg value="${project.basedir}/src/test/c" />
                                     <arg value="-jni" />
                                     <arg value="-force" />
                                     <arg value="io.bit3.jsass.adapter.NativeTestAdapter" />

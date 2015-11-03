@@ -16,4 +16,16 @@ public class NativeTestAdapter {
   public native Object testSassNegativeNumberWithUnitToJava();
 
   public native Object testSassZeroNumberWithUnitToJava();
+
+  public native Object testSassStringToJava();
+
+  public native Object testSassQuotedStringToJava();
+
+  public native Object testSassTrueToJava();
+
+  public native Object testSassFalseToJava();
+
+  public native Object testSassRgbColorToJava();
+
+  public native Object testSassRgbaColorToJava();
 }

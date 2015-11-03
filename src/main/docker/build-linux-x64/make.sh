@@ -5,9 +5,6 @@ cd /jsass/src/main
 rm -r resources/linux-x64
 mkdir -p resources/linux-x64
 
-rm -r ../test/resources/linux-x64
-mkdir -p ../test/resources/linux-x64
-
 # *** Build libsass
 
 make -C libsass clean
@@ -28,4 +25,17 @@ cd c/build
 cmake ../ || exit 1
 make || exit 1
 cp libjsass.so ../../resources/linux-x64/libjsass.so || exit 1
-cp libjsass_test.so ../../../test/resources/linux-x64/libjsass_test.so || exit 1
+
+# *** Build libjsass_test
+
+cd /jsass/src/test
+
+rm -r resources/linux-x64
+mkdir -p resources/linux-x64
+
+rm -r c/build
+mkdir -p c/build
+cd c/build
+cmake ../ || exit 1
+make || exit 1
+cp libjsass_test.so ../../resources/linux-x64/libjsass_test.so || exit 1

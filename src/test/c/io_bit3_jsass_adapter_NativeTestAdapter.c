@@ -48,3 +48,45 @@ JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassZ
     jobject j_value = convert_sass_value_to_java(env, sass_value);
     return j_value;
 }
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassStringToJava
+        (JNIEnv *env, jobject j_context) {
+    union Sass_Value *sass_value = sass_make_string("Nullam vel sem");
+    jobject j_value = convert_sass_value_to_java(env, sass_value);
+    return j_value;
+}
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassQuotedStringToJava
+        (JNIEnv *env, jobject j_context) {
+    union Sass_Value *sass_value = sass_make_qstring("In ac felis");
+    jobject j_value = convert_sass_value_to_java(env, sass_value);
+    return j_value;
+}
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassTrueToJava
+        (JNIEnv *env, jobject j_context) {
+    union Sass_Value *sass_value = sass_make_boolean(true);
+    jobject j_value = convert_sass_value_to_java(env, sass_value);
+    return j_value;
+}
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassFalseToJava
+        (JNIEnv *env, jobject j_context) {
+    union Sass_Value *sass_value = sass_make_boolean(false);
+    jobject j_value = convert_sass_value_to_java(env, sass_value);
+    return j_value;
+}
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassRgbColorToJava
+  (JNIEnv *env, jobject j_context) {
+    union Sass_Value *sass_value = sass_make_color(.74, .32, .56, 1);
+    jobject j_value = convert_sass_value_to_java(env, sass_value);
+    return j_value;
+}
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeTestAdapter_testSassRgbaColorToJava
+  (JNIEnv *env, jobject j_context) {
+    union Sass_Value *sass_value = sass_make_color(.97, .24, .48, .5);
+    jobject j_value = convert_sass_value_to_java(env, sass_value);
+    return j_value;
+}
