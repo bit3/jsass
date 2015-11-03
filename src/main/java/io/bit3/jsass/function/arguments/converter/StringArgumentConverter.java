@@ -5,6 +5,7 @@ import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.FunctionArgumentSignature;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.type.SassNull;
+import io.bit3.jsass.type.SassString;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -24,6 +25,10 @@ public class StringArgumentConverter implements ArgumentConverter {
     // ignore null value
     if (null == value || value instanceof SassNull) {
       return null;
+    }
+
+    if (value instanceof SassString) {
+      return ((SassString) value).getValue();
     }
 
     return value.toString();
