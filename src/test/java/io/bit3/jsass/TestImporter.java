@@ -45,6 +45,11 @@ public class TestImporter implements Importer {
       }
     }
 
+    if ("mixins".equals(url)) {
+      // ignore
+      return null;
+    }
+
     throw new IllegalArgumentException("Cannot handle import \"" + url + "\"");
   }
 }
