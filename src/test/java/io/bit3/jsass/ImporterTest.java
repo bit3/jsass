@@ -79,7 +79,7 @@ public class ImporterTest {
     public Collection<Import> apply(
         String url, Import previous
     ) {
-      this.importPaths.add(previous.getImportUri().toString());
+      this.importPaths.add(previous.getAbsoluteUri().toString());
 
       List<Import> imports = new LinkedList<>();
 
