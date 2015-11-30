@@ -164,7 +164,7 @@ def buildDockerContainer(name) {
 
 // -----------------------------------------------------------------------------
 
-// Run docker tests
+// Build native libs
 task buildNativeLibs {
     dependsOn 'buildNativeLinux64Libs',
             'buildNativeWindows32Libs',
