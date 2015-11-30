@@ -5,6 +5,7 @@ import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.FunctionArgumentSignature;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.type.SassNull;
+import io.bit3.jsass.type.SassString;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -32,6 +33,10 @@ public class CharacterArgumentConverter implements ArgumentConverter {
             || char.class.isAssignableFrom(value.getClass())
         ) {
       return value;
+    }
+
+    if (value instanceof SassString) {
+      value = ((SassString) value).getValue();
     }
 
     return value.toString().charAt(0);

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(jsass)
 
-set(SOURCE_FILES io_bit3_jsass_adapter_NativeAdapter.c empty.cpp)
+set(SOURCE_FILES io_bit3_jsass_adapter_NativeTestAdapter.c empty.cpp)
 
 include_directories(
     # docker
@@ -20,25 +20,28 @@ include_directories(
     "/usr/lib/jvm/java-8-oracle/include/linux"
 
     # libsass
-    "../libsass/include"
+    "../../main/libsass/include"
+
+    # jsass
+    "../../main/c"
 )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
-message("search for libsass static library in: ${CMAKE_SOURCE_DIR}/../libsass/lib")
-find_library(SASS_EXT_LIBRARY NAMES sass libsass PATHS "${CMAKE_SOURCE_DIR}/../libsass/lib" NO_DEFAULT_PATH)
+message("search for libsass static library in: ${CMAKE_SOURCE_DIR}/../../main/libsass/lib")
+find_library(SASS_EXT_LIBRARY NAMES sass libsass PATHS "${CMAKE_SOURCE_DIR}/../../main/libsass/lib" NO_DEFAULT_PATH)
 message(STATUS "libsass library: ${SASS_EXT_LIBRARY}")
 add_library(sass UNKNOWN IMPORTED)
 set_property(TARGET sass PROPERTY IMPORTED_LOCATION "${SASS_EXT_LIBRARY}")
 
 file(WRITE empty.cpp "")
 
-add_library(jsass SHARED ${SOURCE_FILES})
-set_property(TARGET jsass PROPERTY C_STANDARD 99)
+add_library(jsass_test SHARED ${SOURCE_FILES})
+set_property(TARGET jsass_test PROPERTY C_STANDARD 99)
 
 set(LINK_FLAGS ${LINK_FLAGS} "-Wl,--whole-archive")
 
 if(APPLE)
-    target_link_libraries(jsass sass)
+    target_link_libraries(jsass_test sass)
 else()
-    target_link_libraries(jsass "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
+    target_link_libraries(jsass_test "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
 endif()

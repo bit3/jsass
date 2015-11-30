@@ -3,7 +3,7 @@
 
     <groupId>io.bit3</groupId>
     <artifactId>jsass</artifactId>
-    <version>3.3.1</version>
+    <version>4.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -43,7 +43,7 @@
     <scm>
         <connection>scm:git:https://github.com/bit3/jsass.git</connection>
         <developerConnection>scm:git:git@github.com:bit3/jsass.git</developerConnection>
-        <tag>3.3.1</tag>
+        <tag>4.0.0</tag>
         <url>https://github.com/bit3/jsass</url>
     </scm>
 
@@ -78,6 +78,7 @@
                 <version>1.8</version>
                 <executions>
                     <execution>
+                        <id>generate-native-sources</id>
                         <phase>process-classes</phase>
                         <goals>
                             <goal>run</goal>
@@ -94,6 +95,28 @@
                                     <arg value="-jni" />
                                     <arg value="-force" />
                                     <arg value="io.bit3.jsass.adapter.NativeAdapter" />
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-native-test-sources</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <target>
+                                <property name="test_classpath" refid="maven.test.classpath" />
+                                <exec executable="javah">
+                                    <arg value="-cp" />
+                                    <arg value="${test_classpath}" />
+                                    <arg value="-d" />
+                                    <arg value="${project.basedir}/src/test/c" />
+                                    <arg value="-jni" />
+                                    <arg value="-force" />
+                                    <arg value="io.bit3.jsass.adapter.NativeTestAdapter" />
                                 </exec>
                             </target>
                         </configuration>
@@ -130,7 +153,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
+                <version>2.19</version>
                 <configuration>
                     <useFile>false</useFile>
                 </configuration>
@@ -138,7 +161,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.16</version>
+                <version>2.17</version>
                 <executions>
                     <execution>
                         <id>validate</id>
@@ -198,12 +221,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.16</version>
+                    <version>2.17</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>6.9</version>
+                            <version>6.11.2</version>
                         </dependency>
                     </dependencies>
                     <configuration>
@@ -229,7 +252,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.16</version>
+                <version>2.17</version>
                 <reportSets>
                     <reportSet>
                         <reports>

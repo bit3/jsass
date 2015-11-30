@@ -79,7 +79,7 @@ public class ImporterTest {
     public Collection<Import> apply(
         String url, Import previous
     ) {
-      this.importPaths.add(previous.getUri().toString());
+      this.importPaths.add(previous.getAbsoluteUri().toString());
 
       List<Import> imports = new LinkedList<>();
 
@@ -87,8 +87,8 @@ public class ImporterTest {
         try {
           imports.add(
               new Import(
+                  new URI("import"),
                   new URI("/foo/import.scss"),
-                  new URI("/"),
                   "foo { bar: func(); } @import 'imported'; bar { foo: func(); }"
               )
           );
@@ -101,8 +101,8 @@ public class ImporterTest {
         try {
           imports.add(
               new Import(
+                  new URI("imported"),
                   new URI("/bar/imported.scss"),
-                  new URI("/"),
                   "foo { bar: func(); }"
               )
           );

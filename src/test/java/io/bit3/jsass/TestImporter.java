@@ -28,15 +28,12 @@ public class TestImporter implements Importer {
       String resourcePath = String.format("/%s/src/include.%s", syntax, syntax);
       URL resource = getClass().getResource(resourcePath);
 
-      String basePath = String.format("/%s/src", syntax);
-      URL base = getClass().getResource(basePath);
-
       try {
         String contents = IOUtils.toString(resource);
 
         Import importSource = new Import(
             new URI(String.format("include.%s", syntax)),
-            base.toURI(),
+            resource.toURI(),
             contents
         );
 
@@ -48,6 +45,11 @@ public class TestImporter implements Importer {
       }
     }
 
-    return null;
+    if ("mixins".equals(url)) {
+      // ignore
+      return null;
+    }
+
+    throw new IllegalArgumentException("Cannot handle import \"" + url + "\"");
   }
 }
