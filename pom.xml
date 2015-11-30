@@ -3,7 +3,7 @@
 
     <groupId>io.bit3</groupId>
     <artifactId>jsass</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -43,7 +43,7 @@
     <scm>
         <connection>scm:git:https://github.com/bit3/jsass.git</connection>
         <developerConnection>scm:git:git@github.com:bit3/jsass.git</developerConnection>
-        <tag>master</tag>
+        <tag>4.0.0</tag>
         <url>https://github.com/bit3/jsass</url>
     </scm>
 
@@ -108,7 +108,7 @@
                         <configuration>
                             <exportAntProperties>true</exportAntProperties>
                             <target>
-                                <property name="test_classpath" refid="maven.test.classpath"/>
+                                <property name="test_classpath" refid="maven.test.classpath" />
                                 <exec executable="javah">
                                     <arg value="-cp" />
                                     <arg value="${test_classpath}" />
