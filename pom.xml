@@ -135,7 +135,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9.1</version>
+                <version>1.10</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -226,7 +226,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>6.11.2</version>
+                            <version>6.12.1</version>
                         </dependency>
                     </dependencies>
                     <configuration>
