@@ -28,16 +28,19 @@ In libsass 3.3 the import api has changed.
 Compatibility
 -------------
 
-| Linux                                 | Windows                     | Mac               |
-| ------------------------------------- | --------------------------- | ----------------- |
-| ![CentOS 5 (x86_64)][centos5]         | ![Windows 32bit][windows32] | ![OS X 10][osx10] | 
-| ![CentOS 6 (x86_64)][centos6]         | ![Windows 64bit][windows64] |                   |
-| ![CentOS 7 (x86_64)][centos7]         |                             |                   |
-| ![ubuntu 12.04 (x86_64)][ubuntu12.04] |                             |                   |
-| ![ubuntu 14.04 (x86_64)][ubuntu14.04] |                             |                   |
+| Java             | Linux                                 | Windows                     | Mac               |
+| ---------------- | ------------------------------------- | --------------------------- | ----------------- |
+| ![Java 7][java7] | ![CentOS 5 (x86_64)][centos5]         | ![Windows 32bit][windows32] | ![OS X 10][osx10] | 
+| ![Java 8][java8] | ![CentOS 6 (x86_64)][centos6]         | ![Windows 64bit][windows64] |                   |
+|                  | ![CentOS 7 (x86_64)][centos7]         |                             |                   |
+|                  | ![ubuntu 12.04 (x86_64)][ubuntu12.04] |                             |                   |
+|                  | ![ubuntu 14.04 (x86_64)][ubuntu14.04] |                             |                   |
 
 A note to Windows and OS X compatibility: jsass may also work on Windows and OS X.
 But at the moment there are no automated tests for them and both platforms are not well tested!
+
+[java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat-square
+[java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat-square
 
 [centos5]: https://img.shields.io/badge/CentOS-5%20%28x86_64%29-green.svg?style=flat-square
 [centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat-square
