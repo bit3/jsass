@@ -125,7 +125,7 @@ public class NativeAdapter {
     String includePath = includePathsList
         .stream()
         .map(File::getAbsolutePath)
-        .collect(Collectors.joining(File.separator));
+        .collect(Collectors.joining(File.pathSeparator));
 
     String indent = options.getIndent();
 
