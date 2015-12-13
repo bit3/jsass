@@ -3,7 +3,7 @@
 
     <groupId>io.bit3</groupId>
     <artifactId>jsass</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -43,7 +43,7 @@
     <scm>
         <connection>scm:git:https://github.com/bit3/jsass.git</connection>
         <developerConnection>scm:git:git@github.com:bit3/jsass.git</developerConnection>
-        <tag>4.0.0</tag>
+        <tag>4.0.1</tag>
         <url>https://github.com/bit3/jsass</url>
     </scm>
 
@@ -135,7 +135,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9.1</version>
+                <version>1.10</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -226,7 +226,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>6.11.2</version>
+                            <version>6.13</version>
                         </dependency>
                     </dependencies>
                     <configuration>
