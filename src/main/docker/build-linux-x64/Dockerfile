@@ -23,7 +23,9 @@ RUN set -x \
     && cd cmake-3.2.3 \
     && ./configure \
     && make -j8 \
-    && make install
+    && make install \
+    && cd / \
+    && rm -rf "$DIR"
 
 # Install Java JDK 8
 RUN set -x \
