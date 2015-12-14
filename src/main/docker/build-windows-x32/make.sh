@@ -48,8 +48,8 @@ cp libjsass.dll ../../resources/windows-x32/libjsass.dll || exit 1
 
 cd /jsass/src/test
 
-rm -r resources/linux-x64
-mkdir -p resources/linux-x64
+rm -r resources/windows-x32
+mkdir -p resources/windows-x32
 
 rm -r c/build
 mkdir -p c/build
