@@ -43,3 +43,17 @@ cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x32.cmake ../ || exit 1
 make || exit 1
 cp libjsass.dll ../../resources/windows-x32/libjsass.dll || exit 1
+
+# *** Build libjsass_test
+
+cd /jsass/src/test
+
+rm -r resources/linux-x64
+mkdir -p resources/linux-x64
+
+rm -r c/build
+mkdir -p c/build
+cd c/build
+cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x32.cmake ../ || exit 1
+make || exit 1
+cp libjsass_test.dll ../../resources/windows-x32/libjsass_test.dll || exit 1
