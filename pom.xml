@@ -3,7 +3,7 @@
 
     <groupId>io.bit3</groupId>
     <artifactId>jsass</artifactId>
-    <version>4.0.2-SNAPSHOT</version>
+    <version>4.0.2</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -43,7 +43,7 @@
     <scm>
         <connection>scm:git:https://github.com/bit3/jsass.git</connection>
         <developerConnection>scm:git:git@github.com:bit3/jsass.git</developerConnection>
-        <tag>master</tag>
+        <tag>4.0.2</tag>
         <url>https://github.com/bit3/jsass</url>
     </scm>
 
