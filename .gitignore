@@ -17,6 +17,7 @@ dependency-reduced-pom.xml
 ### Gradle
 build/
 .gradle/
+gradle.properties
 
 ### Java
 *.class

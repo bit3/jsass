@@ -14,6 +14,8 @@ before_install:
   - docker pull bit3/jsass-test-centos7
   - docker pull bit3/jsass-test-ubuntu12.04
   - docker pull bit3/jsass-test-ubuntu14.04
+  - openssl aes-256-cbc -K $encrypted_7aff20607abf_key -iv $encrypted_7aff20607abf_iv -in gradle.properties.enc -out gradle.properties -d
 
 script:
   - gradle check
+  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == master ]] && gradle sonarqube -x test"

@@ -1,3 +1,8 @@
+plugins {
+    id 'org.ajoberstar.grgit' version '1.2.0'
+    id 'org.sonarqube' version '1.2'
+}
+
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
@@ -31,12 +36,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.ajoberstar:gradle-git:1.2.0'
+sonarqube {
+    properties {
+        property "sonar.exclusions", "**/src/main/libsass/**"
     }
 }
 

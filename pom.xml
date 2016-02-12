@@ -49,6 +49,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.host.url>http://sonarhub.io</sonar.host.url>
     </properties>
 
     <dependencies>
