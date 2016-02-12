@@ -18,4 +18,4 @@ before_install:
 
 script:
   - gradle check
-  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == master ]] && gradle sonarqube -x test"
+  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == develop ]] && gradle sonarqube -x test"
