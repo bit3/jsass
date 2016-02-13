@@ -15,9 +15,11 @@ release.properties
 dependency-reduced-pom.xml
 
 ### Gradle
+artifacts/
 build/
 .gradle/
-gradle.properties
+.gradle*
+gradle-sonar.properties
 
 ### Java
 *.class

@@ -1,4 +1,5 @@
 plugins {
+    id 'net.researchgate.release' version '2.3.4'
     id 'org.ajoberstar.grgit' version '1.2.0'
     id 'org.sonarqube' version '1.2'
 }
@@ -6,9 +7,17 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+import org.ajoberstar.grgit.*
+
+group = 'io.bit3'
+description = 'SASS compiler using libsass.'
 
 sourceCompatibility = 1.8
-version '3.3.1-SNAPSHOT'
+targetCompatibility = 1.8
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'jsass',
@@ -36,9 +45,101 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+release {
+    git {
+        requireBranch = 'develop'
+    }
+}
+
 sonarqube {
     properties {
+        def git = Grgit.open();
+        def description = git.describe()
+
         property "sonar.exclusions", "**/src/main/libsass/**"
+        property "sonar.projectVersion", description
+    }
+}
+
+// javadoc.jar generation
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// sources.jar generation
+task sourceJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+// summarize artifacts
+artifacts {
+    archives javadocJar, sourceJar
+}
+
+// signing artifacts
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'io.bit3:jsass'
+                packaging 'jar'
+                description 'SASS compiler using libsass.'
+                url 'https://github.com/bit3/jsass'
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://raw.githubusercontent.com/bit3/jsass/master/LICENSE'
+                    }
+                }
+
+                organization {
+                    name 'bit3'
+                    url 'http://bit3.io'
+                }
+
+                developers {
+                    developer {
+                        id 'tril'
+                        name 'Tristan Lins'
+                        email 'tristan@lins.io'
+                        url 'https://tristan.lins.io'
+                    }
+                }
+
+                issueManagement {
+                    system 'GitHub'
+                    url 'https://github.com/bit3/jsass/issues'
+                }
+
+                ciManagement {
+                    system 'travis'
+                    url 'https://travis-ci.org/bit3/jsass'
+                }
+
+                scm {
+                    url 'https://github.com/bit3/jsass'
+                    connection 'scm:git:https://github.com/bit3/jsass.git'
+                    developerConnection 'scm:git:git@github.com:bit3/jsass.git'
+                }
+            }
+        }
     }
 }
 
