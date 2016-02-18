@@ -55,6 +55,12 @@ public class NativeAdapter {
     return checkForError(compileString(nativeContext));
   }
 
+  /**
+   * Checks if the given {@link Output} contains an error.
+   *
+   * @return The given {@link Output}
+   * @throws CompilationException If an error was found in the given {@link Output}
+   */
   private Output checkForError(Output output) throws CompilationException {
     if (output.getErrorStatus() != 0) {
       throw new CompilationException(output);
