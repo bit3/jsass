@@ -49,13 +49,14 @@ public class NativeAdapter {
    *
    * @return The compiled result.
    */
-  public Output compile(StringContext context, ImportStack importStack) throws CompilationException {
+  public Output compile(StringContext context, ImportStack importStack)
+          throws CompilationException {
     NativeStringContext nativeContext = convertToNativeContext(context, importStack);
     return checkForError(compileString(nativeContext));
   }
 
   private Output checkForError(Output output) throws CompilationException {
-    if(output.getErrorStatus() != 0) {
+    if (output.getErrorStatus() != 0) {
       throw new CompilationException(output);
     }
     return output;
