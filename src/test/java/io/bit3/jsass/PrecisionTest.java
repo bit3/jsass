@@ -25,21 +25,36 @@ public class PrecisionTest {
     options.setOutputStyle(OutputStyle.COMPRESSED);
   }
 
-  @Test
-  public void testLowPrecision() throws CompilationException {
-    options.setPrecision(5);
+  private Output getOutput(int precision) throws CompilationException {
+    options.setPrecision(precision);
+    return compiler.compileString(scss, options);
+  }
 
-    Output output = compiler.compileString(scss, options);
+  @Test
+  public void testLowPrecisionOsX() throws CompilationException {
+    Output output = getOutput(5);
 
     assertThat(output.getCss(), containsString("padding:0 0.8em 0.71429 0.8em"));
   }
 
   @Test
-  public void testHighPrecision() throws CompilationException {
-    options.setPrecision(10);
-
-    Output output = compiler.compileString(scss, options);
+  public void testHighPrecisionOsX() throws CompilationException {
+    Output output = getOutput(10);
 
     assertThat(output.getCss(), containsString("padding:0 0.8em 0.7142857143 0.8em"));
+  }
+
+  @Test
+  public void testLowPrecisionLinux() throws CompilationException {
+    Output output = getOutput(5);
+
+    assertThat(output.getCss(), containsString("padding:0 0.8em .71429 0.8em"));
+  }
+
+  @Test
+  public void testHighPrecisionLinux() throws CompilationException {
+    Output output = getOutput(10);
+
+    assertThat(output.getCss(), containsString("padding:0 0.8em .7142857143 0.8em"));
   }
 }
