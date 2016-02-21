@@ -311,7 +311,6 @@ task runDockerTests {
             'runDockerTestUbuntu1204',
             'runDockerTestUbuntu1404'
 }
-test.dependsOn runDockerTests
 
 task runDockerTestCentOS5 {
     dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable

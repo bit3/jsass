@@ -58,7 +58,9 @@ But at the moment there are no automated tests for them and both platforms are n
 Gradle tasks you should know
 ----------------------------
 
-`gradle check` runs checkstyle, pmd, junit locally. Also junit will run on each testing docker container.
+`gradle check` runs checkstyle, pmd, junit locally.
+
+`gradle runDockerTests` runs junit tests on all docker containers.
 
 `gradle buildNativeLibs` build the native libs, using our build docker container.
 
