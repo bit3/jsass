@@ -17,8 +17,7 @@ before_install:
   - mkdir -p $HOME/.gradle
   - openssl aes-256-cbc -K $encrypted_7aff20607abf_key -iv $encrypted_7aff20607abf_iv -in gradle-sonar.properties.enc -out $HOME/.gradle/gradle.properties -d
 
-install:
-  - ./gradlew -PossrhUsername=nobody -PossrhPassword=password assemble
+install: true
 
 script:
   - ./gradlew -PossrhUsername=nobody -PossrhPassword=password check runDockerTests
