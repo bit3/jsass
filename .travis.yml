@@ -21,4 +21,6 @@ install: true
 
 script:
   - ./gradlew check runDockerTests
+
+after_script:
   - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == develop ]] && ./gradlew sonarqube -x test"
