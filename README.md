@@ -1,7 +1,7 @@
 [![Build Status](https://img.shields.io/travis/bit3/jsass/master.svg?style=flat-square)](https://travis-ci.org/bit3/jsass)
 [![Technical Dept](https://img.shields.io/sonar/http/sonarhub.io/io.bit3:jsass/tech_debt.svg?style=flat-square)](http://sonarhub.io/overview/debt?id=io.bit3%3Ajsass)
 [![Coverage](https://img.shields.io/sonar/http/sonarhub.io/io.bit3:jsass/coverage.svg?style=flat-square)](http://sonarhub.io/overview/coverage?id=io.bit3%3Ajsass)
-[![Dependency Status](https://www.versioneye.com/user/projects/55171ff6747ccb3c8e000004/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/55171ff6747ccb3c8e000004)
+[![Dependency Status](https://www.versioneye.com/user/projects/56c9f52c18b2710403dfd158/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/56c9f52c18b2710403dfd158)
 [![Gratipay](https://img.shields.io/gratipay/bit3.svg?style=flat-square)](https://gratipay.com/bit3/)
 [![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](https://readthedocs.org/projects/jsass/?badge=latest)
 
