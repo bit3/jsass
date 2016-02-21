@@ -19,7 +19,7 @@ artifacts/
 build/
 .gradle/
 .gradle*
-gradle-sonar.properties
+gradle-travis.properties
 
 ### Java
 *.class
