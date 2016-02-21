@@ -23,6 +23,4 @@ script:
   - ./gradlew check runDockerTests
 
 after_script:
-  - ping -c 4 sonarhub.io
-  - curl https://sonarhub.io
   - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == develop ]] && ./gradlew sonarqube -x test"
