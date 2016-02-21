@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 if [[ -z "$(which docker)" ]]; then
     echo "The linux build require docker"
     exit 1
