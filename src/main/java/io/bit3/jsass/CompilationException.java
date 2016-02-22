@@ -2,14 +2,41 @@ package io.bit3.jsass;
 
 public class CompilationException extends Exception {
 
-  private int status;
+  private Output output;
 
-  public CompilationException(int status, String message) {
-    super(message);
-    this.status = status;
+  public CompilationException(Output output) {
+    super(output.getErrorText());
+    this.output = output;
   }
 
-  public int getStatus() {
-    return status;
+  /**
+   * @return The {@link Output} of the failed compilation.
+   */
+  public Output getOutput() {
+    return output;
+  }
+
+  public int getErrorStatus() {
+    return getOutput().getErrorStatus();
+  }
+
+  public String getErrorJson() {
+    return getOutput().getErrorJson();
+  }
+
+  public String getErrorText() {
+    return getOutput().getErrorText();
+  }
+
+  public String getErrorMessage() {
+    return getOutput().getErrorMessage();
+  }
+
+  public String getErrorFile() {
+    return getOutput().getErrorFile();
+  }
+
+  public String getErrorSrc() {
+    return getOutput().getErrorSrc();
   }
 }

@@ -1,5 +1,7 @@
 [![Build Status](https://img.shields.io/travis/bit3/jsass/master.svg?style=flat-square)](https://travis-ci.org/bit3/jsass)
-[![Dependency Status](https://www.versioneye.com/user/projects/55171ff6747ccb3c8e000004/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/55171ff6747ccb3c8e000004)
+[![Technical Dept](https://img.shields.io/sonar/http/sonarhub.io/io.bit3:jsass/tech_debt.svg?style=flat-square)](http://sonarhub.io/overview/debt?id=io.bit3%3Ajsass)
+[![Coverage](https://img.shields.io/sonar/http/sonarhub.io/io.bit3:jsass/coverage.svg?style=flat-square)](http://sonarhub.io/overview/coverage?id=io.bit3%3Ajsass)
+[![Dependency Status](https://www.versioneye.com/user/projects/56c9f52c18b2710403dfd158/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/56c9f52c18b2710403dfd158)
 [![Gratipay](https://img.shields.io/gratipay/bit3.svg?style=flat-square)](https://gratipay.com/bit3/)
 [![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](https://readthedocs.org/projects/jsass/?badge=latest)
 
@@ -56,7 +58,9 @@ But at the moment there are no automated tests for them and both platforms are n
 Gradle tasks you should know
 ----------------------------
 
-`gradle check` runs checkstyle, pmd, junit locally. Also junit will run on each testing docker container.
+`gradle check` runs checkstyle, pmd, junit locally.
+
+`gradle runDockerTests` runs junit tests on all docker containers.
 
 `gradle buildNativeLibs` build the native libs, using our build docker container.
 
