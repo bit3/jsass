@@ -15,7 +15,7 @@ before_install:
   - docker pull bit3/jsass-test-ubuntu12.04
   - docker pull bit3/jsass-test-ubuntu14.04
   - mkdir -p $HOME/.gradle
-  - openssl aes-256-cbc -K $encrypted_7aff20607abf_key -iv $encrypted_7aff20607abf_iv -in gradle-travis.properties.enc -out $HOME/.gradle/gradle.properties -d
+  - openssl aes-256-cbc -K $encrypted_7aff20607abf_key -iv $encrypted_7aff20607abf_iv -in gradle-travis.properties.enc -out $HOME/.gradle/gradle.properties -d || true
 
 install: true
 
