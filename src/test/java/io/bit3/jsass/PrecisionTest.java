@@ -1,6 +1,7 @@
 package io.bit3.jsass;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
@@ -34,14 +35,14 @@ public class PrecisionTest {
   public void testLowPrecisionOsX() throws CompilationException {
     Output output = getOutput(5);
 
-    assertThat(output.getCss(), containsString("padding:0 0.8em 0.71429 0.8em"));
+    assertThat(output.getCss(), not(containsString("padding:0 0.8em 0.71429 0.8em")));
   }
 
   @Test
   public void testHighPrecisionOsX() throws CompilationException {
     Output output = getOutput(10);
 
-    assertThat(output.getCss(), containsString("padding:0 0.8em 0.7142857143 0.8em"));
+    assertThat(output.getCss(), not(containsString("padding:0 0.8em 0.7142857143 0.8em")));
   }
 
   @Test
