@@ -7,7 +7,6 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
-apply plugin: 'maven'
 apply plugin: 'signing'
 
 import org.ajoberstar.grgit.*
@@ -83,65 +82,7 @@ signing {
     sign configurations.archives
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            pom.project {
-                name 'io.bit3:jsass'
-                packaging 'jar'
-                description 'SASS compiler using libsass.'
-                url 'https://github.com/bit3/jsass'
-
-                licenses {
-                    license {
-                        name 'MIT'
-                        url 'https://raw.githubusercontent.com/bit3/jsass/master/LICENSE'
-                    }
-                }
-
-                organization {
-                    name 'bit3'
-                    url 'http://bit3.io'
-                }
-
-                developers {
-                    developer {
-                        id 'tril'
-                        name 'Tristan Lins'
-                        email 'tristan@lins.io'
-                        url 'https://tristan.lins.io'
-                    }
-                }
-
-                issueManagement {
-                    system 'GitHub'
-                    url 'https://github.com/bit3/jsass/issues'
-                }
-
-                ciManagement {
-                    system 'travis'
-                    url 'https://travis-ci.org/bit3/jsass'
-                }
-
-                scm {
-                    url 'https://github.com/bit3/jsass'
-                    connection 'scm:git:https://github.com/bit3/jsass.git'
-                    developerConnection 'scm:git:git@github.com:bit3/jsass.git'
-                }
-            }
-        }
-    }
-}
+apply from: 'maven.gradle'
 
 // -----------------------------------------------------------------------------
 
