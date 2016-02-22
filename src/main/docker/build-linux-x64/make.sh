@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 cd /jsass/src/main
 
 rm -r resources/linux-x64

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 if [[ -z "$(which sassc)" ]]; then
     echo "sassc not found, please install sassc first"
     exit 1

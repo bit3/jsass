@@ -1,5 +1,6 @@
 package io.bit3.jsass.adapter;
 
+import io.bit3.jsass.CompilationException;
 import io.bit3.jsass.Options;
 import io.bit3.jsass.Output;
 import io.bit3.jsass.context.Context;
@@ -38,9 +39,9 @@ public class NativeAdapter {
    *
    * @return The compiled result.
    */
-  public Output compile(FileContext context, ImportStack importStack) {
+  public Output compile(FileContext context, ImportStack importStack) throws CompilationException {
     NativeFileContext nativeContext = convertToNativeContext(context, importStack);
-    return compileFile(nativeContext);
+    return checkForError(compileFile(nativeContext));
   }
 
   /**
@@ -48,9 +49,23 @@ public class NativeAdapter {
    *
    * @return The compiled result.
    */
-  public Output compile(StringContext context, ImportStack importStack) {
+  public Output compile(StringContext context, ImportStack importStack)
+          throws CompilationException {
     NativeStringContext nativeContext = convertToNativeContext(context, importStack);
-    return compileString(nativeContext);
+    return checkForError(compileString(nativeContext));
+  }
+
+  /**
+   * Checks if the given {@link Output} contains an error.
+   *
+   * @return The given {@link Output}
+   * @throws CompilationException If an error was found in the given {@link Output}
+   */
+  private Output checkForError(Output output) throws CompilationException {
+    if (output.getErrorStatus() != 0) {
+      throw new CompilationException(output);
+    }
+    return output;
   }
 
   private NativeFileContext convertToNativeContext(

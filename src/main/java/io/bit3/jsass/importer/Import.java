@@ -1,5 +1,6 @@
 package io.bit3.jsass.importer;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -96,8 +97,22 @@ public class Import {
    */
   public Import(String importUri, String absoluteUri, String contents, String sourceMap)
       throws URISyntaxException {
-    this.importUri = new URI(importUri);
-    this.absoluteUri = new URI(absoluteUri);
+    URI tempImportUri;
+    try {
+      tempImportUri = new URI(importUri);
+    } catch (URISyntaxException e) {
+      tempImportUri = new File(importUri).toURI();
+    }
+    this.importUri = tempImportUri;
+
+    URI tempAbsoluteUri;
+    try {
+      tempAbsoluteUri = new URI(absoluteUri);
+    } catch (URISyntaxException e) {
+      tempAbsoluteUri = new File(absoluteUri).toURI();
+    }
+    this.absoluteUri = tempAbsoluteUri;
+
     this.contents = contents;
     this.sourceMap = sourceMap;
   }
