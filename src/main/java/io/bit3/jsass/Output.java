@@ -3,7 +3,7 @@ package io.bit3.jsass;
 /**
  * The SASS compilation output.
  */
-public class Output implements SuccessOutput, FailureOutput {
+public class Output implements SuccessOutput, ErrorOutput {
 
   /**
    * The css output.

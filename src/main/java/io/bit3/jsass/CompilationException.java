@@ -1,18 +1,18 @@
 package io.bit3.jsass;
 
-public class CompilationException extends Exception implements FailureOutput {
+public class CompilationException extends Exception implements ErrorOutput {
 
-  private FailureOutput output;
+  private ErrorOutput output;
 
-  public CompilationException(FailureOutput output) {
+  public CompilationException(ErrorOutput output) {
     super(output.getErrorText());
     this.output = output;
   }
 
   /**
-   * @return The {@link FailureOutput} of the failed compilation.
+   * @return The {@link ErrorOutput} of the failed compilation.
    */
-  public FailureOutput getOutput() {
+  public ErrorOutput getOutput() {
     return output;
   }
 

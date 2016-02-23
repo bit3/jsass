@@ -3,7 +3,7 @@ package io.bit3.jsass;
 /**
  * The Output of a failed compilation
  */
-public interface FailureOutput {
+public interface ErrorOutput {
 
   int getErrorStatus();
 
