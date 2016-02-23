@@ -1,6 +1,5 @@
 package io.bit3.jsass;
 
-import static io.bit3.jsass.Assert.assertSuccessful;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -120,14 +119,13 @@ public class CompileStringTest {
   public void testWithoutMap() throws Exception {
     options.setOutputStyle(outputStyle);
 
-    Output output = compiler.compileString(
+    SuccessOutput output = compiler.compileString(
         source,
         sourceFile.toURI(),
         targetCssFile.toURI(),
         options
     );
 
-    assertSuccessful(output, syntax, outputStyle);
     assertEquals(output.getCss(), expectedCssWithoutMapUrl);
     assertNull(output.getSourceMap());
     assertFalse(targetCssFile.exists());
@@ -138,14 +136,13 @@ public class CompileStringTest {
     options.setOutputStyle(outputStyle);
     options.setSourceMapFile(targetSourceMapFile.toURI());
 
-    Output output = compiler.compileString(
+    SuccessOutput output = compiler.compileString(
         source,
         sourceFile.toURI(),
         targetCssFile.toURI(),
         options
     );
 
-    assertSuccessful(output, syntax, outputStyle);
     assertEquals(output.getCss(), expectedCssWithMapUrl);
     assertNotNull(output.getSourceMap());
     assertFalse(targetCssFile.exists());

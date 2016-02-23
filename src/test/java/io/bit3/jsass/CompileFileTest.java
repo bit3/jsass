@@ -1,7 +1,5 @@
 package io.bit3.jsass;
 
-import static io.bit3.jsass.Assert.assertSuccessful;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -144,9 +142,9 @@ public class CompileFileTest {
     try {
       options.setOutputStyle(outputStyle);
 
-      Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
+      SuccessOutput output =
+              compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
-      assertSuccessful(output, syntax, outputStyle);
       assertEquals(output.getCss(), expectedCssWithoutMapUrl);
     } finally {
       targetCssFile.delete();
@@ -162,9 +160,9 @@ public class CompileFileTest {
       options.setOutputStyle(outputStyle);
       options.setSourceMapFile(targetMapFile.toURI());
 
-      Output output = compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
+      SuccessOutput output =
+              compiler.compileFile(sourceFile.toURI(), targetCssFile.toURI(), options);
 
-      assertSuccessful(output, syntax, outputStyle);
       assertEquals(output.getCss(), expectedCssWithMapUrl);
     } finally {
       targetCssFile.delete();
