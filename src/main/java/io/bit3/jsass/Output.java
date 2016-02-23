@@ -3,7 +3,7 @@ package io.bit3.jsass;
 /**
  * The SASS compilation output.
  */
-public class Output {
+public class Output implements SuccessOutput, FailureOutput {
 
   /**
    * The css output.
@@ -53,44 +53,42 @@ public class Output {
     this.errorSrc = errorSrc;
   }
 
-  /**
-   * Get the css output.
-   *
-   * @return The css output.
-   */
+  @Override
   public String getCss() {
     return css;
   }
 
-  /**
-   * Get the source map output.
-   *
-   * @return The source map output.
-   */
+  @Override
   public String getSourceMap() {
     return sourceMap;
   }
 
+  @Override
   public int getErrorStatus() {
     return errorStatus;
   }
 
+  @Override
   public String getErrorJson() {
     return errorJson;
   }
 
+  @Override
   public String getErrorText() {
     return errorText;
   }
 
+  @Override
   public String getErrorMessage() {
     return errorMessage;
   }
 
+  @Override
   public String getErrorFile() {
     return errorFile;
   }
 
+  @Override
   public String getErrorSrc() {
     return errorSrc;
   }
