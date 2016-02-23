@@ -40,7 +40,8 @@ public class NativeAdapter {
    *
    * @return The compiled result.
    */
-  public SuccessOutput compile(FileContext context, ImportStack importStack) throws CompilationException {
+  public SuccessOutput compile(FileContext context, ImportStack importStack)
+      throws CompilationException {
     NativeFileContext nativeContext = convertToNativeContext(context, importStack);
     return checkForError(compileFile(nativeContext));
   }

@@ -1,7 +1,7 @@
 package io.bit3.jsass;
 
 /**
- * The Output of a failed compilation
+ * The Output of a failed compilation.
  */
 public interface ErrorOutput {
 
