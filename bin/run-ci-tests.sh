@@ -6,4 +6,4 @@ if [[ -d .gradle ]]; then
   rm -rf .gradle
 fi
 
-gradle -PossrhUsername=nobody -PossrhPassword=password clean test
+gradle clean test
