@@ -23,4 +23,6 @@ script:
   - ./gradlew check runDockerTests
 
 after_script:
+  - wget https://www.startssl.com/certs/ca.crt
+  - sudo keytool -keystore /usr/lib/jvm/java-8-oracle-amd64/jre/lib/security/cacerts -storepass changeit -import -trustcacerts -v -noprompt -alias cacertclass1 -file ca.crt
   - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == develop ]] && ./gradlew sonarqube -x test"
