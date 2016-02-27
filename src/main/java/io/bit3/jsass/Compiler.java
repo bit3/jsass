@@ -48,7 +48,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, Options options) throws CompilationException {
+  public SuccessOutput compileString(String string, Options options) throws CompilationException {
     return compileString(string, defaultCharset, null, null, options);
   }
 
@@ -61,7 +61,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, Charset charset, Options options)
+  public SuccessOutput compileString(String string, Charset charset, Options options)
       throws CompilationException {
     return compileString(string, charset, null, null, options);
   }
@@ -76,7 +76,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(String string, URI inputPath, URI outputPath, Options options)
+  public SuccessOutput compileString(String string, URI inputPath, URI outputPath, Options options)
       throws CompilationException {
     return compileString(string, defaultCharset, inputPath, outputPath, options);
   }
@@ -92,7 +92,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileString(
+  public SuccessOutput compileString(
       String string, Charset charset, URI inputPath, URI outputPath,
       Options options
   ) throws CompilationException {
@@ -110,7 +110,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compileFile(URI inputPath, URI outputPath, Options options)
+  public SuccessOutput compileFile(URI inputPath, URI outputPath, Options options)
       throws CompilationException {
     FileContext context = new FileContext(inputPath, outputPath, options);
     return compile(context);
@@ -123,7 +123,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compile(Context context) throws CompilationException {
+  public SuccessOutput compile(Context context) throws CompilationException {
     if (context instanceof FileContext) {
       return compile((FileContext) context);
     }
@@ -147,7 +147,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compile(StringContext context) throws CompilationException {
+  public SuccessOutput compile(StringContext context) throws CompilationException {
     final ImportStack importStack = new ImportStack();
 
     return adapter.compile(context, importStack);
@@ -160,7 +160,7 @@ public class Compiler {
    * @return The compilation output.
    * @throws CompilationException If the compilation failed.
    */
-  public Output compile(FileContext context) throws CompilationException {
+  public SuccessOutput compile(FileContext context) throws CompilationException {
     final ImportStack importStack = new ImportStack();
 
     return adapter.compile(context, importStack);

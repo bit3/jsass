@@ -1,6 +1,5 @@
 package io.bit3.jsass;
 
-import static io.bit3.jsass.Assert.assertSuccessful;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -41,14 +40,13 @@ public class ImporterTest {
     options.getFunctionProviders().add(functions);
     options.getImporters().add(importer);
 
-    Output output = compiler.compileString(
+    SuccessOutput output = compiler.compileString(
         "foo { bar: func(); } @import 'import';",
         new URI("/input.scss"),
         new URI("/output.css"),
         options
     );
 
-    assertSuccessful(output, "scss", options.getOutputStyle());
     assertFalse(functions.calls == 0);
     assertFalse(importer.importPaths.isEmpty());
 
