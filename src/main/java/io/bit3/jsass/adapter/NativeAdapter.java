@@ -151,7 +151,11 @@ public class NativeAdapter {
     );
   }
 
-  private FunctionWrapper[] getFunctionWrappers(Context context, ImportStack importStack, Options options) {
+  private FunctionWrapper[] getFunctionWrappers(
+      Context context,
+      ImportStack importStack,
+      Options options
+  ) {
     List<FunctionWrapper> functionWrappersList;
     try (
         Stream<FunctionWrapper> functionWrappersStream = Stream
