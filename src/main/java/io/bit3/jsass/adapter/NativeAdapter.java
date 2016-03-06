@@ -41,7 +41,7 @@ public class NativeAdapter {
    */
   public Output compile(FileContext context, ImportStack importStack) throws CompilationException {
     NativeFileContext nativeContext = convertToNativeContext(context, importStack);
-    return checkForError(compileFile(nativeContext));
+    return compileFile(nativeContext);
   }
 
   /**
@@ -52,20 +52,7 @@ public class NativeAdapter {
   public Output compile(StringContext context, ImportStack importStack)
           throws CompilationException {
     NativeStringContext nativeContext = convertToNativeContext(context, importStack);
-    return checkForError(compileString(nativeContext));
-  }
-
-  /**
-   * Checks if the given {@link Output} contains an error.
-   *
-   * @return The given {@link Output}
-   * @throws CompilationException If an error was found in the given {@link Output}
-   */
-  private static Output checkForError(Output output) throws CompilationException {
-    if (output.getErrorStatus() != 0) {
-      throw new CompilationException(output);
-    }
-    return output;
+    return compileString(nativeContext);
   }
 
   private NativeFileContext convertToNativeContext(
@@ -205,10 +192,12 @@ public class NativeAdapter {
   /**
    * Native call.
    */
-  private static native Output compileFile(NativeFileContext context);
+  private static native Output compileFile(NativeFileContext context)
+      throws CompilationException;
 
   /**
    * Native call.
    */
-  private static native Output compileString(NativeStringContext context);
+  private static native Output compileString(NativeStringContext context)
+      throws CompilationException;
 }

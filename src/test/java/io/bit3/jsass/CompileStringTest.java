@@ -1,6 +1,5 @@
 package io.bit3.jsass;
 
-import static io.bit3.jsass.Assert.assertSuccessful;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -127,7 +126,6 @@ public class CompileStringTest {
         options
     );
 
-    assertSuccessful(output, syntax, outputStyle);
     assertEquals(output.getCss(), expectedCssWithoutMapUrl);
     assertNull(output.getSourceMap());
     assertFalse(targetCssFile.exists());
@@ -145,7 +143,6 @@ public class CompileStringTest {
         options
     );
 
-    assertSuccessful(output, syntax, outputStyle);
     assertEquals(output.getCss(), expectedCssWithMapUrl);
     assertNotNull(output.getSourceMap());
     assertFalse(targetCssFile.exists());

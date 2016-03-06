@@ -2,41 +2,63 @@ package io.bit3.jsass;
 
 public class CompilationException extends Exception {
   private static final long serialVersionUID = 630234764149041048L;
-  private final Output output;
-
-  public CompilationException(Output output) {
-    super(output.getErrorText());
-    this.output = output;
-  }
 
   /**
-   * @return The {@link Output} of the failed compilation.
+   * The error status, not zero means an error occurred.
    */
-  public Output getOutput() {
-    return output;
+  private final int errorStatus;
+
+  private final String errorJson;
+
+  private final String errorText;
+
+  private final String errorMessage;
+
+  private final String errorFile;
+
+  private final String errorSrc;
+
+  /**
+   * Constructs a new exception.
+   */
+  public CompilationException(
+      int errorStatus,
+      String errorJson,
+      String errorText,
+      String errorMessage,
+      String errorFile,
+      String errorSrc
+  ) {
+    super(errorMessage);
+    this.errorStatus = errorStatus;
+    this.errorJson = errorJson;
+    this.errorText = errorText;
+    this.errorMessage = errorMessage;
+    this.errorFile = errorFile;
+    this.errorSrc = errorSrc;
   }
 
   public int getErrorStatus() {
-    return getOutput().getErrorStatus();
+    return errorStatus;
   }
 
   public String getErrorJson() {
-    return getOutput().getErrorJson();
+    return errorJson;
   }
 
   public String getErrorText() {
-    return getOutput().getErrorText();
+    return errorText;
   }
 
   public String getErrorMessage() {
-    return getOutput().getErrorMessage();
+    return errorMessage;
   }
 
   public String getErrorFile() {
-    return getOutput().getErrorFile();
+    return errorFile;
   }
 
   public String getErrorSrc() {
-    return getOutput().getErrorSrc();
+    return errorSrc;
   }
 }
