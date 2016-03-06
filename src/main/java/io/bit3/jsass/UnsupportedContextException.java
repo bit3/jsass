@@ -5,6 +5,11 @@ import io.bit3.jsass.context.Context;
 public class UnsupportedContextException extends RuntimeException {
   private final Context context;
 
+  /**
+   * Construct a new unsupported context exception with the given context.
+   *
+   * @param context The unsupported {@link Context} instance.
+   */
   public UnsupportedContextException(Context context) {
     super(
         String.format(
