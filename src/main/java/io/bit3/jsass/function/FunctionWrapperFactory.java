@@ -105,13 +105,7 @@ public class FunctionWrapperFactory {
       declarations.add(declaration);
     }
 
-    List<FunctionWrapper> callbacks = new LinkedList<>();
-
-    for (FunctionDeclaration declaration : declarations) {
-      callbacks.add(new FunctionWrapper(declaration));
-    }
-
-    return callbacks;
+    return declarations.stream().map(FunctionWrapper::new).collect(Collectors.toList());
   }
 
   /**
