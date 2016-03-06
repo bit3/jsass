@@ -21,7 +21,7 @@ JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileFile
  * Signature: (Lio/bit3/jsass/adapter/NativeStringContext;)Lio/bit3/jsass/Output;
  */
 JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileString
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus
 }

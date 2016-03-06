@@ -1253,7 +1253,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileF
 }
 
 JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileString
-        (JNIEnv *env, jobject j_adapter, jobject j_context) {
+        (JNIEnv *env, jclass j_adapter, jobject j_context) {
     char *c_source_string = get_string_property(env, j_context, "source");
 
     struct Sass_Data_Context *sass_context = sass_make_data_context(c_source_string);
