@@ -80,7 +80,7 @@ final class NativeLoader {
    */
   private static String determineWindowsLibrary(String library, String osName, String osArch) {
     String resourceName;
-    String platform = null;
+    String platform;
     String fileExtension = "dll";
 
     switch (osArch) {
