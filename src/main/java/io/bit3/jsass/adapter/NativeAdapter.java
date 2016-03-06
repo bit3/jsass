@@ -108,12 +108,7 @@ public class NativeAdapter {
 
     FunctionWrapper[] functionWrappers = getFunctionWrappers(context, importStack, options);
     NativeImporterWrapper[] headerImporters = getHeaderImporters(importStack, options);
-    Collection<Importer> importersList = options.getImporters();
-    NativeImporterWrapper[] importers = importersList
-        .stream()
-        .map(i -> new NativeImporterWrapper(importStack, i))
-        .collect(Collectors.toList())
-        .toArray(new NativeImporterWrapper[importersList.size()]);
+    NativeImporterWrapper[] importers = getImporters(importStack, options);
 
     List<File> includePathsList = options.getIncludePaths();
     String includePath = includePathsList
@@ -192,6 +187,15 @@ public class NativeAdapter {
           .toArray(new NativeImporterWrapper[headerImportersList.size()]);
     }
     return headerImporters;
+  }
+
+  private NativeImporterWrapper[] getImporters(ImportStack importStack, Options options) {
+    Collection<Importer> importersList = options.getImporters();
+    return importersList
+        .stream()
+        .map(i -> new NativeImporterWrapper(importStack, i))
+        .collect(Collectors.toList())
+        .toArray(new NativeImporterWrapper[importersList.size()]);
   }
 
   /**
