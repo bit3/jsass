@@ -1,9 +1,12 @@
 package io.bit3.jsass;
 
+import java.io.Serializable;
+
 /**
  * The SASS compilation output.
  */
-public class Output {
+public class Output implements Serializable {
+  private static final long serialVersionUID = 5649502387645755010L;
 
   /**
    * The css output.
