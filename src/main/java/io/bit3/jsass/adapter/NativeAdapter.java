@@ -107,21 +107,7 @@ public class NativeAdapter {
     Options options = context.getOptions();
 
     FunctionWrapper[] functionWrappers = getFunctionWrappers(context, importStack, options);
-    List<Importer> headerImportersList = options.getHeaderImporters();
-    NativeImporterWrapper[] headerImporters;
-    try (
-      Stream<NativeImporterWrapper> headerImportersStream = Stream
-          .concat(
-              Stream.of(new JsassCustomHeaderImporter(importStack)),
-              headerImportersList.stream()
-          )
-          .map(i -> new NativeImporterWrapper(importStack, i));
-    ) {
-      headerImporters = headerImportersStream
-          .collect(Collectors.toList())
-          .toArray(new NativeImporterWrapper[headerImportersList.size()]);
-    }
-
+    NativeImporterWrapper[] headerImporters = getHeaderImporters(importStack, options);
     Collection<Importer> importersList = options.getImporters();
     NativeImporterWrapper[] importers = importersList
         .stream()
@@ -188,6 +174,24 @@ public class NativeAdapter {
     }
     return functionWrappersList
         .toArray(new FunctionWrapper[functionWrappersList.size()]);
+  }
+
+  private NativeImporterWrapper[] getHeaderImporters(ImportStack importStack, Options options) {
+    List<Importer> headerImportersList = options.getHeaderImporters();
+    NativeImporterWrapper[] headerImporters;
+    try (
+      Stream<NativeImporterWrapper> headerImportersStream = Stream
+          .concat(
+              Stream.of(new JsassCustomHeaderImporter(importStack)),
+              headerImportersList.stream()
+          )
+          .map(i -> new NativeImporterWrapper(importStack, i));
+    ) {
+      headerImporters = headerImportersStream
+          .collect(Collectors.toList())
+          .toArray(new NativeImporterWrapper[headerImportersList.size()]);
+    }
+    return headerImporters;
   }
 
   /**
