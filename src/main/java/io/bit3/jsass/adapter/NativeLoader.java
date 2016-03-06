@@ -39,8 +39,11 @@ final class NativeLoader {
 
   /**
    * Find the right shared library, depending on the operating system and architecture.
+   *
+   * @throws UnsupportedOperationException Throw an exception if no native library for this
+   * platform was found.
    */
-  static URL findLibraryResource(String library) throws UnsupportedOperationException {
+  static URL findLibraryResource(String library) {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
     String platform;
