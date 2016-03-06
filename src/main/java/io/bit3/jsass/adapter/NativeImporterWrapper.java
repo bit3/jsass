@@ -2,6 +2,7 @@ package io.bit3.jsass.adapter;
 
 import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.importer.Import;
+import io.bit3.jsass.importer.ImportException;
 import io.bit3.jsass.importer.Importer;
 import io.bit3.jsass.importer.JsassCustomHeaderImporter;
 
@@ -82,7 +83,7 @@ class NativeImporterWrapper {
           )
       );
     } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw new ImportException(e);
     }
   }
 
@@ -101,7 +102,7 @@ class NativeImporterWrapper {
           )
       );
     } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw new ImportException(e);
     }
   }
 }
