@@ -17,12 +17,6 @@ import java.nio.charset.Charset;
  * The compiler compiles SCSS files, strings and contexts.
  */
 public class Compiler {
-
-  /**
-   * The default defaultCharset that is used for compiling strings.
-   */
-  public static final Charset defaultCharset = Charsets.UTF_8;
-
   /**
    * sass library adapter.
    */
@@ -49,21 +43,7 @@ public class Compiler {
    * @throws CompilationException If the compilation failed.
    */
   public Output compileString(String string, Options options) throws CompilationException {
-    return compileString(string, defaultCharset, null, null, options);
-  }
-
-  /**
-   * Compile string.
-   *
-   * @param string  The input string.
-   * @param charset The defaultCharset of the input string.
-   * @param options The compile options.
-   * @return The compilation output.
-   * @throws CompilationException If the compilation failed.
-   */
-  public Output compileString(String string, Charset charset, Options options)
-      throws CompilationException {
-    return compileString(string, charset, null, null, options);
+    return compileString(string, null, null, options);
   }
 
   /**
@@ -78,24 +58,6 @@ public class Compiler {
    */
   public Output compileString(String string, URI inputPath, URI outputPath, Options options)
       throws CompilationException {
-    return compileString(string, defaultCharset, inputPath, outputPath, options);
-  }
-
-  /**
-   * Compile string.
-   *
-   * @param string     The input string.
-   * @param charset    The defaultCharset of the input string.
-   * @param inputPath  The input path.
-   * @param outputPath The output path.
-   * @param options    The compile options.
-   * @return The compilation output.
-   * @throws CompilationException If the compilation failed.
-   */
-  public Output compileString(
-      String string, Charset charset, URI inputPath, URI outputPath,
-      Options options
-  ) throws CompilationException {
     StringContext context = new StringContext(string, inputPath, outputPath, options);
 
     return compile(context);
