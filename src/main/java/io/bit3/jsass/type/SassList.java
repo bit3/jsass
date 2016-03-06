@@ -22,6 +22,7 @@ public class SassList extends ArrayList<Object> implements SassValue {
    * Create an empty list.
    */
   public SassList() {
+    // an empty list
   }
 
   /**
