@@ -12,7 +12,10 @@ import java.util.stream.Collectors;
 /**
  * Helper class to convert libsass to java values and vise versa.
  */
-public class TypeUtils {
+public final class TypeUtils {
+  private TypeUtils() {
+  }
+
   /**
    * Try to convert "any" java object into a responsible sass value.
    */
