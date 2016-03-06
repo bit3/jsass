@@ -60,6 +60,15 @@ sonarqube {
     }
 }
 
+// jni header generation
+task jniHeaders(type:Exec) {
+    def classpath = sourceSets.main.output.classesDir
+    commandLine "javah", "-classpath", classpath, "-d", "src/main/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeAdapter"
+
+    dependsOn classes
+}
+jar.dependsOn jniHeaders
+
 // javadoc.jar generation
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
