@@ -34,7 +34,7 @@ final class NativeLoader {
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
       exception.printStackTrace(System.err);
-      throw new RuntimeException(exception);
+      throw new LoaderException(exception);
     }
   }
 
