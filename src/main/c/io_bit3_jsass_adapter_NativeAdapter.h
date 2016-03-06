@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Lio/bit3/jsass/adapter/NativeFileContext;)Lio/bit3/jsass/Output;
  */
 JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileFile
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jclass, jobject);
 
 /*
  * Class:     io_bit3_jsass_adapter_NativeAdapter

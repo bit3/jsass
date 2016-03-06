@@ -1233,7 +1233,7 @@ void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass
  */
 
 JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileFile
-        (JNIEnv *env, jobject j_adapter, jobject j_context) {
+        (JNIEnv *env, jclass j_adapter, jobject j_context) {
     const char *c_input_path = get_string_property(env, j_context, "inputPath");
 
     struct Sass_File_Context *sass_context = sass_make_file_context(c_input_path);
