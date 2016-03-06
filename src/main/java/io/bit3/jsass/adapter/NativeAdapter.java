@@ -185,5 +185,5 @@ public class NativeAdapter {
   /**
    * Native call.
    */
-  private native Output compileString(NativeStringContext context);
+  private static native Output compileString(NativeStringContext context);
 }
