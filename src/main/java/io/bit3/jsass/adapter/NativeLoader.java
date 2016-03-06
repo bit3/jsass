@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
 
 /**
  * This loader handle the extraction and loading of the shared library files from the jar.
@@ -19,10 +20,7 @@ final class NativeLoader {
    */
   public static void loadLibrary() {
     try {
-      File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-      File dir = File.createTempFile("libjsass-", ".d", tmpDir);
-      dir.delete();
-      dir.mkdir();
+      File dir = Files.createTempDirectory("libjsass-").toFile();
       dir.deleteOnExit();
 
       if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
