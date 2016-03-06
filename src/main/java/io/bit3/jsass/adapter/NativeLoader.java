@@ -46,8 +46,8 @@ final class NativeLoader {
   static URL findLibraryResource(String library) {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
-    String platform;
-    String fileExtension;
+    String platform = null;
+    String fileExtension = null;
 
     if (osName.startsWith("win")) {
       fileExtension = "dll";
@@ -78,17 +78,13 @@ final class NativeLoader {
           break;
 
         default:
-          throw new UnsupportedOperationException(
-              "Platform " + osName + ":" + osArch + " not supported"
-          );
+          unsupportedPlatform(osName, osArch);
       }
     } else if (osName.startsWith("mac")) {
       fileExtension = "dylib";
       platform = "darwin";
     } else {
-      throw new UnsupportedOperationException(
-          "Platform " + osName + ":" + osArch + " not supported"
-      );
+      unsupportedPlatform(osName, osArch);
     }
 
     String resourceName = "/" + platform + "/" + library + "." + fileExtension;
@@ -96,9 +92,7 @@ final class NativeLoader {
     URL resource = NativeLoader.class.getResource(resourceName);
 
     if (null == resource) {
-      throw new UnsupportedOperationException(
-          "Platform " + osName + ":" + osArch + " not supported"
-      );
+      unsupportedPlatform(osName, osArch);
     }
 
     return resource;
@@ -124,5 +118,11 @@ final class NativeLoader {
     }
 
     return file.getAbsolutePath();
+  }
+
+  private static void unsupportedPlatform(String osName, String osArch) {
+    throw new UnsupportedOperationException(
+        "Platform " + osName + ":" + osArch + " not supported"
+    );
   }
 }
