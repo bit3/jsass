@@ -179,14 +179,14 @@ public class NativeAdapter {
     List<Importer> headerImportersList = options.getHeaderImporters();
     NativeImporterWrapper[] headerImporters;
     try (
-      Stream<NativeImporterWrapper> headerImportersStream = Stream
+      Stream<Importer> headerImportersStream = Stream
           .concat(
               Stream.of(new JsassCustomHeaderImporter(importStack)),
               headerImportersList.stream()
-          )
-          .map(i -> new NativeImporterWrapper(importStack, i));
+          );
     ) {
       headerImporters = headerImportersStream
+          .map(i -> new NativeImporterWrapper(importStack, i))
           .collect(Collectors.toList())
           .toArray(new NativeImporterWrapper[headerImportersList.size()]);
     }
