@@ -106,24 +106,7 @@ public class NativeAdapter {
   private NativeOptions convertToNativeOptions(Context context, ImportStack importStack) {
     Options options = context.getOptions();
 
-    List<FunctionWrapper> functionWrappersList;
-    try (
-      Stream<FunctionWrapper> functionWrappersStream = Stream
-          .concat(
-              functionWrapperFactory
-                  .compileFunctions(importStack, context, new JsassCustomFunctions(importStack))
-                  .stream(),
-              functionWrapperFactory
-                  .compileFunctions(importStack, context, options.getFunctionProviders())
-                  .stream()
-          );
-    ) {
-      functionWrappersList = functionWrappersStream
-          .collect(Collectors.toList());
-    }
-    FunctionWrapper[] functionWrappers = functionWrappersList
-        .toArray(new FunctionWrapper[functionWrappersList.size()]);
-
+    FunctionWrapper[] functionWrappers = getFunctionWrappers(context, importStack, options);
     List<Importer> headerImportersList = options.getHeaderImporters();
     NativeImporterWrapper[] headerImporters;
     try (
@@ -185,6 +168,26 @@ public class NativeAdapter {
         sourceMapFile,
         sourceMapRoot
     );
+  }
+
+  private FunctionWrapper[] getFunctionWrappers(Context context, ImportStack importStack, Options options) {
+    List<FunctionWrapper> functionWrappersList;
+    try (
+        Stream<FunctionWrapper> functionWrappersStream = Stream
+            .concat(
+                functionWrapperFactory
+                    .compileFunctions(importStack, context, new JsassCustomFunctions(importStack))
+                    .stream(),
+                functionWrapperFactory
+                    .compileFunctions(importStack, context, options.getFunctionProviders())
+                    .stream()
+            );
+    ) {
+      functionWrappersList = functionWrappersStream
+          .collect(Collectors.toList());
+    }
+    return functionWrappersList
+        .toArray(new FunctionWrapper[functionWrappersList.size()]);
   }
 
   /**
