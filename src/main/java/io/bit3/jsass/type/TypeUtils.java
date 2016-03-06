@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 /**
@@ -48,16 +49,14 @@ public class TypeUtils {
     }
 
     if (value instanceof Map) {
-      SassMap map = new SassMap();
-
-      for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
-        String key = entry.getKey().toString();
-        SassValue item = TypeUtils.convertToSassValue(entry.getValue());
-
-        map.put(key, item);
-      }
-
-      return map;
+      return ((Map<?, ?>) value).entrySet()
+          .stream()
+          .collect(Collectors.toMap(
+              entry -> entry.getKey().toString(),
+              entry -> TypeUtils.convertToSassValue(entry.getValue()),
+              (origin, duplicate) -> origin,
+              SassMap::new
+          ));
     }
 
     if (value instanceof Throwable) {
