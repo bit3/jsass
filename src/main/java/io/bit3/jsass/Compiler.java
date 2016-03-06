@@ -8,10 +8,7 @@ import io.bit3.jsass.context.StringContext;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.function.FunctionWrapperFactory;
 
-import org.apache.commons.io.Charsets;
-
 import java.net.URI;
-import java.nio.charset.Charset;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
