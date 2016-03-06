@@ -11,6 +11,7 @@ public class SassMap extends LinkedHashMap<String, SassValue> implements SassVal
   public static final int TYPE = 7;
 
   public SassMap() {
+    // an empty map
   }
 
   public SassMap(Map<? extends String, ? extends SassValue> map) {
