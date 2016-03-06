@@ -12,8 +12,8 @@ public class Assert {
    */
   public static void assertSuccessful(Output output, String syntax, OutputStyle outputStyle) {
     String message = String.format(
-        "Compile input.%s into %s output format failed with error status (%d)\n"
-            + "%s\n"
+        "Compile input.%s into %s output format failed with error status (%d)%n"
+            + "%s%n"
             + "%s",
         syntax,
         outputStyle,

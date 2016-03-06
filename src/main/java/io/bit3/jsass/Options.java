@@ -37,7 +37,7 @@ public class Options {
    */
   private boolean isIndentedSyntaxSrc = false;
 
-  private String linefeed = "\n";
+  private String linefeed = System.lineSeparator();
 
   /**
    * Disable sourceMappingUrl in css output.
