@@ -18,7 +18,7 @@ public class TypeUtils {
    */
   public static SassValue convertToSassValue(Object value) {
     if (null == value) {
-      return new SassNull();
+      return SassNull.SINGLETON;
     }
 
     if (value instanceof SassValue) {
