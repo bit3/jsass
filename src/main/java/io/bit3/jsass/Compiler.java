@@ -9,6 +9,7 @@ import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.function.FunctionWrapperFactory;
 
 import java.net.URI;
+import java.util.Objects;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
@@ -80,9 +81,12 @@ public class Compiler {
    *
    * @param context The context.
    * @return The compilation output.
+   * @throws UnsupportedContextException If the given context is not supported.
    * @throws CompilationException If the compilation failed.
    */
   public Output compile(Context context) throws CompilationException {
+    Objects.requireNonNull(context, "Parameter context must not be null");
+
     if (context instanceof FileContext) {
       return compile((FileContext) context);
     }
@@ -91,12 +95,7 @@ public class Compiler {
       return compile((StringContext) context);
     }
 
-    throw new RuntimeException(
-        String.format(
-            "Context type \"%s\" is not supported",
-            null == context ? "null" : context.getClass().getName()
-        )
-    );
+    throw new UnsupportedContextException(context);
   }
 
   /**
