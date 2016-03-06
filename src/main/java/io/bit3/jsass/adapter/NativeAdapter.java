@@ -89,7 +89,7 @@ public class NativeAdapter {
     return new NativeStringContext(source, inputPath, outputPath, options);
   }
 
-  private String convertToString(URI uri) {
+  private static String convertToString(URI uri) {
     if (null == uri) {
       return "";
     }
