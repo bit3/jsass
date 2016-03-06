@@ -69,6 +69,7 @@ task jniHeaders(type:Exec) {
     commandLine "javah", "-classpath", testClasspath, "-d", "src/test/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeTestAdapter"
 
     dependsOn classes
+    dependsOn testClasses
 }
 jar.dependsOn jniHeaders
 
