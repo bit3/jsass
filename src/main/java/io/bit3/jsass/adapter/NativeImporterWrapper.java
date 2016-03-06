@@ -86,7 +86,7 @@ class NativeImporterWrapper {
     }
   }
 
-  private NativeImport createPostImport(Import importSource) {
+  private static NativeImport createPostImport(Import importSource) {
     StringBuilder postSource = new StringBuilder();
 
     // $jsass-void: jsass_import_stack_pop() !global;
