@@ -15,6 +15,9 @@ import java.nio.file.Files;
  * This loader handle the extraction and loading of the shared library files from the jar.
  */
 final class NativeLoader {
+  private NativeLoader() {
+  }
+
   /**
    * Load the shared libraries.
    */
