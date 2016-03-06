@@ -1,7 +1,7 @@
 package io.bit3.jsass;
 
 public class CompilationException extends Exception {
-
+  private static final long serialVersionUID = 630234764149041048L;
   private Output output;
 
   public CompilationException(Output output) {

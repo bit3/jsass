@@ -3,6 +3,7 @@ package io.bit3.jsass;
 import io.bit3.jsass.context.Context;
 
 public class UnsupportedContextException extends RuntimeException {
+  private static final long serialVersionUID = -5832354814221827572L;
   private final Context context;
 
   /**

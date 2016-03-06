@@ -12,6 +12,7 @@ import java.util.Objects;
  * A sass value list.
  */
 public class SassList extends ArrayList<Object> implements SassValue {
+  private static final long serialVersionUID = -2377560327885879156L;
   public static final int TYPE = 6;
 
   /**

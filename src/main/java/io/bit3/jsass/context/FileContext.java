@@ -8,6 +8,7 @@ import java.net.URI;
  * A context to compile a file from the filesystem.
  */
 public class FileContext extends AbstractContext {
+  private static final long serialVersionUID = -1235536277472179438L;
 
   /**
    * Create a new string context.
