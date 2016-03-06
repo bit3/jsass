@@ -30,6 +30,7 @@ public class SassColor implements SassValue {
    * Create an empty (black and full transparent) color.
    */
   public SassColor() {
+    // keep default values
   }
 
   /**
