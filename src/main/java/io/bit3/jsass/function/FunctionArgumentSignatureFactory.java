@@ -11,7 +11,6 @@ import io.bit3.jsass.annotation.DefaultShortValue;
 import io.bit3.jsass.annotation.DefaultStringValue;
 import io.bit3.jsass.annotation.Name;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,8 +20,7 @@ public class FunctionArgumentSignatureFactory {
   /**
    * Create a new factory.
    */
-  public List<FunctionArgumentSignature> createDefaultArgumentSignature(Method method,
-                                                                        Parameter parameter) {
+  public List<FunctionArgumentSignature> createDefaultArgumentSignature(Parameter parameter) {
     List<FunctionArgumentSignature> list = new LinkedList<>();
 
     String name = getParameterName(parameter);

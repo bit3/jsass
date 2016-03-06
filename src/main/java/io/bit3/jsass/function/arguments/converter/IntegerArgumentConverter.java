@@ -47,6 +47,6 @@ public class IntegerArgumentConverter implements ArgumentConverter {
   public List<FunctionArgumentSignature> argumentSignatures(
       Object object, Method method, Parameter parameter, FunctionArgumentSignatureFactory factory
   ) {
-    return factory.createDefaultArgumentSignature(method, parameter);
+    return factory.createDefaultArgumentSignature(parameter);
   }
 }
