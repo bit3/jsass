@@ -45,7 +45,7 @@ public class JsassCustomHeaderImporter implements Importer {
           source.toString()
       );
     } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw new ImportException(e);
     }
   }
 }
