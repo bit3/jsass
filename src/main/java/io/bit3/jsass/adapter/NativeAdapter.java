@@ -106,28 +106,38 @@ public class NativeAdapter {
   private NativeOptions convertToNativeOptions(Context context, ImportStack importStack) {
     Options options = context.getOptions();
 
-    List<FunctionWrapper> functionWrappersList = Stream
-        .concat(
-            functionWrapperFactory
-                .compileFunctions(importStack, context, new JsassCustomFunctions(importStack))
-                .stream(),
-            functionWrapperFactory
-                .compileFunctions(importStack, context, options.getFunctionProviders())
-                .stream()
-        )
-        .collect(Collectors.toList());
+    List<FunctionWrapper> functionWrappersList;
+    try (
+      Stream<FunctionWrapper> functionWrappersStream = Stream
+          .concat(
+              functionWrapperFactory
+                  .compileFunctions(importStack, context, new JsassCustomFunctions(importStack))
+                  .stream(),
+              functionWrapperFactory
+                  .compileFunctions(importStack, context, options.getFunctionProviders())
+                  .stream()
+          );
+    ) {
+      functionWrappersList = functionWrappersStream
+          .collect(Collectors.toList());
+    }
     FunctionWrapper[] functionWrappers = functionWrappersList
         .toArray(new FunctionWrapper[functionWrappersList.size()]);
 
     List<Importer> headerImportersList = options.getHeaderImporters();
-    NativeImporterWrapper[] headerImporters = Stream
-        .concat(
-            Stream.of(new JsassCustomHeaderImporter(importStack)),
-            headerImportersList.stream()
-        )
-        .map(i -> new NativeImporterWrapper(importStack, i))
-        .collect(Collectors.toList())
-        .toArray(new NativeImporterWrapper[headerImportersList.size()]);
+    NativeImporterWrapper[] headerImporters;
+    try (
+      Stream<NativeImporterWrapper> headerImportersStream = Stream
+          .concat(
+              Stream.of(new JsassCustomHeaderImporter(importStack)),
+              headerImportersList.stream()
+          )
+          .map(i -> new NativeImporterWrapper(importStack, i));
+    ) {
+      headerImporters = headerImportersStream
+          .collect(Collectors.toList())
+          .toArray(new NativeImporterWrapper[headerImportersList.size()]);
+    }
 
     Collection<Importer> importersList = options.getImporters();
     NativeImporterWrapper[] importers = importersList
