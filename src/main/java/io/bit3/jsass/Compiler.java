@@ -21,7 +21,7 @@ public class Compiler {
   /**
    * The default defaultCharset that is used for compiling strings.
    */
-  public final Charset defaultCharset = Charsets.UTF_8;
+  public static final Charset defaultCharset = Charsets.UTF_8;
 
   /**
    * sass library adapter.
