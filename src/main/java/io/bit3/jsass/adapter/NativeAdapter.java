@@ -180,7 +180,7 @@ public class NativeAdapter {
   /**
    * Native call.
    */
-  private native Output compileFile(NativeFileContext context);
+  private static native Output compileFile(NativeFileContext context);
 
   /**
    * Native call.
