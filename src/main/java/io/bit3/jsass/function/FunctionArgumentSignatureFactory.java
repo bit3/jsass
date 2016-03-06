@@ -10,6 +10,7 @@ import io.bit3.jsass.annotation.DefaultLongValue;
 import io.bit3.jsass.annotation.DefaultShortValue;
 import io.bit3.jsass.annotation.DefaultStringValue;
 import io.bit3.jsass.annotation.Name;
+import io.bit3.jsass.type.TypeUtils;
 
 import java.lang.reflect.Parameter;
 import java.util.LinkedList;
@@ -55,47 +56,43 @@ public class FunctionArgumentSignatureFactory {
   public Object getDefaultValue(Parameter parameter) {
     Class<?> type = parameter.getType();
 
-    if (isaString(type)) {
+    if (TypeUtils.isaString(type)) {
       return getStringDefaultValue(parameter);
     }
 
-    if (isaByte(type)) {
+    if (TypeUtils.isaByte(type)) {
       return getByteDefaultValue(parameter);
     }
 
-    if (isaShort(type)) {
+    if (TypeUtils.isaShort(type)) {
       return getShortDefaultValue(parameter);
     }
 
-    if (isaInteger(type)) {
+    if (TypeUtils.isaInteger(type)) {
       return getIntegerDefaultValue(parameter);
     }
 
-    if (isaLong(type)) {
+    if (TypeUtils.isaLong(type)) {
       return getLongDefaultValue(parameter);
     }
 
-    if (isaFloat(type)) {
+    if (TypeUtils.isaFloat(type)) {
       return getFloatDefaultValue(parameter);
     }
 
-    if (isaDouble(type)) {
+    if (TypeUtils.isaDouble(type)) {
       return getDoubleDefaultValue(parameter);
     }
 
-    if (isaCharacter(type)) {
+    if (TypeUtils.isaCharacter(type)) {
       return getCharacterDefaultValue(parameter);
     }
 
-    if (isaBoolean(type)) {
+    if (TypeUtils.isaBoolean(type)) {
       return getBooleanDefaultValue(parameter);
     }
 
     return null;
-  }
-
-  private boolean isaString(Class<?> type) {
-    return CharSequence.class.isAssignableFrom(type);
   }
 
   private Object getStringDefaultValue(Parameter parameter) {
@@ -108,10 +105,6 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private boolean isaByte(Class<?> type) {
-    return Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type);
-  }
-
   private Object getByteDefaultValue(Parameter parameter) {
     DefaultByteValue defaultByteValue = parameter.getAnnotation(DefaultByteValue.class);
 
@@ -120,10 +113,6 @@ public class FunctionArgumentSignatureFactory {
     }
 
     return null;
-  }
-
-  private boolean isaShort(Class<?> type) {
-    return Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type);
   }
 
   private Object getShortDefaultValue(Parameter parameter) {
@@ -136,10 +125,6 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private boolean isaInteger(Class<?> type) {
-    return Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type);
-  }
-
   private Object getIntegerDefaultValue(Parameter parameter) {
     DefaultIntegerValue defaultIntegerValue = parameter.getAnnotation(DefaultIntegerValue.class);
 
@@ -148,10 +133,6 @@ public class FunctionArgumentSignatureFactory {
     }
 
     return null;
-  }
-
-  private boolean isaLong(Class<?> type) {
-    return Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type);
   }
 
   private Object getLongDefaultValue(Parameter parameter) {
@@ -164,10 +145,6 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private boolean isaFloat(Class<?> type) {
-    return Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type);
-  }
-
   private Object getFloatDefaultValue(Parameter parameter) {
     DefaultFloatValue defaultFloatValue = parameter.getAnnotation(DefaultFloatValue.class);
 
@@ -176,10 +153,6 @@ public class FunctionArgumentSignatureFactory {
     }
 
     return null;
-  }
-
-  private boolean isaDouble(Class<?> type) {
-    return Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type);
   }
 
   private Object getDoubleDefaultValue(Parameter parameter) {
@@ -192,10 +165,6 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private boolean isaCharacter(Class<?> type) {
-    return Character.class.isAssignableFrom(type) || char.class.isAssignableFrom(type);
-  }
-
   private Object getCharacterDefaultValue(Parameter parameter) {
     DefaultCharacterValue defaultCharacterValue = parameter.getAnnotation(
         DefaultCharacterValue.class
@@ -206,10 +175,6 @@ public class FunctionArgumentSignatureFactory {
     }
 
     return null;
-  }
-
-  private boolean isaBoolean(Class<?> type) {
-    return Boolean.class.isAssignableFrom(type) || boolean.class.isAssignableFrom(type);
   }
 
   private Object getBooleanDefaultValue(Parameter parameter) {
