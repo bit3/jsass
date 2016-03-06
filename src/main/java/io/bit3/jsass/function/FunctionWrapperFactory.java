@@ -191,21 +191,7 @@ public class FunctionWrapperFactory {
     }
 
     if (value instanceof Collection) {
-      StringBuilder builder = new StringBuilder();
-
-      builder.append("(");
-      boolean first = true;
-      for (Object item : ((Collection) value)) {
-        if (first) {
-          first = false;
-        } else {
-          builder.append(",");
-        }
-        builder.append(formatDefaultValue(item));
-      }
-      builder.append(")");
-
-      return builder.toString();
+      return formatCollectionValue((Collection) value);
     }
 
     String string = value.toString();
@@ -215,6 +201,24 @@ public class FunctionWrapperFactory {
     }
 
     return SassString.escape(string);
+  }
+
+  private String formatCollectionValue(Collection value) {
+    StringBuilder builder = new StringBuilder();
+
+    builder.append("(");
+    boolean first = true;
+    for (Object item : value) {
+      if (first) {
+        first = false;
+      } else {
+        builder.append(",");
+      }
+      builder.append(formatDefaultValue(item));
+    }
+    builder.append(")");
+
+    return builder.toString();
   }
 
   private ArgumentConverter createArgumentConverter(
