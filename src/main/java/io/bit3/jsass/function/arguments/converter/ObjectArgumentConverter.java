@@ -36,7 +36,7 @@ public class ObjectArgumentConverter implements ArgumentConverter {
       return value;
     }
 
-    throw new RuntimeException(
+    throw new ConversionException(
         String.format(
             "Cannot convert SASS type %s to Java type %s",
             value.getClass().getName(),
