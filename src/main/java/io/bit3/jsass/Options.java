@@ -28,7 +28,7 @@ public class Options {
   /**
    * SassList of paths.
    */
-  private List<File> includePaths = new LinkedList<File>();
+  private List<File> includePaths = new LinkedList<>();
 
   private String indent = "  ";
 
