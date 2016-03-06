@@ -7,7 +7,7 @@ import java.net.URI;
 /**
  * Abstract context that contain all shared informations for each context.
  */
-public class AbstractContext implements Context {
+public abstract class AbstractContext implements Context {
 
   /**
    * The input file path.
