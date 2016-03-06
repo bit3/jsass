@@ -62,8 +62,11 @@ sonarqube {
 
 // jni header generation
 task jniHeaders(type:Exec) {
-    def classpath = sourceSets.main.output.classesDir
-    commandLine "javah", "-classpath", classpath, "-d", "src/main/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeAdapter"
+    def mainClasspath = sourceSets.main.output.classesDir
+    commandLine "javah", "-classpath", mainClasspath, "-d", "src/main/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeAdapter"
+
+    def testClasspath = sourceSets.test.output.classesDir
+    commandLine "javah", "-classpath", testClasspath, "-d", "src/test/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeTestAdapter"
 
     dependsOn classes
 }
