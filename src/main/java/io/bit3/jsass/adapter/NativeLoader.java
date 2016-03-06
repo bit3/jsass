@@ -44,48 +44,17 @@ final class NativeLoader {
   static URL findLibraryResource(String library) {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
-    String platform = null;
-    String fileExtension = null;
+    String resourceName = null;
 
     if (osName.startsWith("win")) {
-      fileExtension = "dll";
-
-      switch (osArch) {
-        case "i386":
-        case "x86":
-          platform = "windows-x32";
-          break;
-
-        case "amd64":
-        case "x86_64":
-          platform = "windows-x64";
-          break;
-
-        default:
-          throw new UnsupportedOperationException(
-              "Platform " + osName + ":" + osArch + " not supported"
-          );
-      }
+      resourceName = determineWindowsLibrary(library, osName, osArch);
     } else if (osName.startsWith("linux")) {
-      fileExtension = "so";
-
-      switch (osArch) {
-        case "amd64":
-        case "x86_64":
-          platform = "linux-x64";
-          break;
-
-        default:
-          unsupportedPlatform(osName, osArch);
-      }
+      resourceName = determineLinuxLibrary(library, osName, osArch);
     } else if (osName.startsWith("mac")) {
-      fileExtension = "dylib";
-      platform = "darwin";
+      resourceName = determineMacLibrary(library);
     } else {
       unsupportedPlatform(osName, osArch);
     }
-
-    String resourceName = "/" + platform + "/" + library + "." + fileExtension;
 
     URL resource = NativeLoader.class.getResource(resourceName);
 
@@ -97,7 +66,86 @@ final class NativeLoader {
   }
 
   /**
-   * Save the right shared library in the given temporary directory.
+   * Determine the right windows library depending on the architecture.
+   *
+   * @param library The library name.
+   * @param osName  The operating system name.
+   * @param osArch  The system architecture.
+   * @return The library resource.
+   * @throws UnsupportedOperationException Throw an exception if no native library for this platform
+   *                                       was found.
+   */
+  private static String determineWindowsLibrary(String library, String osName, String osArch) {
+    String resourceName;
+    String platform = null;
+    String fileExtension = "dll";
+
+    switch (osArch) {
+      case "i386":
+      case "x86":
+        platform = "windows-x32";
+        break;
+
+      case "amd64":
+      case "x86_64":
+        platform = "windows-x64";
+        break;
+
+      default:
+        throw new UnsupportedOperationException(
+            "Platform " + osName + ":" + osArch + " not supported"
+        );
+    }
+
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Determine the right linux library depending on the architecture.
+   *
+   * @param library The library name.
+   * @param osName  The operating system name.
+   * @param osArch  The system architecture.
+   * @return The library resource.
+   * @throws UnsupportedOperationException Throw an exception if no native library for this platform
+   *                                       was found.
+   */
+  private static String determineLinuxLibrary(String library, String osName, String osArch) {
+    String resourceName;
+    String platform = null;
+    String fileExtension = "so";
+
+    switch (osArch) {
+      case "amd64":
+      case "x86_64":
+        platform = "linux-x64";
+        break;
+
+      default:
+        unsupportedPlatform(osName, osArch);
+    }
+
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Determine the right mac library depending on the architecture.
+   *
+   * @param library The library name.
+   * @return The library resource.
+   */
+  private static String determineMacLibrary(String library) {
+    String resourceName;
+    String platform = "darwin";
+    String fileExtension = "dylib";
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Save the shared library in the given temporary directory.
    */
   static String saveLibrary(File dir, String library) throws IOException {
     library = "lib" + library;
