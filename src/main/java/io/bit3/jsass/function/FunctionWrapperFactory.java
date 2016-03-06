@@ -132,8 +132,7 @@ public class FunctionWrapperFactory {
     signature.append(method.getName()).append("(");
 
     int parameterCount = 0;
-    for (int index = 0; index < parameters.length; index++) {
-      Parameter parameter = parameters[index];
+    for (Parameter parameter : parameters) {
       ArgumentConverter argumentConverter = createArgumentConverter(object, method, parameter);
 
       argumentConverters.add(argumentConverter);
@@ -159,7 +158,7 @@ public class FunctionWrapperFactory {
           signature.append(": ").append(formatDefaultValue(defaultValue));
         }
 
-        parameterCount ++;
+        parameterCount++;
       }
     }
 
