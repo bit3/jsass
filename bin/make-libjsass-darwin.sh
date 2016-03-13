@@ -3,7 +3,11 @@
 set -euo pipefail
 
 cd `dirname $0`;
-cd ../src/main;
+cd ..;
+
+JSASS_BASE_DIR=`pwd`;
+
+cd src/main;
 
 rm -r resources/darwin
 mkdir -p resources/darwin
@@ -31,8 +35,8 @@ cp libjsass.dylib ../../resources/darwin/libjsass.dylib
 
 # *** Build libjsass_test
 
-cd `dirname $0`;
-cd ../src/main;
+cd $JSASS_BASE_DIR;
+cd src/test;
 
 rm -r resources/darwin
 mkdir -p resources/darwin
