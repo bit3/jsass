@@ -6,6 +6,7 @@ import io.bit3.jsass.function.FunctionArgumentSignature;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.type.SassBoolean;
 import io.bit3.jsass.type.SassNull;
+import io.bit3.jsass.type.TypeUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -33,10 +34,7 @@ public class BooleanArgumentConverter implements ArgumentConverter {
     }
 
     // value is already in a compatible type
-    if (
-        Boolean.class.isAssignableFrom(value.getClass())
-            || byte.class.isAssignableFrom(value.getClass())
-        ) {
+    if (TypeUtils.isaBoolean(value.getClass())) {
       return value;
     }
 
@@ -47,6 +45,6 @@ public class BooleanArgumentConverter implements ArgumentConverter {
   public List<FunctionArgumentSignature> argumentSignatures(
       Object object, Method method, Parameter parameter, FunctionArgumentSignatureFactory factory
   ) {
-    return factory.createDefaultArgumentSignature(method, parameter);
+    return factory.createDefaultArgumentSignature(parameter);
   }
 }

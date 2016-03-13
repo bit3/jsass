@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
  * A sass value list.
  */
 public class SassMap extends LinkedHashMap<String, SassValue> implements SassValue {
+  private static final long serialVersionUID = -65270174805160025L;
   public static final int TYPE = 7;
 
   public SassMap() {
+    // an empty map
   }
 
   public SassMap(Map<? extends String, ? extends SassValue> map) {

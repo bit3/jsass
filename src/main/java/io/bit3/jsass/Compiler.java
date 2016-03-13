@@ -8,21 +8,13 @@ import io.bit3.jsass.context.StringContext;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.function.FunctionWrapperFactory;
 
-import org.apache.commons.io.Charsets;
-
 import java.net.URI;
-import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * The compiler compiles SCSS files, strings and contexts.
  */
 public class Compiler {
-
-  /**
-   * The default defaultCharset that is used for compiling strings.
-   */
-  public final Charset defaultCharset = Charsets.UTF_8;
-
   /**
    * sass library adapter.
    */
@@ -49,21 +41,7 @@ public class Compiler {
    * @throws CompilationException If the compilation failed.
    */
   public Output compileString(String string, Options options) throws CompilationException {
-    return compileString(string, defaultCharset, null, null, options);
-  }
-
-  /**
-   * Compile string.
-   *
-   * @param string  The input string.
-   * @param charset The defaultCharset of the input string.
-   * @param options The compile options.
-   * @return The compilation output.
-   * @throws CompilationException If the compilation failed.
-   */
-  public Output compileString(String string, Charset charset, Options options)
-      throws CompilationException {
-    return compileString(string, charset, null, null, options);
+    return compileString(string, null, null, options);
   }
 
   /**
@@ -78,24 +56,6 @@ public class Compiler {
    */
   public Output compileString(String string, URI inputPath, URI outputPath, Options options)
       throws CompilationException {
-    return compileString(string, defaultCharset, inputPath, outputPath, options);
-  }
-
-  /**
-   * Compile string.
-   *
-   * @param string     The input string.
-   * @param charset    The defaultCharset of the input string.
-   * @param inputPath  The input path.
-   * @param outputPath The output path.
-   * @param options    The compile options.
-   * @return The compilation output.
-   * @throws CompilationException If the compilation failed.
-   */
-  public Output compileString(
-      String string, Charset charset, URI inputPath, URI outputPath,
-      Options options
-  ) throws CompilationException {
     StringContext context = new StringContext(string, inputPath, outputPath, options);
 
     return compile(context);
@@ -121,9 +81,12 @@ public class Compiler {
    *
    * @param context The context.
    * @return The compilation output.
+   * @throws UnsupportedContextException If the given context is not supported.
    * @throws CompilationException If the compilation failed.
    */
   public Output compile(Context context) throws CompilationException {
+    Objects.requireNonNull(context, "Parameter context must not be null");
+
     if (context instanceof FileContext) {
       return compile((FileContext) context);
     }
@@ -132,12 +95,7 @@ public class Compiler {
       return compile((StringContext) context);
     }
 
-    throw new RuntimeException(
-        String.format(
-            "Context type \"%s\" is not supported",
-            null == context ? "null" : context.getClass().getName()
-        )
-    );
+    throw new UnsupportedContextException(context);
   }
 
   /**

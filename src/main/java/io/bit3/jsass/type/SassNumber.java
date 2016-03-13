@@ -4,6 +4,7 @@ package io.bit3.jsass.type;
  * A sass number value.
  */
 public class SassNumber extends Number implements SassValue {
+  private static final long serialVersionUID = -6597488416036924788L;
   public static final int TYPE = 2;
 
   /**

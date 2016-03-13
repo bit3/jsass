@@ -2,9 +2,10 @@ package io.bit3.jsass.context;
 
 import io.bit3.jsass.importer.Import;
 
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.Stack;
 
 /**
  * Stack for tracking currently evaluated file.
@@ -19,7 +20,7 @@ public class ImportStack {
   /**
    * The current import stack.
    */
-  private Stack<Import>        stack    = new Stack<>();
+  private Deque<Import> stack = new LinkedList<>();
 
   /**
    * Register a new import, return the registration ID.

@@ -130,7 +130,7 @@ public class FunctionDeclaration {
 
       String message = throwable.getMessage();
       if (StringUtils.isNotEmpty(message)) {
-        printWriter.append(message).append("\n");
+        printWriter.append(message).append(System.lineSeparator());
       }
       throwable.printStackTrace(printWriter);
 

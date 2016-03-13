@@ -8,6 +8,7 @@ import java.net.URI;
  * A context to compile a string in memory.
  */
 public class StringContext extends AbstractContext {
+  private static final long serialVersionUID = -3016862884676346652L;
 
   /**
    * The in-memory sass code.

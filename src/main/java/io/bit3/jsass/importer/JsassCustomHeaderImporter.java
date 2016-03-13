@@ -33,7 +33,7 @@ public class JsassCustomHeaderImporter implements Importer {
     // $jsass-void: jsass_import_stack_push(<id>) !global;
     source.append(
         String.format(
-            "$jsass-void: jsass_import_stack_push(%d) !global;\n",
+            "$jsass-void: jsass_import_stack_push(%d) !global;%n",
             id
         )
     );
@@ -45,7 +45,7 @@ public class JsassCustomHeaderImporter implements Importer {
           source.toString()
       );
     } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw new ImportException(e);
     }
   }
 }

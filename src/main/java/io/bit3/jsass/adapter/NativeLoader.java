@@ -9,20 +9,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
 
 /**
  * This loader handle the extraction and loading of the shared library files from the jar.
  */
 final class NativeLoader {
+  private NativeLoader() {
+  }
+
   /**
    * Load the shared libraries.
    */
   public static void loadLibrary() {
     try {
-      File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-      File dir = File.createTempFile("libjsass-", ".d", tmpDir);
-      dir.delete();
-      dir.mkdir();
+      File dir = Files.createTempDirectory("libjsass-").toFile();
       dir.deleteOnExit();
 
       if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
@@ -33,76 +34,121 @@ final class NativeLoader {
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
       exception.printStackTrace(System.err);
-      throw new RuntimeException(exception);
+      throw new LoaderException(exception);
     }
   }
 
   /**
    * Find the right shared library, depending on the operating system and architecture.
+   *
+   * @throws UnsupportedOperationException Throw an exception if no native library for this platform
+   *                                       was found.
    */
-  static URL findLibraryResource(String library) throws UnsupportedOperationException {
+  static URL findLibraryResource(String library) {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
-    String platform;
-    String fileExtension;
+    String resourceName = null;
 
     if (osName.startsWith("win")) {
-      fileExtension = "dll";
-
-      switch (osArch) {
-        case "i386":
-        case "x86":
-          platform = "windows-x32";
-          break;
-
-        case "amd64":
-        case "x86_64":
-          platform = "windows-x64";
-          break;
-
-        default:
-          throw new UnsupportedOperationException(
-              "Platform " + osName + ":" + osArch + " not supported"
-          );
-      }
+      resourceName = determineWindowsLibrary(library, osName, osArch);
     } else if (osName.startsWith("linux")) {
-      fileExtension = "so";
-
-      switch (osArch) {
-        case "amd64":
-        case "x86_64":
-          platform = "linux-x64";
-          break;
-
-        default:
-          throw new UnsupportedOperationException(
-              "Platform " + osName + ":" + osArch + " not supported"
-          );
-      }
+      resourceName = determineLinuxLibrary(library, osName, osArch);
     } else if (osName.startsWith("mac")) {
-      fileExtension = "dylib";
-      platform = "darwin";
+      resourceName = determineMacLibrary(library);
     } else {
-      throw new UnsupportedOperationException(
-          "Platform " + osName + ":" + osArch + " not supported"
-      );
+      unsupportedPlatform(osName, osArch);
     }
-
-    String resourceName = "/" + platform + "/" + library + "." + fileExtension;
 
     URL resource = NativeLoader.class.getResource(resourceName);
 
     if (null == resource) {
-      throw new UnsupportedOperationException(
-          "Platform " + osName + ":" + osArch + " not supported"
-      );
+      unsupportedPlatform(osName, osArch);
     }
 
     return resource;
   }
 
   /**
-   * Save the right shared library in the given temporary directory.
+   * Determine the right windows library depending on the architecture.
+   *
+   * @param library The library name.
+   * @param osName  The operating system name.
+   * @param osArch  The system architecture.
+   * @return The library resource.
+   * @throws UnsupportedOperationException Throw an exception if no native library for this platform
+   *                                       was found.
+   */
+  private static String determineWindowsLibrary(String library, String osName, String osArch) {
+    String resourceName;
+    String platform;
+    String fileExtension = "dll";
+
+    switch (osArch) {
+      case "i386":
+      case "x86":
+        platform = "windows-x32";
+        break;
+
+      case "amd64":
+      case "x86_64":
+        platform = "windows-x64";
+        break;
+
+      default:
+        throw new UnsupportedOperationException(
+            "Platform " + osName + ":" + osArch + " not supported"
+        );
+    }
+
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Determine the right linux library depending on the architecture.
+   *
+   * @param library The library name.
+   * @param osName  The operating system name.
+   * @param osArch  The system architecture.
+   * @return The library resource.
+   * @throws UnsupportedOperationException Throw an exception if no native library for this platform
+   *                                       was found.
+   */
+  private static String determineLinuxLibrary(String library, String osName, String osArch) {
+    String resourceName;
+    String platform = null;
+    String fileExtension = "so";
+
+    switch (osArch) {
+      case "amd64":
+      case "x86_64":
+        platform = "linux-x64";
+        break;
+
+      default:
+        unsupportedPlatform(osName, osArch);
+    }
+
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Determine the right mac library depending on the architecture.
+   *
+   * @param library The library name.
+   * @return The library resource.
+   */
+  private static String determineMacLibrary(String library) {
+    String resourceName;
+    String platform = "darwin";
+    String fileExtension = "dylib";
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Save the shared library in the given temporary directory.
    */
   static String saveLibrary(File dir, String library) throws IOException {
     library = "lib" + library;
@@ -121,5 +167,11 @@ final class NativeLoader {
     }
 
     return file.getAbsolutePath();
+  }
+
+  private static void unsupportedPlatform(String osName, String osArch) {
+    throw new UnsupportedOperationException(
+        "Platform " + osName + ":" + osArch + " not supported"
+    );
   }
 }

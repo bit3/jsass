@@ -2,9 +2,10 @@ package io.bit3.jsass.context;
 
 import io.bit3.jsass.Options;
 
+import java.io.Serializable;
 import java.net.URI;
 
-public interface Context {
+public interface Context extends Serializable {
 
   /**
    * Return the input file path.

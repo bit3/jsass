@@ -6,11 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * A sass value list.
  */
 public class SassList extends ArrayList<Object> implements SassValue {
+  private static final long serialVersionUID = -2377560327885879156L;
   public static final int TYPE = 6;
 
   /**
@@ -22,6 +24,7 @@ public class SassList extends ArrayList<Object> implements SassValue {
    * Create an empty list.
    */
   public SassList() {
+    // an empty list
   }
 
   /**
@@ -88,5 +91,28 @@ public class SassList extends ArrayList<Object> implements SassValue {
   @Override
   public String toString() {
     return "(" + StringUtils.join(this, separator.character) + ")";
+  }
+
+  @Override
+  public boolean equals(Object that) {
+    if (this == that) {
+      return true;
+    }
+
+    if (that == null || getClass() != that.getClass()) {
+      return false;
+    }
+
+    if (!super.equals(that)) {
+      return false;
+    }
+
+    SassList objects = (SassList) that;
+    return separator == objects.separator;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), separator);
   }
 }

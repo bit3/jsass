@@ -1,9 +1,22 @@
+plugins {
+    id 'net.researchgate.release' version '2.3.4'
+    id 'org.ajoberstar.grgit' version '1.2.0'
+    id 'org.sonarqube' version '1.2'
+}
+
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
+apply plugin: 'signing'
+
+import org.ajoberstar.grgit.*
+
+group = 'io.bit3'
+description = 'SASS compiler using libsass.'
 
 sourceCompatibility = 1.8
-version '3.3.1-SNAPSHOT'
+targetCompatibility = 1.8
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'jsass',
@@ -31,14 +44,60 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.ajoberstar:gradle-git:1.2.0'
+release {
+    git {
+        requireBranch = 'develop'
     }
 }
+
+sonarqube {
+    properties {
+        def git = Grgit.open();
+        def description = git.describe()
+
+        property "sonar.exclusions", "**/src/main/libsass/**"
+        property "sonar.projectVersion", description
+    }
+}
+
+// jni header generation
+task jniHeaders(type:Exec) {
+    def mainClasspath = sourceSets.main.output.classesDir
+    commandLine "javah", "-classpath", mainClasspath, "-d", "src/main/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeAdapter"
+
+    def testClasspath = sourceSets.test.output.classesDir
+    commandLine "javah", "-classpath", testClasspath, "-d", "src/test/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeTestAdapter"
+
+    dependsOn classes
+    dependsOn testClasses
+}
+jar.dependsOn jniHeaders
+
+// javadoc.jar generation
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// sources.jar generation
+task sourceJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+// summarize artifacts
+artifacts {
+    archives javadocJar, sourceJar
+}
+
+// signing artifacts
+if (project.hasProperty("signing.keyId") && project.hasProperty("signing.password")) {
+    signing {
+        sign configurations.archives
+    }
+}
+
+apply from: 'maven.gradle'
 
 // -----------------------------------------------------------------------------
 
@@ -208,7 +267,6 @@ task runDockerTests {
             'runDockerTestUbuntu1204',
             'runDockerTestUbuntu1404'
 }
-test.dependsOn runDockerTests
 
 task runDockerTestCentOS5 {
     dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable

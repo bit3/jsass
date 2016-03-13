@@ -1,6 +1,5 @@
 package io.bit3.jsass;
 
-import static io.bit3.jsass.Assert.assertSuccessful;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -48,7 +47,6 @@ public class ImporterTest {
         options
     );
 
-    assertSuccessful(output, "scss", options.getOutputStyle());
     assertFalse(functions.calls == 0);
     assertFalse(importer.importPaths.isEmpty());
 

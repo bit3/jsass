@@ -15,8 +15,11 @@ release.properties
 dependency-reduced-pom.xml
 
 ### Gradle
+artifacts/
 build/
 .gradle/
+.gradle*
+gradle-travis.properties
 
 ### Java
 *.class

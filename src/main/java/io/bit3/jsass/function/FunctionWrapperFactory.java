@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Factory that create libsass function callbacks and wrap them into {@link
@@ -105,13 +106,7 @@ public class FunctionWrapperFactory {
       declarations.add(declaration);
     }
 
-    List<FunctionWrapper> callbacks = new LinkedList<>();
-
-    for (FunctionDeclaration declaration : declarations) {
-      callbacks.add(new FunctionWrapper(declaration));
-    }
-
-    return callbacks;
+    return declarations.stream().map(FunctionWrapper::new).collect(Collectors.toList());
   }
 
   /**
@@ -132,8 +127,7 @@ public class FunctionWrapperFactory {
     signature.append(method.getName()).append("(");
 
     int parameterCount = 0;
-    for (int index = 0; index < parameters.length; index++) {
-      Parameter parameter = parameters[index];
+    for (Parameter parameter : parameters) {
       ArgumentConverter argumentConverter = createArgumentConverter(object, method, parameter);
 
       argumentConverters.add(argumentConverter);
@@ -159,7 +153,7 @@ public class FunctionWrapperFactory {
           signature.append(": ").append(formatDefaultValue(defaultValue));
         }
 
-        parameterCount ++;
+        parameterCount++;
       }
     }
 
@@ -191,21 +185,7 @@ public class FunctionWrapperFactory {
     }
 
     if (value instanceof Collection) {
-      StringBuilder builder = new StringBuilder();
-
-      builder.append("(");
-      boolean first = true;
-      for (Object item : ((Collection) value)) {
-        if (first) {
-          first = false;
-        } else {
-          builder.append(",");
-        }
-        builder.append(formatDefaultValue(item));
-      }
-      builder.append(")");
-
-      return builder.toString();
+      return formatCollectionValue((Collection) value);
     }
 
     String string = value.toString();
@@ -215,6 +195,24 @@ public class FunctionWrapperFactory {
     }
 
     return SassString.escape(string);
+  }
+
+  private String formatCollectionValue(Collection value) {
+    StringBuilder builder = new StringBuilder();
+
+    builder.append("(");
+    boolean first = true;
+    for (Object item : value) {
+      if (first) {
+        first = false;
+      } else {
+        builder.append(",");
+      }
+      builder.append(formatDefaultValue(item));
+    }
+    builder.append(")");
+
+    return builder.toString();
   }
 
   private ArgumentConverter createArgumentConverter(

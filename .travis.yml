@@ -14,6 +14,18 @@ before_install:
   - docker pull bit3/jsass-test-centos7
   - docker pull bit3/jsass-test-ubuntu12.04
   - docker pull bit3/jsass-test-ubuntu14.04
+  - mkdir -p $HOME/.gradle
+  - '[[ "$encrypted_7aff20607abf_key" != "" && "$encrypted_7aff20607abf_iv" != "" ]] && openssl aes-256-cbc -K $encrypted_7aff20607abf_key -iv $encrypted_7aff20607abf_iv -in gradle-travis.properties.enc -out $HOME/.gradle/gradle.properties -d || true'
+  - git fetch --unshallow
+
+install: true
 
 script:
-  - gradle check
+  - ./gradlew check runDockerTests
+
+after_script:
+  - wget https://www.startssl.com/certs/ca.crt
+  - sudo keytool -keystore /usr/lib/jvm/java-8-oracle-amd64/jre/lib/security/cacerts -storepass changeit -import -trustcacerts -v -noprompt -alias cacertclass1 -file ca.crt
+  - ./gradlew clean assemble
+  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == bit3/jsass ]] && [[ $TRAVIS_BRANCH == develop ]] && ./gradlew --stacktrace sonarqube -x test -Dsonar.login=$sonar_login -Dsonar.password=$sonar_password"
+  - "[[ $TRAVIS_PULL_REQUEST != false ]] && ./gradlew sonarqube -x test -Dsonar.analysis.mode=issues -Dsonar.github.oauth=$sonar_github_token -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG -Dsonar.login=$sonar_login -Dsonar.password=$sonar_password"

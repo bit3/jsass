@@ -3,6 +3,7 @@ package io.bit3.jsass;
 import io.bit3.jsass.importer.Importer;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -11,7 +12,8 @@ import java.util.List;
 /**
  * The compiler options.
  */
-public class Options {
+public class Options implements Serializable {
+  private static final long serialVersionUID = -3258968135964372076L;
 
   /**
    * Custom import functions.
@@ -28,7 +30,7 @@ public class Options {
   /**
    * SassList of paths.
    */
-  private List<File> includePaths = new LinkedList<File>();
+  private List<File> includePaths = new LinkedList<>();
 
   private String indent = "  ";
 
@@ -37,7 +39,7 @@ public class Options {
    */
   private boolean isIndentedSyntaxSrc = false;
 
-  private String linefeed = "\n";
+  private String linefeed = System.lineSeparator();
 
   /**
    * Disable sourceMappingUrl in css output.

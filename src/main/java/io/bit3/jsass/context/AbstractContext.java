@@ -7,7 +7,8 @@ import java.net.URI;
 /**
  * Abstract context that contain all shared informations for each context.
  */
-public class AbstractContext implements Context {
+public abstract class AbstractContext implements Context {
+  private static final long serialVersionUID = 913074077778518500L;
 
   /**
    * The input file path.

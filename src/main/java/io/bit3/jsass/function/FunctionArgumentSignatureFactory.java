@@ -10,8 +10,8 @@ import io.bit3.jsass.annotation.DefaultLongValue;
 import io.bit3.jsass.annotation.DefaultShortValue;
 import io.bit3.jsass.annotation.DefaultStringValue;
 import io.bit3.jsass.annotation.Name;
+import io.bit3.jsass.type.TypeUtils;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,8 +21,7 @@ public class FunctionArgumentSignatureFactory {
   /**
    * Create a new factory.
    */
-  public List<FunctionArgumentSignature> createDefaultArgumentSignature(Method method,
-                                                                        Parameter parameter) {
+  public List<FunctionArgumentSignature> createDefaultArgumentSignature(Parameter parameter) {
     List<FunctionArgumentSignature> list = new LinkedList<>();
 
     String name = getParameterName(parameter);
@@ -57,78 +56,132 @@ public class FunctionArgumentSignatureFactory {
   public Object getDefaultValue(Parameter parameter) {
     Class<?> type = parameter.getType();
 
-    if (CharSequence.class.isAssignableFrom(type)) {
-      DefaultStringValue defaultStringValue = parameter.getAnnotation(DefaultStringValue.class);
-
-      if (null != defaultStringValue) {
-        return defaultStringValue.value();
-      }
+    if (TypeUtils.isaString(type)) {
+      return getStringDefaultValue(parameter);
     }
 
-    if (Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {
-      DefaultByteValue defaultByteValue = parameter.getAnnotation(DefaultByteValue.class);
-
-      if (null != defaultByteValue) {
-        return defaultByteValue.value();
-      }
+    if (TypeUtils.isaByte(type)) {
+      return getByteDefaultValue(parameter);
     }
 
-    if (Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
-      DefaultShortValue defaultShortValue = parameter.getAnnotation(DefaultShortValue.class);
-
-      if (null != defaultShortValue) {
-        return defaultShortValue.value();
-      }
+    if (TypeUtils.isaShort(type)) {
+      return getShortDefaultValue(parameter);
     }
 
-    if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
-      DefaultIntegerValue defaultIntegerValue = parameter.getAnnotation(DefaultIntegerValue.class);
-
-      if (null != defaultIntegerValue) {
-        return defaultIntegerValue.value();
-      }
+    if (TypeUtils.isaInteger(type)) {
+      return getIntegerDefaultValue(parameter);
     }
 
-    if (Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
-      DefaultLongValue defaultLongValue = parameter.getAnnotation(DefaultLongValue.class);
-
-      if (null != defaultLongValue) {
-        return defaultLongValue.value();
-      }
+    if (TypeUtils.isaLong(type)) {
+      return getLongDefaultValue(parameter);
     }
 
-    if (Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
-      DefaultFloatValue defaultFloatValue = parameter.getAnnotation(DefaultFloatValue.class);
-
-      if (null != defaultFloatValue) {
-        return defaultFloatValue.value();
-      }
+    if (TypeUtils.isaFloat(type)) {
+      return getFloatDefaultValue(parameter);
     }
 
-    if (Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
-      DefaultDoubleValue defaultDoubleValue = parameter.getAnnotation(DefaultDoubleValue.class);
-
-      if (null != defaultDoubleValue) {
-        return defaultDoubleValue.value();
-      }
+    if (TypeUtils.isaDouble(type)) {
+      return getDoubleDefaultValue(parameter);
     }
 
-    if (Character.class.isAssignableFrom(type) || char.class.isAssignableFrom(type)) {
-      DefaultCharacterValue defaultCharacterValue = parameter.getAnnotation(
-          DefaultCharacterValue.class
-      );
-
-      if (null != defaultCharacterValue) {
-        return defaultCharacterValue.value();
-      }
+    if (TypeUtils.isaCharacter(type)) {
+      return getCharacterDefaultValue(parameter);
     }
 
-    if (Boolean.class.isAssignableFrom(type) || boolean.class.isAssignableFrom(type)) {
-      DefaultBooleanValue defaultBooleanValue = parameter.getAnnotation(DefaultBooleanValue.class);
+    if (TypeUtils.isaBoolean(type)) {
+      return getBooleanDefaultValue(parameter);
+    }
 
-      if (null != defaultBooleanValue) {
-        return defaultBooleanValue.value();
-      }
+    return null;
+  }
+
+  private Object getStringDefaultValue(Parameter parameter) {
+    DefaultStringValue defaultStringValue = parameter.getAnnotation(DefaultStringValue.class);
+
+    if (null != defaultStringValue) {
+      return defaultStringValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getByteDefaultValue(Parameter parameter) {
+    DefaultByteValue defaultByteValue = parameter.getAnnotation(DefaultByteValue.class);
+
+    if (null != defaultByteValue) {
+      return defaultByteValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getShortDefaultValue(Parameter parameter) {
+    DefaultShortValue defaultShortValue = parameter.getAnnotation(DefaultShortValue.class);
+
+    if (null != defaultShortValue) {
+      return defaultShortValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getIntegerDefaultValue(Parameter parameter) {
+    DefaultIntegerValue defaultIntegerValue = parameter.getAnnotation(DefaultIntegerValue.class);
+
+    if (null != defaultIntegerValue) {
+      return defaultIntegerValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getLongDefaultValue(Parameter parameter) {
+    DefaultLongValue defaultLongValue = parameter.getAnnotation(DefaultLongValue.class);
+
+    if (null != defaultLongValue) {
+      return defaultLongValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getFloatDefaultValue(Parameter parameter) {
+    DefaultFloatValue defaultFloatValue = parameter.getAnnotation(DefaultFloatValue.class);
+
+    if (null != defaultFloatValue) {
+      return defaultFloatValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getDoubleDefaultValue(Parameter parameter) {
+    DefaultDoubleValue defaultDoubleValue = parameter.getAnnotation(DefaultDoubleValue.class);
+
+    if (null != defaultDoubleValue) {
+      return defaultDoubleValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getCharacterDefaultValue(Parameter parameter) {
+    DefaultCharacterValue defaultCharacterValue = parameter.getAnnotation(
+        DefaultCharacterValue.class
+    );
+
+    if (null != defaultCharacterValue) {
+      return defaultCharacterValue.value();
+    }
+
+    return null;
+  }
+
+  private Object getBooleanDefaultValue(Parameter parameter) {
+    DefaultBooleanValue defaultBooleanValue = parameter.getAnnotation(DefaultBooleanValue.class);
+
+    if (null != defaultBooleanValue) {
+      return defaultBooleanValue.value();
     }
 
     return null;

@@ -5,6 +5,7 @@ import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.FunctionArgumentSignature;
 import io.bit3.jsass.function.FunctionArgumentSignatureFactory;
 import io.bit3.jsass.type.SassNull;
+import io.bit3.jsass.type.TypeUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -27,10 +28,7 @@ public class IntegerArgumentConverter implements ArgumentConverter {
     }
 
     // value is already in a compatible type
-    if (
-        Integer.class.isAssignableFrom(value.getClass())
-            || int.class.isAssignableFrom(value.getClass())
-        ) {
+    if (TypeUtils.isaInteger(value.getClass())) {
       return value;
     }
 
@@ -47,6 +45,6 @@ public class IntegerArgumentConverter implements ArgumentConverter {
   public List<FunctionArgumentSignature> argumentSignatures(
       Object object, Method method, Parameter parameter, FunctionArgumentSignatureFactory factory
   ) {
-    return factory.createDefaultArgumentSignature(method, parameter);
+    return factory.createDefaultArgumentSignature(parameter);
   }
 }
