@@ -1,3 +1,7 @@
+/*
+ * A collection of methods that makes working with Java objects easier.
+ */
+
 /**
  * Call a JNI method and return its jobject value.
  *

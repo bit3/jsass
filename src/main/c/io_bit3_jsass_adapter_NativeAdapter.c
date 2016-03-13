@@ -575,27 +575,28 @@ jobject parse_and_execute(JNIEnv *env, struct Sass_Compiler *sass_compiler, stru
 
     jclass j_class;
     jmethodID j_method;
-    jobject j_output;
+    jobject j_output = 0;
 
     if (0 != error_status) {
-      j_class = (*env)->FindClass(env, "io/bit3/jsass/CompilationException");
-      j_method = (*env)->GetMethodID(
-              env, j_class, "<init>",
-              "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"
-      );
-      j_output = (*env)->NewObject(
-              env, j_class, j_method,
-              error_status, j_error_json, j_error_text, j_error_message, j_error_file, j_error_src
-      );
+        j_class = (*env)->FindClass(env, "io/bit3/jsass/CompilationException");
+        j_method = (*env)->GetMethodID(
+                env, j_class, "<init>",
+                "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"
+        );
+        jthrowable j_exception = (*env)->NewObject(
+                env, j_class, j_method,
+                error_status, j_error_json, j_error_text, j_error_message, j_error_file, j_error_src
+        );
+        (*env)->Throw(env, j_exception);
     } else {
-      j_class = (*env)->FindClass(env, "io/bit3/jsass/Output");
-      j_method = (*env)->GetMethodID(
-              env, j_class, "<init>",
-              "(Ljava/lang/String;Ljava/lang/String;)V"
-      );
-      j_output = (*env)->NewObject(
-              env, j_class, j_method, j_css, j_source_map
-      );
+        j_class = (*env)->FindClass(env, "io/bit3/jsass/Output");
+        j_method = (*env)->GetMethodID(
+                env, j_class, "<init>",
+                "(Ljava/lang/String;Ljava/lang/String;)V"
+        );
+        j_output = (*env)->NewObject(
+                env, j_class, j_method, j_css, j_source_map
+        );
     }
 
     (*env)->DeleteLocalRef(env, j_class);
@@ -832,22 +833,6 @@ void configure_options(JNIEnv *env, jobject j_context, struct Sass_Options *sass
 }
 
 /**
- * Determine if the object is a throwable or not. If, then throw it, otherwise return it.
- */
-jobjectArray throwOrReturn(JNIEnv *env, jobject j_object) {
-    jclass j_exception_class = (*env)->FindClass(env, "java/lang/Throwable");
-
-    jboolean is_exception = (*env)->IsInstanceOf(env, j_object, j_exception_class);
-    (*env)->DeleteLocalRef(env, j_exception_class);
-
-    if (is_exception) {
-        return (*env)->Throw(env, j_object);
-    }
-
-    return j_object;
-}
-
-/**
  * The java-native functions.
  */
 
@@ -868,7 +853,7 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileF
 
     sass_delete_file_context(sass_context);
 
-    return throwOrReturn(env, output);
+    return output;
 }
 
 JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileString
@@ -888,5 +873,5 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileS
 
     sass_delete_data_context(sass_context);
 
-    return throwOrReturn(env, output);
+    return output;
 }
