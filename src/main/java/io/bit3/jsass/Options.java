@@ -25,7 +25,7 @@ public class Options implements Serializable {
   /**
    * Custom import functions.
    */
-  private Collection<Importer> importers = new LinkedList<>();
+  private transient Collection<Importer> importers = new LinkedList<>();
 
   /**
    * SassList of paths.
