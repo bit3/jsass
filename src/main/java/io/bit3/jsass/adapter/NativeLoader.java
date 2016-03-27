@@ -47,7 +47,7 @@ final class NativeLoader {
    * @throws UnsupportedOperationException Throw an exception if no native library for this platform
    *                                       was found.
    */
-  static URL findLibraryResource(final String libraryFileName) {
+  private static URL findLibraryResource(final String libraryFileName) {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
     String resourceName = null;
