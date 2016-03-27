@@ -2,6 +2,8 @@ package io.bit3.jsass.adapter;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +17,8 @@ import java.nio.file.Files;
  * This loader handle the extraction and loading of the shared library files from the jar.
  */
 final class NativeLoader {
+  private static final Logger LOG = LoggerFactory.getLogger(NativeLoader.class);
+
   private NativeLoader() {
   }
 
@@ -32,8 +36,7 @@ final class NativeLoader {
 
       System.load(saveLibrary(dir, "jsass"));
     } catch (Exception exception) {
-      System.err.println(exception.getMessage());
-      exception.printStackTrace(System.err);
+      LOG.warn(exception.getMessage(), exception);
       throw new LoaderException(exception);
     }
   }
