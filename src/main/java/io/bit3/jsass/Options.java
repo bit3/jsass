@@ -20,7 +20,7 @@ public class Options implements Serializable {
    */
   private transient List<Object> functionProviders = new LinkedList<>();
 
-  private List<Importer> headerImporters = new LinkedList<>();
+  private transient List<Importer> headerImporters = new LinkedList<>();
 
   /**
    * Custom import functions.
