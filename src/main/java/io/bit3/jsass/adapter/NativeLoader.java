@@ -25,7 +25,7 @@ final class NativeLoader {
   /**
    * Load the shared libraries.
    */
-  public static void loadLibrary() {
+  static void loadLibrary() {
     try {
       File dir = Files.createTempDirectory("libjsass-").toFile();
       dir.deleteOnExit();
