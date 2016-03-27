@@ -18,7 +18,7 @@ public class Options implements Serializable {
   /**
    * Custom import functions.
    */
-  private List<Object> functionProviders = new LinkedList<>();
+  private transient List<Object> functionProviders = new LinkedList<>();
 
   private List<Importer> headerImporters = new LinkedList<>();
 
