@@ -24,6 +24,7 @@ sed -i 's/LDFLAGS  += -std=gnu++0x/LDFLAGS  += -std=gnu++0x -static-libgcc -stat
 # @see https://github.com/sass/libsass/wiki/Building-with-MinGW#building-via-minggw-64bit-makefiles
 sed -i 's/ -Wl,--subsystem,windows/ -static -Wl,--subsystem,windows/' libsass/Makefile
 
+# We use:
 # MAKE=mingw32                      to make sure we build for windows
 # CC=i686-w64-mingw32-gcc           cross compile with mingw32-gcc compiler
 # CXX=i686-w64-mingw32-g++          cross compile with mingw32-g++ compiler
