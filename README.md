@@ -19,15 +19,12 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 [libsass]: https://github.com/sass/libsass
 [jsass-docs]: http://jsass.rtfd.org/
 
-API change warning
-------------------
+Changelog
+---------
 
-### Version 4+
+You can find the changelog in our documentation at [jsass.rtfd.org/en/latest/changelog.html][changelog]
 
-In libsass 3.3 the import api has changed.
-
-- `Import#uri` renamed to `Import#importUri`
-- `Import#base` renamed to `Import#absoluteUri`
+[changelog]: http://jsass.readthedocs.org/en/latest/changelog.html
 
 Compatibility
 -------------
