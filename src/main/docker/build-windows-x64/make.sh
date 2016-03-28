@@ -35,17 +35,17 @@ CC=x86_64-w64-mingw32-gcc \
 CXX=x86_64-w64-mingw32-g++ \
 WINDRES=x86_64-w64-mingw32-windres \
 BUILD=static \
-    make -C libsass -j8 lib/libsass.dll || exit 1
-cp libsass/lib/libsass.dll resources/windows-x64/libsass.dll || exit 1
+    make -C libsass -j8 lib/libsass.dll
+cp libsass/lib/libsass.dll resources/windows-x64/libsass.dll
 
 # *** Build libjsass
 
 rm -r c/build
 mkdir -p c/build
 cd c/build
-cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x64.cmake ../ || exit 1
-make || exit 1
-cp libjsass.dll ../../resources/windows-x64/libjsass.dll || exit 1
+cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x64.cmake ../
+make
+cp libjsass.dll ../../resources/windows-x64/libjsass.dll
 
 # *** Build libjsass_test
 
@@ -57,6 +57,6 @@ mkdir -p resources/windows-x64
 rm -r c/build
 mkdir -p c/build
 cd c/build
-cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x64.cmake ../ || exit 1
-make || exit 1
-cp libjsass_test.dll ../../resources/windows-x64/libjsass_test.dll || exit 1
+cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x64.cmake ../
+make
+cp libjsass_test.dll ../../resources/windows-x64/libjsass_test.dll
