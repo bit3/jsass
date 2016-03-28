@@ -226,9 +226,19 @@ def buildDockerContainer(name) {
 
 // Build native libs
 task buildNativeLibs {
-    dependsOn 'buildNativeLinux64Libs',
+    dependsOn 'buildNativeDarwin64Libs',
+            'buildNativeLinux64Libs',
             'buildNativeWindows32Libs',
             'buildNativeWindows64Libs'
+}
+
+task buildNativeDarwin64Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for darwin x64'
+        runDockerContainer('build-darwin-x64')
+    }
 }
 
 task buildNativeLinux64Libs {
@@ -320,7 +330,8 @@ task runDockerTestUbuntu1404 {
 // Note: these tasks are only for local development purpose,
 // all containers are available on Docker Hub too!
 task buildDocker {
-    dependsOn 'buildDockerBuildLinux64',
+    dependsOn 'buildDockerBuildDarwin64',
+            'buildDockerBuildLinux64',
             'buildDockerBuildWindows32',
             'buildDockerBuildWindows64',
             'buildDockerTestCentOS5',
@@ -328,6 +339,15 @@ task buildDocker {
             'buildDockerTestCentOS7',
             'buildDockerTestUbuntu1204',
             'buildDockerTestUbuntu1404'
+}
+
+task buildDockerBuildDarwin64 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Darwin build container'
+        buildDockerContainer('build-darwin-x64')
+    }
 }
 
 task buildDockerBuildLinux64 {
