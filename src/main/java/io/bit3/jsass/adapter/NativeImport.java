@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
+import java.util.Objects;
 
 class NativeImport {
 
@@ -22,33 +23,31 @@ class NativeImport {
   public final String errorMessage;
 
   public NativeImport(final Import sassImport) {
-    final URI uri = sassImport.getImportUri();
-    final URI base = sassImport.getAbsoluteUri();
-    final String contents = sassImport.getContents();
-    final String sourceMap = sassImport.getSourceMap();
+    final URI importUri = sassImport.getImportUri();
+    final URI absoluteUri = sassImport.getAbsoluteUri();
 
     String uriString = "";
-    if (null != uri) {
-      if ("file".equals(uri.getScheme())) {
-        uriString = new File(uri).getAbsolutePath();
+    if (null != importUri) {
+      if ("file".equals(importUri.getScheme())) {
+        uriString = new File(importUri).getAbsolutePath();
       } else {
-        uriString = uri.toString();
+        uriString = importUri.toString();
       }
     }
 
-    String baseString = "";
-    if (null != base) {
-      if ("file".equals(base.getScheme())) {
-        baseString = new File(base).getAbsolutePath();
+    String absoluteString = "";
+    if (null != absoluteUri) {
+      if ("file".equals(absoluteUri.getScheme())) {
+        absoluteString = new File(absoluteUri).getAbsolutePath();
       } else {
-        baseString = base.toString();
+        absoluteString = absoluteUri.toString();
       }
     }
 
     this.importPath = uriString;
-    this.absolutePath = baseString;
-    this.contents = null == contents ? "" : contents;
-    this.sourceMap = null == sourceMap ? "" : sourceMap;
+    this.absolutePath = absoluteString;
+    this.contents = Objects.toString(sassImport.getContents(), "");
+    this.sourceMap = Objects.toString(sassImport.getSourceMap(), "");
     this.errorMessage = "";
   }
 

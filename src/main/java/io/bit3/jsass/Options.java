@@ -18,14 +18,14 @@ public class Options implements Serializable {
   /**
    * Custom import functions.
    */
-  private List<Object> functionProviders = new LinkedList<>();
+  private transient List<Object> functionProviders = new LinkedList<>();
 
-  private List<Importer> headerImporters = new LinkedList<>();
+  private transient List<Importer> headerImporters = new LinkedList<>();
 
   /**
    * Custom import functions.
    */
-  private Collection<Importer> importers = new LinkedList<>();
+  private transient Collection<Importer> importers = new LinkedList<>();
 
   /**
    * SassList of paths.

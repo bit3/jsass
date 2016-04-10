@@ -2,6 +2,8 @@ package io.bit3.jsass.adapter;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,13 +17,15 @@ import java.nio.file.Files;
  * This loader handle the extraction and loading of the shared library files from the jar.
  */
 final class NativeLoader {
+  private static final Logger LOG = LoggerFactory.getLogger(NativeLoader.class);
+
   private NativeLoader() {
   }
 
   /**
    * Load the shared libraries.
    */
-  public static void loadLibrary() {
+  static void loadLibrary() {
     try {
       File dir = Files.createTempDirectory("libjsass-").toFile();
       dir.deleteOnExit();
@@ -32,8 +36,7 @@ final class NativeLoader {
 
       System.load(saveLibrary(dir, "jsass"));
     } catch (Exception exception) {
-      System.err.println(exception.getMessage());
-      exception.printStackTrace(System.err);
+      LOG.warn(exception.getMessage(), exception);
       throw new LoaderException(exception);
     }
   }
@@ -44,17 +47,17 @@ final class NativeLoader {
    * @throws UnsupportedOperationException Throw an exception if no native library for this platform
    *                                       was found.
    */
-  static URL findLibraryResource(String library) {
+  private static URL findLibraryResource(final String libraryFileName) {
     String osName = System.getProperty("os.name").toLowerCase();
     String osArch = System.getProperty("os.arch").toLowerCase();
     String resourceName = null;
 
     if (osName.startsWith("win")) {
-      resourceName = determineWindowsLibrary(library, osName, osArch);
+      resourceName = determineWindowsLibrary(libraryFileName, osName, osArch);
     } else if (osName.startsWith("linux")) {
-      resourceName = determineLinuxLibrary(library, osName, osArch);
+      resourceName = determineLinuxLibrary(libraryFileName, osName, osArch);
     } else if (osName.startsWith("mac")) {
-      resourceName = determineMacLibrary(library);
+      resourceName = determineMacLibrary(libraryFileName);
     } else {
       unsupportedPlatform(osName, osArch);
     }
@@ -78,7 +81,11 @@ final class NativeLoader {
    * @throws UnsupportedOperationException Throw an exception if no native library for this platform
    *                                       was found.
    */
-  private static String determineWindowsLibrary(String library, String osName, String osArch) {
+  private static String determineWindowsLibrary(
+      final String library,
+      final String osName,
+      final String osArch
+  ) {
     String resourceName;
     String platform;
     String fileExtension = "dll";
@@ -114,7 +121,11 @@ final class NativeLoader {
    * @throws UnsupportedOperationException Throw an exception if no native library for this platform
    *                                       was found.
    */
-  private static String determineLinuxLibrary(String library, String osName, String osArch) {
+  private static String determineLinuxLibrary(
+      final String library,
+      final String osName,
+      final String osArch
+  ) {
     String resourceName;
     String platform = null;
     String fileExtension = "so";
@@ -139,7 +150,7 @@ final class NativeLoader {
    * @param library The library name.
    * @return The library resource.
    */
-  private static String determineMacLibrary(String library) {
+  private static String determineMacLibrary(final String library) {
     String resourceName;
     String platform = "darwin";
     String fileExtension = "dylib";
@@ -150,10 +161,10 @@ final class NativeLoader {
   /**
    * Save the shared library in the given temporary directory.
    */
-  static String saveLibrary(File dir, String library) throws IOException {
-    library = "lib" + library;
+  static String saveLibrary(final File dir, final String libraryName) throws IOException {
+    String libraryFileName = "lib" + libraryName;
 
-    URL libraryResource = findLibraryResource(library);
+    URL libraryResource = findLibraryResource(libraryFileName);
 
     String basename = FilenameUtils.getName(libraryResource.getPath());
     File file = new File(dir, basename);
@@ -169,7 +180,7 @@ final class NativeLoader {
     return file.getAbsolutePath();
   }
 
-  private static void unsupportedPlatform(String osName, String osArch) {
+  private static void unsupportedPlatform(final String osName, final String osArch) {
     throw new UnsupportedOperationException(
         "Platform " + osName + ":" + osArch + " not supported"
     );

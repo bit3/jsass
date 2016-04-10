@@ -6,6 +6,9 @@ import io.bit3.jsass.importer.ImportException;
 import io.bit3.jsass.importer.Importer;
 import io.bit3.jsass.importer.JsassCustomHeaderImporter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -13,6 +16,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 class NativeImporterWrapper {
+  private static final Logger LOG = LoggerFactory.getLogger(NativeImporterWrapper.class);
+
   private final ImportStack importStack;
   private final Importer importer;
 
@@ -55,7 +60,7 @@ class NativeImporterWrapper {
 
       return nativeImports;
     } catch (Throwable throwable) {
-      throwable.printStackTrace(System.err);
+      LOG.warn(throwable.getMessage(), throwable);
       NativeImport nativeImport = new NativeImport(throwable);
       return Collections.singletonList(nativeImport);
     }
