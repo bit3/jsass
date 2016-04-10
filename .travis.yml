@@ -2,6 +2,9 @@ language: java
 
 sudo: required
 
+git:
+  submodules: false
+
 matrix:
   include:
     - os: linux
