@@ -29,16 +29,16 @@ You can find the changelog in our documentation at [jsass.rtfd.org/en/latest/cha
 Compatibility
 -------------
 
-| Java             | Linux                                 | Windows                     | Mac               |
-| ---------------- | ------------------------------------- | --------------------------- | ----------------- |
-| ![Java 7][java7] | ![CentOS 5 (x86_64)][centos5]         | ![Windows 32bit][windows32] | ![OS X 10][osx10] | 
-| ![Java 8][java8] | ![CentOS 6 (x86_64)][centos6]         | ![Windows 64bit][windows64] |                   |
-|                  | ![CentOS 7 (x86_64)][centos7]         |                             |                   |
-|                  | ![ubuntu 12.04 (x86_64)][ubuntu12.04] |                             |                   |
-|                  | ![ubuntu 14.04 (x86_64)][ubuntu14.04] |                             |                   |
+| Java             | Linux                                 | Windows                     | Mac          |
+| ---------------- | ------------------------------------- | --------------------------- | ------------ |
+| ![Java 7][java7] | ![CentOS 5 (x86_64)][centos5]         | ![Windows 32bit][windows32] | ![OS X][osx] |
+| ![Java 8][java8] | ![CentOS 6 (x86_64)][centos6]         | ![Windows 64bit][windows64] |              |
+|                  | ![CentOS 7 (x86_64)][centos7]         |                             |              |
+|                  | ![ubuntu 12.04 (x86_64)][ubuntu12.04] |                             |              |
+|                  | ![ubuntu 14.04 (x86_64)][ubuntu14.04] |                             |              |
 
-A note to Windows and OS X compatibility: jsass may also work on Windows and OS X.
-But at the moment there are no automated tests for them and both platforms are not well tested!
+A note to Windows: jsass may also work on Windows.
+But at the moment there are no automated tests and the platform is not well tested!
 
 [java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat-square
 [java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat-square
@@ -52,7 +52,7 @@ But at the moment there are no automated tests for them and both platforms are n
 [windows32]: https://img.shields.io/badge/Windows-32bit_(broken)-red.svg?style=flat-square
 [windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg?style=flat-square
 
-[osx10]: https://img.shields.io/badge/OS%20X-10-yellow.svg?style=flat-square
+[osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat-square
 
 Gradle tasks you should know
 ----------------------------
