@@ -18,7 +18,6 @@ if [[ "osx" == $TRAVIS_OS_NAME ]]; then
          "http://download.oracle.com/otn-pub/java/jdk/8u77-b03/jdk-8u77-macosx-x64.dmg" \
          -O jdk-8u77-macosx-x64.dmg
     hdiutil mount jdk-8u77-macosx-x64.dmg
-    mount
     sudo installer -package "/Volumes/JDK 8 Update 77/JDK 8 Update 77.pkg" -target "/"
 fi
 
