@@ -56,6 +56,8 @@ final class NativeLoader {
       resourceName = determineWindowsLibrary(libraryFileName, osName, osArch);
     } else if (osName.startsWith("linux")) {
       resourceName = determineLinuxLibrary(libraryFileName, osName, osArch);
+    } else if (osName.startsWith("freebsd")) {
+      resourceName = determineFreebsdLibrary(libraryFileName, osName, osArch);
     } else if (osName.startsWith("mac")) {
       resourceName = determineMacLibrary(libraryFileName);
     } else {
@@ -134,6 +136,39 @@ final class NativeLoader {
       case "amd64":
       case "x86_64":
         platform = "linux-x64";
+        break;
+
+      default:
+        unsupportedPlatform(osName, osArch);
+    }
+
+    resourceName = "/" + platform + "/" + library + "." + fileExtension;
+    return resourceName;
+  }
+
+  /**
+   * Determine the right FreeBSD library depending on the architecture.
+   *
+   * @param library The library name.
+   * @param osName  The operating system name.
+   * @param osArch  The system architecture.
+   * @return The library resource.
+   * @throws UnsupportedOperationException Throw an exception if no native library for this platform
+   *                                       was found.
+   */
+  private static String determineFreebsdLibrary(
+      final String library,
+      final String osName,
+      final String osArch
+  ) {
+    String resourceName;
+    String platform = null;
+    String fileExtension = "so";
+
+    switch (osArch) {
+      case "amd64":
+      case "x86_64":
+        platform = "freebsd-x64";
         break;
 
       default:
