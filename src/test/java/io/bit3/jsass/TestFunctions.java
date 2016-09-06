@@ -56,16 +56,18 @@ public class TestFunctions {
     }
 
     @Override
-    public boolean equals(Object o) {
-      if (this == o) {
+    public boolean equals(Object object) {
+      if (this == object) {
         return true;
       }
-      if (o == null || getClass() != o.getClass()) {
+
+      if (object == null || getClass() != object.getClass()) {
         return false;
       }
-      FallbackCall that = (FallbackCall) o;
-      return Objects.equals(name, that.name) &&
-          Objects.equals(arguments, that.arguments);
+
+      FallbackCall that = (FallbackCall) object;
+      return Objects.equals(name, that.name)
+          && Objects.equals(arguments, that.arguments);
     }
 
     @Override
