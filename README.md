@@ -86,8 +86,8 @@ $ ./gradlew release
 $ git checkout $(git describe --abbrev=0)
 $ ./gradlew uploadArchives
 $ git checkout master
-$ git merge --no-ff $(git describe --abbrev=0 develop
-$ git push origin master)
+$ git merge --no-ff $(git describe --abbrev=0 develop)
+$ git push origin master
 $ git checkout develop
 ```
 
