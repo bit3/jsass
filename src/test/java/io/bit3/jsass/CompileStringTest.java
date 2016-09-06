@@ -19,10 +19,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class CompileStringTest {
+public class CompileStringTest extends AbstractCompileTest {
 
-  private String syntax;
-  private OutputStyle outputStyle;
   private boolean isIndentedStyle;
   private Compiler compiler;
   private Options options;
@@ -41,8 +39,7 @@ public class CompileStringTest {
    * @param isIndentedStyle Options flag for the data syntax.
    */
   public CompileStringTest(String syntax, OutputStyle outputStyle, boolean isIndentedStyle) {
-    this.syntax = syntax;
-    this.outputStyle = outputStyle;
+    super(syntax, outputStyle);
     this.isIndentedStyle = isIndentedStyle;
   }
 
@@ -80,7 +77,7 @@ public class CompileStringTest {
     options = new Options();
     options.setIsIndentedSyntaxSrc(isIndentedStyle);
     options.getIncludePaths().add(new File(incUrl.toURI()));
-    options.getFunctionProviders().add(new TestFunctions());
+    options.getFunctionProviders().add(testFunctions);
     options.getImporters().add(new TestImporter());
 
     String sourcePath = String.format("/%s/input.%s", syntax, syntax);
@@ -129,6 +126,7 @@ public class CompileStringTest {
     assertEquals(output.getCss(), expectedCssWithoutMapUrl);
     assertNull(output.getSourceMap());
     assertFalse(targetCssFile.exists());
+    assertSpecialFunctions();
   }
 
   @Test
@@ -147,15 +145,6 @@ public class CompileStringTest {
     assertNotNull(output.getSourceMap());
     assertFalse(targetCssFile.exists());
     assertFalse(targetSourceMapFile.exists());
-  }
-
-  private void assertEquals(String actual, URL expectedSource) throws IOException {
-    String expected = IOUtils.toString(expectedSource);
-
-    Assert.assertEquals(
-        String.format("Compile input.%s into %s output format failed", syntax, outputStyle),
-        expected,
-        actual
-    );
+    assertSpecialFunctions();
   }
 }
