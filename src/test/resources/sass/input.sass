@@ -9,17 +9,28 @@
 
 .unit-test
   display: block
+
   .compile
     font-size: 16px
+
   .world
     content: hello()
+
   .globe
     content: hello("globe")
+
   .increment
     z-index: increment(10)
+
   .increment-five
     z-index: increment(10, 5)
+
   .decrement
     z-index: decrement(10)
+
   .decrement-five
     z-index: decrement(10, 5)
+
+@warn "I'm a warn message"
+@error "I'm an error message"
+@debug "I'm a debug message"

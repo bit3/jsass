@@ -1,5 +1,8 @@
 package io.bit3.jsass.function;
 
+import io.bit3.jsass.annotation.DebugFunction;
+import io.bit3.jsass.annotation.ErrorFunction;
+import io.bit3.jsass.annotation.WarnFunction;
 import io.bit3.jsass.context.Context;
 import io.bit3.jsass.context.ImportStack;
 import io.bit3.jsass.function.arguments.converter.ArgumentConverter;
@@ -158,6 +161,18 @@ public class FunctionWrapperFactory {
     }
 
     signature.append(")");
+
+    // Overwrite signature with special ones
+    if (method.isAnnotationPresent(WarnFunction.class)) {
+      signature.setLength(0);
+      signature.append("@warn");
+    } else if (method.isAnnotationPresent(ErrorFunction.class)) {
+      signature.setLength(0);
+      signature.append("@error");
+    } else if (method.isAnnotationPresent(DebugFunction.class)) {
+      signature.setLength(0);
+      signature.append("@debug");
+    }
 
     return new FunctionDeclaration(
         importStack,

@@ -16,10 +16,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class CompileFileTest {
+public class CompileFileTest extends AbstractCompileTest {
 
-  private String syntax;
-  private OutputStyle outputStyle;
   private Compiler compiler;
   private Options options;
   private File sourceFile;
@@ -37,8 +35,7 @@ public class CompileFileTest {
    * @param outputStyle The output style.
    */
   public CompileFileTest(String syntax, OutputStyle outputStyle) {
-    this.syntax = syntax;
-    this.outputStyle = outputStyle;
+    super(syntax, outputStyle);
   }
 
   /**
@@ -74,7 +71,7 @@ public class CompileFileTest {
 
     options = new Options();
     options.getIncludePaths().add(new File(incUrl.toURI()));
-    options.getFunctionProviders().add(new TestFunctions());
+    options.getFunctionProviders().add(testFunctions);
     options.getImporters().add(new TestImporter());
 
     String sourcePath = String.format("/%s/input.%s", syntax, syntax);
@@ -166,15 +163,5 @@ public class CompileFileTest {
       targetCssFile.delete();
       targetMapFile.delete();
     }
-  }
-
-  private void assertEquals(String actual, URL expectedSource) throws IOException {
-    String expected = IOUtils.toString(expectedSource);
-
-    Assert.assertEquals(
-        String.format("Compile input.%s into %s output format failed", syntax, outputStyle),
-        expected,
-        actual
-    );
   }
 }
