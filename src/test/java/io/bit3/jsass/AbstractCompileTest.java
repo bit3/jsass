@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 
-class AbstractCompileTest {
+abstract class AbstractCompileTest {
   String syntax;
   OutputStyle outputStyle;
   TestFunctions testFunctions;
