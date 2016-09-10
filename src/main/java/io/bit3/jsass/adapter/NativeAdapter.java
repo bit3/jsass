@@ -162,7 +162,10 @@ public class NativeAdapter {
         .toArray(new FunctionWrapper[functionWrappersList.size()]);
   }
 
-  private static NativeImporterWrapper[] getHeaderImporters(ImportStack importStack, Options options) {
+  private static NativeImporterWrapper[] getHeaderImporters(
+      ImportStack importStack,
+      Options options
+  ) {
     List<Importer> headerImportersList = options.getHeaderImporters();
     NativeImporterWrapper[] headerImporters;
     try (
