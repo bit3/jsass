@@ -95,7 +95,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getStringDefaultValue(Parameter parameter) {
+  private static Object getStringDefaultValue(Parameter parameter) {
     DefaultStringValue defaultStringValue = parameter.getAnnotation(DefaultStringValue.class);
 
     if (null != defaultStringValue) {
@@ -105,7 +105,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getByteDefaultValue(Parameter parameter) {
+  private static Object getByteDefaultValue(Parameter parameter) {
     DefaultByteValue defaultByteValue = parameter.getAnnotation(DefaultByteValue.class);
 
     if (null != defaultByteValue) {
@@ -115,7 +115,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getShortDefaultValue(Parameter parameter) {
+  private static Object getShortDefaultValue(Parameter parameter) {
     DefaultShortValue defaultShortValue = parameter.getAnnotation(DefaultShortValue.class);
 
     if (null != defaultShortValue) {
@@ -125,7 +125,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getIntegerDefaultValue(Parameter parameter) {
+  private static Object getIntegerDefaultValue(Parameter parameter) {
     DefaultIntegerValue defaultIntegerValue = parameter.getAnnotation(DefaultIntegerValue.class);
 
     if (null != defaultIntegerValue) {
@@ -135,7 +135,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getLongDefaultValue(Parameter parameter) {
+  private static Object getLongDefaultValue(Parameter parameter) {
     DefaultLongValue defaultLongValue = parameter.getAnnotation(DefaultLongValue.class);
 
     if (null != defaultLongValue) {
@@ -145,7 +145,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getFloatDefaultValue(Parameter parameter) {
+  private static Object getFloatDefaultValue(Parameter parameter) {
     DefaultFloatValue defaultFloatValue = parameter.getAnnotation(DefaultFloatValue.class);
 
     if (null != defaultFloatValue) {
@@ -155,7 +155,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getDoubleDefaultValue(Parameter parameter) {
+  private static Object getDoubleDefaultValue(Parameter parameter) {
     DefaultDoubleValue defaultDoubleValue = parameter.getAnnotation(DefaultDoubleValue.class);
 
     if (null != defaultDoubleValue) {
@@ -165,7 +165,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getCharacterDefaultValue(Parameter parameter) {
+  private static Object getCharacterDefaultValue(Parameter parameter) {
     DefaultCharacterValue defaultCharacterValue = parameter.getAnnotation(
         DefaultCharacterValue.class
     );
@@ -177,7 +177,7 @@ public class FunctionArgumentSignatureFactory {
     return null;
   }
 
-  private Object getBooleanDefaultValue(Parameter parameter) {
+  private static Object getBooleanDefaultValue(Parameter parameter) {
     DefaultBooleanValue defaultBooleanValue = parameter.getAnnotation(DefaultBooleanValue.class);
 
     if (null != defaultBooleanValue) {

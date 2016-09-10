@@ -162,7 +162,7 @@ public class NativeAdapter {
         .toArray(new FunctionWrapper[functionWrappersList.size()]);
   }
 
-  private NativeImporterWrapper[] getHeaderImporters(ImportStack importStack, Options options) {
+  private static NativeImporterWrapper[] getHeaderImporters(ImportStack importStack, Options options) {
     List<Importer> headerImportersList = options.getHeaderImporters();
     NativeImporterWrapper[] headerImporters;
     try (
@@ -180,7 +180,7 @@ public class NativeAdapter {
     return headerImporters;
   }
 
-  private NativeImporterWrapper[] getImporters(ImportStack importStack, Options options) {
+  private static NativeImporterWrapper[] getImporters(ImportStack importStack, Options options) {
     Collection<Importer> importersList = options.getImporters();
     return importersList
         .stream()
