@@ -27,6 +27,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A sample servlet using jsass to compile and deliver scss source on-demand.
+ *
+ * <p><strong>Warning</strong> this servlet render the sources on every request without any type of caching.</p>
+ */
 public class JsassServlet extends HttpServlet {
 	private final Pattern cssPattern = Pattern.compile("/(?<name>[^_]\\w+)\\.css");
 	private Options options;
@@ -81,6 +86,13 @@ public class JsassServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Resolve the target file for an {@code @import} directive.
+	 *
+	 * @param url The {@code import} url.
+	 * @param previous The file that contains the {@code import} directive.
+	 * @return The resolve import objects or {@code null} if the import file was not found.
+	 */
 	private Collection<Import> doImport(String url, Import previous) {
 		try {
 			if (url.startsWith("/")) {
@@ -118,6 +130,12 @@ public class JsassServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Try to determine the import object for a given path.
+	 *
+	 * @param path The path to resolve.
+	 * @return The import object or {@code null} if the file was not found.
+	 */
 	private Collection<Import> resolveImport(Path path) throws IOException, URISyntaxException {
 		URL resource = resolveResource(path);
 
@@ -137,7 +155,25 @@ public class JsassServlet extends HttpServlet {
 		return Collections.singleton(scssImport);
 	}
 
-	private URL resolveResource(Path path) throws IOException, URISyntaxException {
+	/**
+	 * Try to find a resource for this path.
+	 *
+	 * <p>A sass import like {@code @import "foo"} does not contain the partial prefix (underscore) or file extension.
+	 * This method will try the following namings to find the import file {@code foo}:</p>
+	 * <ul>
+	 *     <li>_foo.scss</li>
+	 *     <li>_foo.css</li>
+	 *     <li>_foo</li>
+	 *     <li>foo.scss</li>
+	 *     <li>foo.css</li>
+	 *     <li>foo</li>
+	 * </ul>
+	 *
+	 * @param path The path to resolve.
+	 *
+	 * @return The resource URL of the resolved file or {@code null} if the file was not found.
+	 */
+	private URL resolveResource(Path path) throws MalformedURLException {
 		final Path dir = path.getParent();
 		final String basename = path.getFileName().toString();
 
