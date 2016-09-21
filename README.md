@@ -19,6 +19,12 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 [libsass]: https://github.com/sass/libsass
 [jsass-docs]: http://jsass.rtfd.org/
 
+Example
+-------
+
+There is a [webapp example](example/webapp) containing a servlet sample implementation, to illustrate the way you
+may integrate jsass into your webapp.
+
 Changelog
 ---------
 
