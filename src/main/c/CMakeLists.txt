@@ -19,6 +19,10 @@ include_directories(
     "/usr/lib/jvm/java-8-oracle/include"
     "/usr/lib/jvm/java-8-oracle/include/linux"
 
+    # freebsd
+    "/usr/local/openjdk8/include"
+    "/usr/local/openjdk8/include/freebsd"
+
     # libsass
     "../libsass/include"
 )
