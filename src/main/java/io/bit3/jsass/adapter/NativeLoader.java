@@ -19,6 +19,16 @@ import java.nio.file.Files;
 final class NativeLoader {
   private static final Logger LOG = LoggerFactory.getLogger(NativeLoader.class);
 
+  private static final String OS_WIN = "win";
+  private static final String OS_LINUX = "linux";
+  private static final String OS_FREEBSD = "freebsd";
+  private static final String OS_MAC = "mac";
+
+  private static final String ARCH_I386 = "i386";
+  private static final String ARCH_X86 = "x86";
+  private static final String ARCH_AMD64 = "amd64";
+  private static final String ARCH_X86_64 = "x86_64";
+
   private NativeLoader() {
   }
 
@@ -52,13 +62,13 @@ final class NativeLoader {
     String osArch = System.getProperty("os.arch").toLowerCase();
     String resourceName = null;
 
-    if (osName.startsWith("win")) {
+    if (osName.startsWith(OS_WIN)) {
       resourceName = determineWindowsLibrary(libraryFileName, osName, osArch);
-    } else if (osName.startsWith("linux")) {
+    } else if (osName.startsWith(OS_LINUX)) {
       resourceName = determineLinuxLibrary(libraryFileName, osName, osArch);
-    } else if (osName.startsWith("freebsd")) {
+    } else if (osName.startsWith(OS_FREEBSD)) {
       resourceName = determineFreebsdLibrary(libraryFileName, osName, osArch);
-    } else if (osName.startsWith("mac")) {
+    } else if (osName.startsWith(OS_MAC)) {
       resourceName = determineMacLibrary(libraryFileName);
     } else {
       unsupportedPlatform(osName, osArch);
@@ -93,13 +103,13 @@ final class NativeLoader {
     String fileExtension = "dll";
 
     switch (osArch) {
-      case "i386":
-      case "x86":
+      case ARCH_I386:
+      case ARCH_X86:
         platform = "windows-x32";
         break;
 
-      case "amd64":
-      case "x86_64":
+      case ARCH_AMD64:
+      case ARCH_X86_64:
         platform = "windows-x64";
         break;
 
@@ -133,8 +143,8 @@ final class NativeLoader {
     String fileExtension = "so";
 
     switch (osArch) {
-      case "amd64":
-      case "x86_64":
+      case ARCH_AMD64:
+      case ARCH_X86_64:
         platform = "linux-x64";
         break;
 
@@ -166,8 +176,8 @@ final class NativeLoader {
     String fileExtension = "so";
 
     switch (osArch) {
-      case "amd64":
-      case "x86_64":
+      case ARCH_AMD64:
+      case ARCH_X86_64:
         platform = "freebsd-x64";
         break;
 
