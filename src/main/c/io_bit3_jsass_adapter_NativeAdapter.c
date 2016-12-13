@@ -843,7 +843,6 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileF
     struct Sass_File_Context *sass_context = sass_make_file_context(c_input_path);
     struct Sass_Options *sass_options = sass_file_context_get_options(sass_context);
     configure_options(env, j_context, sass_options);
-    sass_file_context_set_options(sass_context, sass_options);
     struct Sass_Compiler *sass_compiler = sass_make_file_compiler(sass_context);
     
     (*env)->DeleteLocalRef(env, j_adapter);
@@ -863,7 +862,6 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileS
     struct Sass_Data_Context *sass_context = sass_make_data_context(c_source_string);
     struct Sass_Options *sass_options = sass_data_context_get_options(sass_context);
     configure_options(env, j_context, sass_options);
-    sass_data_context_set_options(sass_context, sass_options);
     struct Sass_Compiler *sass_compiler = sass_make_data_compiler(sass_context);
 
     (*env)->DeleteLocalRef(env, j_adapter);
