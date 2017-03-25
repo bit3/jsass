@@ -7,6 +7,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
+apply plugin: 'jacoco'
 apply plugin: 'signing'
 
 import org.ajoberstar.grgit.*
@@ -34,6 +35,10 @@ pmd {
     toolVersion = "4.3"
 }
 
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
 repositories {
     mavenCentral()
 }
@@ -59,6 +64,7 @@ sonarqube {
 
         property "sonar.exclusions", "**/src/main/libsass/**"
         property "sonar.projectVersion", description
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     }
 }
 
