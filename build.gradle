@@ -1,7 +1,7 @@
 plugins {
-    id 'net.researchgate.release' version '2.3.4'
-    id 'org.ajoberstar.grgit' version '1.2.0'
-    id 'org.sonarqube' version '1.2'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'org.ajoberstar.grgit' version '1.6.0'
+    id 'org.sonarqube' version '2.2.1'
 }
 
 apply plugin: 'java'
