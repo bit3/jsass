@@ -17,6 +17,20 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 [libsass]: https://github.com/sass/libsass
 [jsass-docs]: http://jsass.rtfd.org/
 
+Statistics
+----------
+
+[![Lines](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=lines)](https://sonarhub.io/component_measures/domain/Size?id=io.bit3%3Ajsass)
+[![Lines of code](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=ncloc)](https://sonarhub.io/component_measures/domain/Size?id=io.bit3%3Ajsass)
+[![Comment lines density](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=comment_lines_density)](https://sonarhub.io/component_measures/domain/Size?id=io.bit3%3Ajsass)
+[![complexity / function](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=function_complexity)](https://sonarhub.io/component_measures/domain/Complexity?id=io.bit3%3Ajsass)
+
+[![Bugs](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=bugs)](https://sonarhub.io/component_issues?id=io.bit3%3Ajsass#resolved=false|types=BUG)
+[![Vulnerabilities](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=vulnerabilities)](https://sonarhub.io/component_issues?id=io.bit3%3Ajsass#resolved=false|types=VULNERABILITY)
+[![Code Smells](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=code_smells)](https://sonarhub.io/component_issues?id=io.bit3%3Ajsass#resolved=false|types=CODE_SMELL)
+[![Duplications](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=duplicated_lines_density)](https://sonarhub.io/component_measures/domain/Duplications?id=io.bit3%3Ajsass)
+[![Coverage](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=coverage)](https://sonarhub.io/component_measures/domain/Coverage?id=io.bit3%3Ajsass)
+
 Example
 -------
 
