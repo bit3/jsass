@@ -16,7 +16,7 @@ DIR=$(dirname $(dirname $(realpath "$0")))
 cd "$DIR"
 
 # Install docker container
-gradle buildDockerBuildWindows64
+./gradlew --no-daemon buildDockerBuildWindows64
 
 # Compile binaries
-gradle buildNativeWindows64Libs
+./gradlew --no-daemon buildNativeWindows64Libs
