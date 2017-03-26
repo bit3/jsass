@@ -18,12 +18,12 @@ RUN set -x \
 # Install gradle
 RUN set -x \
     && cd /opt \
-    && wget -nv --no-check-certificate https://services.gradle.org/distributions/gradle-2.11-bin.zip \
-    && unzip -x gradle-2.11-bin.zip \
-    && rm gradle-2.11-bin.zip
+    && wget -nv --no-check-certificate https://services.gradle.org/distributions/gradle-2.14.1-bin.zip \
+    && unzip -x gradle-2.14.1-bin.zip \
+    && rm gradle-2.14.1-bin.zip
 
 # Setup binaries and java home path
-ENV PATH /opt/gradle-2.11/bin:/opt/jdk1.8.0_121/bin:$PATH
+ENV PATH /opt/gradle-2.14.1/bin:/opt/jdk1.8.0_121/bin:$PATH
 ENV HOME /tmp
 ENV JAVA_HOME /opt/jdk1.8.0_121
 
