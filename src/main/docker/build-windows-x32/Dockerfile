@@ -12,12 +12,12 @@ RUN set -x \
 # Install Java JDK 8
 RUN set -x \
     && cd /opt \
-    && wget --no-cookies --no-check-certificate \
-            --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-            "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.tar.gz" \
-            -O jdk-8u60-linux-x64.tar.gz \
-    && tar xf jdk-8u60-linux-x64.tar.gz \
-    && rm jdk-8u60-linux-x64.tar.gz
+    && wget -nv --no-cookies --no-check-certificate \
+            --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz" \
+            -O jdk-8u121-linux-x64.tar.gz \
+    && tar xf jdk-8u121-linux-x64.tar.gz \
+    && rm jdk-8u121-linux-x64.tar.gz
 
 # Install make script
 COPY make.sh /

@@ -7,7 +7,7 @@ RUN set -x \
 # Install build tools
 RUN set -x \
     && cd /etc/yum.repos.d \
-    && wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -O devtools-1.1.repo \
+    && wget -nv http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -O devtools-1.1.repo \
     && yum install -y devtoolset-1.1 devtoolset-1.1-gcc devtoolset-1.1-gcc-c++ glibc glibc-devel \
     && scl enable devtoolset-1.1 bash
 
@@ -18,7 +18,7 @@ ENV PATH $PATH:/opt/centos/devtoolset-1.1/root/usr/bin
 RUN set -x \
     && DIR=$(mktemp -d) \
     && cd "$DIR" \
-    && wget --no-check-certificate http://www.cmake.org/files/v3.2/cmake-3.2.3.tar.gz -O cmake-3.2.3.tar.gz \
+    && wget -nv --no-check-certificate http://www.cmake.org/files/v3.2/cmake-3.2.3.tar.gz -O cmake-3.2.3.tar.gz \
     && tar xf cmake-3.2.3.tar.gz \
     && cd cmake-3.2.3 \
     && ./configure \
@@ -30,22 +30,20 @@ RUN set -x \
 # Install Java JDK 8
 RUN set -x \
     && cd /opt \
-    && wget --no-cookies --no-check-certificate \
-            --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-            "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.tar.gz" \
-            -O jdk-8u60-linux-x64.tar.gz \
-    && tar xf jdk-8u60-linux-x64.tar.gz \
-    && rm jdk-8u60-linux-x64.tar.gz
+    && wget -nv --no-cookies --no-check-certificate \
+            --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz" \
+            -O jdk-8u121-linux-x64.tar.gz \
+    && tar xf jdk-8u121-linux-x64.tar.gz \
+    && rm jdk-8u121-linux-x64.tar.gz
 
 # Install git
 RUN set -x \
     && cd / \
-    && wget http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el5.rf.i386.rpm \
-    && rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt \
-    && rpm -K rpmforge-release-0.5.2-2.el5.rf.i386.rpm \
-    && rpm -i rpmforge-release-0.5.2-2.el5.rf.i386.rpm \
-    && yum install -y git \
-    && rm rpmforge-release-0.5.2-2.el5.rf.i386.rpm
+    && wget -nv https://dl.fedoraproject.org/pub/epel/epel-release-latest-5.noarch.rpm \
+    && rpm -i epel-release-latest-5.noarch.rpm \
+    && rm epel-release-latest-5.noarch.rpm \
+    && yum install -y git
 
 # Install make script
 COPY make.sh /
