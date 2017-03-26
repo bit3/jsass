@@ -3,7 +3,10 @@ MAINTAINER "Tristan Lins" <tristan@lins.io>
 
 # Install required tools
 RUN set -x \
-    && apt-get install -y wget unzip
+    && apt-get update \
+    && apt-get install -y wget unzip \
+    && apt-get clean \
+    && rm -r /var/lib/apt/lists/*
 
 # Install Java JDK 8
 RUN set -x \
