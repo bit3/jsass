@@ -6,4 +6,4 @@ if [[ -d .gradle ]]; then
   rm -rf .gradle
 fi
 
-./gradlew --no-daemon clean test
+./gradlew --no-daemon -b /tmp clean test
