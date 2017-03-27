@@ -4,7 +4,7 @@ set -xeuo pipefail
 
 cd /jsass/src/main
 
-rm -r resources/darwin
+rm -fr resources/darwin
 mkdir -p resources/darwin
 
 # *** Build libsass
@@ -31,7 +31,7 @@ BUILD=static \
 
 # *** Build libjsass
 
-rm -r c/build
+rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=/jsass/src/main/c/Toolchain-darwin-x64.cmake ../
@@ -42,10 +42,10 @@ cp libjsass.dylib ../../resources/darwin/libjsass.dylib
 
 cd /jsass/src/test
 
-rm -r resources/darwin
+rm -fr resources/darwin
 mkdir -p resources/darwin
 
-rm -r c/build
+rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=/jsass/src/main/c/Toolchain-darwin-x64.cmake ../

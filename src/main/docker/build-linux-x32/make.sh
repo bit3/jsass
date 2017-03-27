@@ -4,7 +4,7 @@ set -xeuo pipefail
 
 cd /jsass/src/main
 
-rm -r resources/linux-x32
+rm -fr resources/linux-x32
 mkdir -p resources/linux-x32
 
 # *** Build libsass
@@ -21,7 +21,7 @@ BUILD="static" make -C libsass -j4
 
 # *** Build libjsass
 
-rm -r c/build
+rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=/jsass/src/main/c/Toolchain-linux-x32.cmake ../
@@ -32,10 +32,10 @@ cp libjsass.so ../../resources/linux-x32/libjsass.so
 
 cd /jsass/src/test
 
-rm -r resources/linux-x32
+rm -fr resources/linux-x32
 mkdir -p resources/linux-x32
 
-rm -r c/build
+rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=/jsass/src/main/c/Toolchain-linux-x32.cmake ../
