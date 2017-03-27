@@ -24,7 +24,7 @@ BUILD="static" make -C libsass -j4
 rm -fr c/build
 mkdir -p c/build
 cd c/build
-cmake -DCMAKE_TOOLCHAIN_FILE=/jsass/src/main/c/Toolchain-linux-x32.cmake ../
+cmake ../
 make
 cp libjsass.so ../../resources/linux-x32/libjsass.so
 
@@ -38,6 +38,6 @@ mkdir -p resources/linux-x32
 rm -fr c/build
 mkdir -p c/build
 cd c/build
-cmake -DCMAKE_TOOLCHAIN_FILE=/jsass/src/main/c/Toolchain-linux-x32.cmake ../
+cmake ../
 make
 cp libjsass_test.so ../../resources/linux-x32/libjsass_test.so
