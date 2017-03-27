@@ -7,12 +7,12 @@ RUN set -x \
 # Install build tools
 RUN set -x \
     && cd /etc/yum.repos.d \
-    && wget -nv http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -O devtools-1.1.repo \
-    && yum install -y devtoolset-1.1 devtoolset-1.1-gcc devtoolset-1.1-gcc-c++ glibc glibc-devel \
-    && scl enable devtoolset-1.1 bash
+    && wget -nv http://people.centos.org/tru/devtools-2/devtools-2.repo -O devtools-2.repo \
+    && yum install -y devtoolset-2 devtoolset-2-gcc devtoolset-2-gcc-c++ glibc glibc-devel \
+    && scl enable devtoolset-2 bash
 
 # Set PATH, because "scl enable" does not have any effects to "docker build"
-ENV PATH $PATH:/opt/centos/devtoolset-1.1/root/usr/bin
+ENV PATH $PATH:/opt/rh/devtoolset-2/root/usr/bin
 
 # Install cmake 3.7
 RUN set -x \
