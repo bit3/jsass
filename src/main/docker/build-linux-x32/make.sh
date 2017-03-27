@@ -4,8 +4,8 @@ set -xeuo pipefail
 
 cd /jsass/src/main
 
-rm -fr resources/linux-x64
-mkdir -p resources/linux-x64
+rm -fr resources/linux-x32
+mkdir -p resources/linux-x32
 
 # *** Build libsass
 
@@ -26,18 +26,18 @@ mkdir -p c/build
 cd c/build
 cmake ../
 make
-cp libjsass.so ../../resources/linux-x64/libjsass.so
+cp libjsass.so ../../resources/linux-x32/libjsass.so
 
 # *** Build libjsass_test
 
 cd /jsass/src/test
 
-rm -fr resources/linux-x64
-mkdir -p resources/linux-x64
+rm -fr resources/linux-x32
+mkdir -p resources/linux-x32
 
 rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake ../
 make
-cp libjsass_test.so ../../resources/linux-x64/libjsass_test.so
+cp libjsass_test.so ../../resources/linux-x32/libjsass_test.so

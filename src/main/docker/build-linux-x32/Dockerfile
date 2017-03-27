@@ -1,5 +1,10 @@
-FROM centos:5
+FROM toopher/centos-i386:centos5
 MAINTAINER "Tristan Lins" <tristan@lins.io>
+
+# fix container, see comments on https://hub.docker.com/r/toopher/centos-i386/
+RUN set -x \
+    && sed -i 's/\$arch/i686/g' /etc/yum.repos.d/* \
+    && sed -i 's/\$basearch/i386/g' /etc/yum.repos.d/*
 
 RUN set -x \
     && yum install -y wget
@@ -8,6 +13,8 @@ RUN set -x \
 RUN set -x \
     && cd /etc/yum.repos.d \
     && wget -nv http://people.centos.org/tru/devtools-2/devtools-2.repo -O devtools-2.repo \
+    && sed -i 's/\$arch/i686/g' /etc/yum.repos.d/* \
+    && sed -i 's/\$basearch/i386/g' /etc/yum.repos.d/* \
     && yum install -y devtoolset-2 devtoolset-2-gcc devtoolset-2-gcc-c++ glibc glibc-devel \
     && scl enable devtoolset-2 bash
 
@@ -43,6 +50,8 @@ RUN set -x \
     && wget -nv https://dl.fedoraproject.org/pub/epel/epel-release-latest-5.noarch.rpm \
     && rpm -i epel-release-latest-5.noarch.rpm \
     && rm epel-release-latest-5.noarch.rpm \
+    && sed -i 's/\$arch/i686/g' /etc/yum.repos.d/* \
+    && sed -i 's/\$basearch/i386/g' /etc/yum.repos.d/* \
     && yum install -y git
 
 # Install make script
