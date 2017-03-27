@@ -35,7 +35,7 @@ CC=i686-w64-mingw32-gcc \
 CXX=i686-w64-mingw32-g++ \
 WINDRES=i686-w64-mingw32-windres \
 BUILD=static \
-    make -C libsass -j$(nproc) lib/libsass.dll
+    make -C libsass -j4 lib/libsass.dll
 cp libsass/lib/libsass.dll resources/windows-x32/libsass.dll
 
 # *** Build libjsass

@@ -17,7 +17,7 @@ cd ..
 
 # We use:
 # - BUILD="static" to make sure that we build a static library
-BUILD="static" make -C libsass -j$(nproc)
+BUILD="static" make -C libsass -j4
 
 # *** Build libjsass
 

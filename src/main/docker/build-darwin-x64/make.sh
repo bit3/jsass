@@ -27,7 +27,7 @@ CC=/opt/osxcross/target/bin/x86_64-apple-darwin12-clang \
 CXX=/opt/osxcross/target/bin/x86_64-apple-darwin12-clang++-libc++ \
 AR=/opt/osxcross/target/bin/x86_64-apple-darwin12-ar \
 BUILD=static \
-    make -C libsass -j$(nproc)
+    make -C libsass -j4
 
 # *** Build libjsass
 
