@@ -237,7 +237,11 @@ final class NativeLoader {
     );
   }
 
-  private static void unsupportedPlatform(final String osName, final String osArch, String resourceName) {
+  private static void unsupportedPlatform(
+      final String osName,
+      final String osArch,
+      String resourceName
+  ) {
     throw new UnsupportedOperationException(
         "Platform " + osName + ":" + osArch + " not supported",
         new FileNotFoundException("Resource " + resourceName + " not available")
