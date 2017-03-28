@@ -1,12 +1,9 @@
-FROM ubuntu:14.04
+FROM centos:5
 MAINTAINER "Tristan Lins" <tristan@lins.io>
 
 # Install required tools
 RUN set -x \
-    && apt-get update \
-    && apt-get install -y wget unzip \
-    && apt-get clean \
-    && rm -r /var/lib/apt/lists/*
+    && yum install -y wget unzip
 
 # Install Java JDK 8
 RUN set -x \

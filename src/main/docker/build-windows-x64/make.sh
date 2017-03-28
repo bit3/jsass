@@ -4,7 +4,7 @@ set -xeuo pipefail
 
 cd /jsass/src/main
 
-rm -r resources/windows-x64
+rm -fr resources/windows-x64
 mkdir -p resources/windows-x64
 
 # *** Build libsass
@@ -35,12 +35,12 @@ CC=x86_64-w64-mingw32-gcc \
 CXX=x86_64-w64-mingw32-g++ \
 WINDRES=x86_64-w64-mingw32-windres \
 BUILD=static \
-    make -C libsass -j$(nproc) lib/libsass.dll
+    make -C libsass -j4 lib/libsass.dll
 cp libsass/lib/libsass.dll resources/windows-x64/libsass.dll
 
 # *** Build libjsass
 
-rm -r c/build
+rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x64.cmake ../
@@ -51,10 +51,10 @@ cp libjsass.dll ../../resources/windows-x64/libjsass.dll
 
 cd /jsass/src/test
 
-rm -r resources/windows-x64
+rm -fr resources/windows-x64
 mkdir -p resources/windows-x64
 
-rm -r c/build
+rm -fr c/build
 mkdir -p c/build
 cd c/build
 cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw64-x64.cmake ../

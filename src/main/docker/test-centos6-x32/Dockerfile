@@ -1,22 +1,24 @@
-FROM ubuntu:14.04
+FROM toopher/centos-i386:centos6
 MAINTAINER "Tristan Lins" <tristan@lins.io>
+
+# fix container, see comments on https://hub.docker.com/r/toopher/centos-i386/
+RUN set -x \
+    && sed -i 's/\$arch/i686/g' /etc/yum.repos.d/* \
+    && sed -i 's/\$basearch/i386/g' /etc/yum.repos.d/*
 
 # Install required tools
 RUN set -x \
-    && apt-get update \
-    && apt-get install -y wget unzip \
-    && apt-get clean \
-    && rm -r /var/lib/apt/lists/*
+    && yum install -y wget unzip tar
 
 # Install Java JDK 8
 RUN set -x \
     && cd /opt \
     && wget -nv --no-cookies --no-check-certificate \
             --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz" \
-            -O jdk-8u121-linux-x64.tar.gz \
-    && tar xf jdk-8u121-linux-x64.tar.gz \
-    && rm jdk-8u121-linux-x64.tar.gz
+            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-i586.tar.gz" \
+            -O jdk-8u121-linux-i586.tar.gz \
+    && tar xf jdk-8u121-linux-i586.tar.gz \
+    && rm jdk-8u121-linux-i586.tar.gz
 
 # Install gradle
 RUN set -x \

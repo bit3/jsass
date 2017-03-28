@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,7 +78,7 @@ final class NativeLoader {
     URL resource = NativeLoader.class.getResource(resourceName);
 
     if (null == resource) {
-      unsupportedPlatform(osName, osArch);
+      unsupportedPlatform(osName, osArch, resourceName);
     }
 
     return resource;
@@ -143,6 +144,11 @@ final class NativeLoader {
     String fileExtension = "so";
 
     switch (osArch) {
+      case ARCH_I386:
+      case ARCH_X86:
+        platform = "linux-x32";
+        break;
+
       case ARCH_AMD64:
       case ARCH_X86_64:
         platform = "linux-x64";
@@ -228,6 +234,17 @@ final class NativeLoader {
   private static void unsupportedPlatform(final String osName, final String osArch) {
     throw new UnsupportedOperationException(
         "Platform " + osName + ":" + osArch + " not supported"
+    );
+  }
+
+  private static void unsupportedPlatform(
+      final String osName,
+      final String osArch,
+      String resourceName
+  ) {
+    throw new UnsupportedOperationException(
+        "Platform " + osName + ":" + osArch + " not supported",
+        new FileNotFoundException("Resource " + resourceName + " not available")
     );
   }
 }

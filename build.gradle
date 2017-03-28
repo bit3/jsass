@@ -1,12 +1,13 @@
 plugins {
-    id 'net.researchgate.release' version '2.3.4'
-    id 'org.ajoberstar.grgit' version '1.2.0'
-    id 'org.sonarqube' version '1.2'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'org.ajoberstar.grgit' version '1.6.0'
+    id 'org.sonarqube' version '2.2.1'
 }
 
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
+apply plugin: 'jacoco'
 apply plugin: 'signing'
 
 import org.ajoberstar.grgit.*
@@ -34,6 +35,10 @@ pmd {
     toolVersion = "4.3"
 }
 
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
 repositories {
     mavenCentral()
 }
@@ -41,8 +46,8 @@ repositories {
 dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
-    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -59,6 +64,7 @@ sonarqube {
 
         property "sonar.exclusions", "**/src/main/libsass/**"
         property "sonar.projectVersion", description
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     }
 }
 
@@ -228,9 +234,10 @@ def buildDockerContainer(name) {
 // Build native libs
 task buildNativeLibs {
     dependsOn 'buildNativeDarwin64Libs',
-            'buildNativeLinux64Libs',
-            'buildNativeWindows32Libs',
-            'buildNativeWindows64Libs'
+              'buildNativeLinux32Libs',
+              'buildNativeLinux64Libs',
+              'buildNativeWindows32Libs',
+              'buildNativeWindows64Libs'
 }
 
 task buildNativeDarwin64Libs {
@@ -239,6 +246,15 @@ task buildNativeDarwin64Libs {
     doLast {
         println 'Build native libs for darwin x64'
         runDockerContainer('build-darwin-x64')
+    }
+}
+
+task buildNativeLinux32Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for linux x32'
+        runDockerContainer('build-linux-x32')
     }
 }
 
@@ -273,28 +289,48 @@ task buildNativeWindows64Libs {
 
 // Run docker tests
 task runDockerTests {
-    dependsOn 'runDockerTestCentOS5',
-            'runDockerTestCentOS6',
-            'runDockerTestCentOS7',
-            'runDockerTestUbuntu1204',
-            'runDockerTestUbuntu1404'
+    dependsOn 'runDockerTestCentOS5x32',
+              'runDockerTestCentOS5x64',
+              'runDockerTestCentOS6x32',
+              'runDockerTestCentOS6x64',
+              'runDockerTestCentOS7',
+              'runDockerTestUbuntu1204',
+              'runDockerTestUbuntu1404'
 }
 
-task runDockerTestCentOS5 {
+task runDockerTestCentOS5x32 {
     dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 5 test container'
-        runDockerContainer('test-centos5')
+        runDockerContainer('test-centos5-x32')
     }
 }
 
-task runDockerTestCentOS6 {
+task runDockerTestCentOS5x64 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker CentOS 5 test container'
+        runDockerContainer('test-centos5-x64')
+    }
+}
+
+task runDockerTestCentOS6x32 {
     dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 6 test container'
-        runDockerContainer('test-centos5')
+        runDockerContainer('test-centos5-x32')
+    }
+}
+
+task runDockerTestCentOS6x64 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker CentOS 6 test container'
+        runDockerContainer('test-centos5-x64')
     }
 }
 
@@ -332,14 +368,17 @@ task runDockerTestUbuntu1404 {
 // all containers are available on Docker Hub too!
 task buildDocker {
     dependsOn 'buildDockerBuildDarwin64',
-            'buildDockerBuildLinux64',
-            'buildDockerBuildWindows32',
-            'buildDockerBuildWindows64',
-            'buildDockerTestCentOS5',
-            'buildDockerTestCentOS6',
-            'buildDockerTestCentOS7',
-            'buildDockerTestUbuntu1204',
-            'buildDockerTestUbuntu1404'
+              'buildDockerBuildLinux64',
+              'buildDockerBuildLinux32', // depends on buildDockerBuildLinux64
+              'buildDockerBuildWindows32',
+              'buildDockerBuildWindows64',
+              'buildDockerTestCentOS5x32',
+              'buildDockerTestCentOS5x64',
+              'buildDockerTestCentOS6x32',
+              'buildDockerTestCentOS6x64',
+              'buildDockerTestCentOS7',
+              'buildDockerTestUbuntu1204',
+              'buildDockerTestUbuntu1404'
 }
 
 task buildDockerBuildDarwin64 {
@@ -357,6 +396,15 @@ task buildDockerBuildLinux64 {
     doLast {
         println 'Build Docker Linux build container'
         buildDockerContainer('build-linux-x64')
+    }
+}
+
+task buildDockerBuildLinux32 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux build container'
+        buildDockerContainer('build-linux-x32')
     }
 }
 
@@ -378,21 +426,39 @@ task buildDockerBuildWindows64 {
     }
 }
 
-task buildDockerTestCentOS5 {
+task buildDockerTestCentOS5x32 {
     dependsOn determineDockerAvailable
 
     doLast {
         println 'Build Docker CentOS 5 test container'
-        buildDockerContainer('test-centos5')
+        buildDockerContainer('test-centos5-x32')
     }
 }
 
-task buildDockerTestCentOS6 {
+task buildDockerTestCentOS5x64 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker CentOS 5 test container'
+        buildDockerContainer('test-centos5-x64')
+    }
+}
+
+task buildDockerTestCentOS6x32 {
     dependsOn determineDockerAvailable
 
     doLast {
         println 'Build Docker CentOS 6 test container'
-        buildDockerContainer('test-centos6')
+        buildDockerContainer('test-centos6-x32')
+    }
+}
+
+task buildDockerTestCentOS6x64 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker CentOS 6 test container'
+        buildDockerContainer('test-centos6-x64')
     }
 }
 
