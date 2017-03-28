@@ -18,7 +18,7 @@ if [[ "osx" == $TRAVIS_OS_NAME ]]; then
          "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-macosx-x64.dmg" \
          -O jdk-8u121-macosx-x64.dmg
     hdiutil mount jdk-8u121-macosx-x64.dmg
-    sudo installer -package "/Volumes/JDK 8 Update 77/JDK 8 Update 77.pkg" -target "/"
+    sudo installer -package "/Volumes/JDK 8 Update 121/JDK 8 Update 121.pkg" -target "/"
 fi
 
 git fetch --unshallow
