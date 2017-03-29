@@ -2,8 +2,10 @@
 set -ev
 
 if [[ "linux" == $TRAVIS_OS_NAME ]]; then
-  docker pull bit3/jsass-test-centos5
-  docker pull bit3/jsass-test-centos6
+  docker pull bit3/jsass-test-centos5-x32
+  docker pull bit3/jsass-test-centos5-x64
+  docker pull bit3/jsass-test-centos6-x32
+  docker pull bit3/jsass-test-centos6-x64
   docker pull bit3/jsass-test-centos7
   docker pull bit3/jsass-test-ubuntu12.04
   docker pull bit3/jsass-test-ubuntu14.04
