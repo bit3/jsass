@@ -115,7 +115,7 @@ How to make a release
 ```bash
 $ ./gradlew clean release
 $ git checkout $(git describe --abbrev=0)
-$ ./gradlew uploadArchives
+$ ./gradlew clean uploadArchives
 $ git checkout master
 $ git merge --no-ff $(git describe --abbrev=0 develop)
 $ git push origin master
