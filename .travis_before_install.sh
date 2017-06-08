@@ -17,10 +17,10 @@ fi
 if [[ "osx" == $TRAVIS_OS_NAME ]]; then
     wget -nv --no-cookies --no-check-certificate \
          --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-         "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-macosx-x64.dmg" \
-         -O jdk-8u121-macosx-x64.dmg
-    hdiutil mount jdk-8u121-macosx-x64.dmg
-    sudo installer -package "/Volumes/JDK 8 Update 121/JDK 8 Update 121.pkg" -target "/"
+         "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-macosx-x64.dmg" \
+         -O jdk-8u131-macosx-x64.dmg
+    hdiutil mount jdk-8u131-macosx-x64.dmg
+    sudo installer -package "/Volumes/JDK 8 Update 131/JDK 8 Update 131.pkg" -target "/"
 fi
 
 git fetch --unshallow
