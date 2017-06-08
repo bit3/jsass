@@ -113,7 +113,7 @@ How to make a release
 ---------------------
 
 ```bash
-$ ./gradlew release
+$ ./gradlew clean release
 $ git checkout $(git describe --abbrev=0)
 $ ./gradlew uploadArchives
 $ git checkout master
