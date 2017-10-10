@@ -16,13 +16,11 @@ RUN set -x \
 
 # Install Java JDK 8
 RUN set -x \
-    && cd /opt \
-    && wget -nv --no-cookies --no-check-certificate \
-            --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz" \
-            -O jdk-8u121-linux-x64.tar.gz \
-    && tar xf jdk-8u121-linux-x64.tar.gz \
-    && rm jdk-8u121-linux-x64.tar.gz
+    && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y openjdk-8-jdk ca-certificates-java=20161107~bpo8+1 \
+    && apt-get clean \
+    && rm -r /var/lib/apt/lists/*
 
 # Install git
 RUN set -x \

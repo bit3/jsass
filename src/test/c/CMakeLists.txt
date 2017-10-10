@@ -14,6 +14,8 @@ include_directories(
     "/usr/lib/jvm/default/include/linux"
     "/usr/lib/jvm/default-java/include"
     "/usr/lib/jvm/default-java/include/linux"
+    "/usr/lib/jvm/java-8-openjdk-amd64/include"
+    "/usr/lib/jvm/java-8-openjdk-amd64/include/linux"
     "/usr/lib/jvm/java-8-oracle/include"
     "/usr/lib/jvm/java-8-oracle/include/linux"
 
