@@ -292,7 +292,8 @@ task runDockerTests {
     dependsOn 'runDockerTestCentOS6x32',
               'runDockerTestCentOS6x64',
               'runDockerTestCentOS7',
-              'runDockerTestUbuntu1404'
+              'runDockerTestUbuntu1404',
+              'runDockerTestUbuntu1604'
 }
 
 task runDockerTestCentOS6x32 {
@@ -318,16 +319,7 @@ task runDockerTestCentOS7 {
 
     doLast {
         println 'Run Docker CentOS 7 test container'
-        runDockerContainer('test-centos5')
-    }
-}
-
-task runDockerTestUbuntu1204 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
-
-    doLast {
-        println 'Run Docker ubuntu 12.04 test container'
-        runDockerContainer('test-ubuntu12.04')
+        runDockerContainer('test-centos7')
     }
 }
 
@@ -337,6 +329,15 @@ task runDockerTestUbuntu1404 {
     doLast {
         println 'Run Docker ubuntu 14.04 test container'
         runDockerContainer('test-ubuntu14.04')
+    }
+}
+
+task runDockerTestUbuntu1604 {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Run Docker ubuntu 16.04 test container'
+        runDockerContainer('test-ubuntu16.04')
     }
 }
 
@@ -354,7 +355,8 @@ task buildDocker {
               'buildDockerTestCentOS6x32',
               'buildDockerTestCentOS6x64',
               'buildDockerTestCentOS7',
-              'buildDockerTestUbuntu1404'
+              'buildDockerTestUbuntu1404',
+              'buildDockerTestUbuntu1604'
 }
 
 task buildDockerBuildDarwin64 {
@@ -435,5 +437,14 @@ task buildDockerTestUbuntu1404 {
     doLast {
         println 'Build Docker ubuntu 14.04 test container'
         buildDockerContainer('test-ubuntu14.04')
+    }
+}
+
+task buildDockerTestUbuntu1604 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker ubuntu 16.04 test container'
+        buildDockerContainer('test-ubuntu16.04')
     }
 }
