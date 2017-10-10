@@ -289,31 +289,10 @@ task buildNativeWindows64Libs {
 
 // Run docker tests
 task runDockerTests {
-    dependsOn 'runDockerTestCentOS5x32',
-              'runDockerTestCentOS5x64',
-              'runDockerTestCentOS6x32',
+    dependsOn 'runDockerTestCentOS6x32',
               'runDockerTestCentOS6x64',
               'runDockerTestCentOS7',
-              'runDockerTestUbuntu1204',
               'runDockerTestUbuntu1404'
-}
-
-task runDockerTestCentOS5x32 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
-
-    doLast {
-        println 'Run Docker CentOS 5 test container'
-        runDockerContainer('test-centos5-x32')
-    }
-}
-
-task runDockerTestCentOS5x64 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
-
-    doLast {
-        println 'Run Docker CentOS 5 test container'
-        runDockerContainer('test-centos5-x64')
-    }
 }
 
 task runDockerTestCentOS6x32 {
@@ -372,12 +351,9 @@ task buildDocker {
               'buildDockerBuildLinux32', // depends on buildDockerBuildLinux64
               'buildDockerBuildWindows32',
               'buildDockerBuildWindows64',
-              'buildDockerTestCentOS5x32',
-              'buildDockerTestCentOS5x64',
               'buildDockerTestCentOS6x32',
               'buildDockerTestCentOS6x64',
               'buildDockerTestCentOS7',
-              'buildDockerTestUbuntu1204',
               'buildDockerTestUbuntu1404'
 }
 
@@ -426,24 +402,6 @@ task buildDockerBuildWindows64 {
     }
 }
 
-task buildDockerTestCentOS5x32 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker CentOS 5 test container'
-        buildDockerContainer('test-centos5-x32')
-    }
-}
-
-task buildDockerTestCentOS5x64 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker CentOS 5 test container'
-        buildDockerContainer('test-centos5-x64')
-    }
-}
-
 task buildDockerTestCentOS6x32 {
     dependsOn determineDockerAvailable
 
@@ -468,15 +426,6 @@ task buildDockerTestCentOS7 {
     doLast {
         println 'Build Docker CentOS 7 test container'
         buildDockerContainer('test-centos7')
-    }
-}
-
-task buildDockerTestUbuntu1204 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker ubuntu 12.04 test container'
-        buildDockerContainer('test-ubuntu12.04')
     }
 }
 
