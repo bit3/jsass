@@ -1,13 +1,13 @@
 FROM andrewd/osxcross
 MAINTAINER "Tristan Lins" <tristan@lins.io>
 
-# Install cmake 3.7
+# Install cmake 3.9
 RUN set -x \
     && DIR=$(mktemp -d) \
     && cd "$DIR" \
-    && wget -nv --no-check-certificate http://www.cmake.org/files/v3.7/cmake-3.7.2.tar.gz -O cmake-3.7.2.tar.gz \
-    && tar xf cmake-3.7.2.tar.gz \
-    && cd cmake-3.7.2 \
+    && wget -nv --no-check-certificate http://www.cmake.org/files/v3.9/cmake-3.9.4.tar.gz -O cmake-3.9.4.tar.gz \
+    && tar xf cmake-3.9.4.tar.gz \
+    && cd cmake-3.9.4 \
     && ./configure \
     && make -j8 \
     && make install \
