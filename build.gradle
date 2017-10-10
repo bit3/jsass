@@ -300,7 +300,7 @@ task runDockerTestCentOS6x32 {
 
     doLast {
         println 'Run Docker CentOS 6 test container'
-        runDockerContainer('test-centos5-x32')
+        runDockerContainer('test-centos6-x32')
     }
 }
 
@@ -309,7 +309,7 @@ task runDockerTestCentOS6x64 {
 
     doLast {
         println 'Run Docker CentOS 6 test container'
-        runDockerContainer('test-centos5-x64')
+        runDockerContainer('test-centos6-x64')
     }
 }
 
