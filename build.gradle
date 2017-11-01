@@ -51,12 +51,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-release {
-    git {
-        requireBranch = 'develop'
-    }
-}
-
 sonarqube {
     properties {
         def git = Grgit.open();
