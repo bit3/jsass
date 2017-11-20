@@ -8,7 +8,7 @@ git:
 matrix:
   include:
     - os: linux
-      jdk: oraclejdk8
+      jdk: openjdk8
       sudo: required
       services:
         - docker
