@@ -8,7 +8,7 @@
 Java sass compiler
 ==================
 
-Feature complete java sass compiler using [libsass][libsass] version 3.4.7.
+Feature complete java sass compiler using [libsass][libsass] version 3.4.8.
 
 The most advantage of jsass is to hide the libsass complexity from the developer and provide a more java like way.
 
