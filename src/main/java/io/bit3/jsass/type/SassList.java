@@ -20,6 +20,9 @@ public class SassList extends ArrayList<Object> implements SassValue {
    */
   private Separator separator = Separator.COMMA;
 
+  /**
+   * Is this list bracketed or not.
+   */
   private boolean bracketed = false;
 
   /**
@@ -72,8 +75,8 @@ public class SassList extends ArrayList<Object> implements SassValue {
   /**
    * Create a list from an existing values, with a specific separator character.
    *
-   * @param separator  The item separator.
    * @param collection The existing values collection.
+   * @param separator  The item separator.
    */
   public SassList(Collection<?> collection, Separator separator) {
     super(collection);
@@ -83,8 +86,8 @@ public class SassList extends ArrayList<Object> implements SassValue {
   /**
    * Create a list from an existing values, with a specific separator character.
    *
-   * @param separator  The item separator.
    * @param collection The existing values collection.
+   * @param separator  The item separator.
    * @param bracketed The bracketed status.
    */
   public SassList(Collection<?> collection, Separator separator, boolean bracketed) {
@@ -93,15 +96,33 @@ public class SassList extends ArrayList<Object> implements SassValue {
     this.bracketed = bracketed;
   }
 
+  /**
+   * Create a list with initial capacity.
+   *
+   * @param initialCapacity The initial capacity, see {@link ArrayList#ArrayList(int)}.
+   */
   public SassList(int initialCapacity) {
     super(initialCapacity);
   }
 
+  /**
+   * Create a list with initial capacity.
+   *
+   * @param initialCapacity The initial capacity, see {@link ArrayList#ArrayList(int)}.
+   * @param separator  The item separator.
+   */
   public SassList(int initialCapacity, Separator separator) {
     super(initialCapacity);
     this.separator = separator;
   }
 
+  /**
+   * Create a list with initial capacity.
+   *
+   * @param initialCapacity The initial capacity, see {@link ArrayList#ArrayList(int)}.
+   * @param separator  The item separator.
+   * @param bracketed The bracketed status.
+   */
   public SassList(int initialCapacity, Separator separator, boolean bracketed) {
     super(initialCapacity);
     this.separator = separator;
