@@ -17,7 +17,7 @@ fi
 if [[ "osx" == $TRAVIS_OS_NAME ]]; then
     wget -nv --no-cookies --no-check-certificate \
          --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-         "http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-macosx-x64.dmg?AuthParam=1522417810_338ff0443bdc9513f22fe3a381a4a41f" \
+         "http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-macosx-x64.dmg" \
          -O jdk-8u161-macosx-x64.dmg
     hdiutil mount jdk-8u161-macosx-x64.dmg
     sudo installer -package "/Volumes/JDK 8 Update 161/JDK 8 Update 161.pkg" -target "/"
