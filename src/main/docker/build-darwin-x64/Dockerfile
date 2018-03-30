@@ -1,13 +1,13 @@
 FROM andrewd/osxcross
 MAINTAINER "Tristan Lins" <tristan@lins.io>
 
-# Install cmake 3.7
+# Install cmake 3.9
 RUN set -x \
     && DIR=$(mktemp -d) \
     && cd "$DIR" \
-    && wget -nv --no-check-certificate http://www.cmake.org/files/v3.7/cmake-3.7.2.tar.gz -O cmake-3.7.2.tar.gz \
-    && tar xf cmake-3.7.2.tar.gz \
-    && cd cmake-3.7.2 \
+    && wget -nv --no-check-certificate http://www.cmake.org/files/v3.9/cmake-3.9.4.tar.gz -O cmake-3.9.4.tar.gz \
+    && tar xf cmake-3.9.4.tar.gz \
+    && cd cmake-3.9.4 \
     && ./configure \
     && make -j8 \
     && make install \
@@ -16,13 +16,11 @@ RUN set -x \
 
 # Install Java JDK 8
 RUN set -x \
-    && cd /opt \
-    && wget -nv --no-cookies --no-check-certificate \
-            --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz" \
-            -O jdk-8u121-linux-x64.tar.gz \
-    && tar xf jdk-8u121-linux-x64.tar.gz \
-    && rm jdk-8u121-linux-x64.tar.gz
+    && echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y openjdk-8-jdk ca-certificates-java=20161107~bpo8+1 \
+    && apt-get clean \
+    && rm -r /var/lib/apt/lists/*
 
 # Install git
 RUN set -x \

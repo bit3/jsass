@@ -8,17 +8,11 @@ RUN set -x \
 
 # Install required tools
 RUN set -x \
-    && yum install -y wget unzip tar
+    && yum install -y wget unzip
 
 # Install Java JDK 8
 RUN set -x \
-    && cd /opt \
-    && wget -nv --no-cookies --no-check-certificate \
-            --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-            "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-i586.tar.gz" \
-            -O jdk-8u121-linux-i586.tar.gz \
-    && tar xf jdk-8u121-linux-i586.tar.gz \
-    && rm jdk-8u121-linux-i586.tar.gz
+    && yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
 # Install gradle
 RUN set -x \
@@ -28,9 +22,9 @@ RUN set -x \
     && rm gradle-2.14.1-bin.zip
 
 # Setup binaries and java home path
-ENV PATH /opt/gradle-2.14.1/bin:/opt/jdk1.8.0_121/bin:$PATH
+ENV PATH /opt/gradle-2.14.1/bin:$PATH
 ENV HOME /tmp
-ENV JAVA_HOME /opt/jdk1.8.0_121
+ENV JAVA_HOME /usr/lib/jvm/java
 
 # Check java and gradle work properly
 RUN set -x \

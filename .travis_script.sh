@@ -2,7 +2,7 @@
 set -ev
 
 if [[ "linux" == $TRAVIS_OS_NAME ]]; then
-  ./gradlew runDockerTests
+  ./gradlew --info --no-daemon runDockerTests
 else
-  ./gradlew check
+  ./bin/run-ci-tests.sh
 fi

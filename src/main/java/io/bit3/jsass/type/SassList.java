@@ -20,6 +20,8 @@ public class SassList extends ArrayList<Object> implements SassValue {
    */
   private Separator separator = Separator.COMMA;
 
+  private boolean bracketed = false;
+
   /**
    * Create an empty list.
    */
@@ -37,12 +39,34 @@ public class SassList extends ArrayList<Object> implements SassValue {
   }
 
   /**
+   * Create a list from an existing values.
+   *
+   * @param collection The existing values collection.
+   * @param bracketed The bracketed status.
+   */
+  public SassList(Collection<?> collection, boolean bracketed) {
+    super(collection);
+    this.bracketed = bracketed;
+  }
+
+  /**
    * Create an empty list with a specific separator character.
    *
    * @param separator The item separator.
    */
   public SassList(Separator separator) {
     this.separator = separator;
+  }
+
+  /**
+   * Create an empty list with a specific separator character.
+   *
+   * @param separator The item separator.
+   * @param bracketed The bracketed status.
+   */
+  public SassList(Separator separator, boolean bracketed) {
+    this.separator = separator;
+    this.bracketed = bracketed;
   }
 
   /**
@@ -56,6 +80,19 @@ public class SassList extends ArrayList<Object> implements SassValue {
     this.separator = separator;
   }
 
+  /**
+   * Create a list from an existing values, with a specific separator character.
+   *
+   * @param separator  The item separator.
+   * @param collection The existing values collection.
+   * @param bracketed The bracketed status.
+   */
+  public SassList(Collection<?> collection, Separator separator, boolean bracketed) {
+    super(collection);
+    this.separator = separator;
+    this.bracketed = bracketed;
+  }
+
   public SassList(int initialCapacity) {
     super(initialCapacity);
   }
@@ -63,6 +100,12 @@ public class SassList extends ArrayList<Object> implements SassValue {
   public SassList(int initialCapacity, Separator separator) {
     super(initialCapacity);
     this.separator = separator;
+  }
+
+  public SassList(int initialCapacity, Separator separator, boolean bracketed) {
+    super(initialCapacity);
+    this.separator = separator;
+    this.bracketed = bracketed;
   }
 
   /**
@@ -84,13 +127,35 @@ public class SassList extends ArrayList<Object> implements SassValue {
   }
 
   /**
+   * Determine this list is bracketed.
+   *
+   * @return {@code true} if this list is bracketed.
+   */
+  public boolean isBracketed() {
+    return bracketed;
+  }
+
+  /**
+   * Set if this list is bracketed or not.
+   *
+   * @param bracketed The bracketed status.
+   */
+  public void setBracketed(boolean bracketed) {
+    this.bracketed = bracketed;
+  }
+
+  /**
    * Return a libsass compatible (..) string representation.
    *
    * @return A libsass compatible (..) string representation.
    */
   @Override
   public String toString() {
-    return "(" + StringUtils.join(this, separator.character) + ")";
+    if (bracketed) {
+      return "(" + StringUtils.join(this, separator.character) + ")";
+    } else {
+      return StringUtils.join(this, separator.character);
+    }
   }
 
   @Override
@@ -108,11 +173,11 @@ public class SassList extends ArrayList<Object> implements SassValue {
     }
 
     SassList objects = (SassList) that;
-    return separator == objects.separator;
+    return separator == objects.separator && bracketed == objects.bracketed;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), separator);
+    return Objects.hash(super.hashCode(), separator, bracketed);
   }
 }
