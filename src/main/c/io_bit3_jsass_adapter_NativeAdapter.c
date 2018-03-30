@@ -79,6 +79,7 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
     else if (sass_value_is_list(sass_value)) {
         size_t c_length = sass_list_get_length(sass_value);
         enum Sass_Separator c_separator = sass_list_get_separator(sass_value);
+        bool c_bracketed = sass_list_get_is_bracketed(sass_value);
 
         jclass j_separator_class = (*env)->FindClass(env, "io/bit3/jsass/Separator");
         jobject j_separator;
@@ -92,8 +93,8 @@ jobject convert_sass_value_to_java(JNIEnv *env, const union Sass_Value *sass_val
         }
 
         jclass j_class = (*env)->FindClass(env, "io/bit3/jsass/type/SassList");
-        jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(ILio/bit3/jsass/Separator;)V");
-        j_value = (*env)->NewObject(env, j_class, j_constructor, (jint) c_length, j_separator);
+        jmethodID j_constructor = (*env)->GetMethodID(env, j_class, "<init>", "(ILio/bit3/jsass/Separator;Z)V");
+        j_value = (*env)->NewObject(env, j_class, j_constructor, (jint) c_length, j_separator, c_bracketed);
 
         jmethodID j_add_method = (*env)->GetMethodID(env, j_class, "add", "(Ljava/lang/Object;)Z");
 
@@ -243,7 +244,11 @@ union Sass_Value *convert_java_value_to_sass(JNIEnv *env, jobject j_value) {
             c_separator = SASS_SPACE;
         }
 
-        union Sass_Value *sass_list = sass_make_list((size_t) c_size, c_separator);
+        bool c_bracketed = call_class_boolean_method(
+                env, j_value, j_type_class, "isBracketed"
+        );
+
+        union Sass_Value *sass_list = sass_make_list((size_t) c_size, c_separator, c_bracketed);
 
         jmethodID j_get_method = (*env)->GetMethodID(env, j_type_class, "get", "(I)Ljava/lang/Object;");
 

@@ -1,14 +1,11 @@
 [![Build Status](https://img.shields.io/travis/bit3/jsass/master.svg?style=flat-square)](https://travis-ci.org/bit3/jsass)
-[![Quality Gate](https://sonarhub.io/api/badges/gate?key=io.bit3:jsass)](https://sonarhub.io/dashboard?id=io.bit3%3Ajsass)
-[![Dependency Status](https://www.versioneye.com/user/projects/56c9f52c18b2710403dfd158/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/56c9f52c18b2710403dfd158)
-[![Gratipay](https://img.shields.io/gratipay/bit3.svg?style=flat-square)](https://gratipay.com/bit3/)
-[![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](https://readthedocs.org/projects/jsass/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](http://jsass.readthedocs.io/en/latest/)
 [![Javadoc Status](https://javadocio-badges.herokuapp.com/io.bit3/jsass/badge.svg)](http://javadoc.io/doc/io.bit3/jsass/)
 
 Java sass compiler
 ==================
 
-Feature complete java sass compiler using [libsass][libsass] version 3.4.9.
+Feature complete java sass compiler using [libsass][libsass] version 3.5.2.
 
 The most advantage of jsass is to hide the libsass complexity from the developer and provide a more java like way.
 
@@ -20,20 +17,6 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 #### Related (third-party) projects
 
 - [Libsass Maven Plugin](https://github.com/warmuuh/libsass-maven-plugin)
-
-Statistics
-----------
-
-[![Lines](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=lines)](https://sonarhub.io/component_measures/domain/Size?id=io.bit3%3Ajsass)
-[![Lines of code](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=ncloc)](https://sonarhub.io/component_measures/domain/Size?id=io.bit3%3Ajsass)
-[![Comment lines density](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=comment_lines_density)](https://sonarhub.io/component_measures/domain/Size?id=io.bit3%3Ajsass)
-[![complexity / function](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=function_complexity)](https://sonarhub.io/component_measures/domain/Complexity?id=io.bit3%3Ajsass)
-
-[![Bugs](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=bugs)](https://sonarhub.io/component_issues?id=io.bit3%3Ajsass#resolved=false|types=BUG)
-[![Vulnerabilities](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=vulnerabilities)](https://sonarhub.io/component_issues?id=io.bit3%3Ajsass#resolved=false|types=VULNERABILITY)
-[![Code Smells](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=code_smells)](https://sonarhub.io/component_issues?id=io.bit3%3Ajsass#resolved=false|types=CODE_SMELL)
-[![Duplications](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=duplicated_lines_density)](https://sonarhub.io/component_measures/domain/Duplications?id=io.bit3%3Ajsass)
-[![Coverage](https://sonarhub.io/api/badges/measure?key=io.bit3:jsass&metric=coverage)](https://sonarhub.io/component_measures/domain/Coverage?id=io.bit3%3Ajsass)
 
 Example
 -------
