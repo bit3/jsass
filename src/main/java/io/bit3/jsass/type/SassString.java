@@ -1,10 +1,13 @@
 package io.bit3.jsass.type;
 
-import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
-import org.apache.commons.lang3.text.translate.EntityArrays;
-import org.apache.commons.lang3.text.translate.JavaUnicodeEscaper;
-import org.apache.commons.lang3.text.translate.LookupTranslator;
+import org.apache.commons.text.translate.CharSequenceTranslator;
+import org.apache.commons.text.translate.EntityArrays;
+import org.apache.commons.text.translate.JavaUnicodeEscaper;
+import org.apache.commons.text.translate.LookupTranslator;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -131,16 +134,14 @@ public class SassString implements CharSequence, SassValue {
    * Escape the string with given quote character.
    */
   public static String escape(String value, char quote) {
+    Map<CharSequence, CharSequence> lookupMap = new HashMap<>();
+    lookupMap.put(Character.toString(quote), "\\" + quote);
+    lookupMap.put("\\", "\\\\");
+
     final CharSequenceTranslator escape =
-        new LookupTranslator(
-            new String[][]{
-                {Character.toString(quote), "\\" + quote},
-                {"\\", "\\\\"},
-            }).with(
-            new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_ESCAPE())
-        ).with(
-            JavaUnicodeEscaper.outsideOf(32, 0x7f)
-        );
+        new LookupTranslator(lookupMap)
+                .with(new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_ESCAPE))
+                .with(JavaUnicodeEscaper.outsideOf(32, 0x7f));
 
     return quote + escape.translate(value) + quote;
   }
