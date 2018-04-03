@@ -147,11 +147,10 @@ task determineCurrentWorkingDirectory() {
 }
 
 task determineRepositoryHeadStability() {
-    def repo = Grgit.open()
-
     project.ext['headIsUpstream'] = true
 
     doLast {
+        def repo = Grgit.open()
         def branch = repo.branch.getCurrent()
 
         if (branch) {
@@ -232,6 +231,7 @@ task buildNativeLibs {
     dependsOn 'buildNativeDarwin64Libs',
               'buildNativeLinux32Libs',
               'buildNativeLinux64Libs',
+              'buildNativeLinuxArmhf32Libs',
               'buildNativeWindows32Libs',
               'buildNativeWindows64Libs'
 }
@@ -260,6 +260,15 @@ task buildNativeLinux64Libs {
     doLast {
         println 'Build native libs for linux x64'
         runDockerContainer('build-linux-x64')
+    }
+}
+
+task buildNativeLinuxArmhf32Libs {
+    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for linux armhf32'
+        runDockerContainer('build-linux-armhf32')
     }
 }
 
@@ -346,6 +355,7 @@ task buildDocker {
     dependsOn 'buildDockerBuildDarwin64',
               'buildDockerBuildLinux64',
               'buildDockerBuildLinux32', // depends on buildDockerBuildLinux64
+              'buildDockerBuildLinuxArmhf32',
               'buildDockerBuildWindows32',
               'buildDockerBuildWindows64',
               'buildDockerTestCentOS6x32',
@@ -368,7 +378,7 @@ task buildDockerBuildLinux64 {
     dependsOn determineDockerAvailable
 
     doLast {
-        println 'Build Docker Linux build container'
+        println 'Build Docker Linux x64 build container'
         buildDockerContainer('build-linux-x64')
     }
 }
@@ -377,8 +387,17 @@ task buildDockerBuildLinux32 {
     dependsOn determineDockerAvailable
 
     doLast {
-        println 'Build Docker Linux build container'
+        println 'Build Docker Linux x32 build container'
         buildDockerContainer('build-linux-x32')
+    }
+}
+
+task buildDockerBuildLinuxArmhf32 {
+    dependsOn determineDockerAvailable
+
+    doLast {
+        println 'Build Docker Linux armhf32 build container'
+        buildDockerContainer('build-linux-armhf32')
     }
 }
 

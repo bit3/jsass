@@ -47,6 +47,7 @@ Compatibility
 | ![Windows 32bit][windows32]           | build broken (not analyzed)                                         |
 | ![Windows 64bit][windows64]           | supported, but not tested                                           |
 | ![OS X][osx]                          | fully supported and [tested][travis-ci]                             |
+| ![ARM][arm]                           | experimental, untested                                              |
 
 A note to Windows: jsass may also work on Windows.
 But at the moment there are no automated tests and the platform is not well tested!
@@ -65,6 +66,8 @@ But at the moment there are no automated tests and the platform is not well test
 [windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg?style=flat-square
 
 [osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat-square
+
+[arm]: https://img.shields.io/badge/ARM-experimental-yellow.svg?style=flat-square
 
 [travis-ci]: https://travis-ci.org/bit3/jsass
 

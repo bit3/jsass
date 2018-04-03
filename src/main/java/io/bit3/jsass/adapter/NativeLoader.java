@@ -26,6 +26,7 @@ final class NativeLoader {
   private static final String OS_MAC = "mac";
 
   private static final String ARCH_I386 = "i386";
+  private static final String ARCH_ARM = "arm";
   private static final String ARCH_X86 = "x86";
   private static final String ARCH_AMD64 = "amd64";
   private static final String ARCH_X86_64 = "x86_64";
@@ -152,6 +153,10 @@ final class NativeLoader {
       case ARCH_AMD64:
       case ARCH_X86_64:
         platform = "linux-x64";
+        break;
+
+      case ARCH_ARM:
+        platform = "linux-armhf32";
         break;
 
       default:
