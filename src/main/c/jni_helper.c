@@ -55,7 +55,7 @@ char *call_class_string_method(
         c_string = strdup(c_temp);
         (*env)->ReleaseStringUTFChars(env, j_result, c_temp);
     } else {
-        c_string = "";
+        c_string = strdup("");
     }
 
     return c_string;
@@ -278,7 +278,7 @@ char *get_field_string(
         c_string = strdup(c_temp);
         (*env)->ReleaseStringUTFChars(env, j_result, c_temp);
     } else {
-        c_string = "";
+        c_string = strdup("");
     }
 
     return c_string;
@@ -314,7 +314,7 @@ char *get_class_string_property(
         c_string = strdup(c_temp);
         (*env)->ReleaseStringUTFChars(env, j_result, c_temp);
     } else {
-        c_string = "";
+        c_string = strdup("");
     }
 
     return c_string;
