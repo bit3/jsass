@@ -10,7 +10,7 @@ echo
 
 set -xeuo pipefail
 
-BASE_DIR=$(dirname $(dirname $(realpath "$0")))
+BASE_DIR=$(dirname $(dirname $(readlink -e "$0")))
 
 cd "$BASE_DIR/src/main"
 
