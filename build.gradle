@@ -192,7 +192,33 @@ task determineDockerAvailable() {
     }
 }
 
+def pullDockerContainer(name) {
+    def type = 'stable'
+
+    if (headIsUpstream) {
+        type = 'latest'
+    }
+
+    def output = new ByteArrayOutputStream()
+    def execResult = exec {
+        workingDir cwd
+        commandLine 'docker', 'pull', "bit3/jsass-$name:$type"
+
+        if (!isVerbose()) {
+            standardOutput = output
+            errorOutput = output
+            ignoreExitValue = true
+        }
+    }
+
+    if (execResult.exitValue != 0) {
+        throw new GradleException("Docker pull failed\n" + output.toString())
+    }
+}
+
 def runDockerContainer(name) {
+    pullDockerContainer(name)
+
     def type = 'stable'
 
     if (headIsUpstream) {
