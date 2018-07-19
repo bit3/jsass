@@ -31,6 +31,13 @@
   .decrement-five
     z-index: decrement(10, 5)
 
+  // issue #73
+  .operatory
+    $input-padding-y: 0.5rem
+    $input-border-width: 1px
+
+    padding-top: calc(#{$input-padding-y} + #{$input-border-width})
+
 @warn "I'm a warn message"
 @error "I'm an error message"
 @debug "I'm a debug message"

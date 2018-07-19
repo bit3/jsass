@@ -17,5 +17,7 @@
     z-index: 9; }
   .unit-test .decrement-five {
     z-index: 5; }
+  .unit-test .operatory {
+    padding-top: calc(0.5rem + 1px); }
 
 /*# sourceMappingURL=output-with-map.css.map */
