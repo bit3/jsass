@@ -53,3 +53,5 @@ sassc -t compressed -I sass/inc -I scss/src -I scss/test -m sass/input.sass sass
 # sass/compressed/output-without-map.css
 echo "compile sass/compressed/output-without-map.css"
 sassc -t compressed -I sass/inc -I scss/src -I scss/test sass/input.sass sass/compressed/output-without-map.css
+
+find -name '*.css.map' -delete
