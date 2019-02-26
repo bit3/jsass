@@ -16,11 +16,13 @@ fi
 
 if [[ "osx" == $TRAVIS_OS_NAME ]]; then
     wget -nv --no-cookies --no-check-certificate \
-         --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-         "http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-macosx-x64.dmg" \
-         -O jdk-8u161-macosx-x64.dmg
-    hdiutil mount jdk-8u161-macosx-x64.dmg
-    sudo installer -package "/Volumes/JDK 8 Update 161/JDK 8 Update 161.pkg" -target "/"
+         "https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_osx-x64_bin.tar.gz" \
+         -O openjdk-11.0.2_osx-x64_bin.tar.gz
+    tar xf "openjdk-11.0.2_osx-x64_bin.tar.gz"
+    mv jdk-11.0.2.jdk /Library/Java/JavaVirtualMachines/
+    echo "Java Version"
+    java -version
+    javac -version
 fi
 
 git fetch --unshallow
