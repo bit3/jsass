@@ -89,11 +89,26 @@ sonarqube {
 
 // jni header generation
 task jniHeaders(type:Exec) {
-    def mainClasspath = sourceSets.main.output.classesDir
-    commandLine "javah", "-classpath", mainClasspath, "-d", "src/main/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeAdapter"
+    def javaVersion = org.gradle.api.JavaVersion.current()
+    def isJava9Compatible = javaVersion.isJava9Compatible()
 
-    def testClasspath = sourceSets.test.output.classesDir
-    commandLine "javah", "-classpath", testClasspath, "-d", "src/test/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeTestAdapter"
+    def mainClasspath = sourceSets.main.output.classesDirs.asPath
+    if (isJava9Compatible) {
+        // JDK 9 or newer
+        commandLine "javac", "-h", "src/main/c", "-classpath", mainClasspath, "src/main/java/io/bit3/jsass/adapter/NativeAdapter.java"
+    } else {
+        // JDK 8 or older
+        commandLine "javah", "-classpath", mainClasspath, "-d", "src/main/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeAdapter"
+    }
+
+    def testClasspath = sourceSets.test.output.classesDirs.asPath
+    if (isJava9Compatible) {
+        // JDK 9 or newer
+        commandLine "javac", "-h", "src/test/c", "-classpath", testClasspath, "src/test/java/io/bit3/jsass/adapter/NativeTestAdapter.java"
+    } else {
+        // JDK 8 or older
+        commandLine "javah", "-classpath", testClasspath, "-d", "src/test/c", "-jni", "-force", "io.bit3.jsass.adapter.NativeTestAdapter"
+    }
 
     dependsOn classes
     dependsOn testClasses
