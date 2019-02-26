@@ -19,7 +19,7 @@ if [[ "osx" == $TRAVIS_OS_NAME ]]; then
          "https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_osx-x64_bin.tar.gz" \
          -O openjdk-11.0.2_osx-x64_bin.tar.gz
     tar xf "openjdk-11.0.2_osx-x64_bin.tar.gz"
-    mv jdk-11.0.2.jdk /Library/Java/JavaVirtualMachines/
+    sudo mv jdk-11.0.2.jdk /Library/Java/JavaVirtualMachines/
     echo "Java Version"
     java -version
     javac -version
