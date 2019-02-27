@@ -40,10 +40,10 @@ Compatibility
 | ![Java 7][java7]                      | not supported, jsass uses Java 8 features like streams and lambdas! |
 | ![Java 8][java8]                      | fully supported                                                     |
 | ![Java 11][java11]                    | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
-| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][travis-ci] (travis ci)                 |
-| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][travis-ci] (travis ci)                 |
-| ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][travis-ci] (travis ci)                 |
-| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][travis-ci] (travis ci)                 |
+| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
+| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
+| ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
+| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
 | ![Windows 32bit][windows32]           | not supported                                                       |
 | ![Windows 64bit][windows64]           | supported, but not tested                                           |
 | ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                 |

@@ -7,11 +7,6 @@ git:
 
 matrix:
   include:
-    - os: linux
-      jdk: openjdk8
-      sudo: required
-      services:
-        - docker
     - os: osx
 
 before_install:
@@ -21,6 +16,3 @@ install: true
 
 script:
   - ./.travis_script.sh
-
-after_script:
-  - ./.travis_after_script.sh
