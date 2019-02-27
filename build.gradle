@@ -159,14 +159,6 @@ task determineGid() {
     }
 }
 
-task determineCurrentWorkingDirectory() {
-    project.ext['cwd'] = '/'
-
-    doLast {
-        project.ext['cwd'] = new File('.').absolutePath
-    }
-}
-
 task determineRepositoryHeadStability() {
     project.ext['headIsUpstream'] = true
 
@@ -211,7 +203,7 @@ def pullDockerContainer(name) {
 
     def output = new ByteArrayOutputStream()
     def execResult = exec {
-        workingDir cwd
+        workingDir project.projectDir
         commandLine 'docker', 'pull', "bit3/jsass-$name:$type"
 
         if (!isVerbose()) {
@@ -237,8 +229,8 @@ def runDockerContainer(name) {
 
     def output = new ByteArrayOutputStream()
     def execResult = exec {
-        workingDir cwd
-        commandLine 'docker', 'run', "--user=$uid:$gid", '--rm', '-v', "$cwd:/jsass", "bit3/jsass-$name:$type"
+        workingDir project.projectDir
+        commandLine 'docker', 'run', "--user=$uid:$gid", '--rm', '-v', "${project.projectDir}:/jsass", "bit3/jsass-$name:$type"
 
         if (!isVerbose()) {
             standardOutput = output
@@ -283,7 +275,7 @@ task buildNativeLibs {
 }
 
 task buildNativeDarwin64Libs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for darwin x64'
@@ -292,7 +284,7 @@ task buildNativeDarwin64Libs {
 }
 
 task buildNativeLinux32Libs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for linux x32'
@@ -301,7 +293,7 @@ task buildNativeLinux32Libs {
 }
 
 task buildNativeLinux64Libs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for linux x64'
@@ -310,7 +302,7 @@ task buildNativeLinux64Libs {
 }
 
 task buildNativeLinuxArmhf32Libs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for linux armhf32'
@@ -319,7 +311,7 @@ task buildNativeLinuxArmhf32Libs {
 }
 
 task buildNativeWindows32Libs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for windows x32'
@@ -328,7 +320,7 @@ task buildNativeWindows32Libs {
 }
 
 task buildNativeWindows64Libs {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for windows x64'
@@ -348,7 +340,7 @@ task runDockerTests {
 }
 
 task runDockerTestCentOS6x32 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 6 test container'
@@ -357,7 +349,7 @@ task runDockerTestCentOS6x32 {
 }
 
 task runDockerTestCentOS6x64 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 6 test container'
@@ -366,7 +358,7 @@ task runDockerTestCentOS6x64 {
 }
 
 task runDockerTestCentOS7 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker CentOS 7 test container'
@@ -375,7 +367,7 @@ task runDockerTestCentOS7 {
 }
 
 task runDockerTestUbuntu1404 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker ubuntu 14.04 test container'
@@ -384,7 +376,7 @@ task runDockerTestUbuntu1404 {
 }
 
 task runDockerTestUbuntu1604 {
-    dependsOn determineUid, determineGid, determineCurrentWorkingDirectory, determineRepositoryHeadStability, determineDockerAvailable
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Run Docker ubuntu 16.04 test container'
