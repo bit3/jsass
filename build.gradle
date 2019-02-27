@@ -26,20 +26,6 @@ jar {
     }
 }
 
-// Pinned to checkstyle 6.7 because newer versions are incompatible with gradle <=2.6
-// https://issues.gradle.org/browse/GRADLE-3314
-checkstyle {
-    toolVersion = "6.7"
-}
-
-pmd {
-    toolVersion = "4.3"
-}
-
-jacoco {
-    toolVersion = "0.7.6.201602180812"
-}
-
 repositories {
     mavenCentral()
 }
@@ -117,13 +103,13 @@ jar.dependsOn jniHeaders
 
 // javadoc.jar generation
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
 // sources.jar generation
 task sourceJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
