@@ -72,7 +72,7 @@ sonarqube {
 
 // jni header generation
 task jniHeaders(type:Exec) {
-    def javaVersion = org.gradle.api.JavaVersion.current()
+    def javaVersion = JavaVersion.current()
     def isJava9Compatible = javaVersion.isJava9Compatible()
 
     def mainClasspath = sourceSets.main.output.classesDirs.asPath
@@ -132,30 +132,40 @@ def isVerbose() {
 }
 
 task determineUid() {
-    project.ext['uid'] = 0
+    def file = new File(project.buildDir, "uid")
+
+    project.ext['uid'] = file.canRead() ? new String(file.readBytes()) : 0
+    outputs.file(file)
 
     doLast {
         def user = System.getProperty("user.name")
-        def output = new ByteArrayOutputStream();
+        def output = new ByteArrayOutputStream()
         exec {
             commandLine 'id', '-u', user
             standardOutput = output
         }
-        project.ext['uid'] = output.toString().trim()
+        def uid = output.toString().trim()
+        file.write((String) uid)
+        project.ext['uid'] = uid
     }
 }
 
 task determineGid() {
-    project.ext['gid'] = 0
+    def file = new File(project.buildDir, "gid")
+
+    project.ext['gid'] = file.canRead() ? new String(file.readBytes()) : 0
+    outputs.file(file)
 
     doLast {
         def user = System.getProperty("user.name")
-        def output = new ByteArrayOutputStream();
+        def output = new ByteArrayOutputStream()
         exec {
             commandLine 'id', '-g', user
             standardOutput = output
         }
-        project.ext['gid'] = output.toString().trim()
+        def gid = output.toString().trim()
+        file.write((String) gid)
+        project.ext['gid'] = gid
     }
 }
 
@@ -180,6 +190,9 @@ task determineRepositoryHeadStability() {
 }
 
 task determineDockerAvailable() {
+    def file = new File(project.buildDir, "docker")
+    outputs.file(file)
+
     doLast {
         def execResult = exec {
             commandLine 'docker', '--version'
@@ -191,6 +204,8 @@ task determineDockerAvailable() {
         if (execResult.exitValue != 0) {
             throw new GradleException("Docker is required to run this task")
         }
+
+        file.write("available")
     }
 }
 
