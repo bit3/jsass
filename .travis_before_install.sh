@@ -2,7 +2,6 @@
 set -ev
 
 if [[ "linux" == $TRAVIS_OS_NAME ]]; then
-  docker pull registry.gitlab.com/jsass/docker/test-centos5-x64
   docker pull registry.gitlab.com/jsass/docker/test-centos6-x64
   docker pull registry.gitlab.com/jsass/docker/test-centos7
   docker pull registry.gitlab.com/jsass/docker/test-ubuntu12.04
