@@ -15,8 +15,5 @@ fi
 DIR=$(dirname $(dirname $(realpath "$0")))
 cd "$DIR"
 
-# Install docker container
-./gradlew --no-daemon -g /tmp buildDockerBuildLinux64
-
 # Compile binaries
 ./gradlew --no-daemon -g /tmp buildNativeLinux64Libs

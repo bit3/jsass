@@ -105,11 +105,6 @@ final class NativeLoader {
     String fileExtension = "dll";
 
     switch (osArch) {
-      case ARCH_I386:
-      case ARCH_X86:
-        platform = "windows-x32";
-        break;
-
       case ARCH_AMD64:
       case ARCH_X86_64:
         platform = "windows-x64";
@@ -145,11 +140,6 @@ final class NativeLoader {
     String fileExtension = "so";
 
     switch (osArch) {
-      case ARCH_I386:
-      case ARCH_X86:
-        platform = "linux-x32";
-        break;
-
       case ARCH_AMD64:
       case ARCH_X86_64:
         platform = "linux-x64";

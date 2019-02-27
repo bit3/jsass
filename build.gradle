@@ -219,7 +219,7 @@ def pullDockerContainer(name) {
     def output = new ByteArrayOutputStream()
     def execResult = exec {
         workingDir project.projectDir
-        commandLine 'docker', 'pull', "bit3/jsass-$name:$type"
+        commandLine 'docker', 'pull', "registry.gitlab.com/jsass/docker/$name:$type"
 
         if (!isVerbose()) {
             standardOutput = output
@@ -245,7 +245,7 @@ def runDockerContainer(name) {
     def output = new ByteArrayOutputStream()
     def execResult = exec {
         workingDir project.projectDir
-        commandLine 'docker', 'run', "--user=$uid:$gid", '--rm', '-v', "${project.projectDir}:/jsass", "bit3/jsass-$name:$type"
+        commandLine 'docker', 'run', "--user=$uid:$gid", '--rm', '-v', "${project.projectDir}:/jsass", "registry.gitlab.com/jsass/docker/$name:$type"
 
         if (!isVerbose()) {
             standardOutput = output
@@ -259,33 +259,13 @@ def runDockerContainer(name) {
     }
 }
 
-def buildDockerContainer(name) {
-    def output = new ByteArrayOutputStream()
-    def execResult = exec {
-        workingDir "src/main/docker/$name"
-        commandLine 'docker', 'build', '-t', "bit3/jsass-$name:latest", '.'
-
-        if (!isVerbose()) {
-            standardOutput = output
-            errorOutput = output
-            ignoreExitValue = true
-        }
-    }
-
-    if (execResult.exitValue != 0) {
-        throw new GradleException("Docker build failed\n" + output.toString())
-    }
-}
-
 // -----------------------------------------------------------------------------
 
 // Build native libs
 task buildNativeLibs {
     dependsOn 'buildNativeDarwin64Libs',
-              'buildNativeLinux32Libs',
               'buildNativeLinux64Libs',
               'buildNativeLinuxArmhf32Libs',
-              'buildNativeWindows32Libs',
               'buildNativeWindows64Libs'
 }
 
@@ -295,15 +275,6 @@ task buildNativeDarwin64Libs {
     doLast {
         println 'Build native libs for darwin x64'
         runDockerContainer('build-darwin-x64')
-    }
-}
-
-task buildNativeLinux32Libs {
-    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
-
-    doLast {
-        println 'Build native libs for linux x32'
-        runDockerContainer('build-linux-x32')
     }
 }
 
@@ -325,15 +296,6 @@ task buildNativeLinuxArmhf32Libs {
     }
 }
 
-task buildNativeWindows32Libs {
-    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
-
-    doLast {
-        println 'Build native libs for windows x32'
-        runDockerContainer('build-windows-x32')
-    }
-}
-
 task buildNativeWindows64Libs {
     dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
@@ -347,20 +309,10 @@ task buildNativeWindows64Libs {
 
 // Run docker tests
 task runDockerTests {
-    dependsOn 'runDockerTestCentOS6x32',
-              'runDockerTestCentOS6x64',
+    dependsOn 'runDockerTestCentOS6x64',
               'runDockerTestCentOS7',
               'runDockerTestUbuntu1404',
               'runDockerTestUbuntu1604'
-}
-
-task runDockerTestCentOS6x32 {
-    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
-
-    doLast {
-        println 'Run Docker CentOS 6 test container'
-        runDockerContainer('test-centos6-x32')
-    }
 }
 
 task runDockerTestCentOS6x64 {
@@ -396,123 +348,5 @@ task runDockerTestUbuntu1604 {
     doLast {
         println 'Run Docker ubuntu 16.04 test container'
         runDockerContainer('test-ubuntu16.04')
-    }
-}
-
-// -----------------------------------------------------------------------------
-
-// Build docker images tasks
-// Note: these tasks are only for local development purpose,
-// all containers are available on Docker Hub too!
-task buildDocker {
-    dependsOn 'buildDockerBuildDarwin64',
-              'buildDockerBuildLinux64',
-              'buildDockerBuildLinux32', // depends on buildDockerBuildLinux64
-              'buildDockerBuildLinuxArmhf32',
-              'buildDockerBuildWindows32',
-              'buildDockerBuildWindows64',
-              'buildDockerTestCentOS6x32',
-              'buildDockerTestCentOS6x64',
-              'buildDockerTestCentOS7',
-              'buildDockerTestUbuntu1404',
-              'buildDockerTestUbuntu1604'
-}
-
-task buildDockerBuildDarwin64 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker Darwin build container'
-        buildDockerContainer('build-darwin-x64')
-    }
-}
-
-task buildDockerBuildLinux64 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker Linux x64 build container'
-        buildDockerContainer('build-linux-x64')
-    }
-}
-
-task buildDockerBuildLinux32 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker Linux x32 build container'
-        buildDockerContainer('build-linux-x32')
-    }
-}
-
-task buildDockerBuildLinuxArmhf32 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker Linux armhf32 build container'
-        buildDockerContainer('build-linux-armhf32')
-    }
-}
-
-task buildDockerBuildWindows32 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker Linux build container'
-        buildDockerContainer('build-windows-x32')
-    }
-}
-
-task buildDockerBuildWindows64 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker Linux build container'
-        buildDockerContainer('build-windows-x64')
-    }
-}
-
-task buildDockerTestCentOS6x32 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker CentOS 6 test container'
-        buildDockerContainer('test-centos6-x32')
-    }
-}
-
-task buildDockerTestCentOS6x64 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker CentOS 6 test container'
-        buildDockerContainer('test-centos6-x64')
-    }
-}
-
-task buildDockerTestCentOS7 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker CentOS 7 test container'
-        buildDockerContainer('test-centos7')
-    }
-}
-
-task buildDockerTestUbuntu1404 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker ubuntu 14.04 test container'
-        buildDockerContainer('test-ubuntu14.04')
-    }
-}
-
-task buildDockerTestUbuntu1604 {
-    dependsOn determineDockerAvailable
-
-    doLast {
-        println 'Build Docker ubuntu 16.04 test container'
-        buildDockerContainer('test-ubuntu16.04')
     }
 }
