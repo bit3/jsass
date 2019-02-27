@@ -39,37 +39,36 @@ Compatibility
 | --------------------------------------|---------------------------------------------------------------------|
 | ![Java 7][java7]                      | not supported, jsass uses Java 8 features like streams and lambdas! |
 | ![Java 8][java8]                      | fully supported                                                     |
-| ![Java 9][java9]                      | may be supported, but not tested                                    |
-| ![CentOS 5 (x86_64)][centos5]         | fully supported and [tested][travis-ci]                             |
-| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][travis-ci]                             |
-| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][travis-ci]                             |
-| ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][travis-ci]                             |
-| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][travis-ci]                             |
-| ![Windows 32bit][windows32]           | build broken (not analyzed)                                         |
+| ![Java 11][java11]                    | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
+| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][travis-ci] (travis ci)                 |
+| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][travis-ci] (travis ci)                 |
+| ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][travis-ci] (travis ci)                 |
+| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][travis-ci] (travis ci)                 |
+| ![Windows 32bit][windows32]           | not supported                                                       |
 | ![Windows 64bit][windows64]           | supported, but not tested                                           |
-| ![OS X][osx]                          | fully supported and [tested][travis-ci]                             |
-| ![ARM][arm]                           | experimental, untested                                              |
+| ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                 |
+| ![ARM (armhf32)][armhf32]             | experimental, untested                                              |
 
 A note to Windows: jsass may also work on Windows.
 But at the moment there are no automated tests and the platform is not well tested!
 
-[java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat-square
-[java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat-square
-[java9]: https://img.shields.io/badge/Java-9-yellow.svg?style=flat-square
+[java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat
+[java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat
+[java9]: https://img.shields.io/badge/Java-9-yellow.svg?style=flat
 
-[centos5]: https://img.shields.io/badge/CentOS-5%20%28x86_64%29-green.svg?style=flat-square
-[centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat-square
-[centos7]: https://img.shields.io/badge/CentOS-7%20%28x86_64%29-green.svg?style=flat-square
-[ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg?style=flat-square
-[ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg?style=flat-square
+[centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat
+[centos7]: https://img.shields.io/badge/CentOS-7%20%28x86_64%29-green.svg?style=flat
+[ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg?style=flat
+[ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg?style=flat
 
-[windows32]: https://img.shields.io/badge/Windows-32bit_(broken)-red.svg?style=flat-square
-[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg?style=flat-square
+[windows32]: https://img.shields.io/badge/Windows-32bit-red.svg?style=flat
+[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg?style=flat
 
-[osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat-square
+[osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat
 
-[arm]: https://img.shields.io/badge/ARM-experimental-yellow.svg?style=flat-square
+[armhf32]: https://img.shields.io/badge/ARM_(armhf32)-experimental-yellow.svg?style=flat
 
+[gitlab-ci]: https://gitlab.com/jsass/jsass/pipelines
 [travis-ci]: https://travis-ci.org/bit3/jsass
 
 Gradle tasks you should know
