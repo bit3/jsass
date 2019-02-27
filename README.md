@@ -1,4 +1,5 @@
-[![Build Status](https://img.shields.io/travis/bit3/jsass/master.svg?style=flat-square)](https://travis-ci.org/bit3/jsass)
+[![pipeline status](https://gitlab.com/jsass/jsass/badges/master/pipeline.svg)](https://gitlab.com/jsass/jsass/commits/master)
+[![Build Status](https://img.shields.io/travis/bit3/jsass/master.svg?style=flat&logo=travis)](https://travis-ci.org/bit3/jsass)
 [![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](http://jsass.readthedocs.io/en/latest/)
 [![Javadoc Status](https://javadocio-badges.herokuapp.com/io.bit3/jsass/badge.svg)](http://javadoc.io/doc/io.bit3/jsass/)
 
