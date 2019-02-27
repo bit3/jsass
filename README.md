@@ -54,7 +54,7 @@ But at the moment there are no automated tests and the platform is not well test
 
 [java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat
 [java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat
-[java9]: https://img.shields.io/badge/Java-9-yellow.svg?style=flat
+[java11]: https://img.shields.io/badge/Java-11-green.svg?style=flat
 
 [centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat
 [centos7]: https://img.shields.io/badge/CentOS-7%20%28x86_64%29-green.svg?style=flat
