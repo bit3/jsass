@@ -1,3 +1,5 @@
+image: openjdk:11
+
 cache:
   paths:
     - .gradle
