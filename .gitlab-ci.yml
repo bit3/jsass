@@ -1,0 +1,19 @@
+cache:
+  paths:
+    - .gradle
+
+build:
+  stage: build
+  artifacts:
+    expire_in: 30 days
+    paths:
+      - build
+  script:
+    - ./gradlew --info --no-daemon classes testClasses
+
+test:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - ./gradlew --info --no-daemon test
