@@ -80,8 +80,6 @@ Gradle tasks you should know
 
 `gradle buildNativeLibs` build the native libs, using our build docker container.
 
-`gradle buildDocker` build latest version of all docker containers locally. This should only used for development purpose, the containers are available on Docker Hub!
- 
 Build scripts
 -------------
 
@@ -89,11 +87,9 @@ Build scripts
 
 `./bin/make-libjsass-darwin.sh` build the native lib for OS X.
  
-`./bin/make-libjsass-linux-x64.sh` build the native lib for Linux, using our build docker container. This is equivalent to `gradle buildDockerBuildLinux64 buildNativeLinux64Libs`!
+`./bin/make-libjsass-linux-x64.sh` build the native lib for Linux, using our build docker container. This is equivalent to `gradle buildNativeLinux64Libs`!
  
-`./bin/make-libjsass-windows-x32.sh` build the native lib for Windows, using our build docker container. This is equivalent to `gradle buildDockerBuildWindows32 buildNativeWindows32Libs`!
- 
-`./bin/make-libjsass-windows-x64.sh` build the native lib for Windows, using our build docker container. This is equivalent to `gradle buildDockerBuildWindows64 buildNativeWindows64Libs`!
+`./bin/make-libjsass-windows-x64.sh` build the native lib for Windows, using our build docker container. This is equivalent to `gradle buildNativeWindows64Libs`!
  
 How to make a release
 ---------------------
