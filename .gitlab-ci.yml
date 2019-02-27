@@ -13,9 +13,41 @@ build:
   script:
     - ./gradlew --info --no-daemon classes testClasses
 
-test:
+test-openjdk11:
   stage: test
   dependencies:
     - build
   script:
-    - ./gradlew --info --no-daemon test
+    - ./bin/run-ci-tests.sh
+
+test-centos6:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-centos6-x64:latest
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-centos7:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-centos7:latest
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-ubuntu14.04:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-ubuntu14.04:latest
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-ubuntu16.04:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:latest
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
