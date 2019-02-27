@@ -4,7 +4,7 @@ MAINTAINER "Tristan Lins" <tristan@lins.io>
 # Install required tools
 RUN set -x \
     && apt-get update \
-    && apt-get install -y wget unzip \
+    && apt-get install -y wget unzip git \
     && apt-get clean \
     && rm -r /var/lib/apt/lists/*
 

@@ -3,7 +3,7 @@ MAINTAINER "Tristan Lins" <tristan@lins.io>
 
 # Install required tools
 RUN set -x \
-    && yum install -y wget unzip
+    && yum install -y wget unzip git
 
 # Install Java JDK 8
 RUN set -x \
