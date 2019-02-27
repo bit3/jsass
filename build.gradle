@@ -1,7 +1,7 @@
 plugins {
     id 'com.github.ben-manes.versions' version '0.20.0'
     id 'net.researchgate.release' version '2.8.0'
-    id 'org.ajoberstar.grgit' version '2.3.0'
+    id 'org.ajoberstar.grgit' version '3.0.0'
     id 'org.sonarqube' version '2.7'
 }
 
@@ -10,8 +10,6 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: 'signing'
-
-import org.ajoberstar.grgit.*
 
 group = 'io.bit3'
 description = 'SASS compiler using libsass.'
@@ -64,8 +62,7 @@ release {
 
 sonarqube {
     properties {
-        def git = Grgit.open();
-        def description = git.describe()
+        def description = grgit.describe()
 
         property "sonar.exclusions", "**/src/main/libsass/**"
         property "sonar.projectVersion", description
@@ -174,15 +171,14 @@ task determineRepositoryHeadStability() {
     project.ext['headIsUpstream'] = true
 
     doLast {
-        def repo = Grgit.open()
-        def branch = repo.branch.getCurrent()
+        def branch = grgit.branch.current()
 
         if (branch) {
             branch = branch.getName()
         }
 
-        if (!branch || 'HEAD'.equals(branch)) {
-            def tag = repo.describe()
+        if (!branch || 'HEAD' == branch) {
+            def tag = grgit.describe()
 
             project.ext['headIsUpstream'] = !(tag =~ /^\d+(\.\d+)+$/)
         } else {
