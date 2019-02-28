@@ -18,7 +18,7 @@ if( project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")
                     name 'io.bit3:jsass'
                     packaging 'jar'
                     description 'SASS compiler using libsass.'
-                    url 'https://github.com/bit3/jsass'
+                    url 'https://gitlab.com/jsass/jsass'
 
                     licenses {
                         license {
@@ -42,19 +42,19 @@ if( project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")
                     }
 
                     issueManagement {
-                        system 'GitHub'
-                        url 'https://github.com/bit3/jsass/issues'
+                        system 'GitLab.com'
+                        url 'https://gitlab.com/jsass/jsass/issues'
                     }
 
                     ciManagement {
-                        system 'travis'
-                        url 'https://travis-ci.org/bit3/jsass'
+                        system 'GitLab.com'
+                        url 'https://gitlab.com/jsass/jsass/pipelines'
                     }
 
                     scm {
-                        url 'https://github.com/bit3/jsass'
-                        connection 'scm:git:https://github.com/bit3/jsass.git'
-                        developerConnection 'scm:git:git@github.com:bit3/jsass.git'
+                        url 'https://gitlab.com/jsass/jsass'
+                        connection 'scm:git:https://gitlab.com/jsass/jsass.git'
+                        developerConnection 'scm:git:git@gitlab.com:jsass/jsass.git'
                     }
                 }
             }
