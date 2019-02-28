@@ -22,7 +22,7 @@ abstract class AbstractCompileTest {
 
     Assertions.assertEquals(
         expected,
-        actual,
+        Utils.dos2unix(actual),
         () -> String.format("Compile input.%s into %s output format failed", syntax, outputStyle)
     );
   }
