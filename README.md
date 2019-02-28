@@ -46,7 +46,7 @@ Compatibility
 | ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
 | ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
 | ![Windows 32bit][windows32]           | not supported                                                        |
-| ![Windows 64bit][windows64]           | supported, but not tested                                            |
+| ![Windows 64bit][windows64]           | fully supported and [tested][travis-ci] (travis ci)                  |
 | ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                  |
 | ![ARM (armhf32)][armhf32]             | experimental, untested                                               |
 
@@ -64,7 +64,7 @@ But at the moment there are no automated tests and the platform is not well test
 [ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg?style=flat
 
 [windows32]: https://img.shields.io/badge/Windows-32bit-red.svg?style=flat
-[windows64]: https://img.shields.io/badge/Windows-64bit-yellow.svg?style=flat
+[windows64]: https://img.shields.io/badge/Windows-64bit-green.svg?style=flat
 
 [osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat
 
