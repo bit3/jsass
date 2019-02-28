@@ -35,19 +35,20 @@ You can find the changelog in our documentation at [jsass.rtfd.org/en/latest/cha
 Compatibility
 -------------
 
-| Compatibility                         |                                                                     |
-| --------------------------------------|---------------------------------------------------------------------|
-| ![Java 7][java7]                      | not supported, jsass uses Java 8 features like streams and lambdas! |
-| ![Java 8][java8]                      | fully supported                                                     |
-| ![Java 11][java11]                    | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
-| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
-| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
-| ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
-| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                 |
-| ![Windows 32bit][windows32]           | not supported                                                       |
-| ![Windows 64bit][windows64]           | supported, but not tested                                           |
-| ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                 |
-| ![ARM (armhf32)][armhf32]             | experimental, untested                                              |
+| Compatibility                         |                                                                      |
+| --------------------------------------|----------------------------------------------------------------------|
+| ![Java 7][java7]                      | not supported, jsass uses Java 8 features like streams and lambdas!  |
+| ![Java 8][java8]                      | fully supported                                                      |
+| ![Java 11][java11]                    | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![CentOS 6 (i686)][centos6_32]        | not supported (since jsass 5.7.4 the 32bit support was been removed) |
+| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![Windows 32bit][windows32]           | not supported                                                        |
+| ![Windows 64bit][windows64]           | supported, but not tested                                            |
+| ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                  |
+| ![ARM (armhf32)][armhf32]             | experimental, untested                                               |
 
 A note to Windows: jsass may also work on Windows.
 But at the moment there are no automated tests and the platform is not well tested!
@@ -56,6 +57,7 @@ But at the moment there are no automated tests and the platform is not well test
 [java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat
 [java11]: https://img.shields.io/badge/Java-11-green.svg?style=flat
 
+[centos6_32]: https://img.shields.io/badge/CentOS-6%20%28i686%29-red.svg?style=flat
 [centos6]: https://img.shields.io/badge/CentOS-6%20%28x86_64%29-green.svg?style=flat
 [centos7]: https://img.shields.io/badge/CentOS-7%20%28x86_64%29-green.svg?style=flat
 [ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg?style=flat
