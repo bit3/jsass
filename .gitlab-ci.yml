@@ -13,12 +13,12 @@ build:
   script:
     - ./gradlew --info --no-daemon classes testClasses
 
-test-openjdk11:
+check-openjdk11:
   stage: test
   dependencies:
     - build
   script:
-    - ./bin/run-ci-tests.sh
+    - ./gradlew --no-daemon --info --full-stacktrace -g /tmp clean check
 
 test-centos6:
   stage: test
