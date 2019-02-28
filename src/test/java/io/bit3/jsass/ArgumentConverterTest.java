@@ -1,15 +1,9 @@
 package io.bit3.jsass;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import io.bit3.jsass.context.Context;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,30 +11,17 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Test for argument converters.
  */
-@RunWith(Parameterized.class)
 public class ArgumentConverterTest {
   /**
    * The source to compile.
    */
+  // language=plain
   private static final String SOURCE = "foo { bar: func(%s); }";
-
-  /**
-   * The sass value string representation.
-   */
-  private String sassValue;
-
-  /**
-   * The expected java object.
-   */
-  private Object expectedValue;
-
-  /**
-   * The function provider mock.
-   */
-  private AbstractedCalledMock mock;
 
   /**
    * The jsass compiler.
@@ -53,24 +34,10 @@ public class ArgumentConverterTest {
   private Options options;
 
   /**
-   * Create new test.
-   */
-  public ArgumentConverterTest(
-      String sassValue,
-      Object expectedValue,
-      AbstractedCalledMock mock
-  ) {
-    this.sassValue = sassValue;
-    this.expectedValue = expectedValue;
-    this.mock = mock;
-  }
-
-  /**
    * Return data for running the test.
    *
    * <p>This data contain a set of syntax (scss or sass) and output style in all combinations.</p>
    */
-  @Parameterized.Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(
         new Object[][]{
@@ -93,14 +60,19 @@ public class ArgumentConverterTest {
    *
    * @throws URISyntaxException Throws if the resource URI is invalid.
    */
-  @Before
+  @BeforeEach
   public void setUp() throws IOException, URISyntaxException {
     compiler = new Compiler();
     options = new Options();
   }
 
-  @Test
-  public void testCall() throws Exception {
+  @ParameterizedTest
+  @MethodSource("data")
+  public void testCall(
+      String sassValue,
+      Object expectedValue,
+      AbstractedCalledMock mock
+  ) throws Exception {
     options.getFunctionProviders().add(mock);
 
     String source = String.format(SOURCE, sassValue);

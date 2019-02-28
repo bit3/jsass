@@ -1,11 +1,11 @@
 package io.bit3.jsass;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PrecisionTest {
 
@@ -19,7 +19,7 @@ public class PrecisionTest {
   /**
    * Set up test defaults.
    */
-  @Before
+  @BeforeEach
   public void init() {
     compiler = new Compiler();
     options = new Options();

@@ -1,10 +1,11 @@
 package io.bit3.jsass;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 abstract class AbstractCompileTest {
@@ -12,32 +13,30 @@ abstract class AbstractCompileTest {
   OutputStyle outputStyle;
   TestFunctions testFunctions;
 
-  AbstractCompileTest(String syntax, OutputStyle outputStyle) {
-    this.syntax = syntax;
-    this.outputStyle = outputStyle;
+  AbstractCompileTest() {
     this.testFunctions = new TestFunctions();
   }
 
   void assertEquals(String actual, URL expectedSource) throws IOException {
-    String expected = IOUtils.toString(expectedSource);
+    String expected = IOUtils.toString(expectedSource, StandardCharsets.UTF_8);
 
-    Assert.assertEquals(
-        String.format("Compile input.%s into %s output format failed", syntax, outputStyle),
+    Assertions.assertEquals(
         expected,
-        actual
+        actual,
+        () -> String.format("Compile input.%s into %s output format failed", syntax, outputStyle)
     );
   }
 
   void assertSpecialFunctions() {
-    Assert.assertEquals(
+    Assertions.assertEquals(
         Collections.singletonList("I'm a warn message"),
         testFunctions.warnMessages
     );
-    Assert.assertEquals(
+    Assertions.assertEquals(
         Collections.singletonList("I'm an error message"),
         testFunctions.errorMessages
     );
-    Assert.assertEquals(
+    Assertions.assertEquals(
         Collections.singletonList("I'm a debug message"),
         testFunctions.debugMessages
     );
