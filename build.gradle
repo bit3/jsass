@@ -6,7 +6,6 @@ plugins {
 }
 
 apply plugin: 'java'
-apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: 'signing'
