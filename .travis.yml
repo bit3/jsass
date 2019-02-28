@@ -10,9 +10,6 @@ matrix:
     - os: osx
     - os: windows
 
-before_install:
-  - ./.travis_before_install.sh
-
 install: true
 
 script:
