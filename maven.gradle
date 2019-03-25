@@ -1,9 +1,9 @@
 apply plugin: 'maven'
 
-if( project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")){
-    uploadArchives {
-        repositories {
-            mavenDeployer {
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
                 repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
@@ -13,49 +13,49 @@ if( project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")
                 snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
                     authentication(userName: ossrhUsername, password: ossrhPassword)
                 }
+            }
 
-                pom.project {
-                    name 'io.bit3:jsass'
-                    packaging 'jar'
-                    description 'SASS compiler using libsass.'
+            pom.project {
+                name 'io.bit3:jsass'
+                packaging 'jar'
+                description 'SASS compiler using libsass.'
+                url 'https://gitlab.com/jsass/jsass'
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://raw.githubusercontent.com/bit3/jsass/master/LICENSE'
+                    }
+                }
+
+                organization {
+                    name 'bit3'
+                    url 'http://bit3.io'
+                }
+
+                developers {
+                    developer {
+                        id 'tril'
+                        name 'Tristan Lins'
+                        email 'tristan@lins.io'
+                        url 'https://tristan.lins.io'
+                    }
+                }
+
+                issueManagement {
+                    system 'GitLab.com'
+                    url 'https://gitlab.com/jsass/jsass/issues'
+                }
+
+                ciManagement {
+                    system 'GitLab.com'
+                    url 'https://gitlab.com/jsass/jsass/pipelines'
+                }
+
+                scm {
                     url 'https://gitlab.com/jsass/jsass'
-
-                    licenses {
-                        license {
-                            name 'MIT'
-                            url 'https://raw.githubusercontent.com/bit3/jsass/master/LICENSE'
-                        }
-                    }
-
-                    organization {
-                        name 'bit3'
-                        url 'http://bit3.io'
-                    }
-
-                    developers {
-                        developer {
-                            id 'tril'
-                            name 'Tristan Lins'
-                            email 'tristan@lins.io'
-                            url 'https://tristan.lins.io'
-                        }
-                    }
-
-                    issueManagement {
-                        system 'GitLab.com'
-                        url 'https://gitlab.com/jsass/jsass/issues'
-                    }
-
-                    ciManagement {
-                        system 'GitLab.com'
-                        url 'https://gitlab.com/jsass/jsass/pipelines'
-                    }
-
-                    scm {
-                        url 'https://gitlab.com/jsass/jsass'
-                        connection 'scm:git:https://gitlab.com/jsass/jsass.git'
-                        developerConnection 'scm:git:git@gitlab.com:jsass/jsass.git'
-                    }
+                    connection 'scm:git:https://gitlab.com/jsass/jsass.git'
+                    developerConnection 'scm:git:git@gitlab.com:jsass/jsass.git'
                 }
             }
         }
