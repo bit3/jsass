@@ -271,6 +271,7 @@ task buildNativeLibs {
     dependsOn 'buildNativeDarwin64Libs',
               'buildNativeLinux64Libs',
               'buildNativeLinuxArmhf32Libs',
+              'buildNativeLinuxAarch64Libs',
               'buildNativeWindows64Libs'
 }
 
@@ -298,6 +299,15 @@ task buildNativeLinuxArmhf32Libs {
     doLast {
         println 'Build native libs for linux armhf32'
         runDockerContainer('build-linux-armhf32')
+    }
+}
+
+task buildNativeLinuxAarch64Libs {
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for linux aarch64'
+        runDockerContainer('build-linux-aarch64')
     }
 }
 
