@@ -1,9 +1,9 @@
 kind: pipeline
-name: armhf
+name: arm
 
 platform:
   os: linux
-  arch: armhf
+  arch: arm
 
 steps:
   - name: build
