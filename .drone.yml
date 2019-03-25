@@ -1,0 +1,27 @@
+kind: pipeline
+name: armhf
+
+platform:
+  os: linux
+  arch: armhf
+
+steps:
+  - name: build
+    image: openjdk:8-jdk
+    commands:
+      - ./bin/run-ci-tests.sh
+
+---
+
+kind: pipeline
+name: arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: build
+    image: openjdk:8-jdk
+    commands:
+      - ./bin/run-ci-tests.sh
