@@ -75,6 +75,14 @@ sonarqube {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled false
+    }
+}
+
 // jni header generation
 task jniHeaders(type:Exec) {
     def javaVersion = JavaVersion.current()
