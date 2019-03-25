@@ -51,7 +51,8 @@ Compatibility
 | ![Windows 32bit][windows32]           | not supported                                                        |
 | ![Windows 64bit][windows64]           | fully supported and [tested][travis-ci] (travis ci)                  |
 | ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                  |
-| ![ARM (armhf32)][armhf32]             | experimental, untested                                               |
+| ![ARM (armhf32)][armhf32]             | experimental, tests are failing [tested][drone-io] (drone.io)        |
+| ![ARM64 (aarch64)][aarch64]           | fully supported and [tested][drone-io] (drone.io)                    |
 
 A note to Windows: jsass may also work on Windows.
 But at the moment there are no automated tests and the platform is not well tested!
@@ -72,9 +73,11 @@ But at the moment there are no automated tests and the platform is not well test
 [osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat
 
 [armhf32]: https://img.shields.io/badge/ARM_(armhf32)-experimental-yellow.svg?style=flat
+[aarch64]: https://img.shields.io/badge/ARM64_(aarch64)-green.svg?style=flat
 
 [gitlab-ci]: https://gitlab.com/jsass/jsass/pipelines
 [travis-ci]: https://travis-ci.org/bit3/jsass
+[drone-io]: https://cloud.drone.io/bit3/jsass
 
 Gradle tasks you should know
 ----------------------------
