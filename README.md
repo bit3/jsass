@@ -48,11 +48,11 @@ Compatibility
 | ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
 | ![ubuntu 12.04 (x86_64)][ubuntu12.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
 | ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![ARM (armhf32)][armhf32]             | experimental, [tests][drone-io] are failing (drone.io)               |
+| ![ubuntu 16.04 (aarch64)][aarch64]    | fully supported and [tested][drone-io] (drone.io)                    |
 | ![Windows 32bit][windows32]           | not supported                                                        |
 | ![Windows 64bit][windows64]           | fully supported and [tested][travis-ci] (travis ci)                  |
 | ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                  |
-| ![ARM (armhf32)][armhf32]             | experimental, tests are failing [tested][drone-io] (drone.io)        |
-| ![ARM64 (aarch64)][aarch64]           | fully supported and [tested][drone-io] (drone.io)                    |
 
 A note to Windows: jsass may also work on Windows.
 But at the moment there are no automated tests and the platform is not well tested!
@@ -67,13 +67,13 @@ But at the moment there are no automated tests and the platform is not well test
 [ubuntu12.04]: https://img.shields.io/badge/ubuntu-12.04%20%28x86_64%29-green.svg?style=flat
 [ubuntu14.04]: https://img.shields.io/badge/ubuntu-14.04%20%28x86_64%29-green.svg?style=flat
 
+[armhf32]: https://img.shields.io/badge/ubuntu-ARM_(armhf32)_experimental-red.svg?style=flat
+[aarch64]: https://img.shields.io/badge/ubuntu-ARM64%20(aarch64)-green.svg?style=flat
+
 [windows32]: https://img.shields.io/badge/Windows-32bit-red.svg?style=flat
 [windows64]: https://img.shields.io/badge/Windows-64bit-green.svg?style=flat
 
 [osx]: https://img.shields.io/badge/OS%20X-10+-green.svg?style=flat
-
-[armhf32]: https://img.shields.io/badge/ARM_(armhf32)-experimental-yellow.svg?style=flat
-[aarch64]: https://img.shields.io/badge/ARM64_(aarch64)-green.svg?style=flat
 
 [gitlab-ci]: https://gitlab.com/jsass/jsass/pipelines
 [travis-ci]: https://travis-ci.org/bit3/jsass
