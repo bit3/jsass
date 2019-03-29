@@ -9,7 +9,6 @@ steps:
   - name: build
     image: openjdk:8-jdk-stretch
     commands:
-      - lsb_release -a
       - uname -a
       - cat /proc/cpuinfo
       - mkdir ./tmp
