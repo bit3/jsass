@@ -7,7 +7,7 @@ platform:
 
 steps:
   - name: build
-    image: openjdk:8-jdk
+    image: openjdk:8-jdk-stretch
     commands:
       - mkdir ./tmp
       - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
@@ -23,7 +23,7 @@ platform:
 
 steps:
   - name: build
-    image: openjdk:8-jdk
+    image: openjdk:8-jdk-stretch
     commands:
       - mkdir ./tmp
       - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
