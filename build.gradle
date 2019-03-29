@@ -1,3 +1,6 @@
+import java.nio.file.Paths
+import java.nio.file.Path
+
 plugins {
     id 'com.github.ben-manes.versions' version '0.20.0'
     id 'net.researchgate.release' version '2.8.0'
@@ -61,7 +64,8 @@ test {
     systemProperty 'org.slf4j.simpleLogger.log.io.bit3.jsass', 'trace'
 
     if (project.hasProperty('test.tmpdir')) {
-        systemProperty 'java.io.tmpdir', project.findProperty('test.tmpdir')
+        Path path = Paths.resolve(Objects.toString(project.findProperty('test.tmpdir')))
+        systemProperty 'java.io.tmpdir', path.toAbsolutePath().normalize().toString()
     }
 }
 
