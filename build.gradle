@@ -57,6 +57,8 @@ dependencyUpdates.resolutionStrategy {
 
 test {
     useJUnitPlatform()
+
+    systemProperty 'org.slf4j.simpleLogger.log.io.bit3.jsass', 'trace'
 }
 
 release {

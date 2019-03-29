@@ -63,6 +63,8 @@ final class NativeLoader {
     String osArch = System.getProperty("os.arch").toLowerCase();
     String resourceName = null;
 
+    LOG.trace("Load library \"{}\" for os {}:{}", libraryFileName, osName, osArch);
+
     if (osName.startsWith(OS_WIN)) {
       resourceName = determineWindowsLibrary(libraryFileName, osName, osArch);
     } else if (osName.startsWith(OS_LINUX)) {
@@ -225,6 +227,8 @@ final class NativeLoader {
     ) {
       IOUtils.copy(in, out);
     }
+
+    LOG.trace("Library \"{}\" copied to \"{}\"", libraryName, file.getAbsolutePath());
 
     return file.getAbsolutePath();
   }
