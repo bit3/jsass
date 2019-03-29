@@ -9,7 +9,7 @@ steps:
   - name: build
     image: openjdk:8-jdk
     commands:
-      - ./bin/run-ci-tests.sh
+      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
 
 ---
 
@@ -24,4 +24,4 @@ steps:
   - name: build
     image: openjdk:8-jdk
     commands:
-      - ./bin/run-ci-tests.sh
+      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp

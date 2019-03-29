@@ -59,6 +59,10 @@ test {
     useJUnitPlatform()
 
     systemProperty 'org.slf4j.simpleLogger.log.io.bit3.jsass', 'trace'
+
+    if (project.hasProperty('test.tmpdir')) {
+        systemProperty 'java.io.tmpdir', project.findProperty('test.tmpdir')
+    }
 }
 
 release {
