@@ -9,7 +9,8 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk8
     commands:
-      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
+      - mkdir -p .gradle .gradle_home
+      - gradle --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test
 
 ---
 
@@ -24,7 +25,8 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk11
     commands:
-      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
+      - mkdir -p .gradle .gradle_home
+      - gradle --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test
 
 ---
 
@@ -39,7 +41,8 @@ steps:
 #  - name: build
 #    image: gradle:5.2.1-jdk12
 #    commands:
-#      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
+#      - mkdir -p .gradle .gradle_home
+#      - gradle --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test
 #
 #---
 
@@ -54,7 +57,8 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk8
     commands:
-      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
+      - mkdir -p .gradle .gradle_home
+      - gradle --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test
 
 ---
 
@@ -69,7 +73,8 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk11
     commands:
-      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
+      - mkdir -p .gradle .gradle_home
+      - gradle --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test
 
 #---
 #
@@ -84,4 +89,5 @@ steps:
 #  - name: build
 #    image: gradle:5.2.1-jdk12
 #    commands:
-#      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
+#      - mkdir -p .gradle .gradle_home
+#      - gradle --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test
