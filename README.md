@@ -36,6 +36,17 @@ You can find the changelog in our documentation at [jsass.rtfd.org/en/latest/cha
 
 [changelog]: http://jsass.readthedocs.org/en/latest/changelog.html
 
+Third party projects
+--------------------
+
+Third party projects using JSASS.
+
+- [libsass-maven-plugin](https://github.com/warmuuh/libsass-maven-plugin)
+- [lein-jsass (Clojure)](https://clojars.org/lein-jsass)
+- [oVirt](https://www.ovirt.org/)
+
+Merge requests for further projects are welcome :-)
+
 Compatibility Overview
 ----------------------
 
