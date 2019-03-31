@@ -7,12 +7,9 @@ platform:
 
 steps:
   - name: build
-    image: openjdk:8-jdk-stretch
+    image: gradle:5.2.1-jdk8
     commands:
-      - uname -a
-      - cat /proc/cpuinfo
-      - mkdir ./tmp
-      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+      - ./bin/run-ci-tests.sh
 
 ---
 
@@ -25,32 +22,26 @@ platform:
 
 steps:
   - name: build
-    image: openjdk:11-jdk-stretch
+    image: gradle:5.2.1-jdk11
     commands:
-      - uname -a
-      - cat /proc/cpuinfo
-      - mkdir ./tmp
-      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+      - ./bin/run-ci-tests.sh
 
 ---
 
-kind: pipeline
-name: test-arm-openjdk12
-
-platform:
-  os: linux
-  arch: arm
-
-steps:
-  - name: build
-    image: openjdk:12-jdk-stretch
-    commands:
-      - uname -a
-      - cat /proc/cpuinfo
-      - mkdir ./tmp
-      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
-
----
+#kind: pipeline
+#name: test-arm-openjdk12
+#
+#platform:
+#  os: linux
+#  arch: arm
+#
+#steps:
+#  - name: build
+#    image: gradle:5.2.1-jdk12
+#    commands:
+#      - ./bin/run-ci-tests.sh
+#
+#---
 
 kind: pipeline
 name: test-arm64-openjdk8
@@ -61,10 +52,9 @@ platform:
 
 steps:
   - name: build
-    image: openjdk:8-jdk-stretch
+    image: gradle:5.2.1-jdk8
     commands:
-      - mkdir ./tmp
-      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+      - ./bin/run-ci-tests.sh
 
 ---
 
@@ -77,23 +67,21 @@ platform:
 
 steps:
   - name: build
-    image: openjdk:11-jdk-stretch
+    image: gradle:5.2.1-jdk11
     commands:
-      - mkdir ./tmp
-      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+      - ./bin/run-ci-tests.sh
 
----
-
-kind: pipeline
-name: test-arm64-openjdk12
-
-platform:
-  os: linux
-  arch: arm64
-
-steps:
-  - name: build
-    image: openjdk:12-jdk-stretch
-    commands:
-      - mkdir ./tmp
-      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+#---
+#
+#kind: pipeline
+#name: test-arm64-openjdk12
+#
+#platform:
+#  os: linux
+#  arch: arm64
+#
+#steps:
+#  - name: build
+#    image: gradle:5.2.1-jdk12
+#    commands:
+#      - ./bin/run-ci-tests.sh
