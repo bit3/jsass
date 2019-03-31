@@ -38,6 +38,7 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26'
+    compile group: 'org.sharegov', name: 'mjson', version: '1.4.0'
     testRuntime group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.26'
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.3.2')
     testImplementation('org.junit.jupiter:junit-jupiter-params:5.3.2')
