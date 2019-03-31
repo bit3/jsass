@@ -1,5 +1,5 @@
 kind: pipeline
-name: arm
+name: test-arm-openjdk8
 
 platform:
   os: linux
@@ -17,7 +17,43 @@ steps:
 ---
 
 kind: pipeline
-name: arm64
+name: test-arm-openjdk11
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: build
+    image: openjdk:11-jdk-stretch
+    commands:
+      - uname -a
+      - cat /proc/cpuinfo
+      - mkdir ./tmp
+      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+
+---
+
+kind: pipeline
+name: test-arm-openjdk12
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: build
+    image: openjdk:12-jdk-stretch
+    commands:
+      - uname -a
+      - cat /proc/cpuinfo
+      - mkdir ./tmp
+      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+
+---
+
+kind: pipeline
+name: test-arm64-openjdk8
 
 platform:
   os: linux
@@ -26,6 +62,38 @@ platform:
 steps:
   - name: build
     image: openjdk:8-jdk-stretch
+    commands:
+      - mkdir ./tmp
+      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+
+---
+
+kind: pipeline
+name: test-arm64-openjdk11
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: build
+    image: openjdk:11-jdk-stretch
+    commands:
+      - mkdir ./tmp
+      - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
+
+---
+
+kind: pipeline
+name: test-arm64-openjdk12
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: build
+    image: openjdk:12-jdk-stretch
     commands:
       - mkdir ./tmp
       - ./bin/run-ci-tests.sh -Ptest.tmpdir=./tmp
