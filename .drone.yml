@@ -10,7 +10,7 @@ steps:
     image: gradle:5.2.1-jdk8
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "$PWD/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 ---
 
@@ -26,7 +26,7 @@ steps:
     image: gradle:5.2.1-jdk11
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "$PWD/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 ---
 
@@ -42,7 +42,7 @@ steps:
 #    image: gradle:5.2.1-jdk12
 #    commands:
 #      - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-#      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "$PWD/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+#      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 #
 #---
 
@@ -58,7 +58,7 @@ steps:
     image: gradle:5.2.1-jdk8
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "$PWD/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 ---
 
@@ -74,7 +74,7 @@ steps:
     image: gradle:5.2.1-jdk11
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "$PWD/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 #---
 #
@@ -90,4 +90,4 @@ steps:
 #    image: gradle:5.2.1-jdk12
 #    commands:
 #      - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-#      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "$PWD/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+#      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
