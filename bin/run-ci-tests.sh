@@ -6,4 +6,6 @@ if [[ -d .gradle ]]; then
   rm -rf .gradle
 fi
 
-./gradlew --no-daemon --info --full-stacktrace -g /tmp clean test "$@"
+mkdir -p .gradle_home
+
+./gradlew --no-daemon --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" clean test "$@"
