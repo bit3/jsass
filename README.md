@@ -67,7 +67,7 @@ Compatibility Overview
 | **Windows**                           |                                                                      |
 | ![Windows 32bit][windows32]           | not supported                                                        |
 | ![Windows 64bit][windows64]           | fully supported and [tested][travis-ci] (travis ci)                  |
-| **MacOS**                             |                                                                      |
+| **macOS**                             |                                                                      |
 | ![macOS][macos]                       | fully supported and [tested][travis-ci] (travis ci)                  |
 | **Others**                            |                                                                      |
 | ![Solaris][solaris]                   | not supported                                                        |
@@ -118,7 +118,7 @@ A matrix of all CI systems and jobs, used for testing.
 | ![ARM (armhf32)][armhf32]             | ![Drone.io / test-arm-openjdk8][drone.io-test-arm-openjdk8]                   | ![Drone.io / test-arm-openjdk8][drone.io-test-arm-openjdk11]                   |                                                                                |
 | ![ubuntu 16.04 (aarch64)][aarch64]    | ![Drone.io / test-arm64-openjdk8][drone.io-test-arm64-openjdk8]               | ![Drone.io / test-arm64-openjdk8][drone.io-test-arm64-openjdk11]               |                                                                                |
 | ![Windows 64bit][windows64]           |                                                                               | ![Travis CI / OS: Windows][travis-ci-os-windows]                               |                                                                                |
-| ![OS X][osx]                          |                                                                               | ![Travis CI / OS: MacOS][travis-ci-os-macos]                                   |                                                                                |
+| ![macOS][macos]                       |                                                                               | ![Travis CI / OS: macOS][travis-ci-os-macos]                                   |                                                                                |
 
 [gitlab-ci-test-centos6-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--centos6--openjdk8-blue.svg?style=flat
 [gitlab-ci-test-centos6-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--centos6--openjdk11-blue.svg?style=flat
