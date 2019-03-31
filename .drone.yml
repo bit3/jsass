@@ -9,7 +9,7 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk8
     commands:
-      - ./bin/run-ci-tests.sh
+      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
 
 ---
 
@@ -24,7 +24,7 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk11
     commands:
-      - ./bin/run-ci-tests.sh
+      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
 
 ---
 
@@ -39,7 +39,7 @@ steps:
 #  - name: build
 #    image: gradle:5.2.1-jdk12
 #    commands:
-#      - ./bin/run-ci-tests.sh
+#      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
 #
 #---
 
@@ -54,7 +54,7 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk8
     commands:
-      - ./bin/run-ci-tests.sh
+      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
 
 ---
 
@@ -69,7 +69,7 @@ steps:
   - name: build
     image: gradle:5.2.1-jdk11
     commands:
-      - ./bin/run-ci-tests.sh
+      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
 
 #---
 #
@@ -84,4 +84,4 @@ steps:
 #  - name: build
 #    image: gradle:5.2.1-jdk12
 #    commands:
-#      - ./bin/run-ci-tests.sh
+#      - gradle --no-daemon --info --full-stacktrace -g /tmp clean test
