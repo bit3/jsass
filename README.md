@@ -55,6 +55,7 @@ Compatibility Overview
 | ![Java 7][java7]                      | not supported, jsass uses Java 8 features like streams and lambdas!  |
 | ![Java 8][java8]                      | fully supported                                                      |
 | ![Java 11][java11]                    | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| **Linux**                             |                                                                      |
 | ![CentOS 6 (i686)][centos6_32]        | not supported (since jsass 5.7.4 the 32bit support was been removed) |
 | ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
 | ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
@@ -63,9 +64,14 @@ Compatibility Overview
 | ![ubuntu 18.04 (x86_64)][ubuntu18.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
 | ![Debian Stretch (armhf32)][armhf32]  | experimental, [tests][drone-io] are failing (drone.io)               |
 | ![Debian Stretch (aarch64)][aarch64]  | fully supported and [tested][drone-io] (drone.io)                    |
+| **Windows**                           |                                                                      |
 | ![Windows 32bit][windows32]           | not supported                                                        |
 | ![Windows 64bit][windows64]           | fully supported and [tested][travis-ci] (travis ci)                  |
-| ![OS X][osx]                          | fully supported and [tested][travis-ci] (travis ci)                  |
+| **MacOS**                             |                                                                      |
+| ![macOS][macos]                       | fully supported and [tested][travis-ci] (travis ci)                  |
+| **Others**                            |                                                                      |
+| ![Solaris][solaris]                   | not supported                                                        |
+| ![FreeBSD][freebsd]                   | not supported                                                        |
 
 A note to Windows: jsass may also work on Windows.
 But at the moment there are no automated tests and the platform is not well tested!
@@ -88,11 +94,14 @@ But at the moment there are no automated tests and the platform is not well test
 [windows32]: https://img.shields.io/badge/Windows-32bit-red.svg?style=flat
 [windows64]: https://img.shields.io/badge/Windows-64bit-green.svg?style=flat
 
-[osx]: https://img.shields.io/badge/OS_X-10+-green.svg?style=flat
+[macos]: https://img.shields.io/badge/macOS-10+-green.svg?style=flat
 
 [gitlab-ci]: https://gitlab.com/jsass/jsass/pipelines
 [travis-ci]: https://travis-ci.org/bit3/jsass
 [drone-io]: https://cloud.drone.io/bit3/jsass
+
+[solaris]: https://img.shields.io/badge/Solaris-red.svg?style=flat
+[freebsd]: https://img.shields.io/badge/FreeBSD-red.svg?style=flat
 
 Testing Matrix
 --------------
@@ -140,7 +149,7 @@ A matrix of all CI systems and jobs, used for testing.
 [drone.io-test-arm64-openjdk12]: https://img.shields.io/badge/Drone.io-test--arm64--openjdk12-blue.svg?style=flat
 
 [travis-ci-os-windows]: https://img.shields.io/badge/Travis_CI-OS:_Windows-blue.svg?style=flat
-[travis-ci-os-macos]: https://img.shields.io/badge/Travis_CI-OS:_MacOS-blue.svg?style=flat
+[travis-ci-os-macos]: https://img.shields.io/badge/Travis_CI-OS:_macOS-blue.svg?style=flat
 
 Gradle tasks you should know
 ----------------------------
