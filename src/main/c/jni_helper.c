@@ -193,13 +193,13 @@ jobject call_object_method(
  *
  * @return The return value of the method.
  */
-const char *call_string_method(
+char *call_string_method(
         JNIEnv *env,
         jobject j_object,
         const char *method_name
 ) {
     jclass j_class = (*env)->GetObjectClass(env, j_object);
-    const char *result = call_class_string_method(env, j_object, j_class, method_name);
+    char *result = call_class_string_method(env, j_object, j_class, method_name);
 
     (*env)->DeleteLocalRef(env, j_class);
 
