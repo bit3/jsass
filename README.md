@@ -43,6 +43,7 @@ Third party projects using JSASS.
 
 - [libsass-maven-plugin](https://github.com/warmuuh/libsass-maven-plugin)
 - [lein-jsass (Clojure)](https://clojars.org/lein-jsass)
+- [Deraen/sass4clj (Clojure)](https://github.com/Deraen/sass4clj)
 - [oVirt](https://www.ovirt.org/)
 
 Merge requests for further projects are welcome :-)
