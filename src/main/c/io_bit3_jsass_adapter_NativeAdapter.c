@@ -995,8 +995,10 @@ JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_sass2scss
     (*env)->DeleteLocalRef(env, j_adapter);
 
     char *c_output = sass2scss(c_source, c_options);
+    (*env)->ReleaseStringUTFChars(env, j_source, c_source);
 
     jstring j_output = (*env)->NewStringUTF(env, c_output);
+    free(c_output);
 
     return j_output;
 }
