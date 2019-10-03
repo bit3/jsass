@@ -42,6 +42,7 @@
   .operatory {
     $input-padding-y: 0.5rem;
     $input-border-width: 1px;
+
     padding-top: calc(#{$input-padding-y} + #{$input-border-width});
   }
 }

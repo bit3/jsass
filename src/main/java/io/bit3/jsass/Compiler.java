@@ -158,4 +158,8 @@ public class Compiler {
 
     return new Output(output.getCss(), json.toString());
   }
+
+  public static String sass2scss(String source, int options) {
+    return NativeAdapter.sass2scss(source, options);
+  }
 }
