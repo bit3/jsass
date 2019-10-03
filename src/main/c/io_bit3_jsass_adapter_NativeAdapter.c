@@ -986,3 +986,17 @@ JNIEXPORT jobjectArray JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileS
 
     return output;
 }
+
+JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_sass2scss
+        (JNIEnv *env, jclass j_adapter, jstring j_source, jint j_options) {
+    const char *c_source = (*env)->GetStringUTFChars(env, j_source, 0);
+    const int c_options = (int) j_options;
+
+    (*env)->DeleteLocalRef(env, j_adapter);
+
+    char *c_output = sass2scss(c_source, c_options);
+
+    jstring j_output = (*env)->NewStringUTF(env, c_output);
+
+    return j_output;
+}

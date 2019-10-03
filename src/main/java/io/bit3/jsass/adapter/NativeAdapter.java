@@ -203,4 +203,9 @@ public class NativeAdapter {
    */
   private static native Output compileString(NativeStringContext context)
       throws CompilationException;
+
+  /**
+   * Native call.
+   */
+  public static native String sass2scss(String source, int options);
 }
