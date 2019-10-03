@@ -21,7 +21,7 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 
 #### Related (third-party) projects
 
-- [Libsass Maven Plugin](https://github.com/warmuuh/libsass-maven-plugin)
+- [Libsass Maven Plugin](https://gitlab.com/haynes/libsass-maven-plugin)
 
 Example
 -------
@@ -41,7 +41,7 @@ Third party projects
 
 Third party projects using JSASS.
 
-- [libsass-maven-plugin](https://github.com/warmuuh/libsass-maven-plugin)
+- [libsass-maven-plugin](https://gitlab.com/haynes/libsass-maven-plugin)
 - [lein-jsass (Clojure)](https://clojars.org/lein-jsass)
 - [oVirt](https://www.ovirt.org/)
 
