@@ -160,10 +160,6 @@ How to make a release
 $ ./gradlew clean release
 $ git checkout $(git describe --abbrev=0)
 $ ./gradlew clean uploadArchives
-$ git checkout master
-$ git merge --no-ff $(git describe --abbrev=0 develop)
-$ git push origin master
-$ git checkout develop
 ```
 
 Dont forget to release the artifact from [staging repository](https://oss.sonatype.org/#stagingRepositories)!
