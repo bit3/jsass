@@ -38,6 +38,7 @@ Third party projects
 Third party projects using JSASS.
 
 - [libsass-maven-plugin](https://gitlab.com/haynes/libsass-maven-plugin)
+- [JSass Gradle Plugin](https://plugins.gradle.org/plugin/io.freefair.jsass-java)
 - [lein-jsass (Clojure)](https://clojars.org/lein-jsass)
 - [Deraen/sass4clj (Clojure)](https://github.com/Deraen/sass4clj)
 - [oVirt](https://www.ovirt.org/)
