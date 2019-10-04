@@ -19,10 +19,6 @@ For complete documentation, see [jsass.rtfd.org][jsass-docs].
 [libsass]: https://github.com/sass/libsass
 [jsass-docs]: http://jsass.rtfd.org/
 
-#### Related (third-party) projects
-
-- [Libsass Maven Plugin](https://gitlab.com/haynes/libsass-maven-plugin)
-
 Example
 -------
 
