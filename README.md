@@ -69,9 +69,6 @@ Compatibility Overview
 | ![Solaris][solaris]                   | not supported                                                        |
 | ![FreeBSD][freebsd]                   | not supported                                                        |
 
-A note to Windows: jsass may also work on Windows.
-But at the moment there are no automated tests and the platform is not well tested!
-
 [java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat
 [java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat
 [java11]: https://img.shields.io/badge/Java-11-green.svg?style=flat
