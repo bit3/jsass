@@ -38,9 +38,9 @@ test-centos6-openjdk11:
   script:
     - ./bin/run-ci-tests.sh
 
-test-centos6-openjdk12:
+test-centos6-openjdk13:
   stage: test
-  image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk12
+  image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk13
   dependencies:
     - build
   script:
@@ -62,9 +62,9 @@ test-centos7-openjdk11:
   script:
     - ./bin/run-ci-tests.sh
 
-test-centos7-openjdk12:
+test-centos7-openjdk13:
   stage: test
-  image: registry.gitlab.com/jsass/docker/test-centos7:openjdk12
+  image: registry.gitlab.com/jsass/docker/test-centos7:openjdk13
   dependencies:
     - build
   script:
@@ -86,9 +86,9 @@ test-ubuntu14.04-openjdk11:
   script:
     - ./bin/run-ci-tests.sh
 
-test-ubuntu14.04-openjdk12:
+test-ubuntu14.04-openjdk13:
   stage: test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu14.04:openjdk12
+  image: registry.gitlab.com/jsass/docker/test-ubuntu14.04:openjdk13
   dependencies:
     - build
   script:
@@ -110,9 +110,9 @@ test-ubuntu16.04-openjdk11:
   script:
     - ./bin/run-ci-tests.sh
 
-test-ubuntu16.04-openjdk12:
+test-ubuntu16.04-openjdk13:
   stage: test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk12
+  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk13
   dependencies:
     - build
   script:
@@ -134,9 +134,9 @@ test-ubuntu18.04-openjdk11:
   script:
     - ./bin/run-ci-tests.sh
 
-test-ubuntu18.04-openjdk12:
+test-ubuntu18.04-openjdk13:
   stage: test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk12
+  image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk13
   dependencies:
     - build
   script:
