@@ -7,7 +7,7 @@ platform:
 
 steps:
   - name: build
-    image: gradle:5.6.2-jdk8
+    image: gradle:5.4.1-jdk8
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
       - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
@@ -23,7 +23,7 @@ platform:
 
 steps:
   - name: build
-    image: gradle:5.6.2-jdk11
+    image: gradle:5.4.1-jdk11
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
       - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
@@ -39,7 +39,7 @@ steps:
 #
 #steps:
 #  - name: build
-#    image: gradle:5.6.2-jdk12
+#    image: gradle:5.4.1-jdk12
 #    commands:
 #      - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
 #      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
@@ -55,7 +55,7 @@ platform:
 
 steps:
   - name: build
-    image: gradle:5.6.2-jdk8
+    image: gradle:5.4.1-jdk8
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
       - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
@@ -71,7 +71,7 @@ platform:
 
 steps:
   - name: build
-    image: gradle:5.6.2-jdk11
+    image: gradle:5.4.1-jdk11
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
       - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
@@ -87,7 +87,7 @@ steps:
 #
 #steps:
 #  - name: build
-#    image: gradle:5.6.2-jdk12
+#    image: gradle:5.4.1-jdk12
 #    commands:
 #      - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
 #      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
