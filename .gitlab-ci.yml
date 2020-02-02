@@ -70,30 +70,6 @@ test-centos7-openjdk13:
   script:
     - ./bin/run-ci-tests.sh
 
-test-ubuntu14.04-openjdk8:
-  stage: test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu14.04:openjdk8
-  dependencies:
-    - build
-  script:
-    - ./bin/run-ci-tests.sh
-
-test-ubuntu14.04-openjdk11:
-  stage: test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu14.04:openjdk11
-  dependencies:
-    - build
-  script:
-    - ./bin/run-ci-tests.sh
-
-test-ubuntu14.04-openjdk13:
-  stage: test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu14.04:openjdk13
-  dependencies:
-    - build
-  script:
-    - ./bin/run-ci-tests.sh
-
 test-ubuntu16.04-openjdk8:
   stage: test
   image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk8
