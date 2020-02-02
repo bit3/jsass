@@ -1,5 +1,12 @@
 image: openjdk:11
 
+stages:
+  - build
+  - test
+  - test CentOS
+  - test Ubuntu
+  - test Debian
+
 cache:
   paths:
     - .gradle
@@ -17,13 +24,15 @@ build:
 
 check-openjdk11:
   stage: test
+  needs: ["build"]
   dependencies:
     - build
   script:
     - ./bin/run-ci-tests.sh check
 
 test-centos6-openjdk8:
-  stage: test
+  stage: test CentOS
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk8
   dependencies:
     - build
@@ -31,7 +40,8 @@ test-centos6-openjdk8:
     - ./bin/run-ci-tests.sh
 
 test-centos6-openjdk11:
-  stage: test
+  stage: test CentOS
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk11
   dependencies:
     - build
@@ -39,7 +49,8 @@ test-centos6-openjdk11:
     - ./bin/run-ci-tests.sh
 
 test-centos6-openjdk13:
-  stage: test
+  stage: test CentOS
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk13
   dependencies:
     - build
@@ -47,7 +58,8 @@ test-centos6-openjdk13:
     - ./bin/run-ci-tests.sh
 
 test-centos7-openjdk8:
-  stage: test
+  stage: test CentOS
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-centos7:openjdk8
   dependencies:
     - build
@@ -55,7 +67,8 @@ test-centos7-openjdk8:
     - ./bin/run-ci-tests.sh
 
 test-centos7-openjdk11:
-  stage: test
+  stage: test CentOS
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-centos7:openjdk11
   dependencies:
     - build
@@ -63,7 +76,8 @@ test-centos7-openjdk11:
     - ./bin/run-ci-tests.sh
 
 test-centos7-openjdk13:
-  stage: test
+  stage: test CentOS
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-centos7:openjdk13
   dependencies:
     - build
@@ -71,7 +85,8 @@ test-centos7-openjdk13:
     - ./bin/run-ci-tests.sh
 
 test-ubuntu16.04-openjdk8:
-  stage: test
+  stage: test Ubuntu
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk8
   dependencies:
     - build
@@ -79,7 +94,8 @@ test-ubuntu16.04-openjdk8:
     - ./bin/run-ci-tests.sh
 
 test-ubuntu16.04-openjdk11:
-  stage: test
+  stage: test Ubuntu
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk11
   dependencies:
     - build
@@ -87,7 +103,8 @@ test-ubuntu16.04-openjdk11:
     - ./bin/run-ci-tests.sh
 
 test-ubuntu16.04-openjdk13:
-  stage: test
+  stage: test Ubuntu
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk13
   dependencies:
     - build
@@ -95,7 +112,8 @@ test-ubuntu16.04-openjdk13:
     - ./bin/run-ci-tests.sh
 
 test-ubuntu18.04-openjdk8:
-  stage: test
+  stage: test Ubuntu
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk8
   dependencies:
     - build
@@ -103,7 +121,8 @@ test-ubuntu18.04-openjdk8:
     - ./bin/run-ci-tests.sh
 
 test-ubuntu18.04-openjdk11:
-  stage: test
+  stage: test Ubuntu
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk11
   dependencies:
     - build
@@ -111,7 +130,8 @@ test-ubuntu18.04-openjdk11:
     - ./bin/run-ci-tests.sh
 
 test-ubuntu18.04-openjdk13:
-  stage: test
+  stage: test Ubuntu
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk13
   dependencies:
     - build
@@ -119,7 +139,8 @@ test-ubuntu18.04-openjdk13:
     - ./bin/run-ci-tests.sh
 
 test-debian-stretch-openjdk8:
-  stage: test
+  stage: test Debian
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk8
   dependencies:
     - build
@@ -127,7 +148,8 @@ test-debian-stretch-openjdk8:
     - ./bin/run-ci-tests.sh
 
 test-debian-stretch-openjdk11:
-  stage: test
+  stage: test Debian
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk11
   dependencies:
     - build
@@ -135,7 +157,8 @@ test-debian-stretch-openjdk11:
     - ./bin/run-ci-tests.sh
 
 test-debian-stretch-openjdk13:
-  stage: test
+  stage: test Debian
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk13
   dependencies:
     - build
@@ -143,7 +166,8 @@ test-debian-stretch-openjdk13:
     - ./bin/run-ci-tests.sh
 
 test-debian-buster-openjdk8:
-  stage: test
+  stage: test Debian
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk8
   dependencies:
     - build
@@ -151,7 +175,8 @@ test-debian-buster-openjdk8:
     - ./bin/run-ci-tests.sh
 
 test-debian-buster-openjdk11:
-  stage: test
+  stage: test Debian
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk11
   dependencies:
     - build
@@ -159,7 +184,8 @@ test-debian-buster-openjdk11:
     - ./bin/run-ci-tests.sh
 
 test-debian-buster-openjdk13:
-  stage: test
+  stage: test Debian
+  needs: ["build"]
   image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk13
   dependencies:
     - build
