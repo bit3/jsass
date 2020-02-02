@@ -108,17 +108,19 @@ Testing Matrix
 
 A matrix of all CI systems and jobs, used for testing.
 
-|                                       | OpenJDK 8                                                                     | OpenJDK 11                                                                     | OpenJDK 13                                                                     |
-|---------------------------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| ![CentOS 6 (x86_64)][centos6]         | ![Gitlab CI / test-centos6-openjdk8][gitlab-ci-test-centos6-openjdk8]         | ![Gitlab CI / test-centos6-openjdk8][gitlab-ci-test-centos6-openjdk11]         | ![Gitlab CI / test-centos6-openjdk8][gitlab-ci-test-centos6-openjdk13]         |
-| ![CentOS 7 (x86_64)][centos7]         | ![Gitlab CI / test-centos7-openjdk8][gitlab-ci-test-centos7-openjdk8]         | ![Gitlab CI / test-centos7-openjdk8][gitlab-ci-test-centos7-openjdk11]         | ![Gitlab CI / test-centos7-openjdk8][gitlab-ci-test-centos7-openjdk13]         |
-| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | ![Gitlab CI / test-ubuntu14.04-openjdk8][gitlab-ci-test-ubuntu14.04-openjdk8] | ![Gitlab CI / test-ubuntu14.04-openjdk8][gitlab-ci-test-ubuntu14.04-openjdk11] | ![Gitlab CI / test-ubuntu14.04-openjdk8][gitlab-ci-test-ubuntu14.04-openjdk13] |
-| ![ubuntu 16.04 (x86_64)][ubuntu16.04] | ![Gitlab CI / test-ubuntu16.04-openjdk8][gitlab-ci-test-ubuntu16.04-openjdk8] | ![Gitlab CI / test-ubuntu16.04-openjdk8][gitlab-ci-test-ubuntu16.04-openjdk11] | ![Gitlab CI / test-ubuntu16.04-openjdk8][gitlab-ci-test-ubuntu16.04-openjdk13] |
-| ![ubuntu 18.04 (x86_64)][ubuntu18.04] | ![Gitlab CI / test-ubuntu18.04-openjdk8][gitlab-ci-test-ubuntu18.04-openjdk8] | ![Gitlab CI / test-ubuntu18.04-openjdk8][gitlab-ci-test-ubuntu18.04-openjdk11] | ![Gitlab CI / test-ubuntu18.04-openjdk8][gitlab-ci-test-ubuntu18.04-openjdk13] |
-| ![ARM (armhf32)][armhf32]             | ![Drone.io / test-arm-openjdk8][drone.io-test-arm-openjdk8]                   | ![Drone.io / test-arm-openjdk8][drone.io-test-arm-openjdk11]                   |                                                                                |
-| ![ubuntu 16.04 (aarch64)][aarch64]    | ![Drone.io / test-arm64-openjdk8][drone.io-test-arm64-openjdk8]               | ![Drone.io / test-arm64-openjdk8][drone.io-test-arm64-openjdk11]               |                                                                                |
-| ![Windows 64bit][windows64]           |                                                                               | ![Travis CI / OS: Windows][travis-ci-os-windows]                               |                                                                                |
-| ![macOS][macos]                       |                                                                               | ![Travis CI / OS: macOS][travis-ci-os-macos]                                   |                                                                                |
+|                                            | OpenJDK 8                                                                           | OpenJDK 11                                                                           | OpenJDK 13                                                                           |
+|--------------------------------------------|-------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| ![CentOS 6 (x86_64)][centos6]              | ![Gitlab CI / test-centos6-openjdk8][gitlab-ci-test-centos6-openjdk8]               | ![Gitlab CI / test-centos6-openjdk8][gitlab-ci-test-centos6-openjdk11]               | ![Gitlab CI / test-centos6-openjdk8][gitlab-ci-test-centos6-openjdk13]               |
+| ![CentOS 7 (x86_64)][centos7]              | ![Gitlab CI / test-centos7-openjdk8][gitlab-ci-test-centos7-openjdk8]               | ![Gitlab CI / test-centos7-openjdk8][gitlab-ci-test-centos7-openjdk11]               | ![Gitlab CI / test-centos7-openjdk8][gitlab-ci-test-centos7-openjdk13]               |
+| ![ubuntu 14.04 (x86_64)][ubuntu14.04]      | ![Gitlab CI / test-ubuntu14.04-openjdk8][gitlab-ci-test-ubuntu14.04-openjdk8]       | ![Gitlab CI / test-ubuntu14.04-openjdk8][gitlab-ci-test-ubuntu14.04-openjdk11]       | ![Gitlab CI / test-ubuntu14.04-openjdk8][gitlab-ci-test-ubuntu14.04-openjdk13]       |
+| ![ubuntu 16.04 (x86_64)][ubuntu16.04]      | ![Gitlab CI / test-ubuntu16.04-openjdk8][gitlab-ci-test-ubuntu16.04-openjdk8]       | ![Gitlab CI / test-ubuntu16.04-openjdk8][gitlab-ci-test-ubuntu16.04-openjdk11]       | ![Gitlab CI / test-ubuntu16.04-openjdk8][gitlab-ci-test-ubuntu16.04-openjdk13]       |
+| ![ubuntu 18.04 (x86_64)][ubuntu18.04]      | ![Gitlab CI / test-ubuntu18.04-openjdk8][gitlab-ci-test-ubuntu18.04-openjdk8]       | ![Gitlab CI / test-ubuntu18.04-openjdk8][gitlab-ci-test-ubuntu18.04-openjdk11]       | ![Gitlab CI / test-ubuntu18.04-openjdk8][gitlab-ci-test-ubuntu18.04-openjdk13]       |
+| ![Debian Stretch (x86_64)][debian-stretch] | ![Gitlab CI / test-debian-stretch-openjdk8][gitlab-ci-test-debian-stretch-openjdk8] | ![Gitlab CI / test-debian-stretch-openjdk8][gitlab-ci-test-debian-stretch-openjdk11] | ![Gitlab CI / test-debian-stretch-openjdk8][gitlab-ci-test-debian-stretch-openjdk13] |
+| ![Debian Buster (x86_64)][debian-buster]   | ![Gitlab CI / test-debian-buster-openjdk8][gitlab-ci-test-debian-buster-openjdk8]   | ![Gitlab CI / test-debian-buster-openjdk8][gitlab-ci-test-debian-buster-openjdk11]   | ![Gitlab CI / test-debian-buster-openjdk8][gitlab-ci-test-debian-buster-openjdk13]   |
+| ![ARM (armhf32)][armhf32]                  | ![Drone.io / test-arm-openjdk8][drone.io-test-arm-openjdk8]                         | ![Drone.io / test-arm-openjdk8][drone.io-test-arm-openjdk11]                         |                                                                                      |
+| ![ubuntu 16.04 (aarch64)][aarch64]         | ![Drone.io / test-arm64-openjdk8][drone.io-test-arm64-openjdk8]                     | ![Drone.io / test-arm64-openjdk8][drone.io-test-arm64-openjdk11]                     |                                                                                      |
+| ![Windows 64bit][windows64]                |                                                                                     | ![Travis CI / OS: Windows][travis-ci-os-windows]                                     |                                                                                      |
+| ![macOS][macos]                            |                                                                                     | ![Travis CI / OS: macOS][travis-ci-os-macos]                                         |                                                                                      |
 
 [gitlab-ci-test-centos6-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--centos6--openjdk8-blue.svg?style=flat
 [gitlab-ci-test-centos6-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--centos6--openjdk11-blue.svg?style=flat
@@ -128,17 +130,25 @@ A matrix of all CI systems and jobs, used for testing.
 [gitlab-ci-test-centos7-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--centos7--openjdk11-blue.svg?style=flat
 [gitlab-ci-test-centos7-openjdk13]: https://img.shields.io/badge/Gitlab_CI-test--centos7--openjdk13-blue.svg?style=flat
 
-[gitlab-ci-test-ubuntu14.04-openjdk8]: https://img.shields.io/badge/Gitlab_CI-ubuntu14.04--openjdk8-blue.svg?style=flat
-[gitlab-ci-test-ubuntu14.04-openjdk11]: https://img.shields.io/badge/Gitlab_CI-ubuntu14.04--openjdk11-blue.svg?style=flat
-[gitlab-ci-test-ubuntu14.04-openjdk13]: https://img.shields.io/badge/Gitlab_CI-ubuntu14.04--openjdk13-blue.svg?style=flat
+[gitlab-ci-test-ubuntu14.04-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu14.04--openjdk8-blue.svg?style=flat
+[gitlab-ci-test-ubuntu14.04-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu14.04--openjdk11-blue.svg?style=flat
+[gitlab-ci-test-ubuntu14.04-openjdk13]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu14.04--openjdk13-blue.svg?style=flat
 
-[gitlab-ci-test-ubuntu16.04-openjdk8]: https://img.shields.io/badge/Gitlab_CI-ubuntu16.04--openjdk8-blue.svg?style=flat
-[gitlab-ci-test-ubuntu16.04-openjdk11]: https://img.shields.io/badge/Gitlab_CI-ubuntu16.04--openjdk11-blue.svg?style=flat
-[gitlab-ci-test-ubuntu16.04-openjdk13]: https://img.shields.io/badge/Gitlab_CI-ubuntu16.04--openjdk13-blue.svg?style=flat
+[gitlab-ci-test-ubuntu16.04-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu16.04--openjdk8-blue.svg?style=flat
+[gitlab-ci-test-ubuntu16.04-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu16.04--openjdk11-blue.svg?style=flat
+[gitlab-ci-test-ubuntu16.04-openjdk13]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu16.04--openjdk13-blue.svg?style=flat
 
-[gitlab-ci-test-ubuntu18.04-openjdk8]: https://img.shields.io/badge/Gitlab_CI-ubuntu18.04--openjdk8-blue.svg?style=flat
-[gitlab-ci-test-ubuntu18.04-openjdk11]: https://img.shields.io/badge/Gitlab_CI-ubuntu18.04--openjdk11-blue.svg?style=flat
-[gitlab-ci-test-ubuntu18.04-openjdk13]: https://img.shields.io/badge/Gitlab_CI-ubuntu18.04--openjdk13-blue.svg?style=flat
+[gitlab-ci-test-ubuntu18.04-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu18.04--openjdk8-blue.svg?style=flat
+[gitlab-ci-test-ubuntu18.04-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu18.04--openjdk11-blue.svg?style=flat
+[gitlab-ci-test-ubuntu18.04-openjdk13]: https://img.shields.io/badge/Gitlab_CI-test--ubuntu18.04--openjdk13-blue.svg?style=flat
+
+[gitlab-ci-test-debian-stretch-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--debian--stretch--openjdk8-blue.svg?style=flat
+[gitlab-ci-test-debian-stretch-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--debian--stretch--openjdk11-blue.svg?style=flat
+[gitlab-ci-test-debian-stretch-openjdk13]: https://img.shields.io/badge/Gitlab_CI-test--debian--stretch--openjdk13-blue.svg?style=flat
+
+[gitlab-ci-test-debian-buster-openjdk8]: https://img.shields.io/badge/Gitlab_CI-test--debian--buster--openjdk8-blue.svg?style=flat
+[gitlab-ci-test-debian-buster-openjdk11]: https://img.shields.io/badge/Gitlab_CI-test--debian--buster--openjdk11-blue.svg?style=flat
+[gitlab-ci-test-debian-buster-openjdk13]: https://img.shields.io/badge/Gitlab_CI-test--debian--buster--openjdk13-blue.svg?style=flat
 
 [drone.io-test-arm-openjdk8]: https://img.shields.io/badge/Drone.io-test--arm--openjdk8-blue.svg?style=flat
 [drone.io-test-arm-openjdk11]: https://img.shields.io/badge/Drone.io-test--arm--openjdk11-blue.svg?style=flat
