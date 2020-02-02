@@ -48,28 +48,30 @@ Merge requests for further projects are welcome :-)
 Compatibility Overview
 ----------------------
 
-| Compatibility                         |                                                                      |
-| --------------------------------------|----------------------------------------------------------------------|
-| ![Java 7][java7]                      | not supported, jsass uses Java 8 features like streams and lambdas!  |
-| ![Java 8][java8]                      | fully supported                                                      |
-| ![Java 11][java11]                    | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
-| **Linux**                             |                                                                      |
-| ![CentOS 6 (i686)][centos6_32]        | not supported (since jsass 5.7.4 the 32bit support was been removed) |
-| ![CentOS 6 (x86_64)][centos6]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
-| ![CentOS 7 (x86_64)][centos7]         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
-| ![ubuntu 14.04 (x86_64)][ubuntu14.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
-| ![ubuntu 16.04 (x86_64)][ubuntu16.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
-| ![ubuntu 18.04 (x86_64)][ubuntu18.04] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
-| ![Debian Stretch (armhf32)][armhf32]  | experimental, [tests][drone-io] are failing (drone.io)               |
-| ![Debian Stretch (aarch64)][aarch64]  | fully supported and [tested][drone-io] (drone.io)                    |
-| **Windows**                           |                                                                      |
-| ![Windows 32bit][windows32]           | not supported                                                        |
-| ![Windows 64bit][windows64]           | fully supported and [tested][travis-ci] (travis ci)                  |
-| **macOS**                             |                                                                      |
-| ![macOS][macos]                       | fully supported and [tested][travis-ci] (travis ci)                  |
-| **Others**                            |                                                                      |
-| ![Solaris][solaris]                   | not supported                                                        |
-| ![FreeBSD][freebsd]                   | not supported                                                        |
+| Compatibility                              |                                                                      |
+| -------------------------------------------|----------------------------------------------------------------------|
+| ![Java 7][java7]                           | not supported, jsass uses Java 8 features like streams and lambdas!  |
+| ![Java 8][java8]                           | fully supported                                                      |
+| ![Java 11][java11]                         | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| **Linux**                                  |                                                                      |
+| ![CentOS 6 (i686)][centos6_32]             | not supported (since jsass 5.7.4 the 32bit support was been removed) |
+| ![CentOS 6 (x86_64)][centos6]              | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![CentOS 7 (x86_64)][centos7]              | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![ubuntu 14.04 (x86_64)][ubuntu14.04]      | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![ubuntu 16.04 (x86_64)][ubuntu16.04]      | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![ubuntu 18.04 (x86_64)][ubuntu18.04]      | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![Debian Stretch (x86_64)][debian-stretch] | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![Debian Buster (x86_64)][debian-buster]   | fully supported and [tested][gitlab-ci] (gitlab ci)                  |
+| ![Debian Stretch (armhf32)][armhf32]       | experimental, [tests][drone-io] are failing (drone.io)               |
+| ![Debian Stretch (aarch64)][aarch64]       | fully supported and [tested][drone-io] (drone.io)                    |
+| **Windows**                                |                                                                      |
+| ![Windows 32bit][windows32]                | not supported                                                        |
+| ![Windows 64bit][windows64]                | fully supported and [tested][travis-ci] (travis ci)                  |
+| **macOS**                                  |                                                                      |
+| ![macOS][macos]                            | fully supported and [tested][travis-ci] (travis ci)                  |
+| **Others**                                 |                                                                      |
+| ![Solaris][solaris]                        | not supported                                                        |
+| ![FreeBSD][freebsd]                        | not supported                                                        |
 
 [java7]: https://img.shields.io/badge/Java-7-red.svg?style=flat
 [java8]: https://img.shields.io/badge/Java-8-green.svg?style=flat
@@ -82,6 +84,9 @@ Compatibility Overview
 [ubuntu14.04]: https://img.shields.io/badge/ubuntu_14.04-x86__64-green.svg?style=flat
 [ubuntu16.04]: https://img.shields.io/badge/ubuntu_16.04-x86__64-green.svg?style=flat
 [ubuntu18.04]: https://img.shields.io/badge/ubuntu_18.04-x86__64-green.svg?style=flat
+
+[debian-stretch]: https://img.shields.io/badge/Debian_Stretch-x86__64-green.svg?style=flat
+[debian-buster]: https://img.shields.io/badge/Debian_Buster-x86__64-green.svg?style=flat
 
 [armhf32]: https://img.shields.io/badge/Debian_Stretch-arm_(armhf32)-yellow.svg?style=flat
 [aarch64]: https://img.shields.io/badge/Debian_Stretch-arm64_(aarch64)-green.svg?style=flat
