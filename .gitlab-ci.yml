@@ -141,3 +141,51 @@ test-ubuntu18.04-openjdk13:
     - build
   script:
     - ./bin/run-ci-tests.sh
+
+test-debian-stretch-openjdk8:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk8
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-debian-stretch-openjdk11:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk11
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-debian-stretch-openjdk13:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk13
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-debian-buster-openjdk8:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk8
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-debian-buster-openjdk11:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk11
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
+
+test-debian-buster-openjdk13:
+  stage: test
+  image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk13
+  dependencies:
+    - build
+  script:
+    - ./bin/run-ci-tests.sh
