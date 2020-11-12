@@ -7,6 +7,19 @@
 [![Documentation Status](https://readthedocs.org/projects/jsass/badge/?version=latest)](http://jsass.readthedocs.io/en/latest/)
 [![Javadoc Status](https://javadocio-badges.herokuapp.com/io.bit3/jsass/badge.svg)](http://javadoc.io/doc/io.bit3/jsass/)
 
+ATTENTION: ONLY MAINTENANCE, NO FURTHER DEVELOPMENT
+===================================================
+
+libsass has been [declared deprecated][libsass-deprecated] and there will be no further development!
+This also ends the further development of jsass. It is not yet clear whether there will ever be an implementation based
+on the [Sass embedded protocol][sass-embedded-protocol]. I recommend switching to [Webpack][webpack] or similar technologies!
+This project will continue to be maintained for the time being and compatibility with newer Java versions will be ensured.
+But please do not expect any further development on my part.
+
+[libsass-deprecated]: https://sass-lang.com/blog/libsass-is-deprecated
+[sass-embedded-protocol]: https://github.com/sass/embedded-protocol
+[webpack]: https://webpack.js.org/
+
 Java sass compiler
 ==================
 
