@@ -30,10 +30,10 @@ public class JsassCustomHeaderImporter implements Importer {
 
     StringBuilder source = new StringBuilder();
 
-    // $jsass-void: jsass_import_stack_push(<id>) !global;
+    // $jsass-void: jsass_import_stack_push(<id>);
     source.append(
         String.format(
-            "$jsass-void: jsass_import_stack_push(%d) !global;%n",
+            "$jsass-void: jsass_import_stack_push(%d);%n",
             id
         )
     );

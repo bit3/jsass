@@ -71,10 +71,10 @@ class NativeImporterWrapper {
 
     StringBuilder preSource = new StringBuilder();
 
-    // $jsass-void: jsass_import_stack_push(<id>) !global;
+    // $jsass-void: jsass_import_stack_push(<id>);
     preSource.append(
         String.format(
-            "$jsass-void: jsass_import_stack_push(%d) !global;%n",
+            "$jsass-void: jsass_import_stack_push(%d);%n",
             id
         )
     );
@@ -95,9 +95,9 @@ class NativeImporterWrapper {
   private static NativeImport createPostImport(Import importSource) {
     StringBuilder postSource = new StringBuilder();
 
-    // $jsass-void: jsass_import_stack_pop() !global;
+    // $jsass-void: jsass_import_stack_pop();
     postSource
-        .append("$jsass-void: jsass_import_stack_pop() !global;")
+        .append("$jsass-void: jsass_import_stack_pop();")
         .append(System.lineSeparator());
 
     try {
