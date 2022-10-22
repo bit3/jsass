@@ -36,7 +36,7 @@ dependencyLocking {
 dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
-    compile group: 'org.apache.commons', name: 'commons-text', version: '1.8'
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.10.0'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
     compile group: 'org.sharegov', name: 'mjson', version: '1.4.1'
     testRuntime group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.28'
