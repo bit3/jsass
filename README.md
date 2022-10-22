@@ -16,6 +16,13 @@ on the [Sass embedded protocol][sass-embedded-protocol]. I recommend switching t
 This project will continue to be maintained for the time being and compatibility with newer Java versions will be ensured.
 But please do not expect any further development on my part.
 
+CVE-2022-42889
+==============
+
+In October 2022, a critical vulnerability in the commons-text library became known ([CVE-2022-42889](https://securitylab.github.com/advisories/GHSL-2022-018_Apache_Commons_Text/)). jsass uses the commons-text library, but not the affected StringSubstitutor class!
+Thus, jsass is not directly affected by this vulnerability.
+However, in Jsass version 5.10.5, the commons-text dependency has been updated to version 1.10.0.
+
 [libsass-deprecated]: https://sass-lang.com/blog/libsass-is-deprecated
 [sass-embedded-protocol]: https://github.com/sass/embedded-protocol
 [webpack]: https://webpack.js.org/
