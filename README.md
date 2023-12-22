@@ -1,5 +1,4 @@
 [![pipeline status](https://gitlab.com/jsass/jsass/badges/master/pipeline.svg)](https://gitlab.com/jsass/jsass/commits/master)
-[![Build Status](https://img.shields.io/travis/bit3/jsass/master.svg?style=flat&logo=travis)](https://travis-ci.org/bit3/jsass)
 [![Build Status](https://cloud.drone.io/api/badges/bit3/jsass/status.svg)](https://cloud.drone.io/bit3/jsass)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bit3/jsass/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bit3/jsass/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/bit3/jsass/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bit3/jsass/?branch=master)
