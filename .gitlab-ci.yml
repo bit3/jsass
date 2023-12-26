@@ -58,138 +58,32 @@ CentOS 8:
   variables:
     GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
 
-#CentOS 6 OpenJDK 11:
-#  stage: test Java 11
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk11
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#CentOS 6 OpenJDK 13:
-#  stage: test Java 13
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-centos6-x64:openjdk13
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#CentOS 7 OpenJDK 8:
-#  stage: test Java 8
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-centos7:openjdk8
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#CentOS 7 OpenJDK 11:
-#  stage: test Java 11
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-centos7:openjdk11
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#CentOS 7 OpenJDK 13:
-#  stage: test Java 13
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-centos7:openjdk13
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Ubuntu 16.04 AdopOpenJDK 8:
-#  stage: test Java 8
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk8
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Ubuntu 16.04 AdopOpenJDK 11:
-#  stage: test Java 11
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk11
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Ubuntu 16.04 AdopOpenJDK 13:
-#  stage: test Java 13
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04:openjdk13
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Ubuntu 18.04 AdopOpenJDK 8:
-#  stage: test Java 8
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk8
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Ubuntu 18.04 AdopOpenJDK 11:
-#  stage: test Java 11
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk11
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Ubuntu 18.04 AdopOpenJDK 13:
-#  stage: test Java 13
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-ubuntu18.04:openjdk13
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Debian Stretch AdopOpenJDK 8:
-#  stage: test Java 8
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk8
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Debian Stretch AdopOpenJDK 11:
-#  stage: test Java 11
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk11
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Debian Stretch AdopOpenJDK 13:
-#  stage: test Java 13
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-debian-stretch:openjdk13
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Debian Buster AdopOpenJDK 8:
-#  stage: test Java 8
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk8
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Debian Buster AdopOpenJDK 11:
-#  stage: test Java 11
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk11
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
-#
-#Debian Buster AdopOpenJDK 13:
-#  stage: test Java 13
-#  needs: ["Build"]
-#  image: registry.gitlab.com/jsass/docker/test-debian-buster:openjdk13
-#  dependencies: ["Build"]
-#  script:
-#    - ./bin/run-ci-tests.sh
+Debian 10 Buster:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-debian-10-buster-amd64:latest
+  variables:
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
+
+Debian 11 Bullseye:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-debian-11-bullseye-amd64:latest
+  variables:
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
+
+Ubuntu 16.04:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-ubuntu16.04-amd64:latest
+  variables:
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
+
+Ubuntu 18.04:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-ubuntu18.04-amd64:latest
+  variables:
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
+
+Ubuntu 2ß.04:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-ubuntu2ß.04-amd64:latest
+  variables:
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
