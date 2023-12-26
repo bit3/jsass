@@ -283,32 +283,38 @@ task determineDockerAvailable() {
     outputs.file(file)
 
     doLast {
-        def execResult = exec {
-            commandLine 'docker', '--version'
+        def podmanExecResult = exec {
+            commandLine 'podman', '--version'
             ignoreExitValue = true
             standardOutput = new ByteArrayOutputStream()
             errorOutput = standardOutput
         }
 
-        if (execResult.exitValue != 0) {
-            throw new GradleException("Docker is required to run this task")
-        }
+        if (podmanExecResult.exitValue == 0) {
+            file.write("podman")
+        } else {
+            def dockerExecResult = exec {
+                commandLine 'docker', '--version'
+                ignoreExitValue = true
+                standardOutput = new ByteArrayOutputStream()
+                errorOutput = standardOutput
+            }
 
-        file.write("available")
+            if (dockerExecResult.exitValue == 0) {
+                file.write("docker")
+            } else {
+                throw new GradleException("Docker or Podman is required to run this task")
+            }
+        }
     }
 }
 
 def pullDockerContainer(name) {
-    def type = 'stable'
-
-    if (headIsUpstream) {
-        type = 'latest'
-    }
-
+    def dockerCmd = Files.readString(new File(project.buildDir, "docker").toPath())
     def output = new ByteArrayOutputStream()
     def execResult = exec {
         workingDir project.projectDir
-        commandLine 'docker', 'pull', "registry.gitlab.com/jsass/docker/$name:$type"
+        commandLine dockerCmd, 'pull', "registry.gitlab.com/jsass/docker/$name:latest"
 
         if (!isVerbose()) {
             standardOutput = output
@@ -323,18 +329,13 @@ def pullDockerContainer(name) {
 }
 
 def runDockerContainer(name) {
+    def dockerCmd = Files.readString(new File(project.buildDir, "docker").toPath())
     pullDockerContainer(name)
-
-    def type = 'stable'
-
-    if (headIsUpstream) {
-        type = 'latest'
-    }
 
     def output = new ByteArrayOutputStream()
     def execResult = exec {
         workingDir project.projectDir
-        commandLine 'docker', 'run', "--user=$uid:$gid", '--rm', '-v', "${project.projectDir}:/jsass", "registry.gitlab.com/jsass/docker/$name:$type"
+        commandLine dockerCmd, 'run', "--user=$uid:$gid", '--userns=keep-id', '--rm', '--security-opt', 'label=disable', '-v', "${project.projectDir}:/jsass:z", "registry.gitlab.com/jsass/docker/$name:latest"
 
         if (!isVerbose()) {
             standardOutput = output
