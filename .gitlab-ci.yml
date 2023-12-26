@@ -7,7 +7,10 @@ cache:
 
 variables:
   GRADLE_USER_HOME: ".gradle_home"
-  GRADLE_OPTS: "-Dorg.gradle.logging.level=info -Dorg.gradle.logging.stacktrace=full -Dorg.gradle.parallel=true -Dorg.gradle.caching=true -Dorg.gradle.jvmargs=-Xmx8096M"
+
+before_script:
+  - mkdir -p .gradle_home
+  - cp gradle-ci.properties .gradle_home/gradle.properties
 
 Build:
   stage: build
@@ -15,8 +18,6 @@ Build:
     expire_in: 30 days
     paths:
       - build
-  before_script:
-    - mkdir -p .gradle_home
   script:
     - ./gradlew clean assemble
 
@@ -24,8 +25,6 @@ Build:
   stage: test
   needs: [ "Build" ]
   dependencies: ["Build"]
-  before_script:
-    - mkdir -p .gradle_home
   script:
     - ./gradlew test
 
@@ -44,13 +43,13 @@ CentOS 7:
   extends: .test
   image: registry.gitlab.com/jsass/docker/test-centos7-amd64
   variables:
-    GRADLE_OPTS: "$GRADLE_OPTS -Porg.gradle.java.installations.auto-download=false -Dorg.gradle.java.installations.paths=/opt/java8,/opt/java11,/opt/java17,/opt/java21"
+    GRADLE_OPTS: '-Porg.gradle.java.installations.auto-download=false'
 
 CentOS 8:
   extends: .test
   image: registry.gitlab.com/jsass/docker/test-centos8-amd64
   variables:
-    GRADLE_OPTS: "$GRADLE_OPTS -Porg.gradle.java.installations.auto-download=false -Dorg.gradle.java.installations.paths=/opt/java8,/opt/java11,/opt/java17,/opt/java21"
+    GRADLE_OPTS: '-Porg.gradle.java.installations.auto-download=false'
 
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
