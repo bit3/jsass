@@ -26,10 +26,6 @@ Build:
   script:
     - ./bin/run-ci-tests.sh
 
-Eclipse Temurin OpenJDK 8:
-  extends: .test
-  image: docker.io/eclipse-temurin:8
-
 Eclipse Temurin OpenJDK 11:
   extends: .test
   image: docker.io/eclipse-temurin:11
