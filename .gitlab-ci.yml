@@ -40,6 +40,18 @@ Eclipse Temurin OpenJDK:
 #  variables:
 #    HOMEBREW_NO_AUTO_UPDATE: 1
 
+CentOS 7:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-centos7-amd64
+  variables:
+    GRADLE_OPTS: "$GRADLE_OPTS -Porg.gradle.java.installations.auto-download=false -Dorg.gradle.java.installations.paths=/opt/java8,/opt/java11,/opt/java17,/opt/java21"
+
+CentOS 8:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-centos8-amd64
+  variables:
+    GRADLE_OPTS: "$GRADLE_OPTS -Porg.gradle.java.installations.auto-download=false -Dorg.gradle.java.installations.paths=/opt/java8,/opt/java11,/opt/java17,/opt/java21"
+
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
 #  needs: ["Build"]
