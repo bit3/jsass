@@ -79,6 +79,21 @@ test {
     }
 }
 
+tasks.register('testOnJava8', Test) {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+
+    useJUnitPlatform()
+
+    systemProperty 'org.slf4j.simpleLogger.log.io.bit3.jsass', 'trace'
+
+    if (project.hasProperty('test.tmpdir')) {
+        Path path = Paths.get(Objects.toString(project.findProperty('test.tmpdir')))
+        systemProperty 'java.io.tmpdir', path.toAbsolutePath().normalize().toString()
+    }
+}
+
 tasks.register('testOnJava17', Test) {
     javaLauncher = javaToolchains.launcherFor {
         languageVersion = JavaLanguageVersion.of(17)
@@ -110,7 +125,7 @@ tasks.register('testOnJava21', Test) {
 }
 
 check {
-    dependsOn 'testOnJava17', 'testOnJava21'
+    dependsOn 'testOnJava8', 'testOnJava17', 'testOnJava21'
 }
 
 sonarqube {
