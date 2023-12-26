@@ -40,13 +40,6 @@ Eclipse Temurin OpenJDK:
 #  variables:
 #    HOMEBREW_NO_AUTO_UPDATE: 1
 
-CentOS 6:
-  extends: .test
-  image: registry.gitlab.com/jsass/docker/test-centos6-amd64
-  script:
-    # java 21+ does not run on centos 6!
-    - ./gradlew test -xtestOnJava21
-
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
 #  needs: ["Build"]
