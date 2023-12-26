@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.21)
 project(jsass)
 
 set(SOURCE_FILES io_bit3_jsass_adapter_NativeAdapter.c empty.cpp)
@@ -22,12 +22,15 @@ include_directories(
     # libsass
     "../libsass/include"
 )
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -fvisibility=hidden")
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 message("search for libsass static library in: ${CMAKE_SOURCE_DIR}/../libsass/lib")
 find_library(SASS_EXT_LIBRARY NAMES sass libsass PATHS "${CMAKE_SOURCE_DIR}/../libsass/lib" NO_DEFAULT_PATH)
 message(STATUS "libsass library: ${SASS_EXT_LIBRARY}")
-add_library(sass UNKNOWN IMPORTED)
+add_library(sass STATIC IMPORTED)
 set_property(TARGET sass PROPERTY IMPORTED_LOCATION "${SASS_EXT_LIBRARY}")
 
 file(WRITE empty.cpp "")
@@ -35,10 +38,10 @@ file(WRITE empty.cpp "")
 add_library(jsass SHARED ${SOURCE_FILES})
 set_property(TARGET jsass PROPERTY C_STANDARD 99)
 
-set(LINK_FLAGS ${LINK_FLAGS} "-Wl,--whole-archive")
+set(LINK_FLAGS ${LINK_FLAGS} -static-libgcc -static-libstdc++ "-Wl,--no-whole-archive")
 
 if(APPLE)
-    target_link_libraries(jsass sass)
+    target_link_libraries(jsass PUBLIC sass "-exported_symbols_list ${CMAKE_SOURCE_DIR}/exported_symbols_list.txt")
 else()
-    target_link_libraries(jsass -static-libgcc -static-libstdc++ "-Wl,--whole-archive" sass "-Wl,--no-whole-archive")
+    target_link_libraries(jsass PUBLIC sass "-Wl,--version-script=${CMAKE_SOURCE_DIR}/version_script.map")
 endif()
