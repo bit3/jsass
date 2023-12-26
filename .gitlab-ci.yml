@@ -34,6 +34,17 @@ Eclipse Temurin OpenJDK:
   script:
     - ./gradlew test
 
+Mac OS:
+  stage: test
+  tags: ["saas-macos-medium-m1"]
+  needs: [ "Build" ]
+  dependencies: ["Build"]
+  image: docker.io/eclipse-temurin:11
+  before_script:
+    - mkdir -p .gradle_home
+  script:
+    - ./gradlew test
+
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
 #  needs: ["Build"]
