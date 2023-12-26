@@ -71,12 +71,6 @@ test {
     }
 }
 
-release {
-    git {
-        requireBranch = 'master|develop'
-    }
-}
-
 sonarqube {
     properties {
         def description = grgit.describe()
