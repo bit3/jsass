@@ -26,7 +26,7 @@ Build:
   needs: [ "Build" ]
   dependencies: ["Build"]
   script:
-    - ./gradlew test
+    - ./gradlew check
 
 Eclipse Temurin OpenJDK:
   extends: .test
