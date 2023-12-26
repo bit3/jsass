@@ -21,31 +21,31 @@ Build:
     - ./gradlew clean assemble
 
 .test:
-  script:
-    - ./bin/run-ci-tests.sh
-
-Eclipse Temurin OpenJDK:
   stage: test
   needs: [ "Build" ]
   dependencies: ["Build"]
-  image: docker.io/eclipse-temurin:11
   before_script:
     - mkdir -p .gradle_home
   script:
     - ./gradlew test
 
+Eclipse Temurin OpenJDK:
+  extends: .test
+  image: docker.io/eclipse-temurin:11
+
 #Mac OS:
-#  stage: test
+#  extends: .test
 #  tags: ["saas-macos-medium-m1"]
-#  needs: [ "Build" ]
-#  dependencies: ["Build"]
 #  image: macos-13-xcode-14
 #  variables:
 #    HOMEBREW_NO_AUTO_UPDATE: 1
-#  before_script:
-#    - mkdir -p .gradle_home
-#  script:
-#    - ./gradlew test
+
+CentOS 6:
+  extends: .test
+  image: registry.gitlab.com/jsass/docker/test-centos6-amd64
+  script:
+    # java 21+ does not run on centos 6!
+    - ./gradlew test -xtestOnJava21
 
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
