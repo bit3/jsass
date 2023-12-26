@@ -43,13 +43,13 @@ CentOS 7:
   extends: .test
   image: registry.gitlab.com/jsass/docker/test-centos7-amd64
   variables:
-    GRADLE_OPTS: '-Porg.gradle.java.installations.auto-download=false'
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
 
 CentOS 8:
   extends: .test
   image: registry.gitlab.com/jsass/docker/test-centos8-amd64
   variables:
-    GRADLE_OPTS: '-Porg.gradle.java.installations.auto-download=false'
+    GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
 
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
