@@ -82,8 +82,8 @@ Ubuntu 18.04:
   variables:
     GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
 
-Ubuntu 2ß.04:
+Ubuntu 20.04:
   extends: .test
-  image: registry.gitlab.com/jsass/docker/test-ubuntu2ß.04-amd64:latest
+  image: registry.gitlab.com/jsass/docker/test-ubuntu20.04-amd64:latest
   variables:
     GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
