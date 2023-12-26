@@ -365,8 +365,8 @@ task buildNativeDarwin64Libs {
     dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
-        println 'Build native libs for darwin x64'
-        runDockerContainer('build-darwin-x64')
+        println 'Build native libs for darwin amd64'
+        runDockerContainer('build-jsass.compiler.libsass-darwin-amd64')
     }
 }
 
@@ -374,8 +374,8 @@ task buildNativeLinux64Libs {
     dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
-        println 'Build native libs for linux x64'
-        runDockerContainer('build-linux-x64')
+        println 'Build native libs for linux amd64'
+        runDockerContainer('build-jsass.compiler.libsass-linux-amd64')
     }
 }
 
@@ -384,7 +384,7 @@ task buildNativeLinuxArmhf32Libs {
 
     doLast {
         println 'Build native libs for linux armhf32'
-        runDockerContainer('build-linux-armhf32')
+        runDockerContainer('build-jsass.compiler.build-linux-armhf32')
     }
 }
 
@@ -393,7 +393,7 @@ task buildNativeLinuxAarch64Libs {
 
     doLast {
         println 'Build native libs for linux aarch64'
-        runDockerContainer('build-linux-aarch64')
+        runDockerContainer('build-jsass.compiler.build-linux-aarch64')
     }
 }
 
@@ -401,8 +401,8 @@ task buildNativeWindows64Libs {
     dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
-        println 'Build native libs for windows x64'
-        runDockerContainer('build-windows-x64')
+        println 'Build native libs for windows amd64'
+        runDockerContainer('build-jsass.compiler.build-windows-amd64')
     }
 }
 
