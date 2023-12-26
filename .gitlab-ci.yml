@@ -7,7 +7,7 @@ cache:
 
 variables:
   GRADLE_USER_HOME: ".gradle_home"
-  GRADLE_OPTS: "-Dorg.gradle.parallel=true -Dorg.gradle.caching=true -Dorg.gradle.jvmargs=-Xmx8096M"
+  GRADLE_OPTS: "--info --full-stacktrace -Dorg.gradle.parallel=true -Dorg.gradle.caching=true -Dorg.gradle.jvmargs=-Xmx8096M"
 
 Build:
   stage: build
@@ -15,28 +15,24 @@ Build:
     expire_in: 30 days
     paths:
       - build
-  script:
+  before_script:
     - mkdir -p .gradle_home
-    - ./gradlew --info --full-stacktrace --gradle-user-home "$PWD/.gradle_home" classes testClasses
+  script:
+    - ./gradlew clean assemble
 
 .test:
-  stage: test
-  needs: [ "Build" ]
-  dependencies: ["Build"]
   script:
     - ./bin/run-ci-tests.sh
 
-Eclipse Temurin OpenJDK 11:
-  extends: .test
+Eclipse Temurin OpenJDK:
+  stage: test
+  needs: [ "Build" ]
+  dependencies: ["Build"]
   image: docker.io/eclipse-temurin:11
-
-Eclipse Temurin OpenJDK 17:
-  extends: .test
-  image: docker.io/eclipse-temurin:17
-
-Eclipse Temurin OpenJDK 21:
-  extends: .test
-  image: docker.io/eclipse-temurin:21
+  before_script:
+    - mkdir -p .gradle_home
+  script:
+    - ./gradlew test
 
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11

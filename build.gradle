@@ -79,6 +79,40 @@ test {
     }
 }
 
+tasks.register('testOnJava17', Test) {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+
+    useJUnitPlatform()
+
+    systemProperty 'org.slf4j.simpleLogger.log.io.bit3.jsass', 'trace'
+
+    if (project.hasProperty('test.tmpdir')) {
+        Path path = Paths.get(Objects.toString(project.findProperty('test.tmpdir')))
+        systemProperty 'java.io.tmpdir', path.toAbsolutePath().normalize().toString()
+    }
+}
+
+tasks.register('testOnJava21', Test) {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+
+    useJUnitPlatform()
+
+    systemProperty 'org.slf4j.simpleLogger.log.io.bit3.jsass', 'trace'
+
+    if (project.hasProperty('test.tmpdir')) {
+        Path path = Paths.get(Objects.toString(project.findProperty('test.tmpdir')))
+        systemProperty 'java.io.tmpdir', path.toAbsolutePath().normalize().toString()
+    }
+}
+
+check {
+    dependsOn 'testOnJava17', 'testOnJava21'
+}
+
 sonarqube {
     properties {
         def description = grgit.describe()
