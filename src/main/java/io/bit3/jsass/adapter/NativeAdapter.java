@@ -208,4 +208,9 @@ public class NativeAdapter {
    * Native call.
    */
   public static native String sass2scss(String source, int options);
+
+  /**
+   * Native call.
+   */
+  public static native String libsassVersion();
 }

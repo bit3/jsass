@@ -1002,3 +1002,15 @@ JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_sass2scss
 
     return j_output;
 }
+
+
+JNIEXPORT jstring JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_libsassVersion
+  (JNIEnv *env, jclass j_adapter) {
+    const char *c_version = libsass_version();
+
+    (*env)->DeleteLocalRef(env, j_adapter);
+
+    jstring j_version = (*env)->NewStringUTF(env, c_version);
+
+    return j_version;
+}

@@ -31,6 +31,14 @@ JNIEXPORT jobject JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_compileString
 JNIEXPORT jstring JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_sass2scss
   (JNIEnv *, jclass, jstring, jint);
 
+/*
+ * Class:     io_bit3_jsass_adapter_NativeAdapter
+ * Method:    libsassVersion
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_io_bit3_jsass_adapter_NativeAdapter_libsassVersion
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif

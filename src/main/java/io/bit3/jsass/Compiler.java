@@ -162,4 +162,8 @@ public class Compiler {
   public static String sass2scss(String source, int options) {
     return NativeAdapter.sass2scss(source, options);
   }
+
+  public static String getLibsassVersion() {
+    return NativeAdapter.libsassVersion();
+  }
 }
