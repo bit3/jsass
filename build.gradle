@@ -17,6 +17,9 @@ group = 'io.bit3'
 description = 'SASS compiler using libsass.'
 
 java {
+    withJavadocJar()
+    withSourcesJar()
+
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -127,23 +130,6 @@ task jniHeaders() {
 }
 
 jar.dependsOn jniHeaders
-
-// javadoc.jar generation
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-// sources.jar generation
-task sourceJar(type: Jar) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-// summarize artifacts
-artifacts {
-    archives javadocJar, sourceJar
-}
 
 // signing artifacts
 if (project.hasProperty("signing.gnupg.keyName") && project.hasProperty("signing.gnupg.passphrase")) {
