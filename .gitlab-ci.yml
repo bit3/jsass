@@ -36,9 +36,10 @@ Eclipse Temurin OpenJDK:
 
 Mac OS:
   stage: test
-  tags: ["saas-macos-medium-m1"]
-  needs: [ "Build" ]
-  dependencies: ["Build"]
+  tags:
+    - saas-macos-medium-m1
+  needs: []
+  dependencies: []
   image: macos-13-xcode-14
   variables:
     HOMEBREW_NO_AUTO_UPDATE: 1
