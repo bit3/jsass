@@ -7,7 +7,7 @@ cache:
 
 variables:
   GRADLE_USER_HOME: ".gradle_home"
-  GRADLE_OPTS: "--Dorg.gradle.logging.level=info -Dorg.gradle.logging.stacktrace=full -Dorg.gradle.parallel=true -Dorg.gradle.caching=true -Dorg.gradle.jvmargs=-Xmx8096M"
+  GRADLE_OPTS: "-Dorg.gradle.logging.level=info -Dorg.gradle.logging.stacktrace=full -Dorg.gradle.parallel=true -Dorg.gradle.caching=true -Dorg.gradle.jvmargs=-Xmx8096M"
 
 Build:
   stage: build
