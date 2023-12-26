@@ -16,4 +16,4 @@ DIR=$(dirname $(dirname $(realpath "$0")))
 cd "$DIR"
 
 # Compile binaries
-./gradlew --no-daemon -g /tmp buildNativeWindows64Libs
+./gradlew -g /tmp buildNativeWindows64Libs

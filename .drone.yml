@@ -11,7 +11,7 @@ steps:
     failure: ignore
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 ---
 
@@ -28,7 +28,7 @@ steps:
     failure: ignore
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 ---
 
@@ -44,7 +44,7 @@ steps:
 #    image: gradle:5.4.1-jdk12-slim
 #    commands:
 #      - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-#      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+#      - gradle --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 #
 #---
 
@@ -60,7 +60,7 @@ steps:
     image: gradle:5.4.1-jdk8-slim
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 ---
 
@@ -76,7 +76,7 @@ steps:
     image: gradle:5.4.1-jdk11-slim
     commands:
       - mkdir -p /tmp/gradle /tmp/gradle_home /tmp/gradle_build
-      - gradle --no-daemon --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
+      - gradle --info --full-stacktrace --project-cache-dir /tmp/gradle --gradle-user-home "/tmp/.gradle_home" -Dorg.gradle.project.buildDir=/tmp/gradle_build clean test
 
 #---
 #
