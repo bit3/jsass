@@ -48,13 +48,13 @@ Eclipse Temurin OpenJDK:
 
 CentOS 7:
   extends: .test
-  image: registry.gitlab.com/jsass/docker/test-centos7-amd64
+  image: registry.gitlab.com/jsass/docker/test-centos7-amd64:latest
   variables:
     GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
 
 CentOS 8:
   extends: .test
-  image: registry.gitlab.com/jsass/docker/test-centos8-amd64
+  image: registry.gitlab.com/jsass/docker/test-centos8-amd64:latest
   variables:
     GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
 
