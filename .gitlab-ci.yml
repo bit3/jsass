@@ -25,6 +25,13 @@ Build:
   stage: test
   needs: [ "Build" ]
   dependencies: ["Build"]
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/test-results
+    reports:
+      junit: build/test-results/**/*.xml
   script:
     - ./gradlew check
 
