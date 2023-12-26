@@ -16,8 +16,13 @@ plugins {
 group = 'io.bit3'
 description = 'SASS compiler using libsass.'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
 
 jar {
     manifest {
