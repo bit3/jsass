@@ -34,19 +34,18 @@ Eclipse Temurin OpenJDK:
   script:
     - ./gradlew test
 
-Mac OS:
-  stage: test
-  tags:
-    - saas-macos-medium-m1
-  needs: []
-  dependencies: []
-  image: macos-13-xcode-14
-  variables:
-    HOMEBREW_NO_AUTO_UPDATE: 1
-  before_script:
-    - mkdir -p .gradle_home
-  script:
-    - ./gradlew test
+#Mac OS:
+#  stage: test
+#  tags: ["saas-macos-medium-m1"]
+#  needs: [ "Build" ]
+#  dependencies: ["Build"]
+#  image: macos-13-xcode-14
+#  variables:
+#    HOMEBREW_NO_AUTO_UPDATE: 1
+#  before_script:
+#    - mkdir -p .gradle_home
+#  script:
+#    - ./gradlew test
 
 #CentOS 6 OpenJDK 11:
 #  stage: test Java 11
