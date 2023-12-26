@@ -1,13 +1,17 @@
+include(CMakeForceCompiler)
+
 # the name of the target operating system
-SET(CMAKE_SYSTEM_NAME Windows)
+SET(CMAKE_SYSTEM_NAME Darwin)
+
+SET(CMAKE_OSX_SYSROOT /osxcross/SDK/MacOSX13.1.sdk)
 
 # which compilers to use for C and C++
-SET(CMAKE_C_COMPILER i686-w64-mingw32-gcc)
-SET(CMAKE_CXX_COMPILER i686-w64-mingw32-g++)
-SET(CMAKE_RC_COMPILER i686-w64-mingw32-windres)
+SET(CMAKE_C_COMPILER x86_64-apple-darwin22.2-clang)
+SET(CMAKE_CXX_COMPILER x86_64-apple-darwin22.2-clang++-libc++)
+SET(CMAKE_AR x86_64-apple-darwin22.2-ar CACHE FILEPATH "Archiver")
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH  /usr/share/mingw-w64)
+SET(CMAKE_FIND_ROOT_PATH  /osxcross/SDK/MacOSX13.1.sdk/usr/include)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search
