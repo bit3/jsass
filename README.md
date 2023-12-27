@@ -26,8 +26,6 @@ However, in Jsass version 5.10.5, the commons-text dependency has been updated t
 
 `gradle check` runs checkstyle, pmd, junit locally.
 
-`gradle runDockerTests` runs junit tests on all docker containers.
-
 `gradle buildNativeLibs` build the native libs, using our build docker container.
 
 ### How to make a release
