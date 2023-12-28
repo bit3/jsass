@@ -180,6 +180,10 @@ task jniHeaders() {
 
 jar.dependsOn jniHeaders
 
+javadoc {
+    options.addBooleanOption('html5', true)
+}
+
 // signing artifacts
 if (project.hasProperty("signing.gnupg.keyName") && project.hasProperty("signing.gnupg.passphrase")) {
     signing {
