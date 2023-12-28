@@ -227,6 +227,7 @@ publishing {
             from components.java
 
             pom {
+                name = 'jsass'
                 description = 'SASS compiler using libsass.'
                 url = 'https://gitlab.com/jsass/jsass'
 
