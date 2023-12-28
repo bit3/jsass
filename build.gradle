@@ -184,18 +184,6 @@ javadoc {
     options.addBooleanOption('html5', true)
 }
 
-// signing artifacts
-if (project.hasProperty("signing.gnupg.keyName") && project.hasProperty("signing.gnupg.passphrase")) {
-    signing {
-        useGpgCmd()
-        sign configurations.archives
-    }
-} else if (project.hasProperty("signing.keyId") && project.hasProperty("signing.password")) {
-    signing {
-        sign configurations.archives
-    }
-}
-
 publishing {
     if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
         repositories {
@@ -280,6 +268,18 @@ publishing {
                 }
             }
         }
+    }
+}
+
+// signing artifacts
+if (project.hasProperty("signing.gnupg.keyName") && project.hasProperty("signing.gnupg.passphrase")) {
+    signing {
+        useGpgCmd()
+        sign publishing.publications.maven
+    }
+} else if (project.hasProperty("signing.keyId") && project.hasProperty("signing.password")) {
+    signing {
+        sign publishing.publications.maven
     }
 }
 

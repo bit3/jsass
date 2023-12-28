@@ -33,7 +33,7 @@ However, in Jsass version 5.10.5, the commons-text dependency has been updated t
 ```bash
 $ ./gradlew clean release
 $ git checkout $(git describe --abbrev=0)
-$ ./gradlew clean uploadArchives
+$ ./gradlew clean signMavenPublication publishAllPublicationsToMavenCentralRepository
 ```
 
 Don't forget to release the artifact from [staging repository](https://oss.sonatype.org/#stagingRepositories)!
