@@ -23,7 +23,7 @@ Build:
 
 .test:
   stage: test
-  needs: [ "Build" ]
+  needs: ["Build"]
   dependencies: ["Build"]
   artifacts:
     when: always
@@ -99,3 +99,10 @@ Ubuntu 22.04:
   image: registry.gitlab.com/jsass/docker/test-ubuntu22.04-amd64:latest
   variables:
     GRADLE_OPTS: '-Dorg.gradle.java.installations.auto-download=false'
+
+Publish:
+  stage: deploy
+  needs: ["Build"]
+  dependencies: ["Build"]
+  script:
+    - ./gradlew publishAllPublicationsToGitlabRepository
