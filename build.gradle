@@ -195,6 +195,39 @@ if (project.hasProperty("signing.gnupg.keyName") && project.hasProperty("signing
 apply from: 'maven.gradle'
 
 publishing {
+    if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
+        repositories {
+            maven {
+                name = "maven-central"
+                url(version.endsWith("-SNAPSHOT") ? "https://oss.sonatype.org/content/repositories/snapshots/" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials {
+                    username ossrhUsername
+                    password ossrhPassword
+                }
+            }
+        }
+    }
+
+    var ciJobToken = System.getenv("CI_JOB_TOKEN")
+    var ciApiUrl = System.getenv("CI_API_V4_URL")
+    var ciProjectId = System.getenv("CI_PROJECT_ID")
+
+    if (ciJobToken && ciApiUrl && ciProjectId) {
+        repositories {
+            maven {
+                name = "gitlab-maven"
+                url("${ciApiUrl}/projects/${ciProjectId}/packages/maven")
+                credentials(HttpHeaderCredentials) {
+                    name = 'Job-Token'
+                    value = ciJobToken
+                }
+                authentication {
+                    header(HttpHeaderAuthentication)
+                }
+            }
+        }
+    }
+
     publications {
         maven(MavenPublication) {
             groupId = 'io.bit3'
