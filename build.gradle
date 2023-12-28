@@ -363,14 +363,14 @@ def pullDockerContainer(name) {
     }
 }
 
-def runDockerContainer(name) {
+def runDockerContainer(name, String buildFile) {
     def dockerCmd = Files.readString(new File(project.buildDir, "docker").toPath())
     pullDockerContainer(name)
 
     def output = new ByteArrayOutputStream()
     def execResult = exec {
         workingDir project.projectDir
-        commandLine dockerCmd, 'run', "--user=$uid:$gid", '--userns=keep-id', '--rm', '--security-opt', 'label=disable', '-v', "${project.projectDir}:/jsass:z", "registry.gitlab.com/jsass/docker/$name:latest"
+        commandLine dockerCmd, 'run', "--user=$uid:$gid", '--userns=keep-id', '--rm', '--security-opt', 'label=disable', '-v', "${project.projectDir}:/jsass:z", "registry.gitlab.com/jsass/docker/$name:latest", buildFile
 
         if (!isVerbose()) {
             standardOutput = output
@@ -388,28 +388,38 @@ def runDockerContainer(name) {
 
 // Build native libs
 task buildNativeLibs {
-    dependsOn 'buildNativeDarwin64Libs',
-              'buildNativeLinux64Libs',
+    dependsOn 'buildNativeDarwinAmd64Libs',
+              'buildNativeDarwinArm64Libs',
+              'buildNativeLinuxAmd64Libs',
               'buildNativeLinuxArmhf32Libs',
               'buildNativeLinuxAarch64Libs',
               'buildNativeWindows64Libs'
 }
 
-task buildNativeDarwin64Libs {
+task buildNativeDarwinAmd64Libs {
     dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for darwin amd64'
-        runDockerContainer('build-jsass.compiler.libsass-darwin-amd64')
+        runDockerContainer('build-libsass-darwin', '/make-x86_64.sh')
     }
 }
 
-task buildNativeLinux64Libs {
+task buildNativeDarwinArm64Libs {
+    dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
+
+    doLast {
+        println 'Build native libs for darwin amd64'
+        runDockerContainer('build-libsass-darwin', '/make-aarch64.sh')
+    }
+}
+
+task buildNativeLinuxAmd64Libs {
     dependsOn determineUid, determineGid, determineRepositoryHeadStability, determineDockerAvailable
 
     doLast {
         println 'Build native libs for linux amd64'
-        runDockerContainer('build-jsass.compiler.libsass-linux-amd64')
+        runDockerContainer('build-libsass-linux-x64', '/make.sh')
     }
 }
 
@@ -418,7 +428,7 @@ task buildNativeLinuxArmhf32Libs {
 
     doLast {
         println 'Build native libs for linux armhf32'
-        runDockerContainer('build-jsass.compiler.build-linux-armhf32')
+        runDockerContainer('build-libsass-linux-arm', '/make-armhf32.sh')
     }
 }
 
@@ -427,7 +437,7 @@ task buildNativeLinuxAarch64Libs {
 
     doLast {
         println 'Build native libs for linux aarch64'
-        runDockerContainer('build-jsass.compiler.build-linux-aarch64')
+        runDockerContainer('build-libsass-linux-arm', '/make-aarch64.sh')
     }
 }
 
@@ -436,6 +446,6 @@ task buildNativeWindows64Libs {
 
     doLast {
         println 'Build native libs for windows amd64'
-        runDockerContainer('build-jsass.compiler.build-windows-amd64')
+        runDockerContainer('build-libsass-windows-x64', '/make.sh')
     }
 }

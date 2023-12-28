@@ -7,6 +7,11 @@ include_directories(
     # apple
     "/System/Library/Frameworks/JavaVM.framework/Headers"
 
+    # osxcross
+    "/osxcross/include/tapi"
+    "/osxcross/include/xar"
+    "/usr/include/clang/14/include/"
+
     # unix
     "/usr/lib/jvm/java/include"
     "/usr/lib/jvm/java/include/linux"
@@ -18,6 +23,16 @@ include_directories(
     "/usr/lib/jvm/java-8-openjdk-amd64/include/linux"
     "/usr/lib/jvm/java-8-oracle/include"
     "/usr/lib/jvm/java-8-oracle/include/linux"
+
+    # custom installation
+    "/opt/java8/include"
+    "/opt/java8/include/linux"
+    "/opt/java11/include"
+    "/opt/java11/include/linux"
+    "/opt/java17/include"
+    "/opt/java17/include/linux"
+    "/opt/java21/include"
+    "/opt/java21/include/linux"
 
     # libsass
     "../libsass/include"

@@ -72,7 +72,7 @@ final class NativeLoader {
     } else if (osName.startsWith(OS_FREEBSD)) {
       resourceName = determineFreebsdLibrary(libraryFileName, osName, osArch);
     } else if (osName.startsWith(OS_MAC)) {
-      resourceName = determineMacLibrary(libraryFileName);
+      resourceName = determineMacLibrary(libraryFileName, osName, osArch);
     } else {
       unsupportedPlatform(osName, osArch);
     }
@@ -199,12 +199,28 @@ final class NativeLoader {
    * Determine the right mac library depending on the architecture.
    *
    * @param library The library name.
+   * @param osArch
    * @return The library resource.
    */
-  private static String determineMacLibrary(final String library) {
+  private static String determineMacLibrary(final String library, final String osName, final String osArch) {
     String resourceName;
-    String platform = "darwin";
+    String platform = null;
     String fileExtension = "dylib";
+
+    switch (osArch) {
+      case ARCH_AMD64:
+      case ARCH_X86_64:
+        platform = "darwin-x86_64";
+        break;
+
+      case ARCH_AARCH64:
+        platform = "darwin-aarch64";
+        break;
+
+      default:
+        unsupportedPlatform(osName, osArch);
+    }
+
     resourceName = "/" + platform + "/" + library + "." + fileExtension;
     return resourceName;
   }
