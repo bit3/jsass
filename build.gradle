@@ -192,8 +192,6 @@ if (project.hasProperty("signing.gnupg.keyName") && project.hasProperty("signing
     }
 }
 
-apply from: 'maven.gradle'
-
 publishing {
     if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
         repositories {
