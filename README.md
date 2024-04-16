@@ -4,9 +4,9 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/bit3/jsass/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bit3/jsass/?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/bit3/jsass/badge.svg)](https://snyk.io/test/github/bit3/jsass)
 
-# Java sass compiler
+# Java SASS Compiler
 
-Feature complete java sass compiler.
+The ultimate SASS compiler for Java / the JVM.
 
 ## Documentation
 
@@ -40,4 +40,4 @@ Don't forget to release the artifact from [staging repository](https://oss.sonat
 
 ## License
 
-MIT-License
+[MIT-License](./LICENSE)

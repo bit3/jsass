@@ -1,6 +1,0 @@
-{
-global:
-  Java_io_bit3_jsass_adapter_*;
-local:
-  *;
-};

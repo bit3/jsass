@@ -1,3 +1,0 @@
-# This file is for resolving global symbol conflict in Mac OS.
-
-_Java_io_bit3_jsass_adapter_*
