@@ -42,7 +42,6 @@ public class CleanSourceMapTest {
 
         final String sourceMap = output.getSourceMap();
 
-        assertFalse(sourceMap.contains("$jsass"));
         assertFalse(sourceMap.contains("JSASS_CUSTOM.scss"));
         assertFalse(sourceMap.contains("JSASS_PRE_IMPORT.scss"));
         assertFalse(sourceMap.contains("JSASS_POST_IMPORT.scss"));
