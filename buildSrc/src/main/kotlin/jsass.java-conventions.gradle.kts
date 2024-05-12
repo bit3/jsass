@@ -5,10 +5,10 @@ plugins {
     id("java")
     id("jacoco")
     id("com.github.ben-manes.versions")
-//    id("net.researchgate.release")
     id("org.ajoberstar.grgit")
     id("org.sonarqube")
     id("io.freefair.lombok")
+    id("ca.cutterslade.analyze")
 }
 
 group = "io.bit3"
@@ -22,6 +22,10 @@ java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+tasks.compileJava {
+    options.compilerArgs.add("-parameters")
 }
 
 tasks.jar {
@@ -101,11 +105,8 @@ tasks.check {
 
 sonarqube {
     properties {
-        val description = grgit.describe()
-
-        property("sonar.exclusions", "**/src/main/libsass/**")
-        property("sonar.projectVersion", description)
-        property("sonar.jacoco.reportPath", project.layout.buildDirectory.map { it.file("jacoco/test.exec") }.get())
+        property("sonar.projectKey", "jsass_jsass")
+        property("sonar.organization", "jsass")
     }
 }
 

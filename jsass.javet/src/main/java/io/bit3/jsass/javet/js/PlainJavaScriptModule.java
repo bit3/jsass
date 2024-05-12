@@ -15,4 +15,7 @@ public class PlainJavaScriptModule implements JavaScriptModule {
   @Nullable
   String resourceName;
 
+  @Builder.Default
+  boolean isModule = true;
+
 }

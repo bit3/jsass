@@ -1,0 +1,21 @@
+{
+  "name": "jsass",
+  "scripts": {
+    "build:bootstrap": "sass --style=expanded --no-source-map node_modules/bootstrap/scss/bootstrap.scss tests/src/test/resources/io/bit3/jsass/bootstrap.css",
+    "build": "yarn run build:bootstrap"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.19",
+    "bootstrap": "^5.3.3",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0"
+  },
+  "packageManager": "yarn@4.2.2",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.17.2",
+    "rollup-plugin-cjs-es": "^3.0.0",
+    "sass": "^1.77.1"
+  }
+}

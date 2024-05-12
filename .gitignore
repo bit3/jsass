@@ -1,8 +1,7 @@
-/src/main/c/build/
-/src/main/c/empty.cpp
-/src/test/c/build/
-/src/test/c/empty.cpp
-/docs/
+/node/
+/node_modules/
+.cjsescache
+.frontend-gradle-plugin
 
 ### Maven
 target/

@@ -7,6 +7,8 @@ cache:
 
 variables:
   GRADLE_USER_HOME: ".gradle_home"
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
 
 before_script:
   - mkdir -p .gradle_home
@@ -20,6 +22,18 @@ Build:
       - build
   script:
     - ./gradlew clean assemble
+
+Sonarcloud Check:
+  stage: test
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: ./gradlew sonarqube
+  only:
+    - merge_requests
+    - master
+    - develop
 
 .test:
   stage: test

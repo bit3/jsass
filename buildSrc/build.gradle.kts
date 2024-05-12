@@ -8,9 +8,11 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.51.0")
-    implementation("net.researchgate:gradle-release:3.0.2")
-    implementation("org.ajoberstar.grgit:grgit-gradle:5.2.1")
-    implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:5.0.0.4638")
-    implementation("io.freefair.gradle:lombok-plugin:8.6")
+    implementation(libs.versionsPlugin)
+    implementation(libs.analyze)
+    implementation(libs.release)
+    implementation(libs.grgit)
+    implementation(libs.sonarqube)
+    implementation(libs.lombok)
+    implementation(libs.frontend)
 }

@@ -13,9 +13,9 @@ public class SassFunction {
   /**
    * A javascript function body.
    *
-   * <p><pre>{@code (args) {
+   * <pre>{@code (args) {
    *   return args[0]
-   * }}</pre></p>
+   * }}</pre>
    *
    * @see <a href="https://www.caoccao.com/Javet/reference/v8_values/v8_function.html#what-is-the-source-code-of-a-function-in-v8">https://www.caoccao.com/Javet/reference/v8_values/v8_function.html#what-is-the-source-code-of-a-function-in-v8</a>
    */

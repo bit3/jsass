@@ -3,7 +3,7 @@ plugins {
     id("jsass.publication-conventions")
 }
 
-description = "Javet Compiler Basics."
+description = "Jsass compiler implementation using Javet."
 
 dependencies {
     implementation(project(":jsass"))

@@ -29,6 +29,9 @@ public class ResourceJavaScriptModule implements JavaScriptModule {
   @Nullable
   String resourceName;
 
+  @Builder.Default
+  boolean isModule = true;
+
   @SneakyThrows
   @Override
   public @NotNull String getScript() {

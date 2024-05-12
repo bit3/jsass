@@ -18,6 +18,6 @@ public interface JsassCompiler {
    * @throws JsassCompilationException If the compilation failed.
    */
   @NotNull
-  CompletableFuture<Output> compileString(@NotNull String source, @Nullable Options options) throws JsassCompilationException;
+  CompletableFuture<Output> compileString(@NotNull String source, @Nullable StringOptions options) throws JsassCompilationException;
 
 }

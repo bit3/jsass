@@ -6,4 +6,5 @@ import org.jetbrains.annotations.Nullable;
 public interface JavaScriptModule {
   @NotNull String getScript();
   @Nullable String getResourceName();
+  boolean isModule();
 }
