@@ -8,7 +8,7 @@ publishing {
         repositories {
             maven {
                 name = "MavenCentral"
-                uri(when {
+                setUrl(when {
                     version.toString().endsWith("-SNAPSHOT") -> "https://oss.sonatype.org/content/repositories/snapshots/"
                     else -> "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 })
@@ -28,7 +28,7 @@ publishing {
         repositories {
             maven {
                 name = "Gitlab"
-                uri("${ciApiUrl}/projects/${ciProjectId}/packages/maven")
+                setUrl("${ciApiUrl}/projects/${ciProjectId}/packages/maven")
                 credentials(HttpHeaderCredentials::class) {
                     name = "Job-Token"
                     value = ciJobToken
