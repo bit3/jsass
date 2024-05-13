@@ -33,6 +33,7 @@ Sonarcloud Check:
   only:
     - merge_requests
     - main
+    - jsass-6
 
 .test:
   stage: test
