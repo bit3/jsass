@@ -32,8 +32,7 @@ Sonarcloud Check:
   script: ./gradlew sonarqube
   only:
     - merge_requests
-    - master
-    - develop
+    - main
 
 .test:
   stage: test
