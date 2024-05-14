@@ -20,6 +20,8 @@ Build:
     expire_in: 30 days
     paths:
       - build
+      - node
+      - node_modules
   script:
     - ./gradlew clean assemble
 
@@ -48,7 +50,7 @@ Sonarcloud Check:
     reports:
       junit: build/test-results/**/*.xml
   script:
-    - ./gradlew check
+    - ./gradlew -x installFrontend -x installNode -x installPackageManager check
 
 Eclipse Temurin OpenJDK:
   extends: .test
