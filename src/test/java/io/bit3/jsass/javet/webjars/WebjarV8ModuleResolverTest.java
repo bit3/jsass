@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.caoccao.javet.exceptions.JavetException;
 import com.caoccao.javet.interop.V8Host;
 import com.caoccao.javet.interop.V8Runtime;
+import com.caoccao.javet.interop.engine.JavetEngineConfig;
 import com.caoccao.javet.interop.engine.JavetEnginePool;
 import io.bit3.jsass.json.jackson.JacksonJsonDeserializer;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,10 @@ class WebjarV8ModuleResolverTest {
         .builder()
         .jsonDeserializer(new JacksonJsonDeserializer())
         .build();
+
+    final var config = new JavetEngineConfig();
+    config.setPoolMinSize(1);
+    config.setPoolMaxSize(4);
 
     try (
         final var enginePool = new JavetEnginePool<>();
@@ -65,7 +70,11 @@ class WebjarV8ModuleResolverTest {
         .jsonDeserializer(new JacksonJsonDeserializer())
         .build();
 
-    try (final var enginePool = new JavetEnginePool<>()) {
+    final var config = new JavetEngineConfig();
+    config.setPoolMinSize(1);
+    config.setPoolMaxSize(4); // at least a pool of three is required
+
+    try (final var enginePool = new JavetEnginePool<>(config)) {
       try (final var v8engine1 = enginePool.getEngine()) {
         try (final var v8runtime = v8engine1.getV8Runtime()) {
           resolveAndValidateModule(v8runtime, moduleResolver);
