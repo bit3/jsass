@@ -15,12 +15,6 @@ The ultimate SASS compiler for Java / the JVM.
 - Check out the [example webapp](./example).
 - Inspect the [API documentation](https://javadoc.io/doc/io.bit3/jsass/).
 
-## CVE-2022-42889
-
-In October 2022, a critical vulnerability in the commons-text library became known ([CVE-2022-42889](https://securitylab.github.com/advisories/GHSL-2022-018_Apache_Commons_Text/)). jsass uses the commons-text library, but not the affected StringSubstitutor class!
-Thus, jsass is not directly affected by this vulnerability.
-However, in Jsass version 5.10.5, the commons-text dependency has been updated to version 1.10.0.
-
 ## Developers
 
 ### Gradle tasks you should know
