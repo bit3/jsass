@@ -1,7 +1,6 @@
 [![pipeline status](https://gitlab.com/jsass/jsass/badges/jsass-6/pipeline.svg)](https://gitlab.com/jsass/jsass/commits/jsass-6)
 [![Build Status](https://cloud.drone.io/api/badges/bit3/jsass/status.svg)](https://cloud.drone.io/bit3/jsass)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jsass_jsass&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jsass_jsass)
-[![Known Vulnerabilities](https://snyk.io/test/github/bit3/jsass/badge.svg)](https://snyk.io/test/github/bit3/jsass)
 
 # Java SASS Compiler
 
