@@ -47,6 +47,7 @@ Sonarcloud Check:
     expire_in: 30 days
     paths:
       - build/test-results
+      - build/reports
     reports:
       junit: build/test-results/**/*.xml
   script:
