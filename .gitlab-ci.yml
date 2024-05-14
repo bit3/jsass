@@ -23,7 +23,7 @@ Build:
       - node
       - node_modules
   script:
-    - ./gradlew clean assemble
+    - ./gradlew clean build
 
 Sonarcloud Check:
   image: docker.io/eclipse-temurin:17
@@ -52,10 +52,6 @@ Sonarcloud Check:
       junit: build/test-results/**/*.xml
   script:
     - ./gradlew -x installFrontend -x installNode -x installPackageManager check
-
-Eclipse Temurin OpenJDK:
-  extends: .test
-  image: docker.io/eclipse-temurin:11
 
 #Mac OS:
 #  extends: .test
