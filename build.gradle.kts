@@ -59,3 +59,11 @@ tasks.named<InstallFrontendTask>("installFrontend") {
     inputs.files(retainedMetadataFileNames).withPropertyName("metadataFiles")
     outputs.dir("${projectDir}/node_modules").withPropertyName("nodeModulesDirectory")
 }
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "jsass_jsass")
+        property("sonar.organization", "jsass")
+        property("sonar.junit.reportPaths", project.layout.buildDirectory.dir("build/test-results/test"))
+    }
+}

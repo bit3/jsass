@@ -6,9 +6,9 @@ plugins {
     id("jacoco")
     id("com.github.ben-manes.versions")
     id("org.ajoberstar.grgit")
-    id("org.sonarqube")
     id("io.freefair.lombok")
     id("ca.cutterslade.analyze")
+    id("org.sonarqube")
 }
 
 group = "io.bit3"
@@ -101,13 +101,6 @@ tasks.register<Test>("testOnJava21") {
 
 tasks.check {
     dependsOn("testOnJava17", "testOnJava21")
-}
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "jsass_jsass")
-        property("sonar.organization", "jsass")
-    }
 }
 
 tasks.javadoc {
