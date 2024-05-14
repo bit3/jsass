@@ -17,12 +17,6 @@ The ultimate SASS compiler for Java / the JVM.
 
 ## Developers
 
-### Gradle tasks you should know
-
-`gradle check` runs checkstyle, pmd, junit locally.
-
-`gradle buildNativeLibs` build the native libs, using our build docker container.
-
 ### How to make a release
 
 ```bash
