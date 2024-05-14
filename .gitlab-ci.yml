@@ -24,6 +24,7 @@ Build:
     - ./gradlew clean assemble
 
 Sonarcloud Check:
+  image: docker.io/eclipse-temurin:17
   stage: test
   cache:
     key: "${CI_JOB_NAME}"
