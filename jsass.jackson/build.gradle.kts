@@ -1,6 +1,7 @@
 plugins {
     id("jsass.java-conventions")
     id("jsass.publication-conventions")
+    id("org.sonarqube")
 }
 
 description = "Jsass JSON implementation with Jackson."
