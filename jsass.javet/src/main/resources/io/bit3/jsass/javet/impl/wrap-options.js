@@ -3,15 +3,18 @@ function wrapImporter(importer) {
     return {
       canonicalize: function (url, context) {
         const result = importer.canonicalize(url, context)
-        const r2 = result ? new URL(result) : result
-        console.debug("canonicalize " + url + " to " + r2)
-        return r2
+        return result ? new URL(result) : result
       },
       load: function (canonicalUrl) {
         const result = importer.load(canonicalUrl.toString())
-        const r2 = result ? {...result, sourceMapUrl: result.sourceMapUrl ? new URL(result.sourceMapUrl) : undefined} : null
-        console.debug("load", canonicalUrl, "as", "r2")
-        return r2
+        if (result) {
+          return {
+            ...result,
+            sourceMapUrl: result.sourceMapUrl ? new URL(result.sourceMapUrl) : undefined
+          }
+        } else {
+          return null
+        }
       }
     }
   }
