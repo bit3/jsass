@@ -6,6 +6,7 @@ plugins {
     id("jacoco")
     id("com.github.ben-manes.versions")
     id("org.ajoberstar.grgit")
+    id("org.sonarqube")
     id("io.freefair.lombok")
     id("ca.cutterslade.analyze")
 }

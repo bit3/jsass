@@ -1,7 +1,6 @@
 plugins {
     id("jsass.java-conventions")
     id("jsass.publication-conventions")
-    id("org.sonarqube")
 }
 
 description = "Jsass compiler implementation with Javet V8 Mode."
